@@ -10,7 +10,7 @@
 
     <DockPanel>
 
-        <TextBlock Text="Today's tasks" DockPanel.Dock="Top" Style="{StaticResource TitlePage }" />
+        <TextBlock TextAlignment="Center" Text="Today's tasks" DockPanel.Dock="Top" Style="{StaticResource TitlePage }" />
 
         <ListView  DockPanel.Dock="Top"  Name="TaskListView" HorizontalContentAlignment="Stretch"  Margin="30" >
             <ListView.ItemContainerStyle>
