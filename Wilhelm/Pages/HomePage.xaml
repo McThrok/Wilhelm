@@ -10,9 +10,9 @@
 
     <DockPanel>
 
-        <TextBlock Text="Today's tasks" DockPanel.Dock="Top" Style="{StaticResource TitlePage }" />
+        <TextBlock TextAlignment="Center" Text="Today's tasks" DockPanel.Dock="Top" Style="{StaticResource TitlePage }" />
 
-        <ListView  DockPanel.Dock="Top"  Name="TaskListView" HorizontalContentAlignment="Stretch" >
+        <ListView  DockPanel.Dock="Top"  Name="TaskListView" HorizontalContentAlignment="Stretch"  Margin="30" >
             <ListView.ItemContainerStyle>
                 <Style TargetType="ListViewItem">
                     <EventSetter Event="PreviewMouseLeftButtonDown" Handler="ListViewItem_MouseDown"/>

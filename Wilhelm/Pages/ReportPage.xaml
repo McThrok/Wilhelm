@@ -9,7 +9,8 @@
       Title="ActionTypesPage">
 
     <DockPanel>
-        <ListView  DockPanel.Dock="Top"  Name="ReportListView" HorizontalContentAlignment="Stretch" >
+        <TextBlock TextAlignment="Center" Text="Report" DockPanel.Dock="Top" Style="{StaticResource TitlePage }" />
+        <ListView  DockPanel.Dock="Top"  Margin="30" Name="ReportListView" HorizontalContentAlignment="Stretch" >
             <ListView.View>
                 <GridView>
                     <GridViewColumn Header="Category"  DisplayMemberBinding="{Binding Category}" />

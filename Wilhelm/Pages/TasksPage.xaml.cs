@@ -36,14 +36,14 @@ namespace Wilhelm.Frontend.Pages
             _tasks = new ObservableCollection<TaskHolder>(MockBase.MockBase.GetTasks());
             _groups = new List<GroupHolder>(MockBase.MockBase.GetGroups());
             TasksListView.ItemsSource = _tasks;
-            TaskDetails.Initialize(_activeTask, _groups);
+            ShowCurrentTask();
         }
 
         private void TaskButton_Click(object sender, RoutedEventArgs e)
         {
             var button = sender as Button;
             ActiveTask = button.Tag as TaskHolder;
-            TaskDetails.Initialize(_activeTask, _groups);
+            ShowCurrentTask();
         }
         private void AddNewTask_Click(object sender, RoutedEventArgs e)
         {
@@ -52,7 +52,17 @@ namespace Wilhelm.Frontend.Pages
             addedTask.Frequency = 1;
             _tasks.Insert(0, addedTask);
             ActiveTask = addedTask;
-            TaskDetails.Initialize(addedTask, _groups);
+            ShowCurrentTask();
+        }
+
+        public void ShowCurrentTask()
+        {
+            if (ActiveTask == null)
+                TaskButtonsPanel.Visibility = Visibility.Hidden;
+            else
+                TaskButtonsPanel.Visibility = Visibility.Visible;
+
+            TaskDetails.Initialize(ActiveTask, _groups);
         }
 
         public TaskHolder ActiveTask
@@ -93,7 +103,7 @@ namespace Wilhelm.Frontend.Pages
 
         private void RestetChanges_Click(object sender, RoutedEventArgs e)
         {
-            TaskDetails.Initialize(ActiveTask, _groups);
+            ShowCurrentTask();
         }
         private void Delete_Task(object sender, RoutedEventArgs e)
         {
@@ -102,7 +112,7 @@ namespace Wilhelm.Frontend.Pages
             {
                 ActiveTask.Archivized = true;
                 ActiveTask = null;
-                TaskDetails.Initialize(ActiveTask, _groups);
+                ShowCurrentTask();
             }
         }
     }

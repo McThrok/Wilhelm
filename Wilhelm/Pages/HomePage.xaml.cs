@@ -27,7 +27,7 @@ namespace Wilhelm.Frontend.Pages
         {
             InitializeComponent();
             DataContext = this;
-            _currentList = new ObservableCollection<ActivityHolder>(MockBase.MockBase.GetActivities());
+            _currentList = new ObservableCollection<ActivityHolder>(MockBase.MockBase.GetTodaysActivities());
             TaskListView.ItemsSource = _currentList;
 
         }

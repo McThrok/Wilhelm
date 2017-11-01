@@ -36,21 +36,31 @@ namespace Wilhelm.Frontend.Pages
             _groups = new ObservableCollection<GroupHolder>(MockBase.MockBase.GetGroups());
             _tasks = new List<TaskHolder>(MockBase.MockBase.GetTasks());
             GroupsListView.ItemsSource = _groups;
-            GroupDetails.Initialize(_activeGroup, _tasks);
+            ShowCurrentGroup();
+        }
+
+        public void ShowCurrentGroup()
+        {
+            if (ActiveGroup == null)
+                GroupButtonsPanel.Visibility = Visibility.Hidden;
+            else
+                GroupButtonsPanel.Visibility = Visibility.Visible;
+
+            GroupDetails.Initialize(ActiveGroup, _tasks);
         }
 
         private void GroupButton_Click(object sender, RoutedEventArgs e)
         {
             var button = sender as Button;
             ActiveGroup = button.Tag as GroupHolder;
-            GroupDetails.Initialize(_activeGroup, _tasks);
+            ShowCurrentGroup();
         }
         private void AddNewGroup_Click(object sender, RoutedEventArgs e)
         {
             var addedGroup = new GroupHolder(1, "New Group");
             _groups.Insert(0, addedGroup);
             ActiveGroup = addedGroup;
-            GroupDetails.Initialize(addedGroup, _tasks);
+            ShowCurrentGroup();
         }
 
         public GroupHolder ActiveGroup
@@ -89,7 +99,7 @@ namespace Wilhelm.Frontend.Pages
 
         private void RestetChanges_Click(object sender, RoutedEventArgs e)
         {
-            GroupDetails.Initialize(ActiveGroup, _tasks);
+            ShowCurrentGroup();
         }
         private void Delete_Group(object sender, RoutedEventArgs e)
         {
@@ -98,7 +108,7 @@ namespace Wilhelm.Frontend.Pages
             {
                 ActiveGroup.Archivized = true;
                 ActiveGroup = null;
-                GroupDetails.Initialize(ActiveGroup, _tasks);
+                ShowCurrentGroup();
             }
         }
     }
