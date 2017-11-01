@@ -35,7 +35,7 @@ namespace Wilhelm.Frontend.MockBase
 
             _activities = new List<ActivityHolder>();
             for (int i = 0; i < 100; i++)
-                _activities.Add(new ActivityHolder(i) { IsDone = i % 10 != 0, Date = DateTime.Now, Task = _tasks[i % _tasks.Count] });
+                _activities.Add(new ActivityHolder(i) { IsDone = i % 5 != 0, Date = DateTime.Now, Task = _tasks[i % _tasks.Count] });
 
             _reports = new List<ReportData>();
             _reports.Add(new ReportData() { Category = "Najczęściej pomijane zadanie", Value = "zadanie 2" });
@@ -56,6 +56,10 @@ namespace Wilhelm.Frontend.MockBase
         public static List<ActivityHolder> GetActivities()
         {
             return _activities;
+        }
+        public static List<ActivityHolder> GetTodaysActivities()
+        {
+            return _activities.Where((x, i) => i < 7).ToList();
         }
         public static List<ReportData> GetReports()
         {
