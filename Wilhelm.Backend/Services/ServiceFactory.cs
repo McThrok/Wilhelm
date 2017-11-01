@@ -13,5 +13,13 @@ namespace Wilhelm.Backend.Services
         {
             return new ConfigurationService();
         }
+        public IActivityService GetActivityService()
+        {
+            return new ActivityService();
+        }
+        public IReportService GetReportService()
+        {
+            return new ReportService();
+        }
     }
 }

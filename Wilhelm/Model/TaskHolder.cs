@@ -17,7 +17,7 @@ namespace Wilhelm.Frontend.Model
         {
             Groups = new ObservableCollection<GroupHolder>();
         }
-        public TaskHolder(long id, string name) :
+        public TaskHolder(int id, string name) :
             base(id, name)
         {
             Groups = new ObservableCollection<GroupHolder>();

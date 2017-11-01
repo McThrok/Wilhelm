@@ -11,7 +11,7 @@ namespace Wilhelm.Frontend.Model
     {
         private TaskHolder _task;
         private DateTime _date;
-        private bool _state;
+        private bool _isDone;
 
         public TaskHolder Task
         {
@@ -50,17 +50,17 @@ namespace Wilhelm.Frontend.Model
         {
             get
             {
-                return _state;
+                return _isDone;
             }
             set
             {
-                _state = value;
+                _isDone = value;
                 OnChanged(nameof(IsDone));
             }
         }
 
         public ActivityHolder() : base() { }
-        public ActivityHolder(long id) : base(id) { }
+        public ActivityHolder(int id) : base(id) { }
 
     }
 }

@@ -50,7 +50,7 @@ namespace Wilhelm.Frontend.Model
             }
         }
         public NamedHolder() : base() { }
-        public NamedHolder(long id, string name) : base(id)
+        public NamedHolder(int id, string name) : base(id)
         {
             Name = name;
         }
