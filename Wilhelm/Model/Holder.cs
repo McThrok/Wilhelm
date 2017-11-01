@@ -9,10 +9,10 @@ namespace Wilhelm.Frontend.Model
 {
     public abstract class Holder : INotifyPropertyChanged
     {
-        public long Id { get; set; }
+        public int Id { get; set; }
 
         public Holder() { }
-        public Holder(long id)
+        public Holder(int id)
         {
             Id = id;
         }
