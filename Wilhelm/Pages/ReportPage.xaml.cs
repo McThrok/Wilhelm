@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,16 +14,19 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace Wilhelm
+namespace Wilhelm.Frontend.Pages
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Interaction logic for ActionTypesPage.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class ReportPage : Page
     {
-        public MainWindow()
+        public ReportPage()
         {
             InitializeComponent();
+            DataContext = this;
+            ReportListView.ItemsSource = MockBase.MockBase.GetReports();
+
         }
     }
 }
