@@ -1,0 +1,73 @@
+﻿<UserControl x:Class="Wilhelm.Frontend.Controls.TaskDetailsControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Wilhelm.Frontend.Controls"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="300">
+    <UserControl.Resources>
+
+        <Style TargetType="Panel" x:Key="GroupItemContainer">
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding Archivized}" Value="true">
+                    <Setter Property="Visibility" Value="Collapsed"/>
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+    </UserControl.Resources>
+    
+    <DockPanel Name="TaskDetailsPanel" >
+
+        <Grid DockPanel.Dock="Top">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition  Width="Auto"/>
+                <ColumnDefinition  Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <TextBlock Grid.Row="0" Grid.Column="0" Text="Name"/>
+            <TextBlock Grid.Row="1" Grid.Column="0" Text="Description"/>
+            <TextBlock Grid.Row="2" Grid.Column="0" Text="start date"/>
+            <TextBlock Grid.Row="3" Grid.Column="0" Text="Frequency (in days)"/>
+            <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding Path=ShownTask.Name}"/>
+            <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding Path=ShownTask.Description}"/>
+            <DatePicker Grid.Row="2" Grid.Column="1" SelectedDate="{Binding Path=ShownTask.StartDate}" />
+            <TextBox Grid.Row="3" Grid.Column="1" Text="{Binding Path=ShownTask.Frequency}"/>
+        </Grid>
+
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <DockPanel Grid.Row="0" LastChildFill="False">
+                <TextBlock DockPanel.Dock="Left"  Text="Groups"/>
+                <Button DockPanel.Dock="Left" Content="Assign to group" Width="130" Click="AssignToGroup_Click"/>
+            </DockPanel>
+            <ListView Grid.Row="1" Name="GroupsListView" HorizontalContentAlignment="Stretch"  ItemsSource="{Binding Path=ShownTask.Groups}" >
+                <ListView.ItemTemplate>
+                    <DataTemplate >
+                        <Grid Style="{StaticResource GroupItemContainer}">
+                            <Grid.RowDefinitions>
+                                <RowDefinition/>
+                                <RowDefinition/>
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Grid.Row="0" Grid.Column="0" Text="{Binding Name}" />
+                            <TextBlock Grid.Row="1" Grid.Column="0" Text="{Binding Description}" />
+                            <Button Grid.Row="0" Grid.Column="1" Grid.RowSpan="2" Content="Remove" DockPanel.Dock="Right" Tag="{Binding}" Click="RemoveFromGroup_Click"/>
+                        </Grid>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </Grid>
+    </DockPanel>
+</UserControl>
