@@ -27,17 +27,27 @@ namespace Wilhelm.Frontend.Pages
         {
             InitializeComponent();
             DataContext = this;
-            _currentList = new ObservableCollection<ActivityHolder>(MockBase.MockBase.GetActivities());
+            _currentList = new ObservableCollection<ActivityHolder>(MockBase.MockBase.GetTodaysActivities());
             TaskListView.ItemsSource = _currentList;
 
         }
 
         private void ListViewItem_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            var item = sender as ListViewItem;
-            var activity = item.Content as ActivityHolder;
-            if (activity != null)
-                activity.IsDone = !activity.IsDone;
+            if (!(e.OriginalSource is null))
+            {
+                if (e.Source is ContentPresenter)
+                {
+                    var content = VisualTreeHelper.GetChild(e.Source as ContentPresenter, 0);
+                    if (content is CheckBox)
+                        return;
+                }
+                var item = sender as ListViewItem;
+                var activity = item.Content as ActivityHolder;
+                if (activity != null)
+                    activity.IsDone = !activity.IsDone;
+            }
         }
+
     }
 }

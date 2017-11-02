@@ -14,8 +14,8 @@
         <Style TargetType="Button" x:Key="TaskButton">
             <Setter Property="Margin" Value="0"/>
             <Setter Property="DockPanel.Dock" Value="Top"/>
-            <Setter Property="Width" Value="200"/>
-            <Setter Property="Height" Value="50"/>
+            <Setter Property="Width" Value="160"/>
+            <Setter Property="Height" Value="40"/>
             <Style.Triggers>
                 <DataTrigger Binding="{Binding Archivized}" Value="true">
                     <Setter Property="Visibility" Value="Collapsed"/>
@@ -25,7 +25,7 @@
 
     </Page.Resources>
 
-    <Grid>
+    <Grid Margin="6">
         <Grid.RowDefinitions>
             <RowDefinition  Height="Auto"/>
             <RowDefinition  Height="*"/>
@@ -36,8 +36,8 @@
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
-        <Button Grid.Row="0" Grid.Column="0" Content="Add new task" Style="{StaticResource TaskButton}" Click="AddNewTask_Click" />
-        <ListView Grid.Row="1" Grid.Column="0" Grid.RowSpan="2" Margin="10"  Name="TasksListView" HorizontalContentAlignment="Stretch" >
+        <Button Margin="6" Grid.Row="0" Grid.Column="0" Content="Add new task" Style="{StaticResource TaskButton}" Click="AddNewTask_Click" />
+        <ListView Margin="6" Grid.Row="1" Grid.Column="0" Grid.RowSpan="2" Name="TasksListView" HorizontalContentAlignment="Stretch" >
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <Button Style="{StaticResource TaskButton}" Click="TaskButton_Click" Tag="{Binding}">
@@ -54,10 +54,10 @@
 
         <controls:TaskDetailsControl Grid.Row="0" Grid.Column="1" Grid.RowSpan="2" x:Name="TaskDetails"/>
         
-        <DockPanel Grid.Row="2" Grid.Column="1" LastChildFill="False">
-            <Button DockPanel.Dock="Left" Content="Apply" Width="130" Click="Apply_Click"/>
-            <Button DockPanel.Dock="Left" Content="Reset changes" Width="130" Click="RestetChanges_Click"/>
-            <Button DockPanel.Dock="Right" Content="Delete task" Width="130" Click="Delete_Task"/>
+        <DockPanel Grid.Row="2" Grid.Column="1" LastChildFill="False" Name="TaskButtonsPanel">
+            <Button DockPanel.Dock="Left" Content="Apply" Width="100" Click="Apply_Click"/>
+            <Button DockPanel.Dock="Left" Content="Reset changes" Width="100" Click="RestetChanges_Click"/>
+            <Button DockPanel.Dock="Right" Content="Delete task" Width="100" Click="Delete_Task"/>
         </DockPanel>
 
 

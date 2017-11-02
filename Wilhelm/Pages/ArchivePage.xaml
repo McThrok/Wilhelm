@@ -10,13 +10,13 @@
 
     <DockPanel >
 
-        <TextBlock Text="Today's tasks" DockPanel.Dock="Top" Style="{StaticResource TitlePage }" />
+        <TextBlock Text="Archive" DockPanel.Dock="Top" Style="{StaticResource TitlePage }" />
 
-        <Grid DockPanel.Dock="Top" Margin="10">
+        <Grid DockPanel.Dock="Top" Margin="30">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition  Width="*"/>
             </Grid.ColumnDefinitions>
-            <ListView Grid.Column="0" Margin="10"  Name="TaskListView" HorizontalContentAlignment="Stretch" >
+            <ListView Grid.Column="0"  Name="TaskListView" HorizontalContentAlignment="Stretch" >
                 <ListView.ItemContainerStyle>
                     <Style TargetType="ListViewItem">
                         <EventSetter Event="PreviewMouseLeftButtonDown" Handler="ListViewItem_MouseDown"/>

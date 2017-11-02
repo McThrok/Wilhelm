@@ -25,19 +25,19 @@
                 <ColumnDefinition  Width="*"/>
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
-                <RowDefinition Height="Auto"/>
+                <RowDefinition  Height="Auto"/>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
-            <TextBlock Grid.Row="0" Grid.Column="0" Text="Name"/>
-            <TextBlock Grid.Row="1" Grid.Column="0" Text="Description"/>
-            <TextBlock Grid.Row="2" Grid.Column="0" Text="start date"/>
-            <TextBlock Grid.Row="3" Grid.Column="0" Text="Frequency (in days)"/>
-            <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding Path=ShownTask.Name}"/>
-            <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding Path=ShownTask.Description}"/>
-            <DatePicker Grid.Row="2" Grid.Column="1" SelectedDate="{Binding Path=ShownTask.StartDate}" />
-            <TextBox Grid.Row="3" Grid.Column="1" Text="{Binding Path=ShownTask.Frequency}"/>
+            <TextBlock Margin="6" Grid.Row="0" Grid.Column="0" Text="Name"/>
+            <TextBlock Margin="6" Grid.Row="1" Grid.Column="0" Text="Description"/>
+            <TextBlock Margin="6" Grid.Row="2" Grid.Column="0" Text="start date"/>
+            <TextBlock Margin="6" Grid.Row="3" Grid.Column="0" Text="Frequency (in days)"/>
+            <TextBox Margin="6" Grid.Row="0" Grid.Column="1" Text="{Binding Path=ShownTask.Name}"/>
+            <TextBox Margin="6" Grid.Row="1" Grid.Column="1" Text="{Binding Path=ShownTask.Description}"/>
+            <DatePicker Margin="6" Grid.Row="2" Grid.Column="1" SelectedDate="{Binding Path=ShownTask.StartDate}" />
+            <TextBox Margin="6" Grid.Row="3" Grid.Column="1" Text="{Binding Path=ShownTask.Frequency}"/>
         </Grid>
 
         <Grid>
@@ -46,13 +46,13 @@
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
             <DockPanel Grid.Row="0" LastChildFill="False">
-                <TextBlock DockPanel.Dock="Left"  Text="Groups"/>
-                <Button DockPanel.Dock="Left" Content="Assign to group" Width="130" Click="AssignToGroup_Click"/>
+                <TextBlock DockPanel.Dock="Left"  Text="Groups" FontSize="20"/>
+                <Button DockPanel.Dock="Left" Margin="6" Content="Assign to group" Width="130" Click="AssignToGroup_Click"/>
             </DockPanel>
-            <ListView Grid.Row="1" Name="GroupsListView" HorizontalContentAlignment="Stretch"  ItemsSource="{Binding Path=ShownTask.Groups}" >
+            <ListView Grid.Row="1" Name="GroupsListView"  HorizontalContentAlignment="Stretch"  ItemsSource="{Binding Path=ShownTask.Groups}" >
                 <ListView.ItemTemplate>
                     <DataTemplate >
-                        <Grid Style="{StaticResource GroupItemContainer}">
+                        <Grid Margin="6" Style="{StaticResource GroupItemContainer}">
                             <Grid.RowDefinitions>
                                 <RowDefinition/>
                                 <RowDefinition/>
