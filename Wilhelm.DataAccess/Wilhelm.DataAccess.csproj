@@ -52,6 +52,8 @@
     <Compile Include="WActivity.cs" />
     <Compile Include="WContext.cs" />
     <Compile Include="WGroup.cs" />
+    <Compile Include="WModel.cs" />
+    <Compile Include="WNamedModel.cs" />
     <Compile Include="WTask.cs" />
   </ItemGroup>
   <ItemGroup>

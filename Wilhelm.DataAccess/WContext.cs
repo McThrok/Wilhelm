@@ -29,9 +29,9 @@ namespace Wilhelm.DataAccess
             WTask t4 = new WTask() { Name = "water Maciek", Frequency = 1, StartDate = DateTime.Today };
             WTask t5 = new WTask() { Name = "give insect to Maciek", Frequency = 20, StartDate = DateTime.Today };
 
-            WActivity a1 = new WActivity() { WTask = t1, Date = DateTime.Today, Status = true };
-            WActivity a2 = new WActivity() { WTask = t1, Date = DateTime.Now, Status = false };
-            WActivity a3 = new WActivity() { WTask = t1, Date = DateTime.UtcNow, Status = true };
+            WActivity a1 = new WActivity() { WTask = t1, Date = DateTime.Today, IsDone = true };
+            WActivity a2 = new WActivity() { WTask = t1, Date = DateTime.Now, IsDone = false };
+            WActivity a3 = new WActivity() { WTask = t1, Date = DateTime.UtcNow, IsDone = true };
 
             g1.WTasks.Add(t1);
             g1.WTasks.Add(t2);
