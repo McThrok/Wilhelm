@@ -15,8 +15,8 @@ namespace Wilhelm.Backend.Services
         {
             var confing = new WConfig()
             {
-                Tasks = MockBase.MockBase.GetTasks(),
-                Groups = MockBase.MockBase.GetGroups(),
+                WTasks = MockBase.MockBase.GetTasks(),
+                WGroups = MockBase.MockBase.GetGroups(),
             };
             return confing;
         }

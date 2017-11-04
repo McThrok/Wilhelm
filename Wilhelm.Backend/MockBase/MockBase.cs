@@ -13,7 +13,7 @@ namespace Wilhelm.Backend.MockBase
         private static List<WGroup> _groups;
         private static List<WTask> _tasks;
         private static List<WActivity> _activities;
-        private static List<WReport> _reports;
+        private static List<ReportDto> _reports;
 
         static MockBase()
         {
@@ -38,13 +38,13 @@ namespace Wilhelm.Backend.MockBase
             for (int i = 0; i < 100; i++)
                 _activities.Add(new WActivity() { Id = i, IsDone = i % 5 != 0, Date = DateTime.Now, WTask = _tasks[i % _tasks.Count] });
 
-            _reports = new List<WReport>
+            _reports = new List<ReportDto>
             {
-                new WReport() { Category = "Najczęściej pomijane zadanie", Value = "zadanie 2" },
-                new WReport() { Category = "Najrzadziej pomijane zadanie", Value = "zadanie 2" },
-                new WReport() { Category = "Ilość wykonanych zadań", Value = "231" },
-                new WReport() { Category = "Ilość niewykonanych zadań", Value = "21" },
-                new WReport() { Category = "Procent niewykonanych zadań", Value = "91%" }
+                new ReportDto() { Category = "Najczęściej pomijane zadanie", Value = "zadanie 2" },
+                new ReportDto() { Category = "Najrzadziej pomijane zadanie", Value = "zadanie 2" },
+                new ReportDto() { Category = "Ilość wykonanych zadań", Value = "231" },
+                new ReportDto() { Category = "Ilość niewykonanych zadań", Value = "21" },
+                new ReportDto() { Category = "Procent niewykonanych zadań", Value = "91%" }
             };
 
         }
@@ -64,7 +64,7 @@ namespace Wilhelm.Backend.MockBase
         {
             return _activities.Where((x, i) => i < 7).ToList();
         }
-        public static List<WReport> GetReports()
+        public static List<ReportDto> GetReports()
         {
             return _reports;
         }

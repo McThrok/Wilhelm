@@ -9,7 +9,7 @@ namespace Wilhelm.Backend.Model
 {
     public class WConfig
     {
-        public List<WTask> Tasks { get; set; }
-        public List<WGroup> Groups { get; set; }
+        public List<WTask> WTasks { get; set; }
+        public List<WGroup> WGroups { get; set; }
     }
 }

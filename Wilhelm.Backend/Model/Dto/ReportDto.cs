@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Wilhelm.Backend.Model
 {
-    public class WReport
+    public class ReportDto
     {
         public string Category { get; set; }
         public string Value { get; set; }
