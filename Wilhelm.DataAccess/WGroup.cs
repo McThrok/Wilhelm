@@ -9,18 +9,12 @@ using System.Threading.Tasks;
 namespace Wilhelm.DataAccess
 {
     [Table("Groups")]
-    public class WGroup
+    public class WGroup : WNamedModel
     {
         public WGroup()
         {
             WTasks = new List<WTask>();
         }
-
-        [Key]
-        public int GroupId { get; set; }
-        [Required]
-        public string Name { get; set; }
-        public string Description { get; set; }
 
         public List<WTask> WTasks { get; set; }
     }

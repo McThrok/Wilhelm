@@ -9,14 +9,12 @@ using System.Threading.Tasks;
 namespace Wilhelm.DataAccess
 {
     [Table("Activities")]
-    public class WActivity
+    public class WActivity:WModel
     {
-        [Key]
-        public int ActivityId { get; set; }
-        [Required]
-        public WTask WTask { get; set; }
         [Required]
         public DateTime Date { get; set; }
-        public bool Status { get; set; }
+        [Required]
+        public WTask WTask { get; set; }
+        public bool IsDone { get; set; }
     }
 }
