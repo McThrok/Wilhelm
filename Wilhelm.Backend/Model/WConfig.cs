@@ -5,11 +5,11 @@ using System.Text;
 using System.Threading.Tasks;
 using Wilhelm.DataAccess;
 
-namespace Wilhelm.Backend.Services
+namespace Wilhelm.Backend.Model
 {
-    public interface IConfigurationService
+    public class WConfig
     {
-        WConfig GetConfig();
-        void SaveConfig(WConfig config);
+        public List<WTask> Tasks { get; set; }
+        public List<WGroup> Groups { get; set; }
     }
 }

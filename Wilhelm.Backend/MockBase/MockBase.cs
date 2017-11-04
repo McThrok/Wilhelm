@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Wilhelm.Backend.Model;
+using Wilhelm.DataAccess;
 
 namespace Wilhelm.Backend.MockBase
 {
@@ -28,14 +29,14 @@ namespace Wilhelm.Backend.MockBase
                 foreach (var task in _tasks)
                     if (task.Id % 5 == group.Id % 5)
                     {
-                        task.Groups.Add(group);
-                        group.Tasks.Add(task);
+                        task.WGroups.Add(group);
+                        group.WTasks.Add(task);
                     }
 
 
             _activities = new List<WActivity>();
             for (int i = 0; i < 100; i++)
-                _activities.Add(new WActivity() { Id = i, IsDone = i % 5 != 0, Date = DateTime.Now, Task = _tasks[i % _tasks.Count] });
+                _activities.Add(new WActivity() { Id = i, IsDone = i % 5 != 0, Date = DateTime.Now, WTask = _tasks[i % _tasks.Count] });
 
             _reports = new List<WReport>();
             _reports.Add(new WReport() { Category = "Najczęściej pomijane zadanie", Value = "zadanie 2" });

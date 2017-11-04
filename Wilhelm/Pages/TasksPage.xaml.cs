@@ -33,8 +33,8 @@ namespace Wilhelm.Frontend.Pages
         {
             InitializeComponent();
             DataContext = this;
-            _tasks = new ObservableCollection<TaskHolder>(MockBase.MockBase.GetTasks());
-            _groups = new List<GroupHolder>(MockBase.MockBase.GetGroups());
+            //_tasks = new ObservableCollection<TaskHolder>(MockBase.MockBase.GetTasks());
+            //_groups = new List<GroupHolder>(MockBase.MockBase.GetGroups());
             TasksListView.ItemsSource = _tasks;
             ShowCurrentTask();
         }

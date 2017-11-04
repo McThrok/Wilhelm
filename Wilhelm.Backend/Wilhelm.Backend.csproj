@@ -43,12 +43,14 @@
   <ItemGroup>
     <Compile Include="Class1.cs" />
     <Compile Include="MockBase\MockBase.cs" />
-    <Compile Include="Model\WReport.cs" />
-    <Compile Include="Model\WConfiguration.cs" />
-    <Compile Include="Model\WGroup.cs" />
-    <Compile Include="Model\WNamedModel.cs" />
-    <Compile Include="Model\WModel.cs" />
-    <Compile Include="Model\WTask.cs" />
+    <Compile Include="Model\Dto\ActivityDto.cs" />
+    <Compile Include="Model\Dto\GroupDto.cs" />
+    <Compile Include="Model\Dto\ModelDto.cs" />
+    <Compile Include="Model\Dto\NamedModelDto.cs" />
+    <Compile Include="Model\Dto\TaskDto.cs" />
+    <Compile Include="Model\Dto\ReprtDto.cs" />
+    <Compile Include="Model\Dto\ConfigDto.cs" />
+    <Compile Include="Model\WConfig.cs" />
     <Compile Include="Services\ReportService.cs" />
     <Compile Include="Services\IReportService.cs" />
     <Compile Include="Services\IActivityService.cs" />
@@ -67,5 +69,6 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
