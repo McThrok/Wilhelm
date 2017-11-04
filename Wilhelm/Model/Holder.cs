@@ -11,12 +11,6 @@ namespace Wilhelm.Frontend.Model
     {
         public int Id { get; set; }
 
-        public Holder() { }
-        public Holder(int id)
-        {
-            Id = id;
-        }
-
         public event PropertyChangedEventHandler PropertyChanged;
         protected void OnChanged(string propertyName)
         {

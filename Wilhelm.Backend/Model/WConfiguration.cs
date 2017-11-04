@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace Wilhelm.Backend.Model
 {
-    public class WGroup : WNamedModel
+    public class WConfig
     {
         public List<WTask> Tasks { get; set; }
-
+        public List<WGroup> Groups { get; set; }
     }
 }

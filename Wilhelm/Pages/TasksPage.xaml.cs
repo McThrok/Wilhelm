@@ -47,9 +47,14 @@ namespace Wilhelm.Frontend.Pages
         }
         private void AddNewTask_Click(object sender, RoutedEventArgs e)
         {
-            var addedTask = new TaskHolder(1, "New Task");
-            addedTask.StartDate = DateTime.Now;
-            addedTask.Frequency = 1;
+            var addedTask = new TaskHolder()
+            {
+                Id = 1,
+                Name = "New Task",
+                Groups = new ObservableCollection<GroupHolder>(),
+                StartDate = DateTime.Now,
+                Frequency = 1,
+            };
             _tasks.Insert(0, addedTask);
             ActiveTask = addedTask;
             ShowCurrentTask();

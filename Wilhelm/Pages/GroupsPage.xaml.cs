@@ -57,7 +57,13 @@ namespace Wilhelm.Frontend.Pages
         }
         private void AddNewGroup_Click(object sender, RoutedEventArgs e)
         {
-            var addedGroup = new GroupHolder(1, "New Group");
+            var addedGroup = new GroupHolder()
+            {
+                Id = 1,
+                Name = "New group",
+                
+                Tasks = new ObservableCollection<TaskHolder>(),
+            };
             _groups.Insert(0, addedGroup);
             ActiveGroup = addedGroup;
             ShowCurrentGroup();

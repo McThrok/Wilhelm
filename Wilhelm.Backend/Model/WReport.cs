@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Wilhelm.Frontend.Model
+namespace Wilhelm.Backend.Model
 {
-    public class ReportData
+    public class WReport
     {
         public string Category { get; set; }
         public string Value { get; set; }

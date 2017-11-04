@@ -40,6 +40,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="MockBase\MockBase.cs" />
+    <Compile Include="Model\WReport.cs" />
+    <Compile Include="Model\WConfiguration.cs" />
     <Compile Include="Model\WGroup.cs" />
     <Compile Include="Model\WNamedModel.cs" />
     <Compile Include="Model\WModel.cs" />

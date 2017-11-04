@@ -1,14 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace Wilhelm.Frontend.Model
 {
-    public class GroupHolder : NamedHolder
+    public class ConfigHolder
     {
-        public ObservableCollection<TaskHolder> Tasks { get;  set; }
+        public List<GroupHolder> Groups { get; set; }
+        public List<TaskHolder> Tasks { get; set; }
     }
 }

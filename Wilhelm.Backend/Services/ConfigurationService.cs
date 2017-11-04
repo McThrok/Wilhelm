@@ -9,21 +9,20 @@ namespace Wilhelm.Backend.Services
 {
     internal class ConfigurationService : IConfigurationService
     {
-        public void SaveTasks(List<WTask> tasks)
+        public WConfig GetConfig()
         {
+            var confing = new WConfig()
+            {
+                Tasks = MockBase.MockBase.GetTasks(),
+                Groups = MockBase.MockBase.GetGroups(),
+            };
+            return confing;
+        }
 
-        }
-        public List<WTask> GetTasks()
+        public void SaveConfig(WConfig config)
         {
-            return null;
-        }
-        public void SaveGroups(List<WGroup> groups)
-        {
-
-        }
-        public List<WGroup> GetGroups()
-        {
-            return null;
+            //throw new NotImplementedException();
         }
     }
+    
 }

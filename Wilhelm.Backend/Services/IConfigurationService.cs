@@ -9,9 +9,7 @@ namespace Wilhelm.Backend.Services
 {
     public interface IConfigurationService
     {
-        void SaveTasks(List<WTask> tasks);
-        List<WTask> GetTasks();
-        void SaveGroups(List<WGroup> groups);
-        List<WGroup> GetGroups();
+        WConfig GetConfig();
+        void SaveConfig(WConfig config);
     }
 }
