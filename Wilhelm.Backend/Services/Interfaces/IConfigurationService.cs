@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using Wilhelm.Backend.Model;
 using Wilhelm.DataAccess;
 
-namespace Wilhelm.Backend.Services
+namespace Wilhelm.Backend.Services.Interfaces
 {
     public interface IConfigurationService
     {

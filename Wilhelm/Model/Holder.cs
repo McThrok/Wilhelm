@@ -10,24 +10,12 @@ namespace Wilhelm.Frontend.Model
 {
     public abstract class Holder : INotifyPropertyChanged
     {
-        public ModelDto Model { get; set; }
+        public int Id { get; set; }
 
         public event PropertyChangedEventHandler PropertyChanged;
         protected void OnChanged(string propertyName)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
-
-        public int Id
-        {
-            get
-            {
-                return Model.Id;
-            }
-            set
-            {
-                Model.Id = value;
-            }
         }
     }
 }

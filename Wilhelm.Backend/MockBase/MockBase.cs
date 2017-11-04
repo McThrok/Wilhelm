@@ -38,12 +38,14 @@ namespace Wilhelm.Backend.MockBase
             for (int i = 0; i < 100; i++)
                 _activities.Add(new WActivity() { Id = i, IsDone = i % 5 != 0, Date = DateTime.Now, WTask = _tasks[i % _tasks.Count] });
 
-            _reports = new List<WReport>();
-            _reports.Add(new WReport() { Category = "Najczęściej pomijane zadanie", Value = "zadanie 2" });
-            _reports.Add(new WReport() { Category = "Najrzadziej pomijane zadanie", Value = "zadanie 2" });
-            _reports.Add(new WReport() { Category = "Ilość wykonanych zadań", Value = "231" });
-            _reports.Add(new WReport() { Category = "Ilość niewykonanych zadań", Value = "21" });
-            _reports.Add(new WReport() { Category = "Procent niewykonanych zadań", Value = "91%" });
+            _reports = new List<WReport>
+            {
+                new WReport() { Category = "Najczęściej pomijane zadanie", Value = "zadanie 2" },
+                new WReport() { Category = "Najrzadziej pomijane zadanie", Value = "zadanie 2" },
+                new WReport() { Category = "Ilość wykonanych zadań", Value = "231" },
+                new WReport() { Category = "Ilość niewykonanych zadań", Value = "21" },
+                new WReport() { Category = "Procent niewykonanych zadań", Value = "91%" }
+            };
 
         }
         public static List<WGroup> GetGroups()

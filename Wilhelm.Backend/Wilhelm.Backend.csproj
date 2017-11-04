@@ -51,11 +51,12 @@
     <Compile Include="Model\Dto\ReprtDto.cs" />
     <Compile Include="Model\Dto\ConfigDto.cs" />
     <Compile Include="Model\WConfig.cs" />
+    <Compile Include="Services\ConversionService.cs" />
     <Compile Include="Services\ReportService.cs" />
-    <Compile Include="Services\IReportService.cs" />
-    <Compile Include="Services\IActivityService.cs" />
+    <Compile Include="Services\Interfaces\IReportService.cs" />
+    <Compile Include="Services\Interfaces\IActivityService.cs" />
     <Compile Include="Services\ActivityService.cs" />
-    <Compile Include="Services\IConfigurationService.cs" />
+    <Compile Include="Services\Interfaces\IConfigurationService.cs" />
     <Compile Include="Services\ConfigurationService.cs" />
     <Compile Include="Services\ServiceFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

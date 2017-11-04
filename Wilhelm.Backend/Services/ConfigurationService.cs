@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Wilhelm.Backend.Model;
+using Wilhelm.Backend.Services.Interfaces;
 using Wilhelm.DataAccess;
 
 namespace Wilhelm.Backend.Services

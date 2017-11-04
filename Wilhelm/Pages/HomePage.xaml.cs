@@ -43,8 +43,7 @@ namespace Wilhelm.Frontend.Pages
                         return;
                 }
                 var item = sender as ListViewItem;
-                var activity = item.Content as ActivityHolder;
-                if (activity != null)
+                if (item.Content is ActivityHolder activity)
                     activity.IsDone = !activity.IsDone;
             }
         }
