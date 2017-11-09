@@ -13,10 +13,10 @@ namespace Wilhelm.IntegrationTests
     [TestFixture]
     class BackendDataAccessTests
     {
-        [SetUp]
-        protected void SetUp()
+       [SetUp]
+       protected void SetUp()
         {
-            Database.SetInitializer(new WilhelmContexInitializer());
+            Database.SetInitializer(new WilhelmDropAlwaysContexInitializer());
         }
 
         [Test]
