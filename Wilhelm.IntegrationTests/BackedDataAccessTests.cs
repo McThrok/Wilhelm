@@ -20,7 +20,7 @@ namespace Wilhelm.IntegrationTests
         }
 
         [Test]
-        public void AddTaskToDB_ReturnsCorrectId()
+        public void AddTaskToDB_ChangeId()
         {
             DataAccessIntegration c = new DataAccessIntegration();
             WTask t1 = new WTask() { Name = "T1", Description = "T1", Frequency = 1, StartDate = DateTime.Today };
