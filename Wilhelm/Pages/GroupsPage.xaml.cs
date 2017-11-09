@@ -33,8 +33,8 @@ namespace Wilhelm.Frontend.Pages
         {
             InitializeComponent();
             DataContext = this;
-            _groups = new ObservableCollection<GroupHolder>(MockBase.MockBase.GetGroups());
-            _tasks = new List<TaskHolder>(MockBase.MockBase.GetTasks());
+           // _groups = new ObservableCollection<GroupHolder>(MockBase.MockBase.GetGroups());
+            //_tasks = new List<TaskHolder>(MockBase.MockBase.GetTasks());
             GroupsListView.ItemsSource = _groups;
             ShowCurrentGroup();
         }
@@ -57,7 +57,13 @@ namespace Wilhelm.Frontend.Pages
         }
         private void AddNewGroup_Click(object sender, RoutedEventArgs e)
         {
-            var addedGroup = new GroupHolder(1, "New Group");
+            var addedGroup = new GroupHolder()
+            {
+                Id = 1,
+                Name = "New group",
+                
+                Tasks = new ObservableCollection<TaskHolder>(),
+            };
             _groups.Insert(0, addedGroup);
             ActiveGroup = addedGroup;
             ShowCurrentGroup();

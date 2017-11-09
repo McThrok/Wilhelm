@@ -3,27 +3,28 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Wilhelm.Backend.Model;
+using Wilhelm.Backend.Services.Interfaces;
 using Wilhelm.DataAccess;
 
 namespace Wilhelm.Backend.Services
 {
     internal class ConfigurationService : IConfigurationService
     {
-        public void SaveTasks(List<WTask> tasks)
+        public WConfig GetConfig()
         {
+            var confing = new WConfig()
+            {
+                WTasks = MockBase.MockBase.GetTasks(),
+                WGroups = MockBase.MockBase.GetGroups(),
+            };
+            return confing;
+        }
 
-        }
-        public List<WTask> GetTasks()
+        public void SaveConfig(WConfig config)
         {
-            return null;
-        }
-        public void SaveGroups(List<WGroup> groups)
-        {
-
-        }
-        public List<WGroup> GetGroups()
-        {
-            return null;
+            //throw new NotImplementedException();
         }
     }
+    
 }

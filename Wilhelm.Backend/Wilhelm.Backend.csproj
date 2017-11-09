@@ -42,11 +42,21 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Class1.cs" />
+    <Compile Include="MockBase\MockBase.cs" />
+    <Compile Include="Model\Dto\ActivityDto.cs" />
+    <Compile Include="Model\Dto\GroupDto.cs" />
+    <Compile Include="Model\Dto\ModelDto.cs" />
+    <Compile Include="Model\Dto\NamedModelDto.cs" />
+    <Compile Include="Model\Dto\TaskDto.cs" />
+    <Compile Include="Model\Dto\ReportDto.cs" />
+    <Compile Include="Model\Dto\ConfigDto.cs" />
+    <Compile Include="Model\WConfig.cs" />
+    <Compile Include="Services\ConversionService.cs" />
     <Compile Include="Services\ReportService.cs" />
-    <Compile Include="Services\IReportService.cs" />
-    <Compile Include="Services\IActivityService.cs" />
+    <Compile Include="Services\Interfaces\IReportService.cs" />
+    <Compile Include="Services\Interfaces\IActivityService.cs" />
     <Compile Include="Services\ActivityService.cs" />
-    <Compile Include="Services\IConfigurationService.cs" />
+    <Compile Include="Services\Interfaces\IConfigurationService.cs" />
     <Compile Include="Services\ConfigurationService.cs" />
     <Compile Include="Services\ServiceFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -60,5 +70,6 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

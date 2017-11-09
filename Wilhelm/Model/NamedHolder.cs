@@ -49,10 +49,5 @@ namespace Wilhelm.Frontend.Model
                 OnChanged(nameof(Archivized));
             }
         }
-        public NamedHolder() : base() { }
-        public NamedHolder(int id, string name) : base(id)
-        {
-            Name = name;
-        }
     }
 }

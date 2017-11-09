@@ -113,12 +113,11 @@
     <Compile Include="Controls\TaskDetailsControl.xaml.cs">
       <DependentUpon>TaskDetailsControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="MockBase\MockBase.cs" />
     <Compile Include="Model\ActivityHolder.cs" />
+    <Compile Include="Model\ConfigHolder.cs" />
     <Compile Include="Model\GroupHolder.cs" />
     <Compile Include="Model\Holder.cs" />
     <Compile Include="Model\NamedHolder.cs" />
-    <Compile Include="Model\ReportData.cs" />
     <Compile Include="Model\TaskHolder.cs" />
     <Compile Include="Pages\ArchivePage.xaml.cs">
       <DependentUpon>ArchivePage.xaml</DependentUpon>
@@ -136,6 +135,7 @@
     <Compile Include="Pages\TasksPage.xaml.cs">
       <DependentUpon>TasksPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Services\ConversionService.cs" />
     <Compile Include="Windows\ChooseItemWindow.xaml.cs">
       <DependentUpon>ChooseItemWindow.xaml</DependentUpon>
     </Compile>

@@ -27,7 +27,7 @@ namespace Wilhelm.Frontend.Pages
         {
             InitializeComponent();
             DataContext = this;
-            _currentList = new ObservableCollection<ActivityHolder>(MockBase.MockBase.GetTodaysActivities());
+            //_currentList = new ObservableCollection<ActivityHolder>(MockBase.MockBase.GetTodaysActivities());
             TaskListView.ItemsSource = _currentList;
 
         }
@@ -43,8 +43,7 @@ namespace Wilhelm.Frontend.Pages
                         return;
                 }
                 var item = sender as ListViewItem;
-                var activity = item.Content as ActivityHolder;
-                if (activity != null)
+                if (item.Content is ActivityHolder activity)
                     activity.IsDone = !activity.IsDone;
             }
         }

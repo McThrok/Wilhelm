@@ -77,8 +77,7 @@ namespace Wilhelm.Frontend.Controls
         {
             var dialog = new ChooseItemWindow(Groups.Where(x => !x.Tasks.Contains(ShownTask)).Cast<NamedHolder>().ToList());
             dialog.ShowDialog();
-            var groupToAdd = dialog.SelectedHolder as GroupHolder;
-            if (groupToAdd != null)
+            if (dialog.SelectedHolder is GroupHolder groupToAdd)
             {
                 ShownTask.Groups.Add(groupToAdd);
                 groupToAdd.Tasks.Add(ShownTask);

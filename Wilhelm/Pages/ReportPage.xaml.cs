@@ -25,7 +25,7 @@ namespace Wilhelm.Frontend.Pages
         {
             InitializeComponent();
             DataContext = this;
-            ReportListView.ItemsSource = MockBase.MockBase.GetReports();
+            //ReportListView.ItemsSource = MockBase.MockBase.GetReports();
 
         }
     }

@@ -9,21 +9,10 @@ namespace Wilhelm.Frontend.Model
 {
     public class TaskHolder : NamedHolder
     {
-        public ObservableCollection<GroupHolder> Groups { get; private set; }
+        public ObservableCollection<GroupHolder> Groups { get; set; }
         private DateTime _startDate;
         private int _frequency;
-
-        public TaskHolder() : base()
-        {
-            Groups = new ObservableCollection<GroupHolder>();
-        }
-        public TaskHolder(int id, string name) :
-            base(id, name)
-        {
-            Groups = new ObservableCollection<GroupHolder>();
-        }
-
-
+        
         public DateTime StartDate
         {
             get
@@ -48,7 +37,5 @@ namespace Wilhelm.Frontend.Model
                 OnChanged(nameof(Frequency));
             }
         }
-
-
     }
 }
