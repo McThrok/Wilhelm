@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Wilhelm.Backend.Model
+namespace Wilhelm.Backend.Model.Dto
 {
     public class ReportDto
     {

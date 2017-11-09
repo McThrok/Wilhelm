@@ -48,7 +48,7 @@
     <Compile Include="Model\Dto\ModelDto.cs" />
     <Compile Include="Model\Dto\NamedModelDto.cs" />
     <Compile Include="Model\Dto\TaskDto.cs" />
-    <Compile Include="Model\Dto\ReprtDto.cs" />
+    <Compile Include="Model\Dto\ReportDto.cs" />
     <Compile Include="Model\Dto\ConfigDto.cs" />
     <Compile Include="Model\WConfig.cs" />
     <Compile Include="Services\ConversionService.cs" />

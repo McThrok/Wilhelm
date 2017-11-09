@@ -42,7 +42,6 @@ namespace Wilhelm.Backend.Services
                 config.WTasks.Add(ConvertFromDto(task, config.WGroups, true));
 
             return config;
-
         }
 
         public ActivityDto ConvertToDto(WActivity activity, IEnumerable<TaskDto> tasks)
