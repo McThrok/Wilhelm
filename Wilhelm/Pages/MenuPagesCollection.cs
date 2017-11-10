@@ -67,7 +67,7 @@ namespace Wilhelm.Frontend.Pages
             get
             {
                 if (_archivePage == null)
-                    _archivePage = new ArchivePage(_serviceFactory.CreateActivityService(), holdersConversionService);
+                    _archivePage = new ArchivePage(_serviceFactory.CreateActivityService(), _holdersConversionService);
                 return _archivePage;
             }
         }

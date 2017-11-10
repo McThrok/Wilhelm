@@ -28,7 +28,7 @@ namespace Wilhelm.Frontend.Windows
         private readonly MenuPagesCollection _pages;
         private IServiceFactory _serviceFactory = new ServiceFactory();
         private IHoldersConversionService _holdersConversionService = new HoldersConversionService();
-
+            
         public MainWindow()
         {
             InitializeComponent();
