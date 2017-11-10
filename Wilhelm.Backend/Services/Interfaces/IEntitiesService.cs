@@ -8,9 +8,9 @@ using Wilhelm.DataAccess;
 
 namespace Wilhelm.Backend.Services.Interfaces
 {
-    public interface IConfigurationService
+    public interface IEntitiesService
     {
-        ConfigDto GetConfig();
-        void SaveConfig(ConfigDto config);
+        void UpdateConfig(ConfigDto dto, IDbSet<WTask> wTasks, IDbSet<WGroup> wGroups);
+        void UpdateEntities(IDbSet<WTask> wTasks, IDbSet<WGroup> wGroups, ConfigDto config);
     }
 }

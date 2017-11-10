@@ -5,30 +5,19 @@ using System.Text;
 using System.Threading.Tasks;
 using Wilhelm.Backend.MockBase;
 using Wilhelm.Backend.Model;
-using Wilhelm.Frontend.Model;
+using Wilhelm.Backend.Model.Dto;
 
 namespace Wilhelm.Services
 {
-    //public class ConversionService
-    //{
-    //    public ConfigHolder Convert(WConfig config)
-    //    {
-    //        return null;
-    //    }
-    //    public ConfigHolder Convert(WConfig config)
-    //    {
-    //        return null;
-    //    }
-    //    public ActivityHolder Convert(WActivity activity, TaskHolder holder)
-    //    {
-    //        var result = new ActivityHolder()
-    //        {
-    //            Date = activity.Date,
-    //            Id = activity.Id,
-    //            IsDone = activity.IsDone,
-    //            Task = holder,
-    //        };
-    //        return result;
-    //    }
-    //}
+    public class ConversionService
+    {
+        public ConfigHolder ConvertFromDto(ConfigDto config)
+        {
+            var holder = new ConfigHolder();
+
+            return holder;
+        }
+
+        public Holder ConvertFromDto(ConfigDto)
+    }
 }

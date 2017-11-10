@@ -1,87 +1,50 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Wilhelm.Backend.Model;
 using Wilhelm.Backend.Model.Dto;
+using Wilhelm.Backend.Services.Interfaces;
 using Wilhelm.DataAccess;
 
 namespace Wilhelm.Backend.Services
 {
-    public class ConversionService
+    public class ConversionService : IConversionService
     {
-        public ConfigDto ConvertToDto(WConfig config)
+        public void ConvertToDto(ActivityDto dto, WActivity wActivity, IEnumerable<TaskDto> tasks)
         {
-            var dto = new ConfigDto()
-            {
-                Groups = new List<GroupDto>(),
-                Tasks = new List<TaskDto>(),
-            };
-
-            foreach (var wgroup in config.WGroups)
-                dto.Groups.Add(ConvertToDto(wgroup));
-
-            foreach (var wtasks in config.WTasks)
-                dto.Tasks.Add(ConvertToDto(wtasks,dto.Groups,true));
-
-            return dto;
-        }
-        public WConfig ConvertFromDto(ConfigDto dto)
-        {
-            var config = new WConfig()
-            {
-                WGroups = new List<WGroup>(),
-                WTasks = new List<WTask>(),
-            };
-
-            foreach (var group in dto.Groups)
-                config.WGroups.Add(ConvertFromDto(group));
-
-            foreach (var task in dto.Tasks)
-                config.WTasks.Add(ConvertFromDto(task, config.WGroups, true));
-
-            return config;
-        }
-
-        public ActivityDto ConvertToDto(WActivity activity, IEnumerable<TaskDto> tasks)
-        {
-            var dto = ConvertToDto(activity);
-            var task = tasks.Where(x => x.Id == activity.Id).SingleOrDefault();
+           ConvertToDto(dto, wActivity);
+            var task = tasks.Where(x => x.Id == wActivity.Id).SingleOrDefault();
             if (task != null)
                 dto.Task = task;
-            return dto;
         }
-        public ActivityDto ConvertToDto(WActivity activity)
+        public void ConvertToDto( ActivityDto dto, WActivity wActivity)
         {
-            var dto = new ActivityDto();
-            ConvertToDto(activity, dto);
-            dto.Date = activity.Date;
-            dto.IsDone = activity.IsDone;
-            return dto;
+            ConvertToModelDto(dto, wActivity);
+            dto.Date = wActivity.Date;
+            dto.IsDone = wActivity.IsDone;
         }
-        public WActivity ConvertFromDto(ActivityDto activity, IEnumerable<WTask> tasks)
+        public void ConvertFromDto(WActivity wActivity, ActivityDto dto, IEnumerable<WTask> tasks)
         {
-            var model = ConvertFromDto(activity);
-            var wtask = tasks.Where(x => x.Id == activity.Id).SingleOrDefault();
+            ConvertFromDto(wActivity, dto);
+            var wtask = tasks.Where(x => x.Id == dto.Id).SingleOrDefault();
             if (wtask != null)
-                model.WTask = wtask;
-            return model;
+                wActivity.WTask = wtask;
         }
-        public WActivity ConvertFromDto(ActivityDto activity)
+        public void ConvertFromDto(WActivity wActivity, ActivityDto dto)
         {
-            var model = new WActivity();
-            ConvertToDto(model, activity);
-            model.Date = activity.Date;
-            model.IsDone = activity.IsDone;
-            return model;
+            ConvertFromModelDto(wActivity, dto);
+            wActivity.Date = dto.Date;
+            wActivity.IsDone = dto.IsDone;
         }
 
-        public GroupDto ConvertToDto(WGroup group, IEnumerable<TaskDto> tasks, bool updateTasks)
+        public void ConvertToDto(GroupDto dto, WGroup wGroup, IEnumerable<TaskDto> tasks, bool updateTasks)
         {
-            var dto = ConvertToDto(group);
+            ConvertToDto(dto, wGroup);
             dto.Tasks = new List<TaskDto>();
-            foreach (var wtask in group.WTasks)
+            foreach (var wtask in wGroup.WTasks)
             {
                 var task = tasks.Where(x => x.Id == wtask.Id).SingleOrDefault();
                 if (task == null)
@@ -95,44 +58,38 @@ namespace Wilhelm.Backend.Services
                     task.Groups.Add(dto);
                 }
             }
-            return dto;
         }
-        public GroupDto ConvertToDto(WGroup group)
+        public void ConvertToDto(GroupDto dto, WGroup group)
         {
-            var dto = new GroupDto();
-            ConvertToDto(group, dto);
-            return dto;
+            ConvertToNamedModelDto(dto, group);
         }
-        public WGroup ConvertFromDto(GroupDto group, IEnumerable<WTask> tasks, bool updateTasks)
+        public void ConvertFromDto(WGroup wGroup, GroupDto dto, IEnumerable<WTask> tasks, bool updateTasks)
         {
-            var model = ConvertFromDto(group);
-            foreach (var task in group.Tasks)
+            ConvertFromDto(wGroup, dto);
+            foreach (var task in dto.Tasks)
             {
 
                 var wtask = tasks.Where(x => x.Id == task.Id).SingleOrDefault();
                 if (wtask == null)
                     continue;
 
-                model.WTasks.Add(wtask);
+                wGroup.WTasks.Add(wtask);
                 if (updateTasks)
                 {
                     if (wtask.WGroups == null)
                         wtask.WGroups = new List<WGroup>();
-                    wtask.WGroups.Add(model);
+                    wtask.WGroups.Add(wGroup);
                 }
             }
-            return model;
         }
-        public WGroup ConvertFromDto(GroupDto group)
+        public void ConvertFromDto(WGroup wGroup, GroupDto dto)
         {
-            var model = new WGroup();
-            ConvertFromDto(group, model);
-            return model;
+            ConvertFromNamedModelDto(wGroup, dto);
         }
 
-        public TaskDto ConvertToDto(WTask wtask, IEnumerable<GroupDto> groups, bool updateGroups)
+        public void ConvertToDto(TaskDto dto, WTask wtask, IEnumerable<GroupDto> groups, bool updateGroups)
         {
-            var dto = ConvertToDto(wtask);
+            ConvertToDto(dto, wtask);
             dto.Groups = new List<GroupDto>();
             foreach (var wgroup in wtask.WGroups)
             {
@@ -149,61 +106,62 @@ namespace Wilhelm.Backend.Services
                     group.Tasks.Add(dto);
                 }
             }
-            return dto;
         }
-        public TaskDto ConvertToDto(WTask task)
+        public void ConvertToDto(TaskDto dto, WTask task)
         {
-            var dto = new TaskDto();
-            ConvertToDto(task, dto);
-            return dto;
+            ConvertToNamedModelDto(dto, task);
+            dto.Frequency = task.Frequency;
+            dto.StartDate = task.StartDate;
         }
-        public WTask ConvertFromDto(TaskDto wtask, IEnumerable<WGroup> groups, bool updateGroups)
+        public void ConvertFromDto(WTask wTask, TaskDto dto, IEnumerable<WGroup> groups, bool updateGroups)
         {
-            var model = ConvertFromDto(wtask);
-            foreach (var group in wtask.Groups)
+            ConvertFromDto(wTask, dto);
+            foreach (var group in dto.Groups)
             {
 
                 var wgroup = groups.Where(x => x.Id == group.Id).SingleOrDefault();
                 if (wgroup == null)
                     continue;
 
-                model.WGroups.Add(wgroup);
+                wTask.WGroups.Add(wgroup);
                 if (updateGroups)
                 {
                     if (wgroup.WTasks == null)
                         wgroup.WTasks = new List<WTask>();
-                    wgroup.WTasks.Add(model);
+                    wgroup.WTasks.Add(wTask);
                 }
             }
-            return model;
         }
-        public WTask ConvertFromDto(TaskDto task)
+        public void ConvertFromDto(WTask wTask, TaskDto dto)
         {
             var model = new WTask();
-            ConvertFromDto(task, model);
-            return model;
+            ConvertFromNamedModelDto(model, dto);
+            model.StartDate = dto.StartDate;
+            model.Frequency = dto.Frequency;
         }
 
-        public void ConvertToDto(WNamedModel namedModel, NamedModelDto dto)
+        public void ConvertToNamedModelDto(NamedModelDto dto, WNamedModel namedModel)
         {
             dto.Name = namedModel.Name;
             dto.Description = namedModel.Description;
             dto.Archivized = namedModel.Archivized;
+            ConvertToModelDto(dto, namedModel);
+
         }
-        public void ConvertToDto(WModel model, ModelDto dto)
+        public void ConvertToModelDto(ModelDto dto, WModel model)
         {
             dto.Id = model.Id;
         }
-        public void ConvertFromDto(NamedModelDto dto, WNamedModel namedModel)
+        public void ConvertFromNamedModelDto(WNamedModel namedModel, NamedModelDto dto)
         {
             namedModel.Name = dto.Name;
             namedModel.Description = dto.Description;
             namedModel.Archivized = dto.Archivized;
+            ConvertFromModelDto(namedModel, dto);
         }
-        public void ConvertFromDto(ModelDto dto, WModel model)
+        public void ConvertFromModelDto(WModel model, ModelDto dto)
         {
             model.Id = dto.Id;
         }
-
     }
 }
