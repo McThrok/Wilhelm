@@ -106,6 +106,8 @@ namespace Wilhelm.Frontend.Pages
                     ActiveGroup.Tasks.Remove(task);
                 }
             }
+
+            SaveConfig();
         }
 
         private void RestetChanges_Click(object sender, RoutedEventArgs e)
