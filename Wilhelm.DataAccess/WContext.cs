@@ -7,12 +7,12 @@ using System.Threading.Tasks;
 
 namespace Wilhelm.DataAccess
 {
-    public class WContext : DbContext
+    public class WContext : DbContext, IWContext
     {
         public WContext(){}
-        public DbSet<WTask> WTasks { get; set; }
-        public DbSet<WGroup> WGroups { get; set; }
-        public DbSet<WActivity> WActivities { get; set; }
+        public IDbSet<WTask> WTasks { get; set; }
+        public IDbSet<WGroup> WGroups { get; set; }
+        public IDbSet<WActivity> WActivities { get; set; }
     }
 
     //public class WilhelmContexInitializer : DropCreateDatabaseIfModelChanges<WilhelmContext>
