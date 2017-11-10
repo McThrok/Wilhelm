@@ -14,6 +14,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Wilhelm.Backend.Services.Interfaces;
 using Wilhelm.Frontend.Model;
 
 namespace Wilhelm.Frontend.Pages
@@ -26,11 +27,13 @@ namespace Wilhelm.Frontend.Pages
         private ObservableCollection<GroupHolder> _groups;
         private List<TaskHolder> _tasks;
         private GroupHolder _activeGroup;
+        private readonly IConfigurationService _configurationService;
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public GroupsPage()
+        public GroupsPage(IConfigurationService configurationService)
         {
+            _configurationService = configurationService;
             InitializeComponent();
             DataContext = this;
            // _groups = new ObservableCollection<GroupHolder>(MockBase.MockBase.GetGroups());

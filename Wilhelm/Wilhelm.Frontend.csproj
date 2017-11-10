@@ -136,6 +136,7 @@
       <DependentUpon>TasksPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Services\ConversionService.cs" />
+    <Compile Include="Services\Interfaces\IConversionService.cs" />
     <Compile Include="Windows\ChooseItemWindow.xaml.cs">
       <DependentUpon>ChooseItemWindow.xaml</DependentUpon>
     </Compile>

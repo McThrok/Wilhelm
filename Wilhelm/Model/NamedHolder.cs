@@ -8,7 +8,6 @@ namespace Wilhelm.Frontend.Model
 {
     public abstract class NamedHolder : Holder
     {
-
         private string _name;
         private string _description;
         private bool _archivized;

@@ -13,6 +13,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Wilhelm.Backend.Services.Interfaces;
 using Wilhelm.Frontend.Model;
 
 namespace Wilhelm.Frontend.Pages
@@ -23,8 +24,11 @@ namespace Wilhelm.Frontend.Pages
     public partial class HomePage : Page
     {
         private ObservableCollection<ActivityHolder> _currentList;
-        public HomePage()
+        private readonly IActivityService _activityService;
+
+        public HomePage(IActivityService activityService)
         {
+            _activityService = activityService;
             InitializeComponent();
             DataContext = this;
             //_currentList = new ObservableCollection<ActivityHolder>(MockBase.MockBase.GetTodaysActivities());

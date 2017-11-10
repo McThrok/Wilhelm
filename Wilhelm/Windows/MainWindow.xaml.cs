@@ -14,6 +14,8 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Wilhelm.Backend.Services;
 using Wilhelm.Backend.Services.Interfaces;
+using Wilhelm.Frontend.Services.Interfaces;
+using Wilhelm.Frontend.Services;
 using Wilhelm.Frontend.Pages;
 
 namespace Wilhelm.Frontend.Windows
@@ -25,12 +27,13 @@ namespace Wilhelm.Frontend.Windows
     {
         private readonly MenuPagesCollection _pages;
         private IServiceFactory _serviceFactory = new ServiceFactory();
+        private IHoldersConversionService _holdersConversionService = new HoldersConversionService();
 
         public MainWindow()
         {
             InitializeComponent();
             _serviceFactory = new ServiceFactory();
-            _pages = new MenuPagesCollection(_serviceFactory);
+            _pages = new MenuPagesCollection(_serviceFactory, _holdersConversionService);
             MainFrame.Content = _pages.HomePage;
         }
 

@@ -7,11 +7,12 @@ using System.Threading.Tasks;
 using Wilhelm.Backend.MockBase;
 using Wilhelm.Backend.Model;
 using Wilhelm.Backend.Model.Dto;
+using Wilhelm.Frontend.Services.Interfaces;
 using Wilhelm.Frontend.Model;
 
-namespace Wilhelm.Services
+namespace Wilhelm.Frontend.Services
 {
-    public class ConversionService
+    public class HoldersConversionService : IHoldersConversionService
     {
         public void ConvertFromDto(ActivityHolder activity, ActivityDto dto, IEnumerable<TaskHolder> tasks)
         {
@@ -33,7 +34,7 @@ namespace Wilhelm.Services
             if (task != null)
                 dto.Task = task;
         }
-        public void ConvertToDto( ActivityDto dto, ActivityHolder activity)
+        public void ConvertToDto(ActivityDto dto, ActivityHolder activity)
         {
             ConvertToModelDto(dto, activity);
             dto.Date = activity.Date;
@@ -92,7 +93,7 @@ namespace Wilhelm.Services
                 }
             }
         }
-        public void ConverToDto(GroupDto dto, GroupHolder group)
+        public void ConvertToDto(GroupDto dto, GroupHolder group)
         {
             ConvertToNamedModelDto(dto, group);
         }
