@@ -15,12 +15,12 @@ namespace Wilhelm.Backend.Services
     {
         public void ConvertToDto(ActivityDto dto, WActivity wActivity, IEnumerable<TaskDto> tasks)
         {
-           ConvertToDto(dto, wActivity);
+            ConvertToDto(dto, wActivity);
             var task = tasks.Where(x => x.Id == wActivity.Id).SingleOrDefault();
             if (task != null)
                 dto.Task = task;
         }
-        public void ConvertToDto( ActivityDto dto, WActivity wActivity)
+        public void ConvertToDto(ActivityDto dto, WActivity wActivity)
         {
             ConvertToModelDto(dto, wActivity);
             dto.Date = wActivity.Date;
@@ -50,12 +50,16 @@ namespace Wilhelm.Backend.Services
                 if (task == null)
                     continue;
 
-                dto.Tasks.Add(task);
+                if (!dto.Tasks.Contains(task))
+                    dto.Tasks.Add(task);
+
                 if (updateTasks)
                 {
                     if (task.Groups == null)
                         task.Groups = new List<GroupDto>();
-                    task.Groups.Add(dto);
+
+                    if (!task.Groups.Contains(dto))
+                        task.Groups.Add(dto);
                 }
             }
         }
@@ -68,17 +72,20 @@ namespace Wilhelm.Backend.Services
             ConvertFromDto(wGroup, dto);
             foreach (var task in dto.Tasks)
             {
-
                 var wtask = tasks.Where(x => x.Id == task.Id).SingleOrDefault();
                 if (wtask == null)
                     continue;
 
-                wGroup.WTasks.Add(wtask);
+                if (!wGroup.WTasks.Contains(wtask))
+                    wGroup.WTasks.Add(wtask);
+
                 if (updateTasks)
                 {
                     if (wtask.WGroups == null)
                         wtask.WGroups = new List<WGroup>();
-                    wtask.WGroups.Add(wGroup);
+
+                    if (!wtask.WGroups.Contains(wGroup))
+                        wtask.WGroups.Add(wGroup);
                 }
             }
         }
@@ -93,17 +100,20 @@ namespace Wilhelm.Backend.Services
             dto.Groups = new List<GroupDto>();
             foreach (var wgroup in wtask.WGroups)
             {
-
                 var group = groups.Where(x => x.Id == wgroup.Id).SingleOrDefault();
                 if (group == null)
                     continue;
 
-                dto.Groups.Add(group);
+                if (!dto.Groups.Contains(group))
+                    dto.Groups.Add(group);
+
                 if (updateGroups)
                 {
                     if (group.Tasks == null)
                         group.Tasks = new List<TaskDto>();
-                    group.Tasks.Add(dto);
+
+                    if (!group.Tasks.Contains(dto))
+                        group.Tasks.Add(dto);
                 }
             }
         }
@@ -118,17 +128,20 @@ namespace Wilhelm.Backend.Services
             ConvertFromDto(wTask, dto);
             foreach (var group in dto.Groups)
             {
-
                 var wgroup = groups.Where(x => x.Id == group.Id).SingleOrDefault();
                 if (wgroup == null)
                     continue;
 
-                wTask.WGroups.Add(wgroup);
+                if (!wTask.WGroups.Contains(wgroup))
+                    wTask.WGroups.Add(wgroup);
+
                 if (updateGroups)
                 {
                     if (wgroup.WTasks == null)
                         wgroup.WTasks = new List<WTask>();
-                    wgroup.WTasks.Add(wTask);
+
+                    if (!wgroup.WTasks.Contains(wTask))
+                        wgroup.WTasks.Add(wTask);
                 }
             }
         }

@@ -3,16 +3,24 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Wilhelm.Backend.Services.Interfaces;
 
 namespace Wilhelm.Frontend.Pages
 {
     public class MenuPagesCollection
     {
+
+        private readonly IServiceFactory _serviceFactory;
         HomePage _homePage;
         TasksPage _tasksPage;
         ReportPage _reportPage;
         GroupsPage _groupsPage;
         ArchivePage _archivePage;
+
+        public MenuPagesCollection(IServiceFactory serviceFactory)
+        {
+            _serviceFactory = serviceFactory;
+        }
 
         public HomePage HomePage
         {
