@@ -12,6 +12,10 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Wilhelm.Backend.Services;
+using Wilhelm.Backend.Services.Interfaces;
+using Wilhelm.Frontend.Services.Interfaces;
+using Wilhelm.Frontend.Services;
 using Wilhelm.Frontend.Pages;
 
 namespace Wilhelm.Frontend.Windows
@@ -21,11 +25,15 @@ namespace Wilhelm.Frontend.Windows
     /// </summary>
     public partial class MainWindow : Window
     {
-        private MenuPagesCollection _pages;
+        private readonly MenuPagesCollection _pages;
+        private IServiceFactory _serviceFactory = new ServiceFactory();
+        private IHoldersConversionService _holdersConversionService = new HoldersConversionService();
+            
         public MainWindow()
         {
             InitializeComponent();
-            _pages = new MenuPagesCollection();
+            _serviceFactory = new ServiceFactory();
+            _pages = new MenuPagesCollection(_serviceFactory, _holdersConversionService);
             MainFrame.Content = _pages.HomePage;
         }
 

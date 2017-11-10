@@ -13,7 +13,10 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Wilhelm.Frontend.Services.Interfaces;
+using Wilhelm.Backend.Services.Interfaces;
 using Wilhelm.Frontend.Model;
+using Wilhelm.Backend.Model.Dto;
 
 namespace Wilhelm.Frontend.Pages
 {
@@ -23,13 +26,44 @@ namespace Wilhelm.Frontend.Pages
     public partial class ArchivePage : Page
     {
         private ObservableCollection<ActivityHolder> _currentList;
-        public ArchivePage()
+        private readonly IActivityService _activityService;
+        private readonly IHoldersConversionService _holdersConversionService;
+
+        public ArchivePage(IActivityService activityService, IHoldersConversionService holdersConversionService)
         {
+            _activityService = activityService;
+            _holdersConversionService = holdersConversionService;
             InitializeComponent();
             DataContext = this;
-            //_currentList = new ObservableCollection<ActivityHolder>(MockBase.MockBase.GetActivities());
+            _currentList = GetArchives();
             TaskListView.ItemsSource = _currentList;
+        }
 
+        private ObservableCollection<ActivityHolder> GetArchives()
+        {
+            var activities = _activityService.GetArchive();
+            var holders = new ObservableCollection<ActivityHolder>();
+            foreach (var activity in activities)
+            {
+                var holder = new ActivityHolder();
+                _holdersConversionService.ConvertFromDto(holder, activity);
+                holder.Task = new TaskHolder();
+                _holdersConversionService.ConvertFromDto(holder.Task, activity.Task);
+                holders.Add(holder);
+            }
+            return holders;
+        }
+
+        private void SaveArchive()
+        {
+            var dtos = new List<ActivityDto>();
+            foreach (var holder in _currentList)
+            {
+                var dto = new ActivityDto();
+                _holdersConversionService.ConvertToDto(dto, holder);
+                dtos.Add(dto);
+            }
+            _activityService.SaveArchive(dtos);
         }
 
         private void ListViewItem_MouseDown(object sender, MouseButtonEventArgs e)

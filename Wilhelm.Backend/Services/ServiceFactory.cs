@@ -8,17 +8,17 @@ using Wilhelm.Backend.Services.Interfaces;
 namespace Wilhelm.Backend.Services
 
 {
-    public class ServiceFactory
+    public class ServiceFactory : IServiceFactory
     {
-        public IConfigurationService GetConfigurationService()
+        public IConfigurationService CreateConfigurationService()
         {
             return new ConfigurationService();
         }
-        public IActivityService GetActivityService()
+        public IActivityService CreateActivityService()
         {
             return new ActivityService();
         }
-        public IReportService GetReportService()
+        public IReportService CreateReportService()
         {
             return new ReportService();
         }

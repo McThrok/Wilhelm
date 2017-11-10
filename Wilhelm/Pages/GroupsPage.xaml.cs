@@ -14,7 +14,11 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Wilhelm.Backend.Model;
+using Wilhelm.Backend.Model.Dto;
+using Wilhelm.Backend.Services.Interfaces;
 using Wilhelm.Frontend.Model;
+using Wilhelm.Frontend.Services.Interfaces;
 
 namespace Wilhelm.Frontend.Pages
 {
@@ -26,15 +30,18 @@ namespace Wilhelm.Frontend.Pages
         private ObservableCollection<GroupHolder> _groups;
         private List<TaskHolder> _tasks;
         private GroupHolder _activeGroup;
+        private readonly IConfigurationService _configurationService;
+        private readonly IHoldersConversionService _holderConversionService;
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public GroupsPage()
+        public GroupsPage(IConfigurationService configurationService, IHoldersConversionService holderConversionService)
         {
+            _configurationService = configurationService;
+            _holderConversionService = holderConversionService;
             InitializeComponent();
             DataContext = this;
-           // _groups = new ObservableCollection<GroupHolder>(MockBase.MockBase.GetGroups());
-            //_tasks = new List<TaskHolder>(MockBase.MockBase.GetTasks());
+            SetConfiguration();
             GroupsListView.ItemsSource = _groups;
             ShowCurrentGroup();
         }
@@ -59,12 +66,10 @@ namespace Wilhelm.Frontend.Pages
         {
             var addedGroup = new GroupHolder()
             {
-                Id = 1,
                 Name = "New group",
-                
                 Tasks = new ObservableCollection<TaskHolder>(),
             };
-            _groups.Insert(0, addedGroup);
+            _groups.Add(addedGroup);
             ActiveGroup = addedGroup;
             ShowCurrentGroup();
         }
@@ -116,6 +121,46 @@ namespace Wilhelm.Frontend.Pages
                 ActiveGroup = null;
                 ShowCurrentGroup();
             }
+        }
+        private void SetConfiguration()
+        {
+            var config = _configurationService.GetConfig();
+            _groups = new ObservableCollection<GroupHolder>();
+            _tasks = new List<TaskHolder>();
+
+            foreach (var group in config.Groups)
+            {
+                var groupHolder = new GroupHolder();
+                _holderConversionService.ConvertFromDto(groupHolder, group);
+                _groups.Add(groupHolder);
+            }
+
+            foreach (var task in config.Tasks)
+            {
+                var taskHolder = new TaskHolder();
+                _holderConversionService.ConvertFromDto(taskHolder, task, _groups, true);
+                _tasks.Add(taskHolder);
+            }
+        }
+        private void SaveConfig()
+        {
+            var config = new ConfigDto();
+
+            foreach (var group in _groups)
+            {
+                var groupDto = new GroupDto();
+                _holderConversionService.ConvertToDto(groupDto, group);
+                config.Groups.Add(groupDto);
+            }
+
+            foreach (var task in _tasks)
+            {
+                var taskDto = new TaskDto();
+                _holderConversionService.ConvertToDto(taskDto, task);
+                config.Tasks.Add(taskDto);
+            }
+
+            _configurationService.SaveConfig(config);
         }
     }
 }

@@ -13,6 +13,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Wilhelm.Backend.Model.Dto;
+using Wilhelm.Backend.Services.Interfaces;
 
 namespace Wilhelm.Frontend.Pages
 {
@@ -21,12 +23,14 @@ namespace Wilhelm.Frontend.Pages
     /// </summary>
     public partial class ReportPage : Page
     {
-        public ReportPage()
+        private readonly IReportService _reportService;
+
+        public ReportPage(IReportService reportService)
         {
+            _reportService = reportService;
             InitializeComponent();
             DataContext = this;
-            //ReportListView.ItemsSource = MockBase.MockBase.GetReports();
-
+            ReportListView.ItemsSource = reportService.GetReports();
         }
     }
 }
