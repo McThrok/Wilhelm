@@ -13,9 +13,14 @@ namespace Wilhelm.Backend.Services
 {
     public class EntitiesService : IEntitiesService
     {
-        private IConversionService _conversionService = new ConversionService();
+        private IConversionService _conversionService;
 
-        public void UpdateConfig(ConfigDto dto, IDbSet<WTask> wTasks, IDbSet<WGroup> wGroups)
+        public EntitiesService(IConversionService conversionService)
+        {
+            _conversionService = conversionService;
+        }
+
+        public void UpdateDto(ConfigDto dto, IEnumerable<WTask> wTasks, IEnumerable<WGroup> wGroups)
         {
             if (wTasks == null || wGroups == null || dto == null)
                 return;
@@ -28,7 +33,7 @@ namespace Wilhelm.Backend.Services
             foreach (var wGroup in wGroups)
             {
                 var groupToUpdate = dto.Groups.Where(x => x.Id == wGroup.Id).SingleOrDefault();
-                if(groupToUpdate==null)
+                if (groupToUpdate == null)
                 {
                     groupToUpdate = new GroupDto();
                     dto.Groups.Add(groupToUpdate);
@@ -73,6 +78,37 @@ namespace Wilhelm.Backend.Services
                 }
                 _conversionService.ConvertFromDto(wTaskToUpdate, task);
             }
+        }
+
+        public void UpdateDto(ICollection<ActivityDto> dtos, IEnumerable<WActivity> activities)
+        {
+            if (dtos == null || activities == null)
+                return;
+
+            foreach (var activity in activities)
+                if (!dtos.Any(x => x.Id == activity.Id))
+                {
+                    var activityDto = new ActivityDto();
+                    _conversionService.ConvertToDto(activityDto, activity);
+                    var tasDto = new TaskDto();
+                    _conversionService.ConvertToDto(tasDto, activity.WTask);
+                    dtos.Add(activityDto);
+                }
+        }
+        public void UpdateEntities(IDbSet<WActivity> activities, IEnumerable<ActivityDto> dtos)
+        {
+            if (activities == null || dtos == null)
+                return;
+
+            foreach (var activity in dtos)
+                if (!activities.Any(x => x.Id == activity.Id))
+                {
+                    var wActivity = new WActivity();
+                    _conversionService.ConvertFromDto(wActivity, activity);
+                    var wTask = new WTask();
+                    _conversionService.ConvertFromDto(wTask, activity.Task);
+                    activities.Add(wActivity);
+                }
         }
     }
 }

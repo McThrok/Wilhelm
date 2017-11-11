@@ -26,44 +26,21 @@ namespace Wilhelm.Frontend.Pages
     public partial class HomePage : Page
     {
         private ObservableCollection<ActivityHolder> _currentList;
-        private readonly IActivityService _activityService;
-        private readonly IHoldersConversionService _holdersConversionService;
+        private readonly IHoldersService _holdersService;
 
-        public HomePage(IActivityService activityService, IHoldersConversionService holdersConversionService)
+        public HomePage(IHoldersService holdersService)
         {
-            _activityService = activityService;
-            _holdersConversionService = holdersConversionService;
+            _holdersService = holdersService;
             InitializeComponent();
             DataContext = this;
-            _currentList = GetTodaysTasks();
+            _currentList = new ObservableCollection<ActivityHolder>(_holdersService.GetTodaysActivitiesHolders());
             TaskListView.ItemsSource = _currentList;
         }
 
-        private ObservableCollection<ActivityHolder> GetTodaysTasks()
+        //TODO: use it on close/changepage/...
+        private void ONCLOSE()
         {
-            var activities = _activityService.GetTodaysTasks();
-            var holders = new ObservableCollection<ActivityHolder>();
-            foreach (var activity in activities)
-            {
-                var holder = new ActivityHolder();
-                _holdersConversionService.ConvertFromDto(holder, activity);
-                holder.Task = new TaskHolder();
-                _holdersConversionService.ConvertFromDto(holder.Task, activity.Task);
-                holders.Add(holder);
-            }
-            return holders;
-        }
-
-        private void SaveArchive()
-        {
-            var dtos = new List<ActivityDto>();
-            foreach (var holder in _currentList)
-            {
-                var dto = new ActivityDto();
-                _holdersConversionService.ConvertToDto(dto, holder);
-                dtos.Add(dto);
-            }
-            _activityService.SaveTodaysTasks(dtos);
+            _holdersService.SaveActivities(_currentList);
         }
 
         private void ListViewItem_MouseDown(object sender, MouseButtonEventArgs e)

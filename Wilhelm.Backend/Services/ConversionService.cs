@@ -174,7 +174,11 @@ namespace Wilhelm.Backend.Services
         }
         public void ConvertFromModelDto(WModel model, ModelDto dto)
         {
-            model.Id = dto.Id;
+            //model.Id = dto.Id;
+
+            //if(dto.Id>0)
+            //model.Id = dto.Id;
+
         }
     }
 }

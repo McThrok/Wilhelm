@@ -27,25 +27,28 @@ namespace Wilhelm.Frontend.Pages
     /// </summary>
     public partial class GroupsPage : Page, INotifyPropertyChanged
     {
-        private ObservableCollection<GroupHolder> _groups;
-        private List<TaskHolder> _tasks;
+        private ObservableCollection<GroupHolder> _groups = new ObservableCollection<GroupHolder>();
+        private List<TaskHolder> _tasks = new List<TaskHolder>();
         private GroupHolder _activeGroup;
-        private readonly IConfigurationService _configurationService;
-        private readonly IHoldersConversionService _holderConversionService;
+        private readonly IHoldersService _holdersService;
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public GroupsPage(IConfigurationService configurationService, IHoldersConversionService holderConversionService)
+        public GroupsPage(IHoldersService holdersService)
         {
-            _configurationService = configurationService;
-            _holderConversionService = holderConversionService;
+            _holdersService = holdersService;
+
             InitializeComponent();
             DataContext = this;
-            SetConfiguration();
+            Initialize();
+        }
+        public void Initialize()
+        {
+            _holdersService.SetConfiguration(_groups, _tasks);
+
             GroupsListView.ItemsSource = _groups;
             ShowCurrentGroup();
         }
-
         public void ShowCurrentGroup()
         {
             if (ActiveGroup == null)
@@ -54,6 +57,12 @@ namespace Wilhelm.Frontend.Pages
                 GroupButtonsPanel.Visibility = Visibility.Visible;
 
             GroupDetails.Initialize(ActiveGroup, _tasks);
+        }
+
+        //TODO: use it somewhere
+        private void SaveConfig()
+        {
+            _holdersService.SaveConfig(_groups, _tasks);
         }
 
         private void GroupButton_Click(object sender, RoutedEventArgs e)
@@ -66,25 +75,13 @@ namespace Wilhelm.Frontend.Pages
         {
             var addedGroup = new GroupHolder()
             {
+                Id = _holdersService.GenerateTemporaryId(_groups),
                 Name = "New group",
                 Tasks = new ObservableCollection<TaskHolder>(),
             };
-            _groups.Add(addedGroup);
+            _groups.Insert(0, addedGroup);
             ActiveGroup = addedGroup;
             ShowCurrentGroup();
-        }
-
-        public GroupHolder ActiveGroup
-        {
-            get
-            {
-                return _activeGroup;
-            }
-            set
-            {
-                _activeGroup = value;
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(ActiveGroup)));
-            }
         }
         private void Apply_Click(object sender, RoutedEventArgs e)
         {
@@ -94,13 +91,13 @@ namespace Wilhelm.Frontend.Pages
 
             foreach (var task in _tasks)
             {
-                if (changedGroup.Tasks.Contains(task) && !ActiveGroup.Tasks.Contains(task))
+                if (changedGroup.Tasks.Any(x => x.Id == task.Id) && !ActiveGroup.Tasks.Contains(task))
                 {
                     task.Groups.Add(ActiveGroup);
                     ActiveGroup.Tasks.Add(task);
                 }
 
-                if (!changedGroup.Tasks.Contains(task) && ActiveGroup.Tasks.Contains(task))
+                if (!changedGroup.Tasks.Any(x => x.Id == task.Id) && ActiveGroup.Tasks.Contains(task))
                 {
                     task.Groups.Remove(ActiveGroup);
                     ActiveGroup.Tasks.Remove(task);
@@ -109,7 +106,6 @@ namespace Wilhelm.Frontend.Pages
 
             SaveConfig();
         }
-
         private void RestetChanges_Click(object sender, RoutedEventArgs e)
         {
             ShowCurrentGroup();
@@ -124,45 +120,18 @@ namespace Wilhelm.Frontend.Pages
                 ShowCurrentGroup();
             }
         }
-        private void SetConfiguration()
+
+        public GroupHolder ActiveGroup
         {
-            var config = _configurationService.GetConfig();
-            _groups = new ObservableCollection<GroupHolder>();
-            _tasks = new List<TaskHolder>();
-
-            foreach (var group in config.Groups)
+            get
             {
-                var groupHolder = new GroupHolder();
-                _holderConversionService.ConvertFromDto(groupHolder, group);
-                _groups.Add(groupHolder);
+                return _activeGroup;
             }
-
-            foreach (var task in config.Tasks)
+            set
             {
-                var taskHolder = new TaskHolder();
-                _holderConversionService.ConvertFromDto(taskHolder, task, _groups, true);
-                _tasks.Add(taskHolder);
+                _activeGroup = value;
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(ActiveGroup)));
             }
-        }
-        private void SaveConfig()
-        {
-            var config = new ConfigDto();
-
-            foreach (var group in _groups)
-            {
-                var groupDto = new GroupDto();
-                _holderConversionService.ConvertToDto(groupDto, group);
-                config.Groups.Add(groupDto);
-            }
-
-            foreach (var task in _tasks)
-            {
-                var taskDto = new TaskDto();
-                _holderConversionService.ConvertToDto(taskDto, task);
-                config.Tasks.Add(taskDto);
-            }
-
-            _configurationService.SaveConfig(config);
         }
     }
 }

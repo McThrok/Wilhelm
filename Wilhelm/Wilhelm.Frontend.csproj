@@ -135,8 +135,10 @@
     <Compile Include="Pages\TasksPage.xaml.cs">
       <DependentUpon>TasksPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Services\HoldersService.cs" />
     <Compile Include="Services\HoldersConversionService.cs" />
     <Compile Include="Services\Interfaces\IHoldersConversionService.cs" />
+    <Compile Include="Services\Interfaces\IHoldersService.cs" />
     <Compile Include="Windows\ChooseItemWindow.xaml.cs">
       <DependentUpon>ChooseItemWindow.xaml</DependentUpon>
     </Compile>

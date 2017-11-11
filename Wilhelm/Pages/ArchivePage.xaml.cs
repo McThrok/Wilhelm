@@ -26,44 +26,21 @@ namespace Wilhelm.Frontend.Pages
     public partial class ArchivePage : Page
     {
         private ObservableCollection<ActivityHolder> _currentList;
-        private readonly IActivityService _activityService;
-        private readonly IHoldersConversionService _holdersConversionService;
+        private readonly IHoldersService _holdersService;
 
-        public ArchivePage(IActivityService activityService, IHoldersConversionService holdersConversionService)
+        public ArchivePage( IHoldersService holdersService)
         {
-            _activityService = activityService;
-            _holdersConversionService = holdersConversionService;
+            _holdersService = holdersService;
             InitializeComponent();
             DataContext = this;
-            _currentList = GetArchives();
+            _currentList = new ObservableCollection<ActivityHolder>(_holdersService.GetArchiveHolders());
             TaskListView.ItemsSource = _currentList;
         }
 
-        private ObservableCollection<ActivityHolder> GetArchives()
+        //TODO: use it on close/changepage/...
+        private void ONCLOSE()
         {
-            var activities = _activityService.GetArchive();
-            var holders = new ObservableCollection<ActivityHolder>();
-            foreach (var activity in activities)
-            {
-                var holder = new ActivityHolder();
-                _holdersConversionService.ConvertFromDto(holder, activity);
-                holder.Task = new TaskHolder();
-                _holdersConversionService.ConvertFromDto(holder.Task, activity.Task);
-                holders.Add(holder);
-            }
-            return holders;
-        }
-
-        private void SaveArchive()
-        {
-            var dtos = new List<ActivityDto>();
-            foreach (var holder in _currentList)
-            {
-                var dto = new ActivityDto();
-                _holdersConversionService.ConvertToDto(dto, holder);
-                dtos.Add(dto);
-            }
-            _activityService.SaveArchive(dtos);
+            _holdersService.SaveActivities(_currentList);
         }
 
         private void ListViewItem_MouseDown(object sender, MouseButtonEventArgs e)

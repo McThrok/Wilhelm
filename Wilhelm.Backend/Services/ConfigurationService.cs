@@ -13,15 +13,21 @@ namespace Wilhelm.Backend.Services
 {
     internal class ConfigurationService : IConfigurationService
     {
-        private IWContextFactory _wContextFactory = new WContextFactory();
-        private EntitiesService _entitiesService = new EntitiesService();
+        private IWContextFactory _wContextFactory;
+        private IEntitiesService _entitiesService;
+
+        public ConfigurationService(IWContextFactory wContextFactory, IEntitiesService entitiesService)
+        {
+            _wContextFactory = wContextFactory;
+            _entitiesService = entitiesService;
+        }
 
         public ConfigDto GetConfig()
         {
             ConfigDto dto = null;
             using (var db = _wContextFactory.Create())
             {
-                _entitiesService.UpdateConfig(dto,db.WTasks, db.WGroups);
+                _entitiesService.UpdateDto(dto,db.WTasks, db.WGroups);
             }
             return dto;
         }
