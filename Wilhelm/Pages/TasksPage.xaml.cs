@@ -27,47 +27,28 @@ namespace Wilhelm.Frontend.Pages
     /// </summary>
     public partial class TasksPage : Page, INotifyPropertyChanged
     {
-        private ObservableCollection<TaskHolder> _tasks;
-        private List<GroupHolder> _groups;
+        private ObservableCollection<TaskHolder> _tasks = new ObservableCollection<TaskHolder>();
+        private List<GroupHolder> _groups = new List<GroupHolder>();
         private TaskHolder _activeTask;
-        private readonly IConfigurationService _configurationService;
-        private readonly IHoldersConversionService _holderConversionService;
+        private readonly IHoldersService _holdersService;
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public TasksPage(IConfigurationService configurationService, IHoldersConversionService holderConversionService)
+        public TasksPage(IHoldersService holdersService)
         {
-            _configurationService = configurationService;
-            _holderConversionService = holderConversionService;
+            _holdersService = holdersService;
+            InitializeComponent();
+
             InitializeComponent();
             DataContext = this;
-            //_tasks = new ObservableCollection<TaskHolder>(MockBase.MockBase.GetTasks());
-            //_groups = new List<GroupHolder>(MockBase.MockBase.GetGroups());
+            Initialize();
+        }
+        public void Initialize()
+        {
+            _holdersService.SetConfiguration(_groups, _tasks);
             TasksListView.ItemsSource = _tasks;
             ShowCurrentTask();
         }
-
-        private void TaskButton_Click(object sender, RoutedEventArgs e)
-        {
-            var button = sender as Button;
-            ActiveTask = button.Tag as TaskHolder;
-            ShowCurrentTask();
-        }
-        private void AddNewTask_Click(object sender, RoutedEventArgs e)
-        {
-            var addedTask = new TaskHolder()
-            {
-                Id = 1,
-                Name = "New Task",
-                Groups = new ObservableCollection<GroupHolder>(),
-                StartDate = DateTime.Now,
-                Frequency = 1,
-            };
-            _tasks.Insert(0, addedTask);
-            ActiveTask = addedTask;
-            ShowCurrentTask();
-        }
-
         public void ShowCurrentTask()
         {
             if (ActiveTask == null)
@@ -78,18 +59,32 @@ namespace Wilhelm.Frontend.Pages
             TaskDetails.Initialize(ActiveTask, _groups);
         }
 
-        public TaskHolder ActiveTask
+        //TODO: use it somewhere
+        private void SaveConfig()
         {
-            get
-            {
-                return _activeTask;
-            }
-            set
-            {
-                _activeTask = value;
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(ActiveTask)));
-            }
+            _holdersService.SaveConfig(_groups, _tasks);
         }
+        private void TaskButton_Click(object sender, RoutedEventArgs e)
+        {
+            var button = sender as Button;
+            ActiveTask = button.Tag as TaskHolder;
+            ShowCurrentTask();
+        }
+        private void AddNewTask_Click(object sender, RoutedEventArgs e)
+        {
+            var addedTask = new TaskHolder()
+            {
+                Id = _holdersService.GenerateTemporaryId(_tasks),
+                Name = "New Task",
+                Groups = new ObservableCollection<GroupHolder>(),
+                StartDate = DateTime.Now,
+                Frequency = 1,
+            };
+            _tasks.Insert(0, addedTask);
+            ActiveTask = addedTask;
+            ShowCurrentTask();
+        }
+
         private void Apply_Click(object sender, RoutedEventArgs e)
         {
             var changedTask = TaskDetails.ShownTask;
@@ -115,7 +110,6 @@ namespace Wilhelm.Frontend.Pages
 
             SaveConfig();
         }
-
         private void RestetChanges_Click(object sender, RoutedEventArgs e)
         {
             ShowCurrentTask();
@@ -130,45 +124,18 @@ namespace Wilhelm.Frontend.Pages
                 ShowCurrentTask();
             }
         }
-        private void SetConfiguration()
+
+        public TaskHolder ActiveTask
         {
-            var config = _configurationService.GetConfig();
-            _tasks = new ObservableCollection<TaskHolder>();
-            _groups = new List<GroupHolder>();
-
-            foreach (var group in config.Groups)
+            get
             {
-                var groupHolder = new GroupHolder();
-                _holderConversionService.ConvertFromDto(groupHolder, group);
-                _groups.Add(groupHolder);
+                return _activeTask;
             }
-
-            foreach (var task in config.Tasks)
+            set
             {
-                var taskHolder = new TaskHolder();
-                _holderConversionService.ConvertFromDto(taskHolder, task, _groups, true);
-                _tasks.Add(taskHolder);
+                _activeTask = value;
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(ActiveTask)));
             }
-        }
-        private void SaveConfig()
-        {
-            var config = new ConfigDto();
-
-            foreach (var group in _groups)
-            {
-                var groupDto = new GroupDto();
-                _holderConversionService.ConvertToDto(groupDto, group);
-                config.Groups.Add(groupDto);
-            }
-
-            foreach (var task in _tasks)
-            {
-                var taskDto = new TaskDto();
-                _holderConversionService.ConvertToDto(taskDto, task);
-                config.Tasks.Add(taskDto);
-            }
-
-            _configurationService.SaveConfig(config);
         }
     }
 }

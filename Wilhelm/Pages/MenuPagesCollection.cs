@@ -14,16 +14,18 @@ namespace Wilhelm.Frontend.Pages
     {
         private readonly IServiceFactory _serviceFactory;
         private readonly IHoldersConversionService _holdersConversionService;
+        private readonly IHoldersService _holdersService;
         private HomePage _homePage;
         private TasksPage _tasksPage;
         private ReportPage _reportPage;
         private GroupsPage _groupsPage;
         private ArchivePage _archivePage;
 
-        public MenuPagesCollection(IServiceFactory serviceFactory, IHoldersConversionService holdersConversionService)
+        public MenuPagesCollection(IServiceFactory serviceFactory, IHoldersConversionService holdersConversionService, IHoldersService holdersService)
         {
             _serviceFactory = serviceFactory;
             _holdersConversionService = holdersConversionService;
+            _holdersService = holdersService;
         }
 
         public HomePage HomePage
@@ -31,7 +33,7 @@ namespace Wilhelm.Frontend.Pages
             get
             {
                 if (_homePage == null)
-                    _homePage = new HomePage(_serviceFactory.CreateActivityService());
+                    _homePage = new HomePage(_holdersService);
                 return _homePage;
             }
         }
@@ -40,7 +42,7 @@ namespace Wilhelm.Frontend.Pages
             get
             {
                 if (_tasksPage == null)
-                    _tasksPage = new TasksPage(_serviceFactory.CreateConfigurationService());
+                    _tasksPage = new TasksPage(_holdersService);
                 return _tasksPage;
             }
         }
@@ -58,7 +60,7 @@ namespace Wilhelm.Frontend.Pages
             get
             {
                 if (_groupsPage == null)
-                    _groupsPage = new GroupsPage(_serviceFactory.CreateConfigurationService());
+                    _groupsPage = new GroupsPage(_holdersService);
                 return _groupsPage;
             }
         }
@@ -67,7 +69,7 @@ namespace Wilhelm.Frontend.Pages
             get
             {
                 if (_archivePage == null)
-                    _archivePage = new ArchivePage(_serviceFactory.CreateActivityService(), _holdersConversionService);
+                    _archivePage = new ArchivePage(_holdersService);
                 return _archivePage;
             }
         }

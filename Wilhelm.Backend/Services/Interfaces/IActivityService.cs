@@ -10,8 +10,8 @@ namespace Wilhelm.Backend.Services.Interfaces
     public interface IActivityService
     {
         List<ActivityDto> GetArchive();
-        List<ActivityDto> GetTodaysTasks();
-        void SaveArchive(List<ActivityDto> activities);
-        void SaveTodaysTasks(List<ActivityDto> activities);
+        List<ActivityDto> GetTodaysActivities();
+        void SaveActivities(IEnumerable<ActivityDto> activities);
+
     }
 }

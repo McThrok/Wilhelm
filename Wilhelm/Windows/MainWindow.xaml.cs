@@ -28,12 +28,14 @@ namespace Wilhelm.Frontend.Windows
         private readonly MenuPagesCollection _pages;
         private IServiceFactory _serviceFactory = new ServiceFactory();
         private IHoldersConversionService _holdersConversionService = new HoldersConversionService();
-            
+        private IHoldersService _holdersService;
+
         public MainWindow()
         {
+            _holdersService = new HoldersService(_serviceFactory.CreateConfigurationService(), _serviceFactory.CreateActivityService(), _holdersConversionService);
             InitializeComponent();
             _serviceFactory = new ServiceFactory();
-            _pages = new MenuPagesCollection(_serviceFactory, _holdersConversionService);
+            _pages = new MenuPagesCollection(_serviceFactory, _holdersConversionService, _holdersService);
             MainFrame.Content = _pages.HomePage;
         }
 
