@@ -25,7 +25,7 @@ namespace Wilhelm.Frontend.Pages
     /// <summary>
     /// Interaction logic for ActionTypesPage.xaml
     /// </summary>
-    public partial class TasksPage : Page, INotifyPropertyChanged
+    public partial class TasksPage : Page, INotifyPropertyChanged, IMenuPage
     {
         private ObservableCollection<TaskHolder> _tasks = new ObservableCollection<TaskHolder>();
         private List<GroupHolder> _groups = new List<GroupHolder>();
@@ -39,15 +39,7 @@ namespace Wilhelm.Frontend.Pages
             _holdersService = holdersService;
             InitializeComponent();
 
-            InitializeComponent();
             DataContext = this;
-            Initialize();
-        }
-        public void Initialize()
-        {
-            _holdersService.SetConfiguration(_groups, _tasks);
-            TasksListView.ItemsSource = _tasks;
-            ShowCurrentTask();
         }
         public void ShowCurrentTask()
         {
@@ -59,11 +51,6 @@ namespace Wilhelm.Frontend.Pages
             TaskDetails.Initialize(ActiveTask, _groups);
         }
 
-        //TODO: use it somewhere
-        private void SaveConfig()
-        {
-            _holdersService.SaveConfig(_groups, _tasks);
-        }
         private void TaskButton_Click(object sender, RoutedEventArgs e)
         {
             var button = sender as Button;
@@ -107,8 +94,7 @@ namespace Wilhelm.Frontend.Pages
                     ActiveTask.Groups.Remove(group);
                 }
             }
-
-            SaveConfig();
+            Save();
         }
         private void RestetChanges_Click(object sender, RoutedEventArgs e)
         {
@@ -123,6 +109,18 @@ namespace Wilhelm.Frontend.Pages
                 ActiveTask = null;
                 ShowCurrentTask();
             }
+            _holdersService.SaveConfig(_groups, _tasks);
+        }
+
+        public void Activate()
+        {
+            _holdersService.SetConfiguration(_groups, _tasks);
+            TasksListView.ItemsSource = _tasks;
+            ShowCurrentTask();
+        }
+
+        public void Save()
+        {
         }
 
         public TaskHolder ActiveTask

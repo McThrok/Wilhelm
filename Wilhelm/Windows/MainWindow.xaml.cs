@@ -36,32 +36,43 @@ namespace Wilhelm.Frontend.Windows
             InitializeComponent();
             _serviceFactory = new ServiceFactory();
             _pages = new MenuPagesCollection(_serviceFactory, _holdersConversionService, _holdersService);
-            MainFrame.Content = _pages.HomePage;
+            ClickMenu(_pages.HomePage);
         }
 
         private void HomeButto_Click(object sender, RoutedEventArgs e)
         {
-            MainFrame.Content = _pages.HomePage;
+            ClickMenu(_pages.HomePage);
         }
 
         private void TasksButton_Click(object sender, RoutedEventArgs e)
         {
-            MainFrame.Content = _pages.TasksPage;
+            ClickMenu(_pages.TasksPage);
         }
 
         private void GroupsButton_Click(object sender, RoutedEventArgs e)
         {
-            MainFrame.Content = _pages.GroupsPage;
+            ClickMenu(_pages.GroupsPage);
         }
 
         private void ArchiveButton_Click(object sender, RoutedEventArgs e)
         {
-            MainFrame.Content = _pages.ArchivePage;
+            ClickMenu(_pages.ArchivePage);
         }
 
         private void ReportButton_Click(object sender, RoutedEventArgs e)
         {
-            MainFrame.Content = _pages.ReportPage;
+            ClickMenu(_pages.ReportPage);
+        }
+        private void ClickMenu(Page page)
+        {
+            var currentPage = MainFrame.Content;
+            if (currentPage != null && currentPage is IMenuPage currentMenuPage)
+                currentMenuPage.Save();
+
+            if (page != null && page is IMenuPage newMenuPage)
+                newMenuPage.Activate();
+
+            MainFrame.Content = page;
         }
     }
 }
