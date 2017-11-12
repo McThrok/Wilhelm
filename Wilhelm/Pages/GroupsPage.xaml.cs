@@ -25,7 +25,7 @@ namespace Wilhelm.Frontend.Pages
     /// <summary>
     /// Interaction logic for ActionTypesPage.xaml
     /// </summary>
-    public partial class GroupsPage : Page, INotifyPropertyChanged
+    public partial class GroupsPage : Page, INotifyPropertyChanged, IMenuPage
     {
         private ObservableCollection<GroupHolder> _groups = new ObservableCollection<GroupHolder>();
         private List<TaskHolder> _tasks = new List<TaskHolder>();
@@ -40,14 +40,6 @@ namespace Wilhelm.Frontend.Pages
 
             InitializeComponent();
             DataContext = this;
-            Initialize();
-        }
-        public void Initialize()
-        {
-            _holdersService.SetConfiguration(_groups, _tasks);
-
-            GroupsListView.ItemsSource = _groups;
-            ShowCurrentGroup();
         }
         public void ShowCurrentGroup()
         {
@@ -57,12 +49,6 @@ namespace Wilhelm.Frontend.Pages
                 GroupButtonsPanel.Visibility = Visibility.Visible;
 
             GroupDetails.Initialize(ActiveGroup, _tasks);
-        }
-
-        //TODO: use it somewhere
-        private void SaveConfig()
-        {
-            _holdersService.SaveConfig(_groups, _tasks);
         }
 
         private void GroupButton_Click(object sender, RoutedEventArgs e)
@@ -104,7 +90,7 @@ namespace Wilhelm.Frontend.Pages
                 }
             }
 
-            SaveConfig();
+            _holdersService.SaveConfig(_groups, _tasks);
         }
         private void RestetChanges_Click(object sender, RoutedEventArgs e)
         {
@@ -119,6 +105,17 @@ namespace Wilhelm.Frontend.Pages
                 ActiveGroup = null;
                 ShowCurrentGroup();
             }
+        }
+
+        public void Activate()
+        {
+            _holdersService.SetConfiguration(_groups, _tasks);
+            GroupsListView.ItemsSource = _groups;
+            ShowCurrentGroup();
+        }
+
+        public void Save()
+        {
         }
 
         public GroupHolder ActiveGroup

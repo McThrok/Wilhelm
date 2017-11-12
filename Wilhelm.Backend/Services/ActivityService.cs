@@ -34,8 +34,8 @@ namespace Wilhelm.Backend.Services
             List<ActivityDto> dto = new List<ActivityDto>();
             using (var db = _wContextFactory.Create())
             {
-                var todaysTask = db.WActivities.Where(x => x.Date.Date == DateTime.Now.Date);
-                _entitiesService.UpdateDto(dto, todaysTask);
+              //  var todaysTask = db.WActivities.Where(x => x.Date.Date == DateTime.Now.Date);
+              //  _entitiesService.UpdateDto(dto, todaysTask);
             }
             return dto;
         }

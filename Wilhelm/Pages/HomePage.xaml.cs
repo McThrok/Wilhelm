@@ -33,14 +33,6 @@ namespace Wilhelm.Frontend.Pages
             _holdersService = holdersService;
             InitializeComponent();
             DataContext = this;
-            _currentList = new ObservableCollection<ActivityHolder>(_holdersService.GetTodaysActivitiesHolders());
-            TaskListView.ItemsSource = _currentList;
-        }
-
-        //TODO: use it on close/changepage/...
-        private void ONCLOSE()
-        {
-            _holdersService.SaveActivities(_currentList);
         }
 
         private void ListViewItem_MouseDown(object sender, MouseButtonEventArgs e)
@@ -57,6 +49,17 @@ namespace Wilhelm.Frontend.Pages
                 if (item.Content is ActivityHolder activity)
                     activity.IsDone = !activity.IsDone;
             }
+        }
+      
+        public void Activate()
+        {
+            _currentList = new ObservableCollection<ActivityHolder>(_holdersService.GetTodaysActivitiesHolders());
+            TaskListView.ItemsSource = _currentList;
+        }
+
+        public void Save()
+        {
+            _holdersService.SaveActivities(_currentList);
         }
 
     }

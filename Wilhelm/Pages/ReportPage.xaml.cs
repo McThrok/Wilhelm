@@ -21,7 +21,7 @@ namespace Wilhelm.Frontend.Pages
     /// <summary>
     /// Interaction logic for ActionTypesPage.xaml
     /// </summary>
-    public partial class ReportPage : Page
+    public partial class ReportPage : Page,IMenuPage
     {
         private readonly IReportService _reportService;
 
@@ -30,7 +30,17 @@ namespace Wilhelm.Frontend.Pages
             _reportService = reportService;
             InitializeComponent();
             DataContext = this;
-            ReportListView.ItemsSource = reportService.GetReports();
+           
+        }
+
+        public void Activate()
+        {
+            ReportListView.ItemsSource = _reportService.GetReports();
+        }
+
+        public void Save()
+        {
         }
     }
+
 }
