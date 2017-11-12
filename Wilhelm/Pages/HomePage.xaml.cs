@@ -23,7 +23,7 @@ namespace Wilhelm.Frontend.Pages
     /// <summary>
     /// Interaction logic for MenuPage.xaml
     /// </summary>
-    public partial class HomePage : Page
+    public partial class HomePage : Page, IMenuPage
     {
         private ObservableCollection<ActivityHolder> _currentList;
         private readonly IHoldersService _holdersService;

@@ -27,7 +27,7 @@ namespace Wilhelm.Backend.Services
             ConfigDto dto = null;
             using (var db = _wContextFactory.Create())
             {
-                _entitiesService.UpdateDto(dto,db.WTasks, db.WGroups);
+                _entitiesService.UpdateDto(dto, db.WTasks, db.WGroups);
             }
             return dto;
         }

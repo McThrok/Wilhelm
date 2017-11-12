@@ -69,7 +69,7 @@ namespace Wilhelm.Frontend.Windows
             if (currentPage != null && currentPage is IMenuPage currentMenuPage)
                 currentMenuPage.Save();
 
-            if (currentPage != null && page is IMenuPage newMenuPage)
+            if (page != null && page is IMenuPage newMenuPage)
                 newMenuPage.Activate();
 
             MainFrame.Content = page;
