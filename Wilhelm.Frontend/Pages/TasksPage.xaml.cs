@@ -102,7 +102,7 @@ namespace Wilhelm.Frontend.Pages
                     ActiveTask.Groups.Remove(group);
                 }
             }
-            Save();
+            SaveChanges();
         }
         private void RestetChanges_Click(object sender, RoutedEventArgs e)
         {
@@ -117,7 +117,7 @@ namespace Wilhelm.Frontend.Pages
                 ActiveTask = null;
                 ShowCurrentTask();
             }
-            Save();
+            SaveChanges();
         }
 
         public void Activate()
@@ -127,11 +127,15 @@ namespace Wilhelm.Frontend.Pages
             ShowCurrentTask();
         }
 
-        public void Save()
+        private void SaveChanges()
         {
             var config = new ConfigDto();
             _holdersService.UpdateConfigDto(config, _groups, _tasks);
             _configurationService.SaveConfig(config);
+
+        }
+        public void Save()
+        {
         }
 
         public TaskHolder ActiveTask
