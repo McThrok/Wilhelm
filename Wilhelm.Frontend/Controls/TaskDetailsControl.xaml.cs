@@ -104,17 +104,6 @@ namespace Wilhelm.Frontend.Controls
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(ShownTask)));
             }
         }
-        //public ObservableCollection<GroupHolder> Groups
-        //{
-        //    get
-        //    {
-        //        return _show
-        //    }
-        //    set
-        //    {
-        //        _groups = value;
-        //        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Groups)));
-        //    }
-        //}
+
     }
 }

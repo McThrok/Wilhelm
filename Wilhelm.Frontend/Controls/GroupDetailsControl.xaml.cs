@@ -25,7 +25,6 @@ namespace Wilhelm.Frontend.Controls
     public partial class GroupDetailsControl : UserControl, INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
-        private ObservableCollection<TaskHolder> _tasks;
         private GroupHolder _showGroup;
 
         public GroupDetailsControl()
@@ -49,18 +48,19 @@ namespace Wilhelm.Frontend.Controls
                 Name = chooosenGroup.Name,
                 Description = chooosenGroup.Description,
                 Archivized = chooosenGroup.Archivized,
+                Tasks = new ObservableCollection<TaskHolder>(),
             };
 
-            Tasks = new ObservableCollection<TaskHolder>();
             foreach (var task in tasks)
             {
                 var newTask = new TaskHolder
                 {
                     Name = task.Name,
                     Description = task.Description,
-                    Archivized = task.Archivized
+                    Archivized = task.Archivized,
+                    Groups = new ObservableCollection<GroupHolder>(),
                 };
-                Tasks.Add(newTask);
+                ShownGroup.Tasks.Add(newTask);
 
                 if (task.Groups.Contains(chooosenGroup))
                 {
@@ -73,10 +73,9 @@ namespace Wilhelm.Frontend.Controls
 
         private void AssignTask_Click(object sender, RoutedEventArgs e)
         {
-            var dialog = new ChooseItemWindow(Tasks.Where(x => !x.Groups.Contains(ShownGroup)).Cast<NamedHolder>().ToList());
+            var dialog = new ChooseItemWindow(ShownGroup.Tasks.Where(x => !x.Groups.Contains(ShownGroup)).Cast<NamedHolder>().ToList());
             dialog.ShowDialog();
-            var taskToAdd = dialog.SelectedHolder as TaskHolder;
-            if (taskToAdd != null)
+            if (dialog.SelectedHolder is TaskHolder taskToAdd)
             {
                 ShownGroup.Tasks.Add(taskToAdd);
                 taskToAdd.Groups.Add(ShownGroup);
@@ -101,18 +100,6 @@ namespace Wilhelm.Frontend.Controls
             {
                 _showGroup = value;
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(ShownGroup)));
-            }
-        }
-        public ObservableCollection<TaskHolder> Tasks
-        {
-            get
-            {
-                return _tasks;
-            }
-            set
-            {
-                _tasks = value;
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Tasks)));
             }
         }
     }
