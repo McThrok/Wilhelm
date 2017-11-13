@@ -13,12 +13,12 @@ namespace Wilhelm.Frontend.Services.Interfaces
 {
     public interface IHoldersService
     {
-        List<ActivityHolder> GetArchiveHolders();
-        List<ActivityHolder> GetTodaysActivitiesHolders();
-        void SaveActivities(IEnumerable<ActivityHolder> activities);
+        void UpdateArchiveHolders(ICollection<ActivityHolder> activities, IEnumerable<ActivityDto> dtos);
+        void UpateTodayActivityHolder(ICollection<ActivityHolder> activities, IEnumerable<ActivityDto> dtos);
+        void UpdateActivityDtos(ICollection<ActivityDto> dtos, IEnumerable<ActivityHolder> activities);
 
-        void SetConfiguration(ICollection<GroupHolder> groups, ICollection<TaskHolder> tasks);
-        void SaveConfig(ICollection<GroupHolder> groups, ICollection<TaskHolder> tasks);
+        void UpdateConfigDto(ICollection<GroupHolder> groups, ICollection<TaskHolder> tasks);
+        void UpdateConfigHolders(ICollection<GroupHolder> groups, ICollection<TaskHolder> tasks);
 
         int GenerateTemporaryId(IEnumerable<Holder> holders);
 

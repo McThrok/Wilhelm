@@ -90,7 +90,7 @@ namespace Wilhelm.Frontend.Pages
                 }
             }
 
-            _holdersService.SaveConfig(_groups, _tasks);
+            _holdersService.UpdateConfigHolders(_groups, _tasks);
         }
         private void RestetChanges_Click(object sender, RoutedEventArgs e)
         {
@@ -109,7 +109,7 @@ namespace Wilhelm.Frontend.Pages
 
         public void Activate()
         {
-            _holdersService.SetConfiguration(_groups, _tasks);
+            _holdersService.UpdateConfigDto(_groups, _tasks);
             GroupsListView.ItemsSource = _groups;
             ShowCurrentGroup();
         }

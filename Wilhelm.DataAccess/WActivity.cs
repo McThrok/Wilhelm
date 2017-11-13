@@ -9,21 +9,21 @@ using System.Threading.Tasks;
 namespace Wilhelm.DataAccess
 {
     [Table("Activities")]
-    public class WActivity:WModel
+    public class WActivity : WModel
     {
         [Required]
         public DateTime Date { get; set; }
         [Required]
-        public WTask WTask { get; set; }
+        public virtual WTask WTask { get; set; }
         public bool IsDone { get; set; }
 
-        public static bool operator == (WActivity a1, WActivity a2)
+        public static bool operator ==(WActivity a1, WActivity a2)
         {
             return a1.Id == a2.Id;
         }
         public static bool operator !=(WActivity a1, WActivity a2)
         {
-            return !(a1==a2);
+            return !(a1 == a2);
         }
     }
 }

@@ -26,75 +26,93 @@ namespace Wilhelm.Frontend.Services
             _holdersConversionService = holdersConversionService;
         }
 
-        public List<ActivityHolder> GetArchiveHolders()
+        public void UpdateArchiveHolders(ICollection<ActivityHolder> activities, IEnumerable<ActivityDto> dtos)
         {
-            return GetActivityHolders(_activityService.GetArchive());
+             UpdateHolders(activities,dtos);
         }
-        public List<ActivityHolder> GetTodaysActivitiesHolders()
+        public void UpateTodayActivityHolder(ICollection<ActivityHolder> activities, IEnumerable<ActivityDto> dtos)
         {
-            return GetActivityHolders(_activityService.GetTodaysActivities());
+             UpdateHolders(activities, dtos);
         }
-        private List<ActivityHolder> GetActivityHolders(List<ActivityDto> activities)
+        private void UpdateHolders(ICollection<ActivityHolder> activities, IEnumerable<ActivityDto> dtos)
         {
-            var holders = new List<ActivityHolder>();
-            foreach (var activity in activities)
+            foreach (var dto in dtos)
             {
                 var holder = new ActivityHolder();
-                _holdersConversionService.ConvertFromDto(holder, activity);
+                _holdersConversionService.ConvertFromDto(holder, dto);
 
                 holder.Task = new TaskHolder();
-                _holdersConversionService.ConvertFromDto(holder.Task, activity.Task);
+                _holdersConversionService.ConvertFromDto(holder.Task, dto.Task);
 
-                holders.Add(holder);
+                activities.Add(holder);
             }
-            return holders;
         }
-        public void SaveActivities(IEnumerable<ActivityHolder> activities)
+        public void UpdateActivityDtos(ICollection<ActivityDto> dtos, IEnumerable<ActivityHolder> activities)
         {
-            var dtos = new List<ActivityDto>();
             foreach (var holder in activities)
             {
-                var dto = new ActivityDto();
-                _holdersConversionService.ConvertToDto(dto, holder);
-                dtos.Add(dto);
+                var activityDtoToUpdate = dtos.Where(x => x.Id == holder.Id).SingleOrDefault();
+                if (activityDtoToUpdate == null)
+                {
+                    activityDtoToUpdate = new ActivityDto();
+                    dtos.Add(activityDtoToUpdate);
+                }
+                _holdersConversionService.ConvertToDto(activityDtoToUpdate, holder);
+                dtos.Add(activityDtoToUpdate);
             }
-            _activityService.SaveActivities(dtos);
         }
 
-        public void SetConfiguration(ICollection<GroupHolder> groups, ICollection<TaskHolder> tasks)
+        public void UpdateConfigDto(ICollection<GroupHolder> groups, ICollection<TaskHolder> tasks)
         {
             var config = _configurationService.GetConfig();
 
             foreach (var group in config.Groups)
             {
-                var groupHolder = new GroupHolder();
-                _holdersConversionService.ConvertFromDto(groupHolder, group);
-                groups.Add(groupHolder);
+                var groupHolderToUpdate = groups.Where(x => x.Id == group.Id).SingleOrDefault();
+                if (groupHolderToUpdate == null)
+                {
+                    groupHolderToUpdate = new GroupHolder();
+                    groups.Add(groupHolderToUpdate);
+                }
+                _holdersConversionService.ConvertFromDto(groupHolderToUpdate, group);
             }
 
             foreach (var task in config.Tasks)
             {
-                var taskHolder = new TaskHolder();
-                _holdersConversionService.ConvertFromDto(taskHolder, task, groups, true);
-                tasks.Add(taskHolder);
+                var taskHolderToUpdate = tasks.Where(x => x.Id == task.Id).SingleOrDefault();
+                if (taskHolderToUpdate == null)
+                {
+                    taskHolderToUpdate = new TaskHolder();
+                    tasks.Add(taskHolderToUpdate);
+                }
+                _holdersConversionService.ConvertFromDto(taskHolderToUpdate, task);
             }
         }
-        public void SaveConfig(ICollection<GroupHolder> groups, ICollection<TaskHolder> tasks)
+        public void UpdateConfigHolders(ICollection<GroupHolder> groups, ICollection<TaskHolder> tasks)
         {
             var config = new ConfigDto();
 
             foreach (var group in groups)
             {
-                var groupDto = new GroupDto();
-                _holdersConversionService.ConvertToDto(groupDto, group);
-                config.Groups.Add(groupDto);
+                var groupDtoToUpdate = config.Groups.Where(x => x.Id == group.Id).SingleOrDefault();
+                if (groupDtoToUpdate == null)
+                {
+                    groupDtoToUpdate = new GroupDto();
+                    config.Groups.Add(groupDtoToUpdate);
+                }
+                _holdersConversionService.ConvertToDto(groupDtoToUpdate, group);
             }
 
             foreach (var task in tasks)
             {
-                var taskDto = new TaskDto();
-                _holdersConversionService.ConvertToDto(taskDto, task);
-                config.Tasks.Add(taskDto);
+                var taskDtoToUpdate = config.Tasks.Where(x => x.Id == task.Id).SingleOrDefault();
+                if (taskDtoToUpdate == null)
+                {
+                    taskDtoToUpdate = new TaskDto();
+                    config.Tasks.Add(taskDtoToUpdate);
+                }
+                _holdersConversionService.ConvertToDto(taskDtoToUpdate, task);
+
             }
 
             _configurationService.SaveConfig(config);

@@ -14,7 +14,6 @@ namespace Wilhelm.Backend.Services
     public class EntitiesService : IEntitiesService
     {
         private IConversionService _conversionService;
-
         public EntitiesService(IConversionService conversionService)
         {
             _conversionService = conversionService;
@@ -92,8 +91,9 @@ namespace Wilhelm.Backend.Services
                 {
                     var activityDto = new ActivityDto();
                     _conversionService.ConvertToDto(activityDto, activity);
-                    var tasDto = new TaskDto();
-                    _conversionService.ConvertToDto(tasDto, activity.WTask);
+                    var taskDto = new TaskDto();
+                    _conversionService.ConvertToDto(taskDto, activity.WTask);
+                    activityDto.Task = taskDto;
                     dtos.Add(activityDto);
                 }
         }

@@ -25,12 +25,14 @@ namespace Wilhelm.Frontend.Pages
     /// </summary>
     public partial class HomePage : Page, IMenuPage
     {
-        private ObservableCollection<ActivityHolder> _currentList;
         private readonly IHoldersService _holdersService;
+        private readonly IActivityService _activityService;
+        private ObservableCollection<ActivityHolder> _currentList;
 
-        public HomePage(IHoldersService holdersService)
+        public HomePage(IHoldersService holdersService, IActivityService activityService)
         {
             _holdersService = holdersService;
+            _activityService = activityService;
             InitializeComponent();
             DataContext = this;
         }
@@ -50,16 +52,19 @@ namespace Wilhelm.Frontend.Pages
                     activity.IsDone = !activity.IsDone;
             }
         }
-      
+
         public void Activate()
         {
-            _currentList = new ObservableCollection<ActivityHolder>(_holdersService.GetTodaysActivitiesHolders());
+            _currentList = new ObservableCollection<ActivityHolder>();
+            _holdersService.UpdateArchiveHolders(_currentList, _activityService.GetTodaysActivities());
             TaskListView.ItemsSource = _currentList;
         }
 
         public void Save()
         {
-            _holdersService.SaveActivities(_currentList);
+            var activities = new List<ActivityDto>();
+            _holdersService.UpdateActivityDtos(activities, _currentList);
+            _activityService.SaveActivities(activities);
         }
 
     }

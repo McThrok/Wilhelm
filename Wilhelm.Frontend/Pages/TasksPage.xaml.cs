@@ -75,6 +75,10 @@ namespace Wilhelm.Frontend.Pages
         private void Apply_Click(object sender, RoutedEventArgs e)
         {
             var changedTask = TaskDetails.ShownTask;
+            if(DateTime.Compare(changedTask.StartDate.Date,DateTime.Today)>0)
+            {
+                var result = MessageBox.Show("Invalid date.","", MessageBoxButton.OK,MessageBoxImage.Error);
+            }
             ActiveTask.Name = changedTask.Name;
             ActiveTask.Description = changedTask.Description;
             ActiveTask.StartDate = changedTask.StartDate;
@@ -109,12 +113,12 @@ namespace Wilhelm.Frontend.Pages
                 ActiveTask = null;
                 ShowCurrentTask();
             }
-            _holdersService.SaveConfig(_groups, _tasks);
+            _holdersService.UpdateConfigHolders(_groups, _tasks);
         }
 
         public void Activate()
         {
-            _holdersService.SetConfiguration(_groups, _tasks);
+            _holdersService.UpdateConfigDto(_groups, _tasks);
             TasksListView.ItemsSource = _tasks;
             ShowCurrentTask();
         }

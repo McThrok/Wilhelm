@@ -41,7 +41,7 @@ namespace Wilhelm.Backend.Services
                 //foreach (var activity in generated)
                 //    db.WActivities.Add(activity);
                 //db.SaveChanges();
-
+           
                 var todaysTask = db.WActivities.ToList().Where(x => x.Date.Date == DateTime.Now.Date).ToList();
                 _entitiesService.UpdateDto(dto, todaysTask);
             }

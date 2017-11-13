@@ -26,11 +26,13 @@ namespace Wilhelm.Frontend.Pages
     public partial class ArchivePage : Page, IMenuPage
     {
         private readonly IHoldersService _holdersService;
-        ObservableCollection<ActivityHolder> _currentList;
+        private readonly IActivityService _activityService;
+        private ObservableCollection<ActivityHolder> _currentList;
 
-        public ArchivePage( IHoldersService holdersService)
+        public ArchivePage(IHoldersService holdersService, IActivityService activityService)
         {
             _holdersService = holdersService;
+            _activityService = activityService;
             InitializeComponent();
             DataContext = this;
         }
@@ -44,13 +46,16 @@ namespace Wilhelm.Frontend.Pages
 
         public void Activate()
         {
-            _currentList = new ObservableCollection<ActivityHolder>(_holdersService.GetArchiveHolders());
+            _currentList = new ObservableCollection<ActivityHolder>();
+            _holdersService.UpdateArchiveHolders(_currentList, _activityService.GetArchive());
             TaskListView.ItemsSource = _currentList;
         }
 
         public void Save()
         {
-            _holdersService.SaveActivities(_currentList);
+            var activities = new List<ActivityDto>();
+            _holdersService.UpdateActivityDtos(activities, _currentList);
+            _activityService.SaveActivities(activities);
         }
     }
 }
