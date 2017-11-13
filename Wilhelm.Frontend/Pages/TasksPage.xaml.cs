@@ -77,10 +77,6 @@ namespace Wilhelm.Frontend.Pages
         private void Apply_Click(object sender, RoutedEventArgs e)
         {
             var changedTask = TaskDetails.ShownTask;
-            if(DateTime.Compare(changedTask.StartDate.Date,DateTime.Today)>0)
-            {
-                var result = MessageBox.Show("Invalid date.","", MessageBoxButton.OK,MessageBoxImage.Error);
-            }
             ActiveTask.Name = changedTask.Name;
             ActiveTask.Description = changedTask.Description;
             ActiveTask.StartDate = changedTask.StartDate;

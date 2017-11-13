@@ -16,37 +16,36 @@ namespace Wilhelm.Backend.Services
             foreach (var task in tasks)
             {
                 var lastActivity = activities.LastOrDefault(x => x.WTask.Id == task.Id);
-                var generatedActivity = GenerateActivity(lastActivity, task, date);
-                if (generatedActivity != null)
-                    generatedActivities.Add(generatedActivity);
+                generatedActivities.AddRange(GenerateActivitiesForTask(lastActivity, task, date));
             }
 
             return generatedActivities;
         }
-        public WActivity GenerateActivity(WActivity lastActivity, WTask task, DateTime date)
+        public List<WActivity> GenerateActivitiesForTask(WActivity lastActivity, WTask task, DateTime date)
         {
+            var result = new List<WActivity>();
             if (lastActivity != null && lastActivity.Date.Date == date.Date)
-                return null;
+                return result;
 
             if (DateTime.Compare(task.StartDate.Date, date.Date) > 0)
-                return null;
+                return result;
 
             if (lastActivity != null && DateTime.Compare(lastActivity.Date.AddDays(task.Frequency), date.Date) > 0)
-                return null;
+                return result;
 
-            var newActivity = new WActivity()
+            DateTime lastdate;
+            if (DateTime.Compare(lastActivity.Date.Date, task.StartDate.Date) > 0)
+                lastdate = lastActivity.Date.Date;
+            else
+                lastdate = task.StartDate.Date;
+
+            while (DateTime.Compare(lastdate, date) <= 0)
             {
-                WTask = task,
-                Date = date,
-            };
+                lastdate.AddDays(task.Frequency);
+                result.Add(new WActivity() { Date = lastdate, WTask = task });
+            }
 
-            if (lastActivity == null && task.StartDate.Date == date.Date)
-                return newActivity;
-
-            if (lastActivity != null && DateTime.Compare(lastActivity.Date.AddDays(task.Frequency), date.Date) == 0)
-                return newActivity;
-
-            throw new Exception("activity generation exception");
+            return result;
         }
     }
 }
