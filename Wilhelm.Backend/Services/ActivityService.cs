@@ -51,7 +51,9 @@ namespace Wilhelm.Backend.Services
         {
             using (var db = _wContextFactory.Create())
             {
+                var a = activities.ToList();
                 _entitiesService.UpdateEntities(db.WActivities, activities);
+                var b = db.WActivities.ToList();
                 db.SaveChanges();
             }
         }

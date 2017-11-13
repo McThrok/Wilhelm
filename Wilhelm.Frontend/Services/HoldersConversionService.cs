@@ -25,7 +25,7 @@ namespace Wilhelm.Frontend.Services
         {
             ConvertFromModelDto(activity, dto);
             activity.Date = dto.Date;
-            activity.Id = dto.Id;
+            activity.IsDone = dto.IsDone;
         }
         public void ConvertToDto(ActivityDto dto, ActivityHolder activity, IEnumerable<TaskDto> tasks)
         {
@@ -39,6 +39,7 @@ namespace Wilhelm.Frontend.Services
             ConvertToModelDto(dto, activity);
             dto.Date = activity.Date;
             dto.Id = activity.Id;
+            dto.IsDone = activity.IsDone;
         }
 
         public void ConvertFromDto(GroupHolder group, GroupDto dto, IEnumerable<TaskHolder> groups, bool updateGroups)

@@ -101,7 +101,6 @@ namespace Wilhelm.Backend.Services
         {
             if (activities == null || dtos == null)
                 return;
-            var a = activities.ToList();
 
             foreach (var dto in dtos)
             {
