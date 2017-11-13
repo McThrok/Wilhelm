@@ -101,16 +101,23 @@ namespace Wilhelm.Backend.Services
         {
             if (activities == null || dtos == null)
                 return;
+            var a = activities.ToList();
 
-            foreach (var activity in dtos)
-                if (!activities.Any(x => x.Id == activity.Id))
+            foreach (var dto in dtos)
+            {
+                var activityModelToUpdate = activities.Where(x => x.Id == dto.Id).SingleOrDefault();
+                if (activityModelToUpdate == null)
                 {
-                    var wActivity = new WActivity();
-                    _conversionService.ConvertFromDto(wActivity, activity);
-                    var wTask = new WTask();
-                    _conversionService.ConvertFromDto(wTask, activity.Task);
-                    activities.Add(wActivity);
+                    activityModelToUpdate = new WActivity();
+                    activities.Add(activityModelToUpdate);
                 }
+                if (activityModelToUpdate.WTask == null)
+                    activityModelToUpdate.WTask = new WTask();
+
+                if(dto.Task!=null)
+                    _conversionService.ConvertFromDto(activityModelToUpdate.WTask, dto.Task);
+                _conversionService.ConvertFromDto(activityModelToUpdate, dto);
+            }
         }
     }
 }

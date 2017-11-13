@@ -26,16 +26,18 @@ namespace Wilhelm.Frontend.Windows
     public partial class MainWindow : Window
     {
         private readonly MenuPagesCollection _pages;
-        private IServiceFactory _serviceFactory = new ServiceFactory();
-        private IHoldersConversionService _holdersConversionService = new HoldersConversionService();
-        private IHoldersService _holdersService;
+        private readonly IServiceFactory _serviceFactory;
+        private readonly IHoldersConversionService _holdersConversionService;//not used
+        private readonly IHoldersService _holdersService;
 
         public MainWindow()
         {
-            _holdersService = new HoldersService(_serviceFactory.CreateConfigurationService(), _serviceFactory.CreateActivityService(), _holdersConversionService);
-            InitializeComponent();
             _serviceFactory = new ServiceFactory();
+            _holdersConversionService = new HoldersConversionService();
+            _holdersService = new HoldersService(_holdersConversionService);
             _pages = new MenuPagesCollection(_serviceFactory, _holdersConversionService, _holdersService);
+
+            InitializeComponent();
             ClickMenu(_pages.HomePage);
         }
 

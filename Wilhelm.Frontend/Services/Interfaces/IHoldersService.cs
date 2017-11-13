@@ -17,8 +17,8 @@ namespace Wilhelm.Frontend.Services.Interfaces
         void UpateTodayActivityHolder(ICollection<ActivityHolder> activities, IEnumerable<ActivityDto> dtos);
         void UpdateActivityDtos(ICollection<ActivityDto> dtos, IEnumerable<ActivityHolder> activities);
 
-        void UpdateConfigDto(ICollection<GroupHolder> groups, ICollection<TaskHolder> tasks);
-        void UpdateConfigHolders(ICollection<GroupHolder> groups, ICollection<TaskHolder> tasks);
+        void UpdateConfigHolders(ICollection<GroupHolder> groups, ICollection<TaskHolder> tasks, ConfigDto config);
+        void UpdateConfigDto(ConfigDto config, ICollection<GroupHolder> groups, ICollection<TaskHolder> tasks);
 
         int GenerateTemporaryId(IEnumerable<Holder> holders);
 

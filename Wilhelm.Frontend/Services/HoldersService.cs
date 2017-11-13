@@ -15,36 +15,37 @@ namespace Wilhelm.Frontend.Services
 {
     public class HoldersService : IHoldersService
     {
-        private readonly IConfigurationService _configurationService;
-        private readonly IActivityService _activityService;
         private readonly IHoldersConversionService _holdersConversionService;
 
-        public HoldersService(IConfigurationService configurationService, IActivityService activityService, IHoldersConversionService holdersConversionService)
+        public HoldersService(IHoldersConversionService holdersConversionService)
         {
-            _configurationService = configurationService;
-            _activityService = activityService;
             _holdersConversionService = holdersConversionService;
         }
 
         public void UpdateArchiveHolders(ICollection<ActivityHolder> activities, IEnumerable<ActivityDto> dtos)
         {
-             UpdateHolders(activities,dtos);
+            UpdateHolders(activities, dtos);
         }
         public void UpateTodayActivityHolder(ICollection<ActivityHolder> activities, IEnumerable<ActivityDto> dtos)
         {
-             UpdateHolders(activities, dtos);
+            UpdateHolders(activities, dtos);
         }
         private void UpdateHolders(ICollection<ActivityHolder> activities, IEnumerable<ActivityDto> dtos)
         {
             foreach (var dto in dtos)
             {
-                var holder = new ActivityHolder();
-                _holdersConversionService.ConvertFromDto(holder, dto);
+                var activityHolderToUpdate = activities.Where(x => x.Id == dto.Id).SingleOrDefault();
+                if (activityHolderToUpdate == null)
+                {
+                    activityHolderToUpdate = new ActivityHolder();
+                    activities.Add(activityHolderToUpdate);
+                }
+                if (activityHolderToUpdate.Task == null)
+                    activityHolderToUpdate.Task = new TaskHolder();
 
-                holder.Task = new TaskHolder();
-                _holdersConversionService.ConvertFromDto(holder.Task, dto.Task);
-
-                activities.Add(holder);
+                if (dto.Task != null)
+                    _holdersConversionService.ConvertFromDto(activityHolderToUpdate.Task, dto.Task);
+                _holdersConversionService.ConvertFromDto(activityHolderToUpdate, dto);
             }
         }
         public void UpdateActivityDtos(ICollection<ActivityDto> dtos, IEnumerable<ActivityHolder> activities)
@@ -57,15 +58,17 @@ namespace Wilhelm.Frontend.Services
                     activityDtoToUpdate = new ActivityDto();
                     dtos.Add(activityDtoToUpdate);
                 }
+                if (activityDtoToUpdate.Task == null)
+                    activityDtoToUpdate.Task = new TaskDto();
+
+                if (holder.Task != null)
+                    _holdersConversionService.ConvertToDto(activityDtoToUpdate.Task, holder.Task);
                 _holdersConversionService.ConvertToDto(activityDtoToUpdate, holder);
-                dtos.Add(activityDtoToUpdate);
             }
         }
 
-        public void UpdateConfigDto(ICollection<GroupHolder> groups, ICollection<TaskHolder> tasks)
+        public void UpdateConfigHolders(ICollection<GroupHolder> groups, ICollection<TaskHolder> tasks, ConfigDto config)
         {
-            var config = _configurationService.GetConfig();
-
             foreach (var group in config.Groups)
             {
                 var groupHolderToUpdate = groups.Where(x => x.Id == group.Id).SingleOrDefault();
@@ -88,9 +91,10 @@ namespace Wilhelm.Frontend.Services
                 _holdersConversionService.ConvertFromDto(taskHolderToUpdate, task);
             }
         }
-        public void UpdateConfigHolders(ICollection<GroupHolder> groups, ICollection<TaskHolder> tasks)
+        public void UpdateConfigDto(ConfigDto config, ICollection<GroupHolder> groups, ICollection<TaskHolder> tasks)
         {
-            var config = new ConfigDto();
+            if (config.Groups == null) config.Groups = new List<GroupDto>();
+            if (config.Tasks == null) config.Tasks = new List<TaskDto>();
 
             foreach (var group in groups)
             {
@@ -112,10 +116,7 @@ namespace Wilhelm.Frontend.Services
                     config.Tasks.Add(taskDtoToUpdate);
                 }
                 _holdersConversionService.ConvertToDto(taskDtoToUpdate, task);
-
             }
-
-            _configurationService.SaveConfig(config);
         }
 
         public int GenerateTemporaryId(IEnumerable<Holder> holders)

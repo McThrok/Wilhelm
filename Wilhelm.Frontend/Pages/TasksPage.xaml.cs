@@ -31,12 +31,14 @@ namespace Wilhelm.Frontend.Pages
         private List<GroupHolder> _groups = new List<GroupHolder>();
         private TaskHolder _activeTask;
         private readonly IHoldersService _holdersService;
+        private readonly IConfigurationService _configurationService;
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public TasksPage(IHoldersService holdersService)
+        public TasksPage(IHoldersService holdersService, IConfigurationService configurationService)
         {
             _holdersService = holdersService;
+            _configurationService = configurationService;
             InitializeComponent();
 
             DataContext = this;
@@ -113,18 +115,21 @@ namespace Wilhelm.Frontend.Pages
                 ActiveTask = null;
                 ShowCurrentTask();
             }
-            _holdersService.UpdateConfigHolders(_groups, _tasks);
+            Save();
         }
 
         public void Activate()
         {
-            _holdersService.UpdateConfigDto(_groups, _tasks);
+            _holdersService.UpdateConfigHolders(_groups, _tasks, _configurationService.GetConfig());
             TasksListView.ItemsSource = _tasks;
             ShowCurrentTask();
         }
 
         public void Save()
         {
+            var config = new ConfigDto();
+            _holdersService.UpdateConfigDto(config, _groups, _tasks);
+            _configurationService.SaveConfig(config);
         }
 
         public TaskHolder ActiveTask
