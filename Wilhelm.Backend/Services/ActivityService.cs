@@ -34,22 +34,15 @@ namespace Wilhelm.Backend.Services
         public List<ActivityDto> GetTodaysActivities()
         {
             List<ActivityDto> dto = new List<ActivityDto>();
-            WTask t1 = new WTask() { Name = "T1", Description = "T1", Frequency = 1, StartDate = DateTime.Today };
             using (var db = _wContextFactory.Create())
             {
-<<<<<<< HEAD
-                db.WTasks.Add(t1);
-                //var generated = _activityGenerationService.GenerateActivities(db.WActivities, db.WTasks.Where(x => !x.Archivized), DateTime.Today);
-                //foreach (var activity in generated)
-                //    db.WActivities.Add(activity);
-                //db.SaveChanges();
-                // var todaysTask = db.WActivities.Where(x => x.Date.Date == DateTime.Now.Date);
-                // _entitiesService.UpdateDto(dto, todaysTask);
+                var generated = _activityGenerationService.GenerateActivities(db.WActivities, db.WTasks.Where(x => !x.Archivized), DateTime.Today);
+                foreach (var activity in generated)
+                    db.WActivities.Add(activity);
                 db.SaveChanges();
-=======
-                var todaysTask = db.WActivities.Where(x => x.Date.Date == DateTime.Now.Date);
-               // _entitiesService.UpdateDto(dto, todaysTask);
->>>>>>> develop
+
+                var todaysTask = db.WActivities.ToList().Where(x => x.Date.Date == DateTime.Now.Date);
+                _entitiesService.UpdateDto(dto, todaysTask);
             }
             return dto;
         }
