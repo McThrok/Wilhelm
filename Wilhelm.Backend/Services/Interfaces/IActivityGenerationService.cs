@@ -10,6 +10,5 @@ namespace Wilhelm.Backend.Services.Interfaces
     public interface IActivityGenerationService
     {
         List<WActivity> GenerateActivities(IEnumerable<WActivity> activities, IEnumerable<WTask> tasks, DateTime date);
-       
     }
 }

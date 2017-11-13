@@ -14,12 +14,14 @@ namespace Wilhelm.Backend.Services
         private readonly IWContextFactory _wContextFactory;
         private readonly IEntitiesService _entitiesService;
         private readonly IConversionService _conversionService;
+        private readonly IActivityGenerationService _activityGenerationService;
 
         public ServiceFactory()
         {
             _wContextFactory = new WContextFactory();
             _conversionService = new ConversionService();
             _entitiesService = new EntitiesService(_conversionService);
+            _activityGenerationService = new ActivityGenerationService();
         }
 
         public IConfigurationService CreateConfigurationService()
@@ -28,7 +30,7 @@ namespace Wilhelm.Backend.Services
         }
         public IActivityService CreateActivityService()
         {
-            return new ActivityService(_wContextFactory, _entitiesService);
+            return new ActivityService(_wContextFactory, _entitiesService,_activityGenerationService);
         }
         public IReportService CreateReportService()
         {

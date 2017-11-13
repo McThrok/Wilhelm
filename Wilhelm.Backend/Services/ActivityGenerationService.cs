@@ -4,10 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Wilhelm.DataAccess;
+using Wilhelm.Backend.Services.Interfaces;
 
 namespace Wilhelm.Backend.Services
 {
-    public class ActivityGenerationService
+    public class ActivityGenerationService : IActivityGenerationService
     {
         public List<WActivity> GenerateActivities(IEnumerable<WActivity> activities, IEnumerable<WTask> tasks, DateTime date)
         {

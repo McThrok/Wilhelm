@@ -15,10 +15,11 @@ namespace Wilhelm.Backend.Services
         private IEntitiesService _entitiesService;
         private IActivityGenerationService _activityGenerationService;
 
-        public ActivityService(IWContextFactory wContextFactory, IEntitiesService entitiesService)
+        public ActivityService(IWContextFactory wContextFactory, IEntitiesService entitiesService, IActivityGenerationService activityGenerationService)
         {
             _wContextFactory = wContextFactory;
             _entitiesService = entitiesService;
+            _activityGenerationService = activityGenerationService;
         }
 
 
@@ -36,12 +37,12 @@ namespace Wilhelm.Backend.Services
             List<ActivityDto> dto = new List<ActivityDto>();
             using (var db = _wContextFactory.Create())
             {
-                var generated = _activityGenerationService.GenerateActivities(db.WActivities, db.WTasks.Where(x => !x.Archivized), DateTime.Today);
-                foreach (var activity in generated)
-                    db.WActivities.Add(activity);
-                db.SaveChanges();
+                //var generated = _activityGenerationService.GenerateActivities(db.WActivities, db.WTasks.Where(x => !x.Archivized), DateTime.Today);
+                //foreach (var activity in generated)
+                //    db.WActivities.Add(activity);
+                //db.SaveChanges();
 
-                var todaysTask = db.WActivities.ToList().Where(x => x.Date.Date == DateTime.Now.Date);
+                var todaysTask = db.WActivities.ToList().Where(x => x.Date.Date == DateTime.Now.Date).ToList();
                 _entitiesService.UpdateDto(dto, todaysTask);
             }
             return dto;

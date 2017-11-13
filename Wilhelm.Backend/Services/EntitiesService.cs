@@ -22,13 +22,16 @@ namespace Wilhelm.Backend.Services
 
         public void UpdateDto(ConfigDto dto, IEnumerable<WTask> wTasks, IEnumerable<WGroup> wGroups)
         {
-            if (wTasks == null || wGroups == null || dto == null)
+            if (dto == null)
                 return;
 
             if (dto.Groups == null)
                 dto.Groups = new List<GroupDto>();
             if (dto.Tasks == null)
                 dto.Tasks = new List<TaskDto>();
+
+            if (wTasks == null || wGroups == null)
+                return;
 
             foreach (var wGroup in wGroups)
             {
@@ -84,7 +87,6 @@ namespace Wilhelm.Backend.Services
         {
             if (dtos == null || activities == null)
                 return;
-
             foreach (var activity in activities)
                 if (!dtos.Any(x => x.Id == activity.Id))
                 {
