@@ -10,17 +10,17 @@ using System.Threading.Tasks;
 namespace Wilhelm.DataAccess
 {
     [Table("Tasks")]
-    public class WTask:WNamedModel
+    public class WTask : WNamedModel
     {
         public WTask()
         {
             WGroups = new List<WGroup>();
         }
-        
+
         public DateTime StartDate { get; set; }
         [Required]
         public int Frequency { get; set; }
 
-        public List<WGroup> WGroups { get; set; }
+        public virtual List<WGroup> WGroups { get; set; }
     }
 }

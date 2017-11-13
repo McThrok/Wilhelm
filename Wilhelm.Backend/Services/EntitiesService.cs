@@ -14,7 +14,6 @@ namespace Wilhelm.Backend.Services
     public class EntitiesService : IEntitiesService
     {
         private IConversionService _conversionService;
-
         public EntitiesService(IConversionService conversionService)
         {
             _conversionService = conversionService;
@@ -22,13 +21,16 @@ namespace Wilhelm.Backend.Services
 
         public void UpdateDto(ConfigDto dto, IEnumerable<WTask> wTasks, IEnumerable<WGroup> wGroups)
         {
-            if (wTasks == null || wGroups == null || dto == null)
+            if (dto == null)
                 return;
 
             if (dto.Groups == null)
                 dto.Groups = new List<GroupDto>();
             if (dto.Tasks == null)
                 dto.Tasks = new List<TaskDto>();
+
+            if (wTasks == null || wGroups == null)
+                return;
 
             foreach (var wGroup in wGroups)
             {
@@ -49,7 +51,7 @@ namespace Wilhelm.Backend.Services
                     taskToUpdate = new TaskDto();
                     dto.Tasks.Add(taskToUpdate);
                 }
-                _conversionService.ConvertToDto(taskToUpdate, wTask);
+                _conversionService.ConvertToDto(taskToUpdate, wTask, dto.Groups, true);
             }
         }
         public void UpdateEntities(IDbSet<WTask> wTasks, IDbSet<WGroup> wGroups, ConfigDto config)
@@ -76,7 +78,7 @@ namespace Wilhelm.Backend.Services
                     wTaskToUpdate = new WTask();
                     wTasks.Add(wTaskToUpdate);
                 }
-                _conversionService.ConvertFromDto(wTaskToUpdate, task);
+                _conversionService.ConvertFromDto(wTaskToUpdate, task, wGroups, true);
             }
         }
 
@@ -84,14 +86,14 @@ namespace Wilhelm.Backend.Services
         {
             if (dtos == null || activities == null)
                 return;
-
             foreach (var activity in activities)
                 if (!dtos.Any(x => x.Id == activity.Id))
                 {
                     var activityDto = new ActivityDto();
                     _conversionService.ConvertToDto(activityDto, activity);
-                    var tasDto = new TaskDto();
-                    _conversionService.ConvertToDto(tasDto, activity.WTask);
+                    var taskDto = new TaskDto();
+                    _conversionService.ConvertToDto(taskDto, activity.WTask);
+                    activityDto.Task = taskDto;
                     dtos.Add(activityDto);
                 }
         }
@@ -100,15 +102,21 @@ namespace Wilhelm.Backend.Services
             if (activities == null || dtos == null)
                 return;
 
-            foreach (var activity in dtos)
-                if (!activities.Any(x => x.Id == activity.Id))
+            foreach (var dto in dtos)
+            {
+                var activityModelToUpdate = activities.Where(x => x.Id == dto.Id).SingleOrDefault();
+                if (activityModelToUpdate == null)
                 {
-                    var wActivity = new WActivity();
-                    _conversionService.ConvertFromDto(wActivity, activity);
-                    var wTask = new WTask();
-                    _conversionService.ConvertFromDto(wTask, activity.Task);
-                    activities.Add(wActivity);
+                    activityModelToUpdate = new WActivity();
+                    activities.Add(activityModelToUpdate);
                 }
+                if (activityModelToUpdate.WTask == null)
+                    activityModelToUpdate.WTask = new WTask();
+
+                if (dto.Task != null)
+                    _conversionService.ConvertFromDto(activityModelToUpdate.WTask, dto.Task);
+                _conversionService.ConvertFromDto(activityModelToUpdate, dto);
+            }
         }
     }
 }

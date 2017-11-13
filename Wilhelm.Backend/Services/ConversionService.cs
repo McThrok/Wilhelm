@@ -176,8 +176,8 @@ namespace Wilhelm.Backend.Services
         {
             //model.Id = dto.Id;
 
-            //if(dto.Id>0)
-            //model.Id = dto.Id;
+            if (dto.Id > 0)
+                model.Id = dto.Id;
 
         }
     }

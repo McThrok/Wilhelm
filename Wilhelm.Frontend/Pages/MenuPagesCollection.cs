@@ -13,8 +13,11 @@ namespace Wilhelm.Frontend.Pages
     public class MenuPagesCollection
     {
         private readonly IServiceFactory _serviceFactory;
-        private readonly IHoldersConversionService _holdersConversionService;
+        private readonly IHoldersConversionService _holdersConversionService;//not used
         private readonly IHoldersService _holdersService;
+        private readonly IConfigurationService _configurationService;
+        private readonly IActivityService _activityService;
+        private readonly IReportService _reportService;
         private HomePage _homePage;
         private TasksPage _tasksPage;
         private ReportPage _reportPage;
@@ -26,6 +29,9 @@ namespace Wilhelm.Frontend.Pages
             _serviceFactory = serviceFactory;
             _holdersConversionService = holdersConversionService;
             _holdersService = holdersService;
+            _configurationService = serviceFactory.CreateConfigurationService();
+            _activityService = _serviceFactory.CreateActivityService();
+            _reportService = serviceFactory.CreateReportService();
         }
 
         public HomePage HomePage
@@ -33,7 +39,7 @@ namespace Wilhelm.Frontend.Pages
             get
             {
                 if (_homePage == null)
-                    _homePage = new HomePage(_holdersService);
+                    _homePage = new HomePage(_holdersService,_activityService);
                 return _homePage;
             }
         }
@@ -42,7 +48,7 @@ namespace Wilhelm.Frontend.Pages
             get
             {
                 if (_tasksPage == null)
-                    _tasksPage = new TasksPage(_holdersService);
+                    _tasksPage = new TasksPage(_holdersService, _configurationService);
                 return _tasksPage;
             }
         }
@@ -51,7 +57,7 @@ namespace Wilhelm.Frontend.Pages
             get
             {
                 if (_reportPage == null)
-                    _reportPage = new ReportPage(_serviceFactory.CreateReportService());
+                    _reportPage = new ReportPage(_reportService);
                 return _reportPage;
             }
         }
@@ -60,7 +66,7 @@ namespace Wilhelm.Frontend.Pages
             get
             {
                 if (_groupsPage == null)
-                    _groupsPage = new GroupsPage(_holdersService);
+                    _groupsPage = new GroupsPage(_holdersService,_configurationService);
                 return _groupsPage;
             }
         }
@@ -69,7 +75,7 @@ namespace Wilhelm.Frontend.Pages
             get
             {
                 if (_archivePage == null)
-                    _archivePage = new ArchivePage(_holdersService);
+                    _archivePage = new ArchivePage(_holdersService, _activityService);
                 return _archivePage;
             }
         }

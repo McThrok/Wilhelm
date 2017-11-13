@@ -9,10 +9,10 @@ namespace Wilhelm.DataAccess
 {
     public class WContext : DbContext, IWContext
     {
-        public WContext(){}
+        public WContext() { }
         public IDbSet<WTask> WTasks { get; set; }
         public IDbSet<WGroup> WGroups { get; set; }
-        public DbSet<WActivity> WActivities { get; set; }
+        public IDbSet<WActivity> WActivities { get; set; }
     }
 
     //public class WilhelmContexInitializer : DropCreateDatabaseIfModelChanges<WilhelmContext>
