@@ -88,13 +88,15 @@ namespace Wilhelm.Frontend.Pages
 
             foreach (var group in _groups)
             {
-                if (changedTask.Groups.Contains(group) && !ActiveTask.Groups.Contains(group))
+                var taskInDetails = changedTask.Groups.Where(x => x.Id == group.Id).SingleOrDefault();
+
+                if (ActiveTask.Groups.Contains(group) && taskInDetails == null)
                 {
                     group.Tasks.Add(ActiveTask);
                     ActiveTask.Groups.Add(group);
                 }
 
-                if (!changedTask.Groups.Contains(group) && ActiveTask.Groups.Contains(group))
+                if (!ActiveTask.Groups.Contains(group) && taskInDetails != null)
                 {
                     group.Tasks.Remove(ActiveTask);
                     ActiveTask.Groups.Remove(group);

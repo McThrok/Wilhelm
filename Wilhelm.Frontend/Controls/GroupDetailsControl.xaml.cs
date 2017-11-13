@@ -68,7 +68,6 @@ namespace Wilhelm.Frontend.Controls
                     ShownGroup.Tasks.Add(newTask);
                 }
             }
-
         }
 
         private void AssignTask_Click(object sender, RoutedEventArgs e)

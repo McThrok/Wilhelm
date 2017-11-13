@@ -43,7 +43,9 @@ namespace Wilhelm.Backend.Services
         public void ConvertToDto(GroupDto dto, WGroup wGroup, IEnumerable<TaskDto> tasks, bool updateTasks)
         {
             ConvertToDto(dto, wGroup);
+            if(dto.Tasks==null)
             dto.Tasks = new List<TaskDto>();
+
             foreach (var wtask in wGroup.WTasks)
             {
                 var task = tasks.Where(x => x.Id == wtask.Id).SingleOrDefault();
@@ -97,7 +99,9 @@ namespace Wilhelm.Backend.Services
         public void ConvertToDto(TaskDto dto, WTask wtask, IEnumerable<GroupDto> groups, bool updateGroups)
         {
             ConvertToDto(dto, wtask);
-            dto.Groups = new List<GroupDto>();
+            if (dto.Groups == null)
+                dto.Groups = new List<GroupDto>();
+
             foreach (var wgroup in wtask.WGroups)
             {
                 var group = groups.Where(x => x.Id == wgroup.Id).SingleOrDefault();
@@ -147,10 +151,9 @@ namespace Wilhelm.Backend.Services
         }
         public void ConvertFromDto(WTask wTask, TaskDto dto)
         {
-            var model = new WTask();
-            ConvertFromNamedModelDto(model, dto);
-            model.StartDate = dto.StartDate;
-            model.Frequency = dto.Frequency;
+            ConvertFromNamedModelDto(wTask, dto);
+            wTask.StartDate = dto.StartDate;
+            wTask.Frequency = dto.Frequency;
         }
 
         public void ConvertToNamedModelDto(NamedModelDto dto, WNamedModel namedModel)
@@ -175,7 +178,6 @@ namespace Wilhelm.Backend.Services
         public void ConvertFromModelDto(WModel model, ModelDto dto)
         {
             //model.Id = dto.Id;
-
             if (dto.Id > 0)
                 model.Id = dto.Id;
 
