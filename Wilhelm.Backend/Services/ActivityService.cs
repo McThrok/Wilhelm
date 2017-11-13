@@ -37,6 +37,7 @@ namespace Wilhelm.Backend.Services
             WTask t1 = new WTask() { Name = "T1", Description = "T1", Frequency = 1, StartDate = DateTime.Today };
             using (var db = _wContextFactory.Create())
             {
+<<<<<<< HEAD
                 db.WTasks.Add(t1);
                 //var generated = _activityGenerationService.GenerateActivities(db.WActivities, db.WTasks.Where(x => !x.Archivized), DateTime.Today);
                 //foreach (var activity in generated)
@@ -45,6 +46,10 @@ namespace Wilhelm.Backend.Services
                 // var todaysTask = db.WActivities.Where(x => x.Date.Date == DateTime.Now.Date);
                 // _entitiesService.UpdateDto(dto, todaysTask);
                 db.SaveChanges();
+=======
+                var todaysTask = db.WActivities.Where(x => x.Date.Date == DateTime.Now.Date);
+               // _entitiesService.UpdateDto(dto, todaysTask);
+>>>>>>> develop
             }
             return dto;
         }
