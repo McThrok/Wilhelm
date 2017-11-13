@@ -69,6 +69,7 @@ namespace Wilhelm.Frontend.Services
         public void ConvertFromDto(GroupHolder group, GroupDto dto)
         {
             ConvertFromNamedModelDto(group, dto);
+            group.Tasks = new ObservableCollection<TaskHolder>();
         }
         public void ConvertFromDto(GroupDto dto, GroupHolder group, IEnumerable<TaskDto> groups, bool updateGroups)
         {
@@ -97,6 +98,7 @@ namespace Wilhelm.Frontend.Services
         public void ConvertToDto(GroupDto dto, GroupHolder group)
         {
             ConvertToNamedModelDto(dto, group);
+            dto.Tasks = new List<TaskDto>();
         }
 
         public void ConvertFromDto(TaskHolder task, TaskDto dto, IEnumerable<GroupHolder> groups, bool updateGroups)
@@ -128,6 +130,7 @@ namespace Wilhelm.Frontend.Services
             ConvertFromNamedModelDto(task, dto);
             task.Frequency = dto.Frequency;
             task.StartDate = dto.StartDate;
+            task.Groups = new ObservableCollection<GroupHolder>();
         }
         public void ConvertToDto(TaskDto dto, TaskHolder task, IEnumerable<GroupDto> groups, bool updateGroups)
         {
@@ -158,6 +161,7 @@ namespace Wilhelm.Frontend.Services
             ConvertToNamedModelDto(dto, task);
             dto.Frequency = task.Frequency;
             dto.StartDate = task.StartDate;
+            dto.Groups = new List<GroupDto>();
         }
 
         public void ConvertFromNamedModelDto(NamedHolder namedHolder, NamedModelDto dto)

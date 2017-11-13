@@ -68,6 +68,9 @@ namespace Wilhelm.Frontend.Windows
         private void ClickMenu(Page page)
         {
             var currentPage = MainFrame.Content;
+            if (currentPage == page)
+                return;
+
             if (currentPage != null && currentPage is IMenuPage currentMenuPage)
                 currentMenuPage.Save();
 

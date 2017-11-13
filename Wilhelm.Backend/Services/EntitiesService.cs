@@ -51,7 +51,7 @@ namespace Wilhelm.Backend.Services
                     taskToUpdate = new TaskDto();
                     dto.Tasks.Add(taskToUpdate);
                 }
-                _conversionService.ConvertToDto(taskToUpdate, wTask);
+                _conversionService.ConvertToDto(taskToUpdate, wTask, dto.Groups, true);
             }
         }
         public void UpdateEntities(IDbSet<WTask> wTasks, IDbSet<WGroup> wGroups, ConfigDto config)
@@ -78,7 +78,7 @@ namespace Wilhelm.Backend.Services
                     wTaskToUpdate = new WTask();
                     wTasks.Add(wTaskToUpdate);
                 }
-                _conversionService.ConvertFromDto(wTaskToUpdate, task);
+                _conversionService.ConvertFromDto(wTaskToUpdate, task, wGroups, true);
             }
         }
 
@@ -113,7 +113,7 @@ namespace Wilhelm.Backend.Services
                 if (activityModelToUpdate.WTask == null)
                     activityModelToUpdate.WTask = new WTask();
 
-                if(dto.Task!=null)
+                if (dto.Task != null)
                     _conversionService.ConvertFromDto(activityModelToUpdate.WTask, dto.Task);
                 _conversionService.ConvertFromDto(activityModelToUpdate, dto);
             }

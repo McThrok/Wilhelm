@@ -37,11 +37,21 @@ namespace Wilhelm.Frontend.Pages
             DataContext = this;
         }
 
+
         private void ListViewItem_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            var item = sender as ListViewItem;
-            if (item.Content is ActivityHolder activity)
-                activity.IsDone = !activity.IsDone;
+            if (!(e.OriginalSource is null))
+            {
+                if (e.Source is ContentPresenter)
+                {
+                    var content = VisualTreeHelper.GetChild(e.Source as ContentPresenter, 0);
+                    if (content is CheckBox)
+                        return;
+                }
+                var item = sender as ListViewItem;
+                if (item.Content is ActivityHolder activity)
+                    activity.IsDone = !activity.IsDone;
+            }
         }
 
         public void Activate()

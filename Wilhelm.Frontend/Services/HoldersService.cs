@@ -88,7 +88,7 @@ namespace Wilhelm.Frontend.Services
                     taskHolderToUpdate = new TaskHolder();
                     tasks.Add(taskHolderToUpdate);
                 }
-                _holdersConversionService.ConvertFromDto(taskHolderToUpdate, task);
+                _holdersConversionService.ConvertFromDto(taskHolderToUpdate, task, groups, true);
             }
         }
         public void UpdateConfigDto(ConfigDto config, ICollection<GroupHolder> groups, ICollection<TaskHolder> tasks)
@@ -115,7 +115,7 @@ namespace Wilhelm.Frontend.Services
                     taskDtoToUpdate = new TaskDto();
                     config.Tasks.Add(taskDtoToUpdate);
                 }
-                _holdersConversionService.ConvertToDto(taskDtoToUpdate, task);
+                _holdersConversionService.ConvertToDto(taskDtoToUpdate, task, config.Groups, true);
             }
         }
 

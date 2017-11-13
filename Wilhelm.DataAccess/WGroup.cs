@@ -16,6 +16,6 @@ namespace Wilhelm.DataAccess
             WTasks = new List<WTask>();
         }
 
-        public List<WTask> WTasks { get; set; }
+        public virtual List<WTask> WTasks { get; set; }
     }
 }
