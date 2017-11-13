@@ -56,8 +56,10 @@
     <Compile Include="Model\Dto\TaskDto.cs" />
     <Compile Include="Model\Dto\ReportDto.cs" />
     <Compile Include="Model\Dto\ConfigDto.cs" />
+    <Compile Include="Services\ActivityGenerationService.cs" />
     <Compile Include="Services\ConversionService.cs" />
     <Compile Include="Services\EntitiesService.cs" />
+    <Compile Include="Services\Interfaces\IActivityGenerationService.cs" />
     <Compile Include="Services\Interfaces\IEntitiesService.cs" />
     <Compile Include="Services\Interfaces\IConversionService.cs" />
     <Compile Include="Services\Interfaces\IServiceFactory.cs" />

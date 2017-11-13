@@ -13,12 +13,14 @@ namespace Wilhelm.Backend.Services
     {
         private IWContextFactory _wContextFactory;
         private IEntitiesService _entitiesService;
+        private IActivityGenerationService _activityGenerationService;
 
         public ActivityService(IWContextFactory wContextFactory, IEntitiesService entitiesService)
         {
             _wContextFactory = wContextFactory;
             _entitiesService = entitiesService;
         }
+
 
         public List<ActivityDto> GetArchive()
         {
@@ -32,10 +34,17 @@ namespace Wilhelm.Backend.Services
         public List<ActivityDto> GetTodaysActivities()
         {
             List<ActivityDto> dto = new List<ActivityDto>();
+            WTask t1 = new WTask() { Name = "T1", Description = "T1", Frequency = 1, StartDate = DateTime.Today };
             using (var db = _wContextFactory.Create())
             {
-                var todaysTask = db.WActivities.Where(x => x.Date.Date == DateTime.Now.Date);
-                _entitiesService.UpdateDto(dto, todaysTask);
+                db.WTasks.Add(t1);
+                //var generated = _activityGenerationService.GenerateActivities(db.WActivities, db.WTasks.Where(x => !x.Archivized), DateTime.Today);
+                //foreach (var activity in generated)
+                //    db.WActivities.Add(activity);
+                //db.SaveChanges();
+                // var todaysTask = db.WActivities.Where(x => x.Date.Date == DateTime.Now.Date);
+                // _entitiesService.UpdateDto(dto, todaysTask);
+                db.SaveChanges();
             }
             return dto;
         }
@@ -44,6 +53,7 @@ namespace Wilhelm.Backend.Services
             using (var db = _wContextFactory.Create())
             {
                 _entitiesService.UpdateEntities(db.WActivities, activities);
+                db.SaveChanges();
             }
         }
     }
