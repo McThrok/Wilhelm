@@ -128,5 +128,16 @@ namespace Wilhelm.Frontend.Services
             int minId = Math.Min(holders.Min(x => x.Id), 0);
             return minId - 1;
         }
+        public string GetNameWithIndexIfNeeded(string startName, IEnumerable<NamedHolder> holders)
+        {
+            if (holders.Any(x => x.Name == startName))
+            {
+                int index = 1;
+                while (holders.Any(x => x.Name == startName + index.ToString()))
+                    index++;
+                startName += index.ToString();
+            }
+            return startName;
+        }
     }
 }

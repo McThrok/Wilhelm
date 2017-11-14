@@ -24,8 +24,8 @@ namespace Wilhelm.Frontend.Pages
 {
     public partial class TasksPage : Page, INotifyPropertyChanged, IMenuPage
     {
-        private ObservableCollection<TaskHolder> _tasks = new ObservableCollection<TaskHolder>();
-        private List<GroupHolder> _groups = new List<GroupHolder>();
+        private readonly ObservableCollection<TaskHolder> _tasks = new ObservableCollection<TaskHolder>();
+        private readonly List<GroupHolder> _groups = new List<GroupHolder>();
         private TaskHolder _activeTask;
         private readonly IHoldersService _holdersService;
         private readonly IConfigurationService _configurationService;
@@ -61,7 +61,7 @@ namespace Wilhelm.Frontend.Pages
             var addedTask = new TaskHolder()
             {
                 Id = _holdersService.GenerateTemporaryId(_tasks),
-                Name = "New Task",
+                Name = _holdersService.GetNameWithIndexIfNeeded("New task", _tasks),
                 Groups = new ObservableCollection<GroupHolder>(),
                 StartDate = DateTime.Now,
                 Frequency = 1,
@@ -73,7 +73,7 @@ namespace Wilhelm.Frontend.Pages
         private void Apply_Click(object sender, RoutedEventArgs e)
         {
             var changedTask = TaskDetails.ShownTask;
-            if(!_tasks.Contains(ActiveTask))
+            if (!_tasks.Contains(ActiveTask))
                 _tasks.Insert(0, ActiveTask);
             ActiveTask.Name = changedTask.Name;
             ActiveTask.Description = changedTask.Description;
@@ -104,7 +104,7 @@ namespace Wilhelm.Frontend.Pages
         }
         private void Delete_Task(object sender, RoutedEventArgs e)
         {
-            var result = MessageBox.Show("Do you really want to delete " + ActiveTask.Name, "", MessageBoxButton.YesNo);
+            var result = MessageBox.Show("Do you really want to delete " + ActiveTask.Name + "?", "", MessageBoxButton.YesNo);
             if (result == MessageBoxResult.Yes)
             {
                 ActiveTask.Archivized = true;
@@ -116,6 +116,8 @@ namespace Wilhelm.Frontend.Pages
 
         public void Activate()
         {
+            _groups.Clear();
+            _tasks.Clear();
             _holdersService.UpdateConfigHolders(_groups, _tasks, _configurationService.GetConfig());
             TasksListView.ItemsSource = _tasks;
             ShowCurrentTask();

@@ -24,8 +24,8 @@ namespace Wilhelm.Frontend.Pages
 {
     public partial class GroupsPage : Page, INotifyPropertyChanged, IMenuPage
     {
-        private ObservableCollection<GroupHolder> _groups = new ObservableCollection<GroupHolder>();
-        private List<TaskHolder> _tasks = new List<TaskHolder>();
+        private readonly ObservableCollection<GroupHolder> _groups = new ObservableCollection<GroupHolder>();
+        private readonly List<TaskHolder> _tasks = new List<TaskHolder>();
         private GroupHolder _activeGroup;
         private readonly IHoldersService _holdersService;
         private readonly IConfigurationService _configurationService;
@@ -61,7 +61,7 @@ namespace Wilhelm.Frontend.Pages
             var addedGroup = new GroupHolder()
             {
                 Id = _holdersService.GenerateTemporaryId(_groups),
-                Name = "New group",
+                Name = _holdersService.GetNameWithIndexIfNeeded("New group", _groups),
                 Tasks = new ObservableCollection<TaskHolder>(),
             };
             ActiveGroup = addedGroup;
@@ -100,7 +100,7 @@ namespace Wilhelm.Frontend.Pages
         }
         private void Delete_Group(object sender, RoutedEventArgs e)
         {
-            var result = MessageBox.Show("Do you really want to delete " + ActiveGroup.Name, "", MessageBoxButton.YesNo);
+            var result = MessageBox.Show("Do you really want to delete " + ActiveGroup.Name + "?", "", MessageBoxButton.YesNo);
             if (result == MessageBoxResult.Yes)
             {
                 ActiveGroup.Archivized = true;
@@ -112,6 +112,8 @@ namespace Wilhelm.Frontend.Pages
 
         public void Activate()
         {
+            _groups.Clear();
+            _tasks.Clear();
             _holdersService.UpdateConfigHolders(_groups, _tasks, _configurationService.GetConfig());
             GroupsListView.ItemsSource = _groups;
             ShowCurrentGroup();
