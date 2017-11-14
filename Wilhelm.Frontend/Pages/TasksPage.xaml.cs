@@ -22,9 +22,6 @@ using Wilhelm.Frontend.Services.Interfaces;
 
 namespace Wilhelm.Frontend.Pages
 {
-    /// <summary>
-    /// Interaction logic for ActionTypesPage.xaml
-    /// </summary>
     public partial class TasksPage : Page, INotifyPropertyChanged, IMenuPage
     {
         private ObservableCollection<TaskHolder> _tasks = new ObservableCollection<TaskHolder>();
@@ -39,8 +36,8 @@ namespace Wilhelm.Frontend.Pages
         {
             _holdersService = holdersService;
             _configurationService = configurationService;
-            InitializeComponent();
 
+            InitializeComponent();
             DataContext = this;
         }
         public void ShowCurrentTask()

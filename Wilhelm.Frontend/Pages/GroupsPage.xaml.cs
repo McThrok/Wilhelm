@@ -22,9 +22,6 @@ using Wilhelm.Frontend.Services.Interfaces;
 
 namespace Wilhelm.Frontend.Pages
 {
-    /// <summary>
-    /// Interaction logic for ActionTypesPage.xaml
-    /// </summary>
     public partial class GroupsPage : Page, INotifyPropertyChanged, IMenuPage
     {
         private ObservableCollection<GroupHolder> _groups = new ObservableCollection<GroupHolder>();
@@ -67,13 +64,14 @@ namespace Wilhelm.Frontend.Pages
                 Name = "New group",
                 Tasks = new ObservableCollection<TaskHolder>(),
             };
-            _groups.Insert(0, addedGroup);
             ActiveGroup = addedGroup;
             ShowCurrentGroup();
         }
         private void Apply_Click(object sender, RoutedEventArgs e)
         {
             var changedGroup = GroupDetails.ShownGroup;
+            if (!_groups.Contains(ActiveGroup))
+                _groups.Insert(0, ActiveGroup);
             ActiveGroup.Name = changedGroup.Name;
             ActiveGroup.Description = changedGroup.Description;
 

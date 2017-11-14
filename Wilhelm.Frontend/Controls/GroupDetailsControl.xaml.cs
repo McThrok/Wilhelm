@@ -25,6 +25,7 @@ namespace Wilhelm.Frontend.Controls
     public partial class GroupDetailsControl : UserControl, INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
+        private List<TaskHolder> _availableTasksToAdd;
         private GroupHolder _showGroup;
 
         public GroupDetailsControl()
@@ -41,6 +42,7 @@ namespace Wilhelm.Frontend.Controls
             }
 
             GroupDetailsPanel.Visibility = Visibility.Visible;
+            _availableTasksToAdd = new List<TaskHolder>();
 
             ShownGroup = new GroupHolder()
             {
@@ -55,17 +57,21 @@ namespace Wilhelm.Frontend.Controls
             {
                 var newTask = new TaskHolder
                 {
+                    Id = task.Id,
                     Name = task.Name,
                     Description = task.Description,
                     Archivized = task.Archivized,
                     Groups = new ObservableCollection<GroupHolder>(),
                 };
-                ShownGroup.Tasks.Add(newTask);
 
                 if (task.Groups.Contains(chooosenGroup))
                 {
                     newTask.Groups.Add(ShownGroup);
                     ShownGroup.Tasks.Add(newTask);
+                }
+                else
+                {
+                    _availableTasksToAdd.Add(newTask);
                 }
             }
         }
@@ -76,6 +82,7 @@ namespace Wilhelm.Frontend.Controls
             dialog.ShowDialog();
             if (dialog.SelectedHolder is TaskHolder taskToAdd)
             {
+                _availableTasksToAdd.Remove(taskToAdd);
                 ShownGroup.Tasks.Add(taskToAdd);
                 taskToAdd.Groups.Add(ShownGroup);
             }
@@ -87,6 +94,7 @@ namespace Wilhelm.Frontend.Controls
             var task = button.Tag as TaskHolder;
             task.Groups.Remove(ShownGroup);
             ShownGroup.Tasks.Remove(task);
+            _availableTasksToAdd.Add(task);
         }
 
         public GroupHolder ShownGroup
