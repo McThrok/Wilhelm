@@ -69,7 +69,6 @@ namespace Wilhelm.Frontend.Pages
                 StartDate = DateTime.Now,
                 Frequency = 1,
             };
-            _tasks.Insert(0, addedTask);
             ActiveTask = addedTask;
             ShowCurrentTask();
         }
@@ -77,10 +76,8 @@ namespace Wilhelm.Frontend.Pages
         private void Apply_Click(object sender, RoutedEventArgs e)
         {
             var changedTask = TaskDetails.ShownTask;
-            if(DateTime.Compare(changedTask.StartDate.Date,DateTime.Today)>0)
-            {
-                var result = MessageBox.Show("Invalid date.","", MessageBoxButton.OK,MessageBoxImage.Error);
-            }
+            if(!_tasks.Contains(ActiveTask))
+                _tasks.Insert(0, ActiveTask);
             ActiveTask.Name = changedTask.Name;
             ActiveTask.Description = changedTask.Description;
             ActiveTask.StartDate = changedTask.StartDate;
@@ -88,19 +85,21 @@ namespace Wilhelm.Frontend.Pages
 
             foreach (var group in _groups)
             {
-                if (changedTask.Groups.Contains(group) && !ActiveTask.Groups.Contains(group))
+                var taskInDetails = changedTask.Groups.Where(x => x.Id == group.Id).SingleOrDefault();
+
+                if (!ActiveTask.Groups.Contains(group) && taskInDetails != null)
                 {
                     group.Tasks.Add(ActiveTask);
                     ActiveTask.Groups.Add(group);
                 }
 
-                if (!changedTask.Groups.Contains(group) && ActiveTask.Groups.Contains(group))
+                if (ActiveTask.Groups.Contains(group) && taskInDetails == null)
                 {
                     group.Tasks.Remove(ActiveTask);
                     ActiveTask.Groups.Remove(group);
                 }
             }
-            Save();
+            SaveChanges();
         }
         private void RestetChanges_Click(object sender, RoutedEventArgs e)
         {
@@ -115,7 +114,7 @@ namespace Wilhelm.Frontend.Pages
                 ActiveTask = null;
                 ShowCurrentTask();
             }
-            Save();
+            SaveChanges();
         }
 
         public void Activate()
@@ -125,11 +124,15 @@ namespace Wilhelm.Frontend.Pages
             ShowCurrentTask();
         }
 
-        public void Save()
+        private void SaveChanges()
         {
             var config = new ConfigDto();
             _holdersService.UpdateConfigDto(config, _groups, _tasks);
             _configurationService.SaveConfig(config);
+
+        }
+        public void Save()
+        {
         }
 
         public TaskHolder ActiveTask

@@ -79,19 +79,21 @@ namespace Wilhelm.Frontend.Pages
 
             foreach (var task in _tasks)
             {
-                if (changedGroup.Tasks.Any(x => x.Id == task.Id) && !ActiveGroup.Tasks.Contains(task))
+                var groupInDetails = changedGroup.Tasks.Where(x => x.Id == task.Id).SingleOrDefault();
+
+                if (ActiveGroup.Tasks.Contains(task) && groupInDetails == null)
                 {
                     task.Groups.Add(ActiveGroup);
                     ActiveGroup.Tasks.Add(task);
                 }
 
-                if (!changedGroup.Tasks.Any(x => x.Id == task.Id) && ActiveGroup.Tasks.Contains(task))
+                if (!ActiveGroup.Tasks.Contains(task) && groupInDetails != null)
                 {
                     task.Groups.Remove(ActiveGroup);
                     ActiveGroup.Tasks.Remove(task);
                 }
             }
-            Save();
+            SaveChanges();
 
         }
         private void RestetChanges_Click(object sender, RoutedEventArgs e)
@@ -107,7 +109,7 @@ namespace Wilhelm.Frontend.Pages
                 ActiveGroup = null;
                 ShowCurrentGroup();
             }
-            Save();
+            SaveChanges();
         }
 
         public void Activate()
@@ -117,11 +119,15 @@ namespace Wilhelm.Frontend.Pages
             ShowCurrentGroup();
         }
 
-        public void Save()
+        public void SaveChanges()
         {
             var config = new ConfigDto();
             _holdersService.UpdateConfigDto(config, _groups, _tasks);
             _configurationService.SaveConfig(config);
+        }
+
+        public void Save()
+        {
         }
 
         public GroupHolder ActiveGroup
