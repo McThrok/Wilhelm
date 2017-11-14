@@ -22,7 +22,6 @@ namespace Wilhelm.Backend.Services
             _activityGenerationService = activityGenerationService;
         }
 
-
         public List<ActivityDto> GetArchive()
         {
             List<ActivityDto> dto = new List<ActivityDto>();
@@ -37,11 +36,11 @@ namespace Wilhelm.Backend.Services
             List<ActivityDto> dto = new List<ActivityDto>();
             using (var db = _wContextFactory.Create())
             {
-                //var generated = _activityGenerationService.GenerateActivities(db.WActivities, db.WTasks.Where(x => !x.Archivized), DateTime.Today);
-                //foreach (var activity in generated)
-                //    db.WActivities.Add(activity);
-                //db.SaveChanges();
-           
+                var generated = _activityGenerationService.GenerateActivities(db.WActivities, db.WTasks.Where(x => !x.Archivized), DateTime.Today);
+                foreach (var activity in generated)
+                    db.WActivities.Add(activity);
+                db.SaveChanges();
+
                 var todaysTask = db.WActivities.ToList().Where(x => x.Date.Date == DateTime.Now.Date).ToList();
                 _entitiesService.UpdateDto(dto, todaysTask);
             }
