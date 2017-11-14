@@ -27,6 +27,15 @@ namespace Wilhelm.Backend.Services
             return reports;
         }
         
+        public IEnumerable<WActivity> GetDataToAnalyze()
+        {
+            IEnumerable<WActivity> data = null;
+            using (var db = _wContextFactory.Create())
+            {
+                data = db.WActivities.ToList();
+            }
+            return data;
+        }
         public ReportDto GetTotalNumberOfAcitivitiesReport(IEnumerable<WActivity> data)
         {
             var report = new ReportDto
@@ -37,14 +46,5 @@ namespace Wilhelm.Backend.Services
             return report;
         }
 
-        public IEnumerable<WActivity> GetDataToAnalyze()
-        {
-            IEnumerable<WActivity> data = null;
-            using (var db = _wContextFactory.Create())
-            {
-                data = db.WActivities.ToList();
-            }
-            return data;
-        }
     }
 }

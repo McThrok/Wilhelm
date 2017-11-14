@@ -47,7 +47,7 @@ namespace Wilhelm.MainDataSet
                 WTask t4 = new WTask() { Name = "water Maciek", Frequency = 1, StartDate = new DateTime(2017, 12, 03) };
                 WTask t5 = new WTask() { Name = "give insect to Maciek", Frequency = 20, StartDate = new DateTime(2017, 12, 01) };
 
-                WActivity a1 = new WActivity() { WTask = t1, Date = DateTime.Today, IsDone = true };
+                WActivity a1 = new WActivity() { WTask = t1, Date = DateTime.Today, IsDone = false };
                 WActivity a2 = new WActivity() { WTask = t1, Date = new DateTime(2017, 12, 03), IsDone = false };
                 WActivity a3 = new WActivity() { WTask = t1, Date = new DateTime(2017, 12, 03), IsDone = true };
                 //t1.Activities = new List<WActivity>() { a1, a2, a3 };
