@@ -69,7 +69,6 @@ namespace Wilhelm.Frontend.Pages
                 StartDate = DateTime.Now,
                 Frequency = 1,
             };
-            _tasks.Insert(0, addedTask);
             ActiveTask = addedTask;
             ShowCurrentTask();
         }
@@ -77,6 +76,8 @@ namespace Wilhelm.Frontend.Pages
         private void Apply_Click(object sender, RoutedEventArgs e)
         {
             var changedTask = TaskDetails.ShownTask;
+            if(!_tasks.Contains(ActiveTask))
+                _tasks.Insert(0, ActiveTask);
             ActiveTask.Name = changedTask.Name;
             ActiveTask.Description = changedTask.Description;
             ActiveTask.StartDate = changedTask.StartDate;
@@ -86,13 +87,13 @@ namespace Wilhelm.Frontend.Pages
             {
                 var taskInDetails = changedTask.Groups.Where(x => x.Id == group.Id).SingleOrDefault();
 
-                if (ActiveTask.Groups.Contains(group) && taskInDetails == null)
+                if (!ActiveTask.Groups.Contains(group) && taskInDetails != null)
                 {
                     group.Tasks.Add(ActiveTask);
                     ActiveTask.Groups.Add(group);
                 }
 
-                if (!ActiveTask.Groups.Contains(group) && taskInDetails != null)
+                if (ActiveTask.Groups.Contains(group) && taskInDetails == null)
                 {
                     group.Tasks.Remove(ActiveTask);
                     ActiveTask.Groups.Remove(group);

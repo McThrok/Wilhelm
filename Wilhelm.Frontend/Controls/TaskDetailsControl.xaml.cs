@@ -25,6 +25,7 @@ namespace Wilhelm.Frontend.Controls
     public partial class TaskDetailsControl : UserControl, INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
+        private List<GroupHolder> _availableGroupsToAdd;
         private TaskHolder _shownTask;
 
         public TaskDetailsControl()
@@ -41,6 +42,7 @@ namespace Wilhelm.Frontend.Controls
             }
 
             TaskDetailsPanel.Visibility = Visibility.Visible;
+            _availableGroupsToAdd = new List<GroupHolder>();
 
             ShownTask = new TaskHolder()
             {
@@ -57,17 +59,21 @@ namespace Wilhelm.Frontend.Controls
             {
                 var newGroup = new GroupHolder
                 {
+                    Id = group.Id,
                     Name = group.Name,
                     Description = group.Description,
                     Archivized = group.Archivized,
                     Tasks = new ObservableCollection<TaskHolder>(),
                 };
-                ShownTask.Groups.Add(newGroup);
 
                 if (group.Tasks.Contains(choosenTask))
                 {
                     newGroup.Tasks.Add(ShownTask);
                     ShownTask.Groups.Add(newGroup);
+                }
+                else
+                {
+                    _availableGroupsToAdd.Add(newGroup);
                 }
             }
 
@@ -75,10 +81,11 @@ namespace Wilhelm.Frontend.Controls
 
         private void AssignToGroup_Click(object sender, RoutedEventArgs e)
         {
-            var dialog = new ChooseItemWindow(ShownTask.Groups.Where(x => !x.Tasks.Contains(ShownTask)).Cast<NamedHolder>().ToList());
+            var dialog = new ChooseItemWindow(_availableGroupsToAdd.Cast<NamedHolder>().ToList());
             dialog.ShowDialog();
             if (dialog.SelectedHolder is GroupHolder groupToAdd)
             {
+                _availableGroupsToAdd.Remove(groupToAdd);
                 ShownTask.Groups.Add(groupToAdd);
                 groupToAdd.Tasks.Add(ShownTask);
             }
@@ -90,6 +97,7 @@ namespace Wilhelm.Frontend.Controls
             var group = button.Tag as GroupHolder;
             group.Tasks.Remove(ShownTask);
             ShownTask.Groups.Remove(group);
+            _availableGroupsToAdd.Add(group);
         }
 
         public TaskHolder ShownTask
