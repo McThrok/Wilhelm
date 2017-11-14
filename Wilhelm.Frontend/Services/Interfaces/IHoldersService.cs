@@ -21,6 +21,7 @@ namespace Wilhelm.Frontend.Services.Interfaces
         void UpdateConfigDto(ConfigDto config, ICollection<GroupHolder> groups, ICollection<TaskHolder> tasks);
 
         int GenerateTemporaryId(IEnumerable<Holder> holders);
+        string GetNameWithIndexIfNeeded(string startName, IEnumerable<NamedHolder> holders);
 
     }
 }

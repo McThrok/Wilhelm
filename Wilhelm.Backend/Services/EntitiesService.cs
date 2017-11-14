@@ -40,6 +40,7 @@ namespace Wilhelm.Backend.Services
                     groupToUpdate = new GroupDto();
                     dto.Groups.Add(groupToUpdate);
                 }
+                groupToUpdate.Tasks = new List<TaskDto>();
                 _conversionService.ConvertToDto(groupToUpdate, wGroup);
             }
 
@@ -51,6 +52,7 @@ namespace Wilhelm.Backend.Services
                     taskToUpdate = new TaskDto();
                     dto.Tasks.Add(taskToUpdate);
                 }
+                taskToUpdate.Groups = new List<GroupDto>();
                 _conversionService.ConvertToDto(taskToUpdate, wTask, dto.Groups, true);
             }
         }
@@ -67,6 +69,7 @@ namespace Wilhelm.Backend.Services
                     wGroupToUpdate = new WGroup();
                     wGroups.Add(wGroupToUpdate);
                 }
+                wGroupToUpdate.WTasks = new List<WTask>();
                 _conversionService.ConvertFromDto(wGroupToUpdate, group);
             }
 
@@ -78,6 +81,7 @@ namespace Wilhelm.Backend.Services
                     wTaskToUpdate = new WTask();
                     wTasks.Add(wTaskToUpdate);
                 }
+                wTaskToUpdate.WGroups = new List<WGroup>();
                 _conversionService.ConvertFromDto(wTaskToUpdate, task, wGroups, true);
             }
         }
