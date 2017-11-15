@@ -36,6 +36,7 @@ namespace Wilhelm.Backend.Services
             using (var db = _wContextFactory.Create())
             {
                 _entitiesService.UpdateEntities(db.WTasks, db.WGroups, config);
+                _entitiesService.PrepareConfigToSave(db.WTasks, db.WGroups);
                 db.SaveChanges();
             }
         }

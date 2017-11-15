@@ -17,6 +17,7 @@ using Wilhelm.Backend.Services.Interfaces;
 using Wilhelm.Frontend.Services.Interfaces;
 using Wilhelm.Frontend.Services;
 using Wilhelm.Frontend.Pages;
+using System.ComponentModel;
 
 namespace Wilhelm.Frontend.Windows
 {
@@ -78,6 +79,14 @@ namespace Wilhelm.Frontend.Windows
                 newMenuPage.Activate();
 
             MainFrame.Content = page;
+        }
+        protected override void OnClosing(CancelEventArgs e)
+        {
+            var currentPage = MainFrame.Content;
+            if (currentPage != null && currentPage is IMenuPage currentMenuPage)
+                currentMenuPage.Save();
+
+            base.OnClosing(e);
         }
     }
 }

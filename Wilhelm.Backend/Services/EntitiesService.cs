@@ -85,6 +85,16 @@ namespace Wilhelm.Backend.Services
                 _conversionService.ConvertFromDto(wTaskToUpdate, task, wGroups, true);
             }
         }
+        public void PrepareConfigToSave(IEnumerable<WTask> wTasks, IEnumerable<WGroup> wGroups)
+        {
+            foreach (var item in wTasks)
+                if (item.Id < 0)
+                    item.Id = 0;
+
+            foreach (var item in wGroups)
+                if (item.Id < 0)
+                    item.Id = 0;
+        }
 
         public void UpdateDto(ICollection<ActivityDto> dtos, IEnumerable<WActivity> activities)
         {
@@ -122,5 +132,6 @@ namespace Wilhelm.Backend.Services
                 _conversionService.ConvertFromDto(activityModelToUpdate, dto);
             }
         }
+
     }
 }
