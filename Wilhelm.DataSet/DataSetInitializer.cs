@@ -50,13 +50,13 @@ namespace Wilhelm.MainDataSet
                 List<WActivity> activities = new List<WActivity>();
                 for (int i = 0; i <7; i++)
                     activities.Add(new WActivity() { WTask = t1, Date = new DateTime(DateTime.Today.Year, DateTime.Today.Month, DateTime.Today.Day - i), IsDone = random.Next() % 2 == 0 });
-                for (int i = 0; i < 10; i++)
+                for (int i = 0; i < 14; i++)
                     activities.Add(new WActivity() { WTask = t2, Date = new DateTime(DateTime.Today.Year, DateTime.Today.Month, DateTime.Today.Day - i), IsDone = random.Next() % 2 == 0 });
                 for (int i = 0; i < 3; i++)
                     activities.Add(new WActivity() { WTask = t3, Date = new DateTime(DateTime.Today.Year, DateTime.Today.Month, DateTime.Today.Day - i * t3.Frequency), IsDone = random.Next() % 2 == 0 });
-                for (int i = 0; i < 10; i++)
+                for (int i = 0; i < 5; i++)
                     activities.Add(new WActivity() { WTask = t4, Date = new DateTime(DateTime.Today.Year, DateTime.Today.Month, DateTime.Today.Day - i * t4.Frequency), IsDone = random.Next() % 2 == 0 });
-                for (int i = 0; i < 10; i++)
+                for (int i = 0; i < 8; i++)
                     activities.Add(new WActivity() { WTask = t5, Date = new DateTime(DateTime.Today.Year, DateTime.Today.Month-i, DateTime.Today.Day), IsDone = random.Next() % 2 == 0 });
 
                 activities.Sort((x, y) => DateTime.Compare(x.Date, y.Date));

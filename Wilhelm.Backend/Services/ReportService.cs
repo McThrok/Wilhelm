@@ -26,13 +26,14 @@ namespace Wilhelm.Backend.Services
             using (var db = _wContextFactory.Create())
             {
                 var data = db.WActivities.Include(a => a.WTask);
+                var tasks = db.WTasks;
                 reports.Add(GetTotalNumberOfAcitivitiesReport(data));
                 reports.Add(GetCountOfDoneActivities(data));
                 reports.Add(GetPercentOfDoneActivities(data));
                 reports.Add(GetCountOfSkipActivities(data));
                 reports.Add(GetPercentOfSkipActivities(data));
 
-                reports.Add(GetCountOfMostDoneActivities(data));
+                reports.Add(GetCountOfMostDoneActivities(data,tasks));
                 reports.Add(GetPercentOfMostDoneActivities(data));
                 reports.Add(GetCountOfMostSkippedActivities(data));
                 reports.Add(GetPercentOfMostSkippedActivities(data));
@@ -95,13 +96,16 @@ namespace Wilhelm.Backend.Services
             };
             return report;
         }
-        public ReportDto GetCountOfMostDoneActivities(IEnumerable<WActivity> data)
+        public ReportDto GetCountOfMostDoneActivities(IEnumerable<WActivity> data, IEnumerable<WTask> tasks)
         {
-            var aa = data.GroupBy(a => a.WTask.Id).ToList();
+            var doneActivity = data.Where(a=>a.IsDone==true).GroupBy(a => a.WTask.Id).Select(r => new { Id = r.Key, count = r.Count() }).ToList();
+            doneActivity=doneActivity.OrderByDescending(a => a.count).ToList();
+            var task = tasks.Where(t => t.Id == doneActivity[0].Id).Single();
+            var taskCount = data.Where(a => a.WTask.Id == task.Id).Count();
             var report = new ReportDto
             {
-                Category = "Count of most done activity",
-                Value = "a"
+                Category = "most done activity: " + task.Name.ToUpper(),
+                Value = "Done " + doneActivity[0].count.ToString() + " / " + taskCount.ToString() 
             };
             return report;
         }
