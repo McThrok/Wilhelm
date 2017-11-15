@@ -36,7 +36,7 @@ namespace Wilhelm.Backend.Services
             List<ActivityDto> dto = new List<ActivityDto>();
             using (var db = _wContextFactory.Create())
             {
-                var generated = _activityGenerationService.GenerateActivities(db.WActivities, db.WTasks.Where(x => !x.Archivized), DateTime.Today);
+                var generated = _activityGenerationService.GenerateActivities(db.WActivities, db.WTasks, DateTime.Today);
                 foreach (var activity in generated)
                     db.WActivities.Add(activity);
                 db.SaveChanges();
