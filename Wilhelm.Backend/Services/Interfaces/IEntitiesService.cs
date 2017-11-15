@@ -14,6 +14,7 @@ namespace Wilhelm.Backend.Services.Interfaces
     {
         void UpdateDto(ConfigDto dto, IEnumerable<WTask> wTasks, IEnumerable<WGroup> wGroups);
         void UpdateEntities(IDbSet<WTask> wTasks, IDbSet<WGroup> wGroups, ConfigDto config);
+        void PrepareConfigToSave( IEnumerable<WTask> wTasks, IEnumerable<WGroup> wGroups);
 
         void UpdateDto(ICollection<ActivityDto> dtos, IEnumerable<WActivity> activities);
         void UpdateEntities(IDbSet<WActivity> activities, IEnumerable<ActivityDto> dtos);

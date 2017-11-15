@@ -17,6 +17,14 @@
                 </DataTrigger>
             </Style.Triggers>
         </Style>
+
+        <Style TargetType="DockPanel" x:Key="ArchivixedHolder">
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding Archivized}" Value="true">
+                    <Setter Property="Visibility" Value="Collapsed"/>
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
     </Window.Resources>
 
     <DockPanel>
@@ -27,7 +35,7 @@
         <ListView  Name="HoldersListView">
             <ListView.ItemTemplate>
                 <DataTemplate>
-                    <DockPanel >
+                    <DockPanel Style="{StaticResource ArchivixedHolder}">
                         <TextBlock Text="{Binding Name}" DockPanel.Dock="Top"/>
                         <TextBlock Text="{Binding Description}"/>
                     </DockPanel>

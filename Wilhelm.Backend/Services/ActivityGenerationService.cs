@@ -14,35 +14,31 @@ namespace Wilhelm.Backend.Services
         {
             List<WActivity> generatedActivities = new List<WActivity>();
             foreach (var task in tasks)
-            {
-                var lastActivity = activities.LastOrDefault(x => x.WTask.Id == task.Id);
-                generatedActivities.AddRange(GenerateActivitiesForTask(lastActivity, task, date));
-            }
+                if (!task.Archivized)
+                {
+                    var lastActivity = activities.LastOrDefault(x => x.WTask.Id == task.Id);
+                    generatedActivities.AddRange(GenerateActivitiesForTask(lastActivity, task, date));
+                }
 
             return generatedActivities;
         }
         public List<WActivity> GenerateActivitiesForTask(WActivity lastActivity, WTask task, DateTime date)
         {
             var result = new List<WActivity>();
-            if (lastActivity != null && lastActivity.Date.Date == date.Date)
-                return result;
 
-            if (DateTime.Compare(task.StartDate.Date, date.Date) > 0)
-                return result;
+            DateTime nextActivityDate = task.StartDate.Date;
 
-            if (lastActivity != null && DateTime.Compare(lastActivity.Date.AddDays(task.Frequency), date.Date) > 0)
-                return result;
-
-            DateTime lastdate;
-            if (DateTime.Compare(lastActivity.Date.Date, task.StartDate.Date) > 0)
-                lastdate = lastActivity.Date.Date;
-            else
-                lastdate = task.StartDate.Date;
-
-            while (DateTime.Compare(lastdate, date) <= 0)
+            if (lastActivity != null)
             {
-                lastdate.AddDays(task.Frequency);
-                result.Add(new WActivity() { Date = lastdate, WTask = task });
+                var nextFromActivity = lastActivity.Date.Date.AddDays(task.Frequency);
+                if (DateTime.Compare(nextFromActivity, nextActivityDate) > 0)
+                    nextActivityDate = nextFromActivity;
+            }
+
+            while (DateTime.Compare(nextActivityDate, date) <= 0)
+            {
+                result.Add(new WActivity() { Date = nextActivityDate, WTask = task });
+                nextActivityDate = nextActivityDate.AddDays(task.Frequency);
             }
 
             return result;

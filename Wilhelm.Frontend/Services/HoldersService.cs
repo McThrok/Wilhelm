@@ -77,6 +77,7 @@ namespace Wilhelm.Frontend.Services
                     groupHolderToUpdate = new GroupHolder();
                     groups.Add(groupHolderToUpdate);
                 }
+                groupHolderToUpdate.Tasks = new ObservableCollection<TaskHolder>();
                 _holdersConversionService.ConvertFromDto(groupHolderToUpdate, group);
             }
 
@@ -88,6 +89,7 @@ namespace Wilhelm.Frontend.Services
                     taskHolderToUpdate = new TaskHolder();
                     tasks.Add(taskHolderToUpdate);
                 }
+                taskHolderToUpdate.Groups = new ObservableCollection<GroupHolder>();
                 _holdersConversionService.ConvertFromDto(taskHolderToUpdate, task, groups, true);
             }
         }
@@ -104,6 +106,7 @@ namespace Wilhelm.Frontend.Services
                     groupDtoToUpdate = new GroupDto();
                     config.Groups.Add(groupDtoToUpdate);
                 }
+                groupDtoToUpdate.Tasks = new List<TaskDto>();
                 _holdersConversionService.ConvertToDto(groupDtoToUpdate, group);
             }
 
@@ -115,6 +118,7 @@ namespace Wilhelm.Frontend.Services
                     taskDtoToUpdate = new TaskDto();
                     config.Tasks.Add(taskDtoToUpdate);
                 }
+                taskDtoToUpdate.Groups = new List<GroupDto>();
                 _holdersConversionService.ConvertToDto(taskDtoToUpdate, task, config.Groups, true);
             }
         }
@@ -123,6 +127,17 @@ namespace Wilhelm.Frontend.Services
         {
             int minId = Math.Min(holders.Min(x => x.Id), 0);
             return minId - 1;
+        }
+        public string GetNameWithIndexIfNeeded(string startName, IEnumerable<NamedHolder> holders)
+        {
+            if (holders.Any(x => x.Name == startName))
+            {
+                int index = 1;
+                while (holders.Any(x => x.Name == startName + index.ToString()))
+                    index++;
+                startName += index.ToString();
+            }
+            return startName;
         }
     }
 }

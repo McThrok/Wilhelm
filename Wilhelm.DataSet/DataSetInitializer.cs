@@ -14,7 +14,9 @@ namespace Wilhelm.MainDataSet
         static void Main(string[] args)
         {
             var initializer = new DataSetInitializer();
+            Console.WriteLine("Cleaning data..");
             initializer.Clean();
+            Console.WriteLine("Loading data..");
             initializer.Init();
             Console.WriteLine("Done");
         }
