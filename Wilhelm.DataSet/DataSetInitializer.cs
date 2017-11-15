@@ -18,28 +18,19 @@ namespace Wilhelm.MainDataSet
             initializer.Clean();
             Console.WriteLine("Loading data..");
             initializer.Init();
-            Console.WriteLine("Done");
+            Console.WriteLine("Database is ready.");
         }
         public void Clean()
         {
             using (var db = new WContext())
             {
-                foreach (var item in db.WTasks.ToList())
-                    db.WTasks.Remove(item);
-
-                foreach (var item in db.WGroups.ToList())
-                    db.WGroups.Remove(item);
-
-                foreach (var item in db.WActivities.ToList())
-                    db.WActivities.Remove(item);
-                db.SaveChanges();
+                db.Database.Delete();
             }
         }
         public void Init()
         {
             using (var db = new WContext())
             {
-
                 WGroup g1 = new WGroup() { Name = "Group1", Description = "Animals" };
                 WGroup g2 = new WGroup() { Name = "Group2", Description = "Plants" };
 
@@ -52,7 +43,6 @@ namespace Wilhelm.MainDataSet
                 WActivity a1 = new WActivity() { WTask = t1, Date = DateTime.Today, IsDone = false };
                 WActivity a2 = new WActivity() { WTask = t1, Date = new DateTime(2017, 12, 03), IsDone = false };
                 WActivity a3 = new WActivity() { WTask = t1, Date = new DateTime(2017, 12, 03), IsDone = true };
-                //t1.Activities = new List<WActivity>() { a1, a2, a3 };
 
                 g1.WTasks.Add(t1);
                 g1.WTasks.Add(t2);
