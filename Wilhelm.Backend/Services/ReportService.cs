@@ -21,8 +21,6 @@ namespace Wilhelm.Backend.Services
         public List<ReportDto> GetReports()
         {
             var reports = new List<ReportDto>();
-            //  var data = GetDataToAnalyze();
-
             using (var db = _wContextFactory.Create())
             {
                 var data = db.WActivities.Include(a => a.WTask);
@@ -33,8 +31,8 @@ namespace Wilhelm.Backend.Services
                 reports.Add(GetCountOfSkipActivities(data));
                 reports.Add(GetPercentOfSkipActivities(data));
 
+                reports.AddRange(GetPercentActivities(data, tasks));
                 reports.AddRange(GetCountOfActivities(data, tasks));
-                reports.AddRange(GetPercentOfMostDoneActivities(data, tasks));
             }
             return reports;
         }
@@ -112,7 +110,7 @@ namespace Wilhelm.Backend.Services
             }
             return reports;
         }
-        public List<ReportDto> GetPercentOfMostDoneActivities(IEnumerable<WActivity> data, IEnumerable<WTask> tasks)
+        public List<ReportDto> GetPercentActivities(IEnumerable<WActivity> data, IEnumerable<WTask> tasks)
         {
             var doneActivity = data.Where(a => a.IsDone == true).GroupBy(a => a.WTask.Id).Select(r => new { Id = r.Key, count = r.Count() }).ToList();
             doneActivity = doneActivity.OrderByDescending(a => a.count).ToList();
