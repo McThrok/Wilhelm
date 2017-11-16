@@ -32,54 +32,72 @@ namespace Wilhelm.MainDataSet
             using (var db = new WContext())
             {
                 Random random = new Random(1);
-                WGroup g1 = new WGroup() { Name = "Group1", Description = "Animals" };
-                WGroup g2 = new WGroup() { Name = "Group2", Description = "Plants" };
+                WGroup g1 = new WGroup() { Name = "Zwierzęta", Description = "wszystkie moje domowe zwierzaki" };
+                WGroup g2 = new WGroup() { Name = "Rośliny", Description = "wszystkie rośliny doniczkowe" };
+                WGroup g3 = new WGroup() { Name = "Finanse" };
+                WGroup g4 = new WGroup() { Name = "Ważne", Description = "Lepiej o tym nie zapominać" };
 
-                WTask t1 = new WTask() { Name = "Feed the cat", Description = "Royal Canin", Frequency = 1, StartDate = DateTime.Today };
-                WTask t2 = new WTask() { Name = "Feed the dog", Frequency = 1, StartDate = DateTime.Today };
-                WTask t3 = new WTask() { Name = "Water plant1", Frequency = 3, StartDate = new DateTime(DateTime.Today.Year, DateTime.Today.Month, DateTime.Today.Day + 1) };
-                WTask t4 = new WTask() { Name = "water Maciek", Frequency = 1, StartDate = DateTime.Today };
-                WTask t5 = new WTask() { Name = "give insect to Maciek", Frequency = 30, StartDate = new DateTime(DateTime.Today.Year, DateTime.Today.Month, DateTime.Today.Day + 5) };
 
-                List<WActivity> activities = new List<WActivity>();
-                for (int i = 0; i < 7; i++)
-                    activities.Add(new WActivity() { WTask = t1, Date = new DateTime(DateTime.Today.Year, DateTime.Today.Month, DateTime.Today.Day - i), IsDone = random.Next() % 2 == 0 });
-                for (int i = 0; i < 14; i++)
-                    activities.Add(new WActivity() { WTask = t2, Date = new DateTime(DateTime.Today.Year, DateTime.Today.Month, DateTime.Today.Day - i), IsDone = random.Next() % 2 == 0 });
-                for (int i = 0; i < 3; i++)
-                    activities.Add(new WActivity() { WTask = t3, Date = new DateTime(DateTime.Today.Year, DateTime.Today.Month, DateTime.Today.Day - i * t3.Frequency), IsDone = random.Next() % 2 == 0 });
-                for (int i = 0; i < 5; i++)
-                    activities.Add(new WActivity() { WTask = t4, Date = new DateTime(DateTime.Today.Year, DateTime.Today.Month, DateTime.Today.Day - i * t4.Frequency), IsDone = random.Next() % 2 == 0 });
-                for (int i = 0; i < 8; i++)
-                    activities.Add(new WActivity() { WTask = t5, Date = new DateTime(DateTime.Today.Year, DateTime.Today.Month - i, DateTime.Today.Day), IsDone = random.Next() % 2 == 0 });
+                WTask t1 = new WTask() { Name = "Nakarmić kota", Description = "Tom jest wybredny i je tylko Royal Canin", Frequency = 1, StartDate = DateTime.Today };
+                WTask t2 = new WTask() { Name = "Nakarmić psa", Description = "Burek zje wszystko", Frequency = 1, StartDate = DateTime.Today };
+                WTask t3 = new WTask() { Name = "Nakarmić rybki", Description = "Jeśli pływają brzuszkiem do góry to można przestać karmić", Frequency = 2, StartDate = new DateTime(DateTime.Today.Year, DateTime.Today.Month, DateTime.Today.Day + 5) };
+                WTask t4 = new WTask() { Name = "Wymienić wodę rybkom", Frequency = 14, StartDate = new DateTime(DateTime.Today.Year, DateTime.Today.Month, DateTime.Today.Day + 5) };
 
-                foreach (WActivity a in activities)
-                    db.WActivities.Add(a);
-                g1.WTasks.Add(t1);
-                g1.WTasks.Add(t2);
-                g1.WTasks.Add(t5);
+                WTask t5 = new WTask() { Name = "Podlać kwiaty", Description = "Wszytkie oprócz rosiczki", Frequency = 3, StartDate = new DateTime(DateTime.Today.Year, DateTime.Today.Month, DateTime.Today.Day + 1) };
+                WTask t6 = new WTask() { Name = "Podlać rosiczkę", Description = "Rosiczka jest mięsożerna, ale można i trzeba ją regularnie podlewać", Frequency = 1, StartDate = DateTime.Today };
 
-                g2.WTasks.Add(t3);
-                g2.WTasks.Add(t4);
-
-                t1.WGroups.Add(g1);
-                t2.WGroups.Add(g1);
-                t3.WGroups.Add(g2);
-                t4.WGroups.Add(g2);
-                t5.WGroups.Add(g1);
-                t5.WGroups.Add(g2);
-
-                db.WGroups.Add(g1);
-                db.WGroups.Add(g2);
+                WTask t7 = new WTask() { Name = "Zapłacić czynsz", Description = "1000zl plus ewentualne dopłaty", Frequency = 30, StartDate = DateTime.Today };
+                WTask t8 = new WTask() { Name = "Zapłacić za internet", Description = "60 plus ewentualne dopłaty", Frequency = 30, StartDate = DateTime.Today };
 
                 db.WTasks.Add(t1);
                 db.WTasks.Add(t2);
                 db.WTasks.Add(t3);
                 db.WTasks.Add(t5);
+                db.WTasks.Add(t6);
+                db.WTasks.Add(t7);
+                db.WTasks.Add(t8);
+
+                db.WGroups.Add(g1);
+                db.WGroups.Add(g2);
+                db.WGroups.Add(g3);
+                db.WGroups.Add(g4);
+
+                List<WActivity> activities = new List<WActivity>();
+                foreach (var task in db.WTasks)
+                    foreach (var activity in GenerateActivities(random, task))
+                        db.WActivities.Add(activity);
+
+                Link(g1, t1);
+                Link(g1, t2);
+                Link(g1, t3);
+                Link(g1, t4);
+
+                Link(g2, t5);
+                Link(g2, t6);
+
+                Link(g3, t7);
+                Link(g3, t8);
+
+                Link(g4, t2);
+                Link(g4, t7);
 
                 db.SaveChanges();
             }
+        }
+        private void Link(WGroup group, WTask task)
+        {
+            task.WGroups.Add(group);
+            group.WTasks.Add(task);
+        }
+        private List<WActivity> GenerateActivities(Random rd, WTask task)
+        {
+            var activities = new List<WActivity>();
+            int n = rd.Next() % 10 + 7;
+            int offset = rd.Next() % 2;
 
+            for (int i = 0; i < n; i++)
+                activities.Add(new WActivity() { WTask = task, IsDone = rd.Next() % 5 != 0, Date = DateTime.Today.Date.AddDays(-offset - i * task.Frequency) });
+            return activities;
         }
     }
 }

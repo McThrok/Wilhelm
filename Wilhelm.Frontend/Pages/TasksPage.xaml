@@ -78,7 +78,6 @@
                 <Button DockPanel.Dock="Right" Content="Delete task" Width="100" Click="Delete_Task"/>
             </DockPanel>
 
-
         </Grid>
     </DockPanel>
 </Page>
