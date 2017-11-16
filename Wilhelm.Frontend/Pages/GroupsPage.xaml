@@ -73,10 +73,7 @@
                     <DataTemplate>
                         <Button Style="{StaticResource GroupButton}" Click="GroupButton_Click" Tag="{Binding}">
                             <Button.Content >
-                                <DockPanel >
                                     <TextBlock Text="{Binding Name}" DockPanel.Dock="Top"/>
-                                    <TextBlock Text="{Binding Description}"/>
-                                </DockPanel>
                             </Button.Content>
                         </Button>
                     </DataTemplate>
