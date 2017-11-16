@@ -21,7 +21,7 @@ namespace Wilhelm.Backend.Services
         public List<ReportDto> GetReports()
         {
             var reports = new List<ReportDto>();
-          //  var data = GetDataToAnalyze();
+            //  var data = GetDataToAnalyze();
 
             using (var db = _wContextFactory.Create())
             {
@@ -33,10 +33,8 @@ namespace Wilhelm.Backend.Services
                 reports.Add(GetCountOfSkipActivities(data));
                 reports.Add(GetPercentOfSkipActivities(data));
 
-                reports.Add(GetCountOfMostDoneActivities(data,tasks));
-                reports.Add(GetPercentOfMostDoneActivities(data));
-                reports.Add(GetCountOfMostSkippedActivities(data));
-                reports.Add(GetPercentOfMostSkippedActivities(data));
+                reports.AddRange(GetCountOfActivities(data, tasks));
+                reports.AddRange(GetPercentOfMostDoneActivities(data, tasks));
             }
             return reports;
         }
@@ -96,45 +94,66 @@ namespace Wilhelm.Backend.Services
             };
             return report;
         }
-        public ReportDto GetCountOfMostDoneActivities(IEnumerable<WActivity> data, IEnumerable<WTask> tasks)
+        public List<ReportDto> GetCountOfActivities(IEnumerable<WActivity> data, IEnumerable<WTask> tasks)
         {
-            var doneActivity = data.Where(a=>a.IsDone==true).GroupBy(a => a.WTask.Id).Select(r => new { Id = r.Key, count = r.Count() }).ToList();
-            doneActivity=doneActivity.OrderByDescending(a => a.count).ToList();
-            var task = tasks.Where(t => t.Id == doneActivity[0].Id).Single();
-            var taskCount = data.Where(a => a.WTask.Id == task.Id).Count();
-            var report = new ReportDto
+            var doneActivity = data.Where(a => a.IsDone == true).GroupBy(a => a.WTask.Id).Select(r => new { Id = r.Key, count = r.Count() }).ToList();
+            doneActivity = doneActivity.OrderByDescending(a => a.count).ToList();
+            List<ReportDto> reports = new List<ReportDto>();
+            for (int i = 0; i < doneActivity.Count; i++)
             {
-                Category = "most done activity: " + task.Name.ToUpper(),
-                Value = "Done " + doneActivity[0].count.ToString() + " / " + taskCount.ToString() 
-            };
-            return report;
+                var task = tasks.Where(t => t.Id == doneActivity[i].Id).Single();
+                var taskCount = data.Where(a => a.WTask.Id == task.Id).Count();
+                var report = new ReportDto
+                {
+                    Category = "Activity: " + task.Name.ToUpper(),
+                    Value = "Done " + doneActivity[i].count.ToString() + " / " + taskCount.ToString() + " times"
+                };
+                reports.Add(report);
+            }
+            return reports;
         }
-        public ReportDto GetPercentOfMostDoneActivities(IEnumerable<WActivity> data)
+        public List<ReportDto> GetPercentOfMostDoneActivities(IEnumerable<WActivity> data, IEnumerable<WTask> tasks)
         {
-            var report = new ReportDto
+            var doneActivity = data.Where(a => a.IsDone == true).GroupBy(a => a.WTask.Id).Select(r => new { Id = r.Key, count = r.Count() }).ToList();
+            doneActivity = doneActivity.OrderByDescending(a => a.count).ToList();
+            double maxPercent = 0;
+            int maxPercentIndex = -1;
+            string maxPersentTaskName="";
+            double minPercent = 100;
+            int minPercentIndex = -1;
+            string minPersentTaskName="";
+            for (int i = 0; i < doneActivity.Count; i++)
             {
-                Category = "Percent of most done activity (to all done activities)",
-                Value = "a"
-            };
-            return report;
-        }
-        public ReportDto GetCountOfMostSkippedActivities(IEnumerable<WActivity> data)
-        {
-            var report = new ReportDto
-            {
-                Category = "Count of most skipped activities",
-                Value = "a"
-            };
-            return report;
-        }
-        public ReportDto GetPercentOfMostSkippedActivities(IEnumerable<WActivity> data)
-        {
-            var report = new ReportDto
-            {
-                Category = "Percent of most skipped activities",
-                Value = "a"
-            };
-            return report;
+                var task = tasks.Where(t => t.Id == doneActivity[i].Id).Single();
+                var taskCount = data.Where(a => a.WTask.Id == task.Id).Count();
+                double percent = doneActivity[i].count / (double)taskCount;
+                if (percent < minPercent)
+                {
+                    minPercent = percent;
+                    minPercentIndex = i;
+                    minPersentTaskName = task.Name;
+                }
+                if (percent > maxPercent)
+                {
+                    maxPercent = percent;
+                    maxPercentIndex = i;
+                    maxPersentTaskName = task.Name;
+                }
+            }
+            List<ReportDto> reports = new List<ReportDto>();
+            if (minPercentIndex != -1)
+                reports.Add(new ReportDto
+                {
+                    Category = "Activity with lowest percentage: " + minPersentTaskName.ToUpper(),
+                    Value = "Done " + Math.Round(minPercent*100, 2) + " % "
+                });
+            if (maxPercentIndex != -1)
+                reports.Add(new ReportDto
+                {
+                    Category = "Activity with highest percentage: " + maxPersentTaskName.ToUpper(),
+                    Value = "Done " + Math.Round(maxPercent * 100, 2) + " % "
+                });
+            return reports;
         }
     }
 }
