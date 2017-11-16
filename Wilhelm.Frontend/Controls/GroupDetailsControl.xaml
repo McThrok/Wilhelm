@@ -28,8 +28,8 @@
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
-            <TextBlock Margin="6" Grid.Row="0" Grid.Column="0" Text="Name"/>
-            <TextBlock Margin="6" Grid.Row="1" Grid.Column="0" Text="Description"/>
+            <TextBlock Foreground="#3b424c" FontWeight="Bold" Margin="6" Grid.Row="0" Grid.Column="0" Text="Name"/>
+            <TextBlock Foreground="#3b424c" FontWeight="Bold" Margin="6" Grid.Row="1" Grid.Column="0" Text="Description"/>
             <TextBox Margin="6" Grid.Row="0" Grid.Column="1" Text="{Binding Path=ShownGroup.Name}"/>
             <TextBox Margin="6" Grid.Row="1" Grid.Column="1" Text="{Binding Path=ShownGroup.Description}"/>
         </Grid>
@@ -40,7 +40,7 @@
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
             <DockPanel Grid.Row="0" LastChildFill="False">
-                <TextBlock DockPanel.Dock="Left"  Text="Tasks" FontSize="20"/>
+                <TextBlock DockPanel.Dock="Left" Foreground="#3b424c" FontWeight="Bold" Text="Tasks" FontSize="20"/>
                 <Button DockPanel.Dock="Left"  Margin="6" Content="Assign task" Width="130" Click="AssignTask_Click"/>
             </DockPanel>
             <ListView Grid.Row="1" Name="GroupsListView" HorizontalContentAlignment="Stretch"  ItemsSource="{Binding Path=ShownGroup.Tasks}" >
