@@ -16,7 +16,7 @@
             </Style.Triggers>
         </Style>
     </UserControl.Resources>
-    
+
     <DockPanel Name="TaskDetailsPanel" >
 
         <Grid DockPanel.Dock="Top">
@@ -32,7 +32,7 @@
             </Grid.RowDefinitions>
             <TextBlock Margin="6" Grid.Row="0" Grid.Column="0" Text="Name"/>
             <TextBlock Margin="6" Grid.Row="1" Grid.Column="0" Text="Description"/>
-            <TextBlock Margin="6" Grid.Row="2" Grid.Column="0" Text="start date"/>
+            <TextBlock Margin="6" Grid.Row="2" Grid.Column="0" Text="Start date"/>
             <TextBlock Margin="6" Grid.Row="3" Grid.Column="0" Text="Frequency (in days)"/>
             <TextBox Margin="6" Grid.Row="0" Grid.Column="1" Text="{Binding Path=ShownTask.Name}"/>
             <TextBox Margin="6" Grid.Row="1" Grid.Column="1" Text="{Binding Path=ShownTask.Description}"/>

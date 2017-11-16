@@ -13,7 +13,7 @@
 
         <ListView  DockPanel.Dock="Top"  Margin="0" Name="ReportListView" HorizontalContentAlignment="Stretch" >
             <ListView.View>
-                <GridView>
+                <GridView >
                     <GridViewColumn Header="Category"  DisplayMemberBinding="{Binding Category}" />
                 <GridViewColumn Header="Value"  DisplayMemberBinding="{Binding Value}" />
                 </GridView>
