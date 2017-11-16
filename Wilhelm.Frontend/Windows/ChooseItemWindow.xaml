@@ -9,6 +9,10 @@
         Title="ChooseGroupWindow" Height="300" Width="300">
     
     <Window.Resources>
+        <Style TargetType="Button">
+            <Setter Property="Height" Value="30"></Setter>
+        </Style>
+        
         <Style TargetType="Button" x:Key="OkButton">
             <Style.Triggers>
                 <DataTrigger 
@@ -16,6 +20,7 @@
                     <Setter Property="Button.IsEnabled" Value="false"/>
                 </DataTrigger>
             </Style.Triggers>
+            <Setter Property="Height" Value="30"></Setter>
         </Style>
 
         <Style TargetType="DockPanel" x:Key="ArchivixedHolder">
@@ -28,9 +33,15 @@
     </Window.Resources>
 
     <DockPanel>
-        <DockPanel LastChildFill="False" DockPanel.Dock="Bottom">
-            <Button Content="OK" DockPanel.Dock="Left" Click="OkButton_Click" Style="{StaticResource OkButton}"/>
-            <Button Content="Cancel" DockPanel.Dock="Left" Click="CancelButton_Click"/>
+        <DockPanel LastChildFill="True" DockPanel.Dock="Bottom">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"></ColumnDefinition>
+                    <ColumnDefinition Width="*"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+            <Button Grid.Column="0" Content="OK" DockPanel.Dock="Left" Click="OkButton_Click" Style="{StaticResource OkButton}"/>
+            <Button Grid.Column="1" Content="Cancel" DockPanel.Dock="Left" Click="CancelButton_Click" />
+            </Grid>
         </DockPanel>
         <ListView  Name="HoldersListView">
             <ListView.ItemTemplate>
