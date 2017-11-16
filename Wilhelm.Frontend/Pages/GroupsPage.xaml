@@ -25,41 +25,43 @@
 
     </Page.Resources>
 
-    <Grid Margin="6">
-        <Grid.RowDefinitions>
-            <RowDefinition  Height="Auto"/>
-            <RowDefinition  Height="*"/>
-            <RowDefinition  Height="Auto"/>
-        </Grid.RowDefinitions>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="Auto"/>
-            <ColumnDefinition Width="*"/>
-        </Grid.ColumnDefinitions>
+    <DockPanel Margin="10">
 
-        <Button Margin="6" Grid.Row="0" Grid.Column="0" Content="Add new group" Style="{StaticResource GroupButton}" Click="AddNewGroup_Click" />
-        <ListView Margin="6" Grid.Row="1" Grid.Column="0" Grid.RowSpan="2"  Name="GroupsListView" HorizontalContentAlignment="Stretch" >
-            <ListView.ItemTemplate>
-                <DataTemplate>
-                    <Button Style="{StaticResource GroupButton}" Click="GroupButton_Click" Tag="{Binding}">
-                        <Button.Content >
-                            <DockPanel >
-                                <TextBlock Text="{Binding Name}" DockPanel.Dock="Top"/>
-                                <TextBlock Text="{Binding Description}"/>
-                            </DockPanel>
-                        </Button.Content>
-                    </Button>
-                </DataTemplate>
-            </ListView.ItemTemplate>
-        </ListView>
+        <TextBlock Height="50" Margin="0,10,0,0" TextAlignment="Center" Text="Groups" DockPanel.Dock="Top" Style="{StaticResource TitlePage }" />
+        <Grid Margin="0">
+            <Grid.RowDefinitions>
+                <RowDefinition  Height="Auto"/>
+                <RowDefinition  Height="*"/>
+                <RowDefinition  Height="Auto"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
 
-        <controls:GroupDetailsControl Grid.Row="0" Grid.Column="1" Grid.RowSpan="2" x:Name="GroupDetails"/>
+            <Button Margin="6" Grid.Row="0" Grid.Column="0" Content="Add new group" Style="{StaticResource GroupButton}" Click="AddNewGroup_Click" />
+            <ListView Margin="6" Grid.Row="1" Grid.Column="0" Grid.RowSpan="2"  Name="GroupsListView" HorizontalContentAlignment="Stretch" >
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <Button Style="{StaticResource GroupButton}" Click="GroupButton_Click" Tag="{Binding}">
+                            <Button.Content >
+                                <DockPanel >
+                                    <TextBlock Text="{Binding Name}" DockPanel.Dock="Top"/>
+                                    <TextBlock Text="{Binding Description}"/>
+                                </DockPanel>
+                            </Button.Content>
+                        </Button>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
 
-        <DockPanel Grid.Row="2" Grid.Column="1" LastChildFill="False" Name="GroupButtonsPanel">
-            <Button DockPanel.Dock="Left" Content="Apply" Width="100" Click="Apply_Click"/>
-            <Button DockPanel.Dock="Left" Content="Reset changes" Width="100" Click="RestetChanges_Click"/>
-            <Button DockPanel.Dock="Right" Content="Delete group" Width="100" Click="Delete_Group"/>
-        </DockPanel>
+            <controls:GroupDetailsControl Grid.Row="0" Grid.Column="1" Grid.RowSpan="2" x:Name="GroupDetails"/>
 
-
-    </Grid>
+            <DockPanel Grid.Row="2" Grid.Column="1" LastChildFill="False" Name="GroupButtonsPanel">
+                <Button DockPanel.Dock="Left" Content="Apply" Width="100" Click="Apply_Click"/>
+                <Button DockPanel.Dock="Left" Content="Reset changes" Width="100" Click="RestetChanges_Click"/>
+                <Button DockPanel.Dock="Right" Content="Delete group" Width="100" Click="Delete_Group"/>
+            </DockPanel>
+        </Grid>
+    </DockPanel>
 </Page>
