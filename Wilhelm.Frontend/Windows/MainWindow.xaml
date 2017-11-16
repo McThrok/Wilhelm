@@ -6,8 +6,7 @@
         xmlns:local="clr-namespace:Wilhelm.Frontend"
         mc:Ignorable="d"
         WindowStartupLocation="CenterScreen"
-        Title="Wilhelm" Height="600" Width="800"
-        Background="#7F7C84">
+        Title="Wilhelm" Height="600" Width="800">
     
     <Window.Resources>
 

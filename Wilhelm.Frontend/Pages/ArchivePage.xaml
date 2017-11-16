@@ -9,8 +9,7 @@
       Title="ActionTypesPage">
 
     <DockPanel >
-
-        <TextBlock TextAlignment="Center" Text="Archive" DockPanel.Dock="Top" Style="{StaticResource TitlePage }" />
+        <TextBlock Height="50" Margin="0,10,0,0" TextAlignment="Center" Text="Archive" DockPanel.Dock="Top" Style="{StaticResource TitlePage }" />
 
         <Grid DockPanel.Dock="Bottom" Margin="30">
             <Grid.ColumnDefinitions>
