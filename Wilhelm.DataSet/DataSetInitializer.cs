@@ -40,10 +40,10 @@ namespace Wilhelm.MainDataSet
 
                 WTask t1 = new WTask() { Name = "Nakarmić kota", Description = "Tom jest wybredny i je tylko Royal Canin", Frequency = 1, StartDate = DateTime.Today };
                 WTask t2 = new WTask() { Name = "Nakarmić psa", Description = "Burek zje wszystko", Frequency = 1, StartDate = DateTime.Today };
-                WTask t3 = new WTask() { Name = "Nakarmić rybki", Description = "Jeśli pływają brzuszkiem do góry to można przestać karmić", Frequency = 2, StartDate = new DateTime(DateTime.Today.Year, DateTime.Today.Month, DateTime.Today.Day + 5) };
-                WTask t4 = new WTask() { Name = "Wymienić wodę rybkom", Frequency = 14, StartDate = new DateTime(DateTime.Today.Year, DateTime.Today.Month, DateTime.Today.Day + 5) };
+                WTask t3 = new WTask() { Name = "Nakarmić rybki", Description = "Jeśli pływają brzuszkiem do góry to można przestać karmić", Frequency = 2, StartDate = DateTime.Today };
+                WTask t4 = new WTask() { Name = "Wymienić wodę rybkom", Frequency = 14, StartDate = DateTime.Today };
 
-                WTask t5 = new WTask() { Name = "Podlać kwiaty", Description = "Wszytkie oprócz rosiczki", Frequency = 3, StartDate = new DateTime(DateTime.Today.Year, DateTime.Today.Month, DateTime.Today.Day + 1) };
+                WTask t5 = new WTask() { Name = "Podlać kwiaty", Description = "Wszytkie oprócz rosiczki", Frequency = 3, StartDate = DateTime.Today };
                 WTask t6 = new WTask() { Name = "Podlać rosiczkę", Description = "Rosiczka jest mięsożerna, ale można i trzeba ją regularnie podlewać", Frequency = 1, StartDate = DateTime.Today };
 
                 WTask t7 = new WTask() { Name = "Zapłacić czynsz", Description = "1000zl plus ewentualne dopłaty", Frequency = 30, StartDate = DateTime.Today };
@@ -62,7 +62,8 @@ namespace Wilhelm.MainDataSet
                 db.WGroups.Add(g3);
                 db.WGroups.Add(g4);
 
-                List<WActivity> activities = new List<WActivity>();
+                db.SaveChanges();
+
                 foreach (var task in db.WTasks)
                     foreach (var activity in GenerateActivities(random, task))
                         db.WActivities.Add(activity);
@@ -82,6 +83,7 @@ namespace Wilhelm.MainDataSet
                 Link(g4, t7);
 
                 db.SaveChanges();
+                var a = db.WActivities.ToList();
             }
         }
         private void Link(WGroup group, WTask task)
@@ -93,10 +95,9 @@ namespace Wilhelm.MainDataSet
         {
             var activities = new List<WActivity>();
             int n = rd.Next() % 10 + 7;
-            int offset = rd.Next() % 2;
 
             for (int i = 0; i < n; i++)
-                activities.Add(new WActivity() { WTask = task, IsDone = rd.Next() % 5 != 0, Date = DateTime.Today.Date.AddDays(-offset - i * task.Frequency) });
+                activities.Add(new WActivity() { WTask = task, IsDone = rd.Next() % 5 != 0, Date = DateTime.Today.Date.AddDays(- i * task.Frequency) });
             return activities;
         }
     }

@@ -12,12 +12,14 @@ namespace Wilhelm.Backend.Services
     {
         public List<WActivity> GenerateActivities(IEnumerable<WActivity> activities, IEnumerable<WTask> tasks, DateTime date)
         {
+            var a = activities.ToList();
             List<WActivity> generatedActivities = new List<WActivity>();
             foreach (var task in tasks)
                 if (!task.Archivized)
                 {
-                    var lastActivity = activities.LastOrDefault(x => x.WTask.Id == task.Id);
-                    generatedActivities.AddRange(GenerateActivitiesForTask(lastActivity, task, date));
+                    var latestActivityDate = activities.Max(x => x.Date);
+                    var latestActivity = activities.First(x => date == latestActivityDate);
+                    generatedActivities.AddRange(GenerateActivitiesForTask(latestActivity, task, date));
                 }
 
             return generatedActivities;
