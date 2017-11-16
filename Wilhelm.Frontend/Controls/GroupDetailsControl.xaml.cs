@@ -78,7 +78,7 @@ namespace Wilhelm.Frontend.Controls
 
         private void AssignTask_Click(object sender, RoutedEventArgs e)
         {
-            var dialog = new ChooseItemWindow(ShownGroup.Tasks.Where(x => !x.Groups.Contains(ShownGroup)).Cast<NamedHolder>().ToList());
+            var dialog = new ChooseItemWindow(_availableTasksToAdd.Cast<NamedHolder>().ToList());
             dialog.ShowDialog();
             if (dialog.SelectedHolder is TaskHolder taskToAdd)
             {
