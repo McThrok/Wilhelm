@@ -79,20 +79,20 @@ namespace Wilhelm.Frontend.Pages
             {
                 var groupInDetails = changedGroup.Tasks.Where(x => x.Id == task.Id).SingleOrDefault();
 
-                if (ActiveGroup.Tasks.Contains(task) && groupInDetails == null)
+                if (!ActiveGroup.Tasks.Contains(task) && groupInDetails != null)
                 {
                     task.Groups.Add(ActiveGroup);
                     ActiveGroup.Tasks.Add(task);
                 }
 
-                if (!ActiveGroup.Tasks.Contains(task) && groupInDetails != null)
+                if (ActiveGroup.Tasks.Contains(task) && groupInDetails == null)
                 {
                     task.Groups.Remove(ActiveGroup);
                     ActiveGroup.Tasks.Remove(task);
                 }
             }
             SaveChanges();
-
+            Activate();
         }
         private void RestetChanges_Click(object sender, RoutedEventArgs e)
         {

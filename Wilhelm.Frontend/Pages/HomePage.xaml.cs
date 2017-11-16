@@ -57,7 +57,7 @@ namespace Wilhelm.Frontend.Pages
         {
             var todayTasksList = new List<ActivityHolder>();
             _holdersService.UpdateArchiveHolders(todayTasksList, _activityService.GetTodaysActivities());
-            _currentList = new ObservableCollection<ActivityHolder>(todayTasksList);
+            _currentList = new ObservableCollection<ActivityHolder>(todayTasksList.Where(x => !x.Task.Archivized));
             TaskListView.ItemsSource = _currentList;
         }
 

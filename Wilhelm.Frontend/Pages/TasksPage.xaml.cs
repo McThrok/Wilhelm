@@ -97,6 +97,7 @@ namespace Wilhelm.Frontend.Pages
                 }
             }
             SaveChanges();
+            Activate();
         }
         private void RestetChanges_Click(object sender, RoutedEventArgs e)
         {
