@@ -83,6 +83,7 @@ namespace Wilhelm.Frontend.Controls
         {
             var dialog = new ChooseItemWindow(_availableGroupsToAdd.Cast<NamedHolder>().ToList());
             dialog.ShowDialog();
+
             if (dialog.SelectedHolder is GroupHolder groupToAdd)
             {
                 _availableGroupsToAdd.Remove(groupToAdd);

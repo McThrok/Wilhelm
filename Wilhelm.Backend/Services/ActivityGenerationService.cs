@@ -12,30 +12,31 @@ namespace Wilhelm.Backend.Services
     {
         public List<WActivity> GenerateActivities(IEnumerable<WActivity> activities, IEnumerable<WTask> tasks, DateTime date)
         {
-            List<WActivity> generatedActivities = new List<WActivity>();
+            List<WActivity> generatedTodayTasks = new List<WActivity>();
             foreach (var task in tasks)
                 if (!task.Archivized)
                 {
                     WActivity latestActivity = null;
-                    if (activities != null && activities.FirstOrDefault() !=null)
+                    var activitiesForTask = activities.Where(x => x.WTask.Id == task.Id);
+                    if (activitiesForTask != null && activitiesForTask.FirstOrDefault() !=null)
                     {
-                        var latestActivityDate = activities.Max(x => x.Date);
-                        latestActivity = activities.First(x => x.Date == latestActivityDate);
+                        var latestActivityDate = activitiesForTask.Max(x => x.Date);
+                        latestActivity = activitiesForTask.First(x => x.Date == latestActivityDate);
                     }
-                    generatedActivities.AddRange(GenerateActivitiesForTask(latestActivity, task, date));
+                    generatedTodayTasks.AddRange(GenerateActivitiesForTask(latestActivity, task, date));
                 }
 
-            return generatedActivities;
+            return generatedTodayTasks;
         }
-        public List<WActivity> GenerateActivitiesForTask(WActivity lastActivity, WTask task, DateTime date)
+        private List<WActivity> GenerateActivitiesForTask(WActivity latestActivity, WTask task, DateTime date)
         {
             var result = new List<WActivity>();
 
             DateTime nextActivityDate = task.StartDate.Date;
 
-            if (lastActivity != null)
+            if (latestActivity != null)
             {
-                var nextFromActivity = lastActivity.Date.Date.AddDays(task.Frequency);
+                var nextFromActivity = latestActivity.Date.Date.AddDays(task.Frequency);
                 if (DateTime.Compare(nextFromActivity, nextActivityDate) > 0)
                     nextActivityDate = nextFromActivity;
             }

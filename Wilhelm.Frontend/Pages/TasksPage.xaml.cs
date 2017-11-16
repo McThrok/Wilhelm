@@ -116,6 +116,7 @@ namespace Wilhelm.Frontend.Pages
 
         public void Activate()
         {
+            ActiveTask = null;
             _groups.Clear();
             _tasks.Clear();
             _holdersService.UpdateConfigHolders(_groups, _tasks, _configurationService.GetConfig());

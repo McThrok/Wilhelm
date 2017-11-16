@@ -22,13 +22,13 @@ namespace Wilhelm.Frontend.Services
             _holdersConversionService = holdersConversionService;
         }
 
-        public void UpdateArchiveHolders(ICollection<ActivityHolder> activities, IEnumerable<ActivityDto> dtos)
+        public void UpdateArchiveHolders(ICollection<ActivityHolder> archives, IEnumerable<ActivityDto> dtos)
         {
-            UpdateHolders(activities, dtos);
+            UpdateHolders(archives, dtos);
         }
-        public void UpateTodayActivityHolder(ICollection<ActivityHolder> activities, IEnumerable<ActivityDto> dtos)
+        public void UpateTodayActivityHolder(ICollection<ActivityHolder> todayTasks, IEnumerable<ActivityDto> dtos)
         {
-            UpdateHolders(activities, dtos);
+            UpdateHolders(todayTasks, dtos);
         }
         private void UpdateHolders(ICollection<ActivityHolder> activities, IEnumerable<ActivityDto> dtos)
         {

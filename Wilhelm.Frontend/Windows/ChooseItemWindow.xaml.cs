@@ -21,17 +21,17 @@ namespace Wilhelm.Frontend.Windows
     public partial class ChooseItemWindow : Window
     {
         public NamedHolder SelectedHolder { get; private set; }
-        private List<NamedHolder> holders;
-        public ChooseItemWindow(List<NamedHolder> groups)
+        private List<NamedHolder> _holders;
+        public ChooseItemWindow(List<NamedHolder> holders)
         {
             InitializeComponent();
-            holders = groups;
-            HoldersListView.ItemsSource = holders;
+            this._holders = holders;
+            HoldersListView.ItemsSource = this._holders;
         }
 
         private void OkButton_Click(object sender, RoutedEventArgs e)
         {
-            SelectedHolder = holders[HoldersListView.SelectedIndex];
+            SelectedHolder = _holders[HoldersListView.SelectedIndex];
             Close();
         }
 

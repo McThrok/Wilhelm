@@ -41,6 +41,7 @@ namespace Wilhelm.Backend.Services
                     db.WActivities.Add(activity);
                 db.SaveChanges();
 
+                //first ToList is to allow to compare dates
                 var todaysTask = db.WActivities.ToList().Where(x => x.Date.Date == DateTime.Now.Date).ToList();
                 _entitiesService.UpdateDto(dto, todaysTask);
             }

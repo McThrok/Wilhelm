@@ -55,10 +55,9 @@ namespace Wilhelm.Frontend.Pages
 
         public void Activate()
         {
-            var archiveList = new List<ActivityHolder>();
-            _holdersService.UpdateArchiveHolders(archiveList, _activityService.GetTodaysActivities());
-            archiveList.Sort((a, b) => DateTime.Compare(a.Date, b.Date));
-            _currentList = new ObservableCollection<ActivityHolder>(archiveList);
+            var todayTasksList = new List<ActivityHolder>();
+            _holdersService.UpdateArchiveHolders(todayTasksList, _activityService.GetTodaysActivities());
+            _currentList = new ObservableCollection<ActivityHolder>(todayTasksList);
             TaskListView.ItemsSource = _currentList;
         }
 
