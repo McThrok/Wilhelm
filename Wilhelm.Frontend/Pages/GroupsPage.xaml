@@ -6,7 +6,7 @@
       xmlns:local="clr-namespace:Wilhelm.Frontend.Pages"
       xmlns:controls="clr-namespace:Wilhelm.Frontend.Controls"
       mc:Ignorable="d" 
-      d:DesignHeight="300" d:DesignWidth="300"
+      d:DesignHeight="600" d:DesignWidth="600"
       Title="ActionTypesPage">
 
     <Page.Resources>
@@ -14,8 +14,8 @@
         <Style TargetType="Button" x:Key="GroupButton">
             <Setter Property="Margin" Value="0"/>
             <Setter Property="DockPanel.Dock" Value="Top"/>
-            <Setter Property="Width" Value="200"/>
-            <Setter Property="Height" Value="50"/>
+            <Setter Property="Width" Value="160"/>
+            <Setter Property="Height" Value="40"/>
             <Style.Triggers>
                 <DataTrigger Binding="{Binding Archivized}" Value="true">
                     <Setter Property="Visibility" Value="Collapsed"/>
@@ -25,7 +25,7 @@
 
     </Page.Resources>
 
-    <Grid>
+    <Grid Margin="6">
         <Grid.RowDefinitions>
             <RowDefinition  Height="Auto"/>
             <RowDefinition  Height="*"/>
@@ -36,8 +36,8 @@
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
-        <Button Grid.Row="0" Grid.Column="0" Content="Add new group" Style="{StaticResource GroupButton}" Click="AddNewGroup_Click" />
-        <ListView Grid.Row="1" Grid.Column="0" Grid.RowSpan="2" Margin="10"  Name="GroupsListView" HorizontalContentAlignment="Stretch" >
+        <Button Margin="6" Grid.Row="0" Grid.Column="0" Content="Add new group" Style="{StaticResource GroupButton}" Click="AddNewGroup_Click" />
+        <ListView Margin="6" Grid.Row="1" Grid.Column="0" Grid.RowSpan="2"  Name="GroupsListView" HorizontalContentAlignment="Stretch" >
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <Button Style="{StaticResource GroupButton}" Click="GroupButton_Click" Tag="{Binding}">
@@ -55,9 +55,9 @@
         <controls:GroupDetailsControl Grid.Row="0" Grid.Column="1" Grid.RowSpan="2" x:Name="GroupDetails"/>
 
         <DockPanel Grid.Row="2" Grid.Column="1" LastChildFill="False" Name="GroupButtonsPanel">
-            <Button DockPanel.Dock="Left" Content="Apply" Width="130" Click="Apply_Click"/>
-            <Button DockPanel.Dock="Left" Content="Reset changes" Width="130" Click="RestetChanges_Click"/>
-            <Button DockPanel.Dock="Right" Content="Delete group" Width="130" Click="Delete_Group"/>
+            <Button DockPanel.Dock="Left" Content="Apply" Width="100" Click="Apply_Click"/>
+            <Button DockPanel.Dock="Left" Content="Reset changes" Width="100" Click="RestetChanges_Click"/>
+            <Button DockPanel.Dock="Right" Content="Delete group" Width="100" Click="Delete_Group"/>
         </DockPanel>
 
 
