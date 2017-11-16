@@ -57,8 +57,8 @@
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
 
-            <Button Margin="0,0,0,0" Grid.Row="0" Grid.Column="0" Content="Add new task" Style="{StaticResource TaskButton}" Click="AddNewTask_Click" Background="#435774" />
-            <ListView BorderThickness="0" Margin="0,0,0,0" Grid.Row="1" Grid.Column="0" Grid.RowSpan="2" Name="TasksListView" HorizontalContentAlignment="Stretch"  >
+            <Button Margin="0" Grid.Row="0" Grid.Column="0" Content="Add new task" Style="{StaticResource TaskButton}" Click="AddNewTask_Click"/>
+            <ListView Background="#b7b09c" Width="170" BorderThickness="0" Margin="0,0,0,0" Grid.Row="1" Grid.Column="0" Grid.RowSpan="2" Name="TasksListView" HorizontalContentAlignment="Stretch"  >
                 <ListView.ItemContainerStyle>
                     <Style TargetType="{x:Type ListBoxItem}">
                         <Setter Property="Template">
@@ -85,9 +85,9 @@
                 </ListView.ItemTemplate>
             </ListView>
 
-            <controls:TaskDetailsControl Grid.Row="0" Grid.Column="1" Grid.RowSpan="2" x:Name="TaskDetails"/>
+            <controls:TaskDetailsControl Grid.Row="0" Margin="10,0,0,0" Grid.Column="1" Grid.RowSpan="2" x:Name="TaskDetails"/>
 
-            <DockPanel Grid.Row="2" Grid.Column="1" LastChildFill="False" Name="TaskButtonsPanel" Height="40">
+            <DockPanel Grid.Row="2" Grid.Column="1" Margin="10,0,0,0" LastChildFill="False" Name="TaskButtonsPanel" Height="40">
                 <Button DockPanel.Dock="Left" Content="Apply" Width="100" Click="Apply_Click"/>
                 <Button DockPanel.Dock="Left" Content="Reset changes" Width="100" Click="RestetChanges_Click"/>
                 <Button DockPanel.Dock="Right" Content="Delete task" Width="100" Click="Delete_Task"/>

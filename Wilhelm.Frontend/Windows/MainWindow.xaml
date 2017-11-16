@@ -6,7 +6,8 @@
         xmlns:local="clr-namespace:Wilhelm.Frontend"
         mc:Ignorable="d"
         WindowStartupLocation="CenterScreen"
-        Title="Wilhelm" Height="600" Width="800">
+        Title="Wilhelm" Height="600" Width="800"
+        Background="#ddd8c9">
     
     <Window.Resources>
 
@@ -49,14 +50,13 @@
         <!--datetime control removed-->
 
         <DockPanel Grid.Row="1" LastChildFill="False" Width="150" Margin="0,60,0,0">
-            <Grid Width="150" Margin="10,0,0,0">
+            <Grid Width="150" Margin="10,0,0,10">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="*"/>
                     <RowDefinition Height="*"/>
                     <RowDefinition Height="*"/>
                     <RowDefinition Height="*"/>
                     <RowDefinition Height="*"/>
-                    <RowDefinition Height="2*"/>
                 </Grid.RowDefinitions>
                 <Button Grid.Row="0" Name="HomeButton" Content="Home" Style="{StaticResource ResourceKey=MenuButon}" Click="HomeButto_Click"/>
                 <Button Grid.Row="1" Name="TasksButton" Content="Tasks" Style="{StaticResource ResourceKey=MenuButon}" Click="TasksButton_Click"/>
