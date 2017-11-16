@@ -16,8 +16,8 @@
             </Style.Triggers>
         </Style>
     </UserControl.Resources>
-    
-    <DockPanel Name="GroupDetailsPanel" >
+
+    <DockPanel Name="GroupDetailsPanel"  >
 
         <Grid DockPanel.Dock="Top">
             <Grid.ColumnDefinitions>

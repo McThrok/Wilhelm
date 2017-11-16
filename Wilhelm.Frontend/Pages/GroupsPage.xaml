@@ -37,7 +37,7 @@
         </Grid.ColumnDefinitions>
 
         <Button Margin="6" Grid.Row="0" Grid.Column="0" Content="Add new group" Style="{StaticResource GroupButton}" Click="AddNewGroup_Click" />
-        <ListView Margin="6" Grid.Row="1" Grid.Column="0" Grid.RowSpan="2"  Name="GroupsListView" HorizontalContentAlignment="Stretch" >
+        <ListView Margin="6" Grid.Row="1" Grid.Column="0" Grid.RowSpan="2"  Name="GroupsListView" HorizontalContentAlignment="Stretch"  >
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <Button Style="{StaticResource GroupButton}" Click="GroupButton_Click" Tag="{Binding}">

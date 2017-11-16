@@ -10,7 +10,7 @@
 
     <DockPanel >
 
-        <TextBlock Text="Archive" DockPanel.Dock="Top" Style="{StaticResource TitlePage }" />
+        <TextBlock TextAlignment="Center" Text="Archive" DockPanel.Dock="Top" Style="{StaticResource TitlePage }" />
 
         <Grid DockPanel.Dock="Bottom" Margin="30">
             <Grid.ColumnDefinitions>
