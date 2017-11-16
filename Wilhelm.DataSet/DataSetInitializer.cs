@@ -53,9 +53,8 @@ namespace Wilhelm.MainDataSet
                 for (int i = 0; i < 8; i++)
                     activities.Add(new WActivity() { WTask = t5, Date = new DateTime(DateTime.Today.Year, DateTime.Today.Month-i, DateTime.Today.Day), IsDone = random.Next() % 2 == 0 });
 
-                foreach (WActivity a in activities)
                     db.WActivities.Add(a);
-
+                foreach (WActivity a in activities)
                 g1.WTasks.Add(t1);
                 g1.WTasks.Add(t2);
                 g1.WTasks.Add(t5);
