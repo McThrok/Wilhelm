@@ -7,6 +7,7 @@
     <Application.Resources>
         <Style TargetType="TextBlock" x:Key="TitlePage">
             <Setter Property="FontSize" Value="25"/>
+            <Setter Property="Foreground" Value="#5a636f"/>
         </Style>
 
 

@@ -43,11 +43,17 @@
             <Button Grid.Column="1" Content="Cancel" DockPanel.Dock="Left" Click="CancelButton_Click" />
             </Grid>
         </DockPanel>
+        
         <ListView  Name="HoldersListView">
+            <ListView.ItemContainerStyle>
+                <Style TargetType="{x:Type ListViewItem}">
+                    <Setter Property="Margin" Value="5"/>
+                </Style>
+            </ListView.ItemContainerStyle>
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <DockPanel Style="{StaticResource ArchivixedHolder}">
-                        <TextBlock Text="{Binding Name}" DockPanel.Dock="Top"/>
+                        <TextBlock Text="{Binding Name}" DockPanel.Dock="Top" FontWeight="Bold"/>
                         <TextBlock Text="{Binding Description}"/>
                     </DockPanel>
                 </DataTemplate>

@@ -61,7 +61,7 @@
                                 <ColumnDefinition Width="*"/>
                                 <ColumnDefinition Width="Auto"/>
                             </Grid.ColumnDefinitions>
-                            <TextBlock Grid.Row="0" Grid.Column="0" Text="{Binding Name}" />
+                            <TextBlock Grid.Row="0" Grid.Column="0" Text="{Binding Name}" FontWeight="Bold"/>
                             <TextBlock Grid.Row="1" Grid.Column="0" Text="{Binding Description}" />
                             <Button Grid.Row="0" Grid.Column="1" Grid.RowSpan="2" Content="Remove" DockPanel.Dock="Right" Tag="{Binding}" Click="RemoveFromGroup_Click"/>
                         </Grid>
