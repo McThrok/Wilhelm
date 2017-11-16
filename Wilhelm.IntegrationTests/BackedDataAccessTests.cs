@@ -10,6 +10,19 @@ using Wilhelm.DataAccess;
 
 namespace Wilhelm.IntegrationTests
 {
+    class DbConnectionTests
+    {
+        [Test]
+        public void DbConnectionTest()
+        {
+            using (var db = new WContext())
+            {
+                db.WActivities.ToList();
+                db.Database.Delete();
+            }
+        }
+    }
+
     [TestFixture]
     class BackendDataAccessTests
     {
@@ -19,41 +32,72 @@ namespace Wilhelm.IntegrationTests
             Database.SetInitializer(new WilhelmTestContexInitializer());
         }
 
-        [TestCase]
-        public void AddTaskToDB_ReturnsCorrectId()
+
+        [Test]
+        public void AutoAddIdTest()
         {
-            DataAccessIntegration c = new DataAccessIntegration(new WContextFactory());
-            WTask t1 = new WTask() { Name = "T1", Description = "T1", Frequency = 1, StartDate = DateTime.Today };
-            c.SaveTask(t1);
+            WTask t1 = new WTask() { Id = 0, Name = nameof(AutoAddIdTest), Description = "T1", Frequency = 1, StartDate = DateTime.Today };
+            using (WContext db = new WContext())
+            {
+                db.WTasks.Add(t1);
+                db.SaveChanges();
+            }
 
             WTask dbTask;
             using (WContext db = new WContext())
             {
-                dbTask = db.WTasks.Where((t) => (t.Name == t1.Name) && (t.Description == t1.Description) && (t.Frequency == t1.Frequency)).Single();
+                dbTask = db.WTasks.Where(x => x.Name == nameof(AutoAddIdTest)).SingleOrDefault();
             }
-            Assert.AreEqual(t1.Id, dbTask.Id);
+            Assert.AreNotEqual(0, dbTask.Id);
         }
 
         [Test]
-        public void GetTodayActiovities_ReturnsTodayActivities()
+        public void GetActivityWithNotNullTask()
         {
-            DataAccessIntegration c = new DataAccessIntegration(new WContextFactory());
-            var activities = c.GetTodayActivities();
+            WTask t1 = new WTask() { Id = 1234,Name="t1", Frequency = 1, StartDate = new DateTime(2017,10,10) };
+            WActivity a1 = new WActivity() {Id = 5123, WTask = t1, Date = new DateTime(2017, 10, 10) };
 
-            List<WActivity> allActivities = new List<WActivity>();
             using (WContext db = new WContext())
             {
-                allActivities = db.WActivities.ToList();
+                db.WActivities.Add(a1);
+                db.SaveChanges();
             }
 
-           // var bbb = activities.Intersect(allActivities, (a)=>a.);
-            //var aaa = activities.Intersect(allActivities).Count();
-            var hasAll = activities.Intersect(allActivities).Count() == activities.Count();
-            Assert.IsTrue(hasAll);
+            bool resut = false;
+            using (WContext db = new WContext())
+            {
+                var dbActivity = db.WActivities.Include(a => a.WTask).Where(x => x.Id == a1.Id).SingleOrDefault();
+                if (dbActivity != null && dbActivity.WTask != null)
+                    resut = true;
+            }
+            Assert.IsTrue(resut);
+
         }
-        
+        [Test]
+        public void GetGroupWithNotNullTask()
+        {
+            WTask t1 = new WTask() { Id = 12345, Name = "t1", Frequency = 1, StartDate = new DateTime(2017, 10, 10) };
+            WGroup g1 = new WGroup() {Id = 45678, Name = "g1", WTasks = new List<WTask>() { t1 }};
+            t1.WGroups = new List<WGroup>() { g1 };
+
+            using (WContext db = new WContext())
+            {
+                db.WGroups.Add(g1);
+                db.SaveChanges();
+            }
+
+            bool resut = false;
+            using (WContext db = new WContext())
+            {
+                var dbActivity = db.WGroups.Include(a => a.WTasks).Where(x => x.Id == g1.Id).SingleOrDefault();
+                if (dbActivity != null && dbActivity.WTasks != null && dbActivity.WTasks.Count == 1)
+                    resut = true;
+            }
+            Assert.IsTrue(resut);
+        }
+
         [TearDown]
-       public void TearDown()
+        public void TearDown()
         {
             using (var db = new WContext())
             {
@@ -70,7 +114,7 @@ namespace Wilhelm.IntegrationTests
             WGroup g2 = new WGroup() { Name = "Group2", Description = "Plants" };
 
             WTask t1 = new WTask() { Name = "Feed the cat", Description = "Royal Canin", Frequency = 1, StartDate = DateTime.Today };
-            WTask t2 = new WTask() { Name = "Feed the dog", Frequency = 1, StartDate = new DateTime(2017,12,01) };
+            WTask t2 = new WTask() { Name = "Feed the dog", Frequency = 1, StartDate = new DateTime(2017, 12, 01) };
             WTask t3 = new WTask() { Name = "Water plant1", Frequency = 3, StartDate = new DateTime(2017, 12, 02) };
             WTask t4 = new WTask() { Name = "water Maciek", Frequency = 1, StartDate = new DateTime(2017, 12, 03) };
             WTask t5 = new WTask() { Name = "give insect to Maciek", Frequency = 20, StartDate = new DateTime(2017, 12, 01) };

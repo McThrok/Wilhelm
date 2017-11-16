@@ -18,21 +18,13 @@ namespace Wilhelm.MainDataSet
             initializer.Clean();
             Console.WriteLine("Loading data..");
             initializer.Init();
-            Console.WriteLine("Done");
+            Console.WriteLine("Database is ready.");
         }
         public void Clean()
         {
             using (var db = new WContext())
             {
-                foreach (var item in db.WTasks.ToList())
-                    db.WTasks.Remove(item);
-
-                foreach (var item in db.WGroups.ToList())
-                    db.WGroups.Remove(item);
-
-                foreach (var item in db.WActivities.ToList())
-                    db.WActivities.Remove(item);
-                db.SaveChanges();
+                db.Database.Delete();
             }
         }
         public void Init()
@@ -50,7 +42,7 @@ namespace Wilhelm.MainDataSet
                 WTask t5 = new WTask() { Name = "give insect to Maciek", Frequency = 30, StartDate = new DateTime(DateTime.Today.Year, DateTime.Today.Month, DateTime.Today.Day + 5) };
 
                 List<WActivity> activities = new List<WActivity>();
-                for (int i = 0; i <7; i++)
+                for (int i = 0; i < 7; i++)
                     activities.Add(new WActivity() { WTask = t1, Date = new DateTime(DateTime.Today.Year, DateTime.Today.Month, DateTime.Today.Day - i), IsDone = random.Next() % 2 == 0 });
                 for (int i = 0; i < 14; i++)
                     activities.Add(new WActivity() { WTask = t2, Date = new DateTime(DateTime.Today.Year, DateTime.Today.Month, DateTime.Today.Day - i), IsDone = random.Next() % 2 == 0 });
@@ -59,12 +51,10 @@ namespace Wilhelm.MainDataSet
                 for (int i = 0; i < 5; i++)
                     activities.Add(new WActivity() { WTask = t4, Date = new DateTime(DateTime.Today.Year, DateTime.Today.Month, DateTime.Today.Day - i * t4.Frequency), IsDone = random.Next() % 2 == 0 });
                 for (int i = 0; i < 8; i++)
-                    activities.Add(new WActivity() { WTask = t5, Date = new DateTime(DateTime.Today.Year, DateTime.Today.Month-i, DateTime.Today.Day), IsDone = random.Next() % 2 == 0 });
+                    activities.Add(new WActivity() { WTask = t5, Date = new DateTime(DateTime.Today.Year, DateTime.Today.Month - i, DateTime.Today.Day), IsDone = random.Next() % 2 == 0 });
 
-                activities.Sort((x, y) => DateTime.Compare(x.Date, y.Date));
                 foreach (WActivity a in activities)
                     db.WActivities.Add(a);
-
                 g1.WTasks.Add(t1);
                 g1.WTasks.Add(t2);
                 g1.WTasks.Add(t5);
