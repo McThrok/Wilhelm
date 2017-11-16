@@ -12,11 +12,10 @@
     <Window.Resources>
 
         <Style TargetType="Button" x:Key="MenuButon">
-            <Setter Property="Margin" Value="10"/>
             <Setter Property="DockPanel.Dock" Value="Top"/>
             <Setter Property="Width" Value="auto"/>
             <Setter Property="Height" Value="auto"/>
-            <Setter Property="Margin" Value="0,0,0,0"/>
+            <Setter Property="Margin" Value="0"/>
             <Setter Property="Background" Value="#3b424c"/>
             <Setter Property="Foreground" Value="#e5e9e6"/>
             <Setter Property="FontSize" Value="16px"/>
