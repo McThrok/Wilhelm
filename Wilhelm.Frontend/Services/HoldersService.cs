@@ -139,5 +139,93 @@ namespace Wilhelm.Frontend.Services
             }
             return startName;
         }
+
+        public void ApplyChanges(ICollection<TaskHolder> currnetTasks, IEnumerable<GroupHolder> currentGroups, TaskHolder updatedTask)
+        {
+            var taskToUpdate = currnetTasks.SingleOrDefault(x => x.Id == updatedTask.Id);
+            if (taskToUpdate == null)
+            {
+                taskToUpdate = new TaskHolder();
+                currnetTasks.Add(taskToUpdate);
+            }
+            taskToUpdate.Name = updatedTask.Name;
+            taskToUpdate.Description = updatedTask.Description;
+            taskToUpdate.StartDate = updatedTask.StartDate;
+            taskToUpdate.Frequency = updatedTask.Frequency;
+            if (taskToUpdate.Groups == null)
+                taskToUpdate.Groups = new ObservableCollection<GroupHolder>();
+
+            foreach (var group in currentGroups)
+            {
+                var taskInDetails = updatedTask.Groups.Where(x => x.Id == group.Id).SingleOrDefault();
+
+                if (!taskToUpdate.Groups.Contains(group) && taskInDetails != null)
+                {
+                    group.Tasks.Add(taskToUpdate);
+                    taskToUpdate.Groups.Add(group);
+                }
+
+                if (taskToUpdate.Groups.Contains(group) && taskInDetails == null)
+                {
+                    group.Tasks.Remove(taskToUpdate);
+                    taskToUpdate.Groups.Remove(group);
+                }
+            }
+        }
+        public void ApplyChanges(ICollection<GroupHolder> currentGroups, IEnumerable<TaskHolder> currnetTasks, GroupHolder updatedGroup)
+        {
+            var groupToUpdate = currentGroups.SingleOrDefault(x => x.Id == updatedGroup.Id);
+            if (groupToUpdate == null)
+            {
+                groupToUpdate = new GroupHolder();
+                currentGroups.Add(groupToUpdate);
+            }
+            groupToUpdate.Name = updatedGroup.Name;
+            groupToUpdate.Description = updatedGroup.Description;
+            if (groupToUpdate.Tasks == null)
+                groupToUpdate.Tasks = new ObservableCollection<TaskHolder>();
+
+
+            foreach (var task in currnetTasks)
+            {
+                var groupInDetails = updatedGroup.Tasks.Where(x => x.Id == task.Id).SingleOrDefault();
+
+                if (!groupToUpdate.Tasks.Contains(task) && groupInDetails != null)
+                {
+                    task.Groups.Add(groupToUpdate);
+                    groupToUpdate.Tasks.Add(task);
+                }
+
+                if (groupToUpdate.Tasks.Contains(task) && groupInDetails == null)
+                {
+                    task.Groups.Remove(groupToUpdate);
+                    groupToUpdate.Tasks.Remove(task);
+                }
+            }
+        }
+
+        public GroupHolder CreateNewGroup(IEnumerable<GroupHolder> groups)
+        {
+            var newGroup = new GroupHolder()
+            {
+                Id = GenerateTemporaryId(groups),
+                Name = GetNameWithIndexIfNeeded("New group", groups),
+                Tasks = new ObservableCollection<TaskHolder>(),
+            };
+            return newGroup;
+        }
+
+        public TaskHolder CreateNewTask(IEnumerable<TaskHolder> tasks)
+        {
+            var newTask = new TaskHolder()
+            {
+                Id = GenerateTemporaryId(tasks),
+                Name = GetNameWithIndexIfNeeded("New task", tasks),
+                Groups = new ObservableCollection<GroupHolder>(),
+                StartDate = DateTime.Now,
+                Frequency = 1,
+            };
+            return newTask;
+        }
     }
 }

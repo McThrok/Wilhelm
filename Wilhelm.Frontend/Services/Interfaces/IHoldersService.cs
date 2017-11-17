@@ -22,6 +22,15 @@ namespace Wilhelm.Frontend.Services.Interfaces
 
         int GenerateTemporaryId(IEnumerable<Holder> holders);
         string GetNameWithIndexIfNeeded(string startName, IEnumerable<NamedHolder> holders);
+        GroupHolder CreateNewGroup(IEnumerable<GroupHolder> groups);
+        TaskHolder CreateNewTask(IEnumerable<TaskHolder> tasks);
+
+        void ApplyChanges(ICollection<TaskHolder> currnetTasks, IEnumerable<GroupHolder> currentGroups, TaskHolder updatedTask);
+        void ApplyChanges(ICollection<GroupHolder> currentGroups, IEnumerable<TaskHolder> currnetTasks, GroupHolder updatedGroup);
+
+
+
+
 
     }
 }

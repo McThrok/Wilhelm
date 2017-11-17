@@ -58,39 +58,12 @@ namespace Wilhelm.Frontend.Pages
         }
         private void AddNewGroup_Click(object sender, RoutedEventArgs e)
         {
-            var addedGroup = new GroupHolder()
-            {
-                Id = _holdersService.GenerateTemporaryId(_groups),
-                Name = _holdersService.GetNameWithIndexIfNeeded("New group", _groups),
-                Tasks = new ObservableCollection<TaskHolder>(),
-            };
-            ActiveGroup = addedGroup;
+            ActiveGroup = _holdersService.CreateNewGroup(_groups);
             ShowCurrentGroup();
         }
         private void Apply_Click(object sender, RoutedEventArgs e)
         {
-            var changedGroup = GroupDetails.ShownGroup;
-            if (!_groups.Contains(ActiveGroup))
-                _groups.Insert(0, ActiveGroup);
-            ActiveGroup.Name = changedGroup.Name;
-            ActiveGroup.Description = changedGroup.Description;
-
-            foreach (var task in _tasks)
-            {
-                var groupInDetails = changedGroup.Tasks.Where(x => x.Id == task.Id).SingleOrDefault();
-
-                if (!ActiveGroup.Tasks.Contains(task) && groupInDetails != null)
-                {
-                    task.Groups.Add(ActiveGroup);
-                    ActiveGroup.Tasks.Add(task);
-                }
-
-                if (ActiveGroup.Tasks.Contains(task) && groupInDetails == null)
-                {
-                    task.Groups.Remove(ActiveGroup);
-                    ActiveGroup.Tasks.Remove(task);
-                }
-            }
+            _holdersService.ApplyChanges(_groups, _tasks, GroupDetails.ShownGroup);
             SaveChanges();
             Activate();
         }
@@ -119,14 +92,12 @@ namespace Wilhelm.Frontend.Pages
             GroupsListView.ItemsSource = _groups;
             ShowCurrentGroup();
         }
-
         public void SaveChanges()
         {
             var config = new ConfigDto();
             _holdersService.UpdateConfigDto(config, _groups, _tasks);
             _configurationService.SaveConfig(config);
         }
-
         public void Save()
         {
         }

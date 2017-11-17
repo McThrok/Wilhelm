@@ -58,44 +58,12 @@ namespace Wilhelm.Frontend.Pages
         }
         private void AddNewTask_Click(object sender, RoutedEventArgs e)
         {
-            var addedTask = new TaskHolder()
-            {
-                Id = _holdersService.GenerateTemporaryId(_tasks),
-                Name = _holdersService.GetNameWithIndexIfNeeded("New task", _tasks),
-                Groups = new ObservableCollection<GroupHolder>(),
-                StartDate = DateTime.Now,
-                Frequency = 1,
-            };
-            ActiveTask = addedTask;
+            ActiveTask = _holdersService.CreateNewTask(_tasks);
             ShowCurrentTask();
         }
-
         private void Apply_Click(object sender, RoutedEventArgs e)
         {
-            var changedTask = TaskDetails.ShownTask;
-            if (!_tasks.Contains(ActiveTask))
-                _tasks.Insert(0, ActiveTask);
-            ActiveTask.Name = changedTask.Name;
-            ActiveTask.Description = changedTask.Description;
-            ActiveTask.StartDate = changedTask.StartDate;
-            ActiveTask.Frequency = changedTask.Frequency;
-
-            foreach (var group in _groups)
-            {
-                var taskInDetails = changedTask.Groups.Where(x => x.Id == group.Id).SingleOrDefault();
-
-                if (!ActiveTask.Groups.Contains(group) && taskInDetails != null)
-                {
-                    group.Tasks.Add(ActiveTask);
-                    ActiveTask.Groups.Add(group);
-                }
-
-                if (ActiveTask.Groups.Contains(group) && taskInDetails == null)
-                {
-                    group.Tasks.Remove(ActiveTask);
-                    ActiveTask.Groups.Remove(group);
-                }
-            }
+            _holdersService.ApplyChanges(_tasks, _groups, TaskDetails.ShownTask);
             SaveChanges();
             Activate();
         }
@@ -124,7 +92,6 @@ namespace Wilhelm.Frontend.Pages
             TasksListView.ItemsSource = _tasks;
             ShowCurrentTask();
         }
-
         private void SaveChanges()
         {
             var config = new ConfigDto();
