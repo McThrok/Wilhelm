@@ -15,6 +15,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Wilhelm.Frontend.Model;
+using Wilhelm.Frontend.Services.Interfaces;
 using Wilhelm.Frontend.Windows;
 
 namespace Wilhelm.Frontend.Controls
@@ -27,9 +28,12 @@ namespace Wilhelm.Frontend.Controls
         public event PropertyChangedEventHandler PropertyChanged;
         private List<TaskHolder> _availableTasksToAdd;
         private GroupHolder _showGroup;
+        private IHoldersService _holdersService;
 
-        public GroupDetailsControl()
+        public GroupDetailsControl(IHoldersService holdersService)
         {
+            _holdersService = holdersService;
+
             InitializeComponent();
             DataContext = this;
         }
@@ -44,36 +48,7 @@ namespace Wilhelm.Frontend.Controls
             GroupDetailsPanel.Visibility = Visibility.Visible;
             _availableTasksToAdd = new List<TaskHolder>();
 
-            ShownGroup = new GroupHolder()
-            {
-                Id = chooosenGroup.Id,
-                Name = chooosenGroup.Name,
-                Description = chooosenGroup.Description,
-                Archivized = chooosenGroup.Archivized,
-                Tasks = new ObservableCollection<TaskHolder>(),
-            };
-
-            foreach (var task in tasks)
-            {
-                var newTask = new TaskHolder
-                {
-                    Id = task.Id,
-                    Name = task.Name,
-                    Description = task.Description,
-                    Archivized = task.Archivized,
-                    Groups = new ObservableCollection<GroupHolder>(),
-                };
-
-                if (task.Groups.Contains(chooosenGroup))
-                {
-                    newTask.Groups.Add(ShownGroup);
-                    ShownGroup.Tasks.Add(newTask);
-                }
-                else
-                {
-                    _availableTasksToAdd.Add(newTask);
-                }
-            }
+            ShownGroup = _holdersService.InitializeGroupDetails(_availableTasksToAdd, chooosenGroup, tasks);
         }
 
         private void AssignTask_Click(object sender, RoutedEventArgs e)

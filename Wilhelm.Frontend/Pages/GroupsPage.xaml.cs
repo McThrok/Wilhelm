@@ -17,6 +17,7 @@ using System.Windows.Shapes;
 using Wilhelm.Backend.Model;
 using Wilhelm.Backend.Model.Dto;
 using Wilhelm.Backend.Services.Interfaces;
+using Wilhelm.Frontend.Controls;
 using Wilhelm.Frontend.Model;
 using Wilhelm.Frontend.Services.Interfaces;
 
@@ -29,6 +30,7 @@ namespace Wilhelm.Frontend.Pages
         private GroupHolder _activeGroup;
         private readonly IHoldersService _holdersService;
         private readonly IConfigurationService _configurationService;
+        private GroupDetailsControl _groupDetailsControl;
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -38,6 +40,8 @@ namespace Wilhelm.Frontend.Pages
             _configurationService = configurationService;
 
             InitializeComponent();
+            _groupDetailsControl = new GroupDetailsControl(holdersService);
+            GroupDetailsContentControl.Content = _groupDetailsControl;
             DataContext = this;
         }
         public void ShowCurrentGroup()
@@ -47,7 +51,7 @@ namespace Wilhelm.Frontend.Pages
             else
                 GroupButtonsPanel.Visibility = Visibility.Visible;
 
-            GroupDetails.Initialize(ActiveGroup, _tasks);
+            _groupDetailsControl.Initialize(ActiveGroup, _tasks);
         }
 
         private void GroupButton_Click(object sender, RoutedEventArgs e)
@@ -58,39 +62,12 @@ namespace Wilhelm.Frontend.Pages
         }
         private void AddNewGroup_Click(object sender, RoutedEventArgs e)
         {
-            var addedGroup = new GroupHolder()
-            {
-                Id = _holdersService.GenerateTemporaryId(_groups),
-                Name = _holdersService.GetNameWithIndexIfNeeded("New group", _groups),
-                Tasks = new ObservableCollection<TaskHolder>(),
-            };
-            ActiveGroup = addedGroup;
+            ActiveGroup = _holdersService.CreateNewGroup(_groups);
             ShowCurrentGroup();
         }
         private void Apply_Click(object sender, RoutedEventArgs e)
         {
-            var changedGroup = GroupDetails.ShownGroup;
-            if (!_groups.Contains(ActiveGroup))
-                _groups.Insert(0, ActiveGroup);
-            ActiveGroup.Name = changedGroup.Name;
-            ActiveGroup.Description = changedGroup.Description;
-
-            foreach (var task in _tasks)
-            {
-                var groupInDetails = changedGroup.Tasks.Where(x => x.Id == task.Id).SingleOrDefault();
-
-                if (!ActiveGroup.Tasks.Contains(task) && groupInDetails != null)
-                {
-                    task.Groups.Add(ActiveGroup);
-                    ActiveGroup.Tasks.Add(task);
-                }
-
-                if (ActiveGroup.Tasks.Contains(task) && groupInDetails == null)
-                {
-                    task.Groups.Remove(ActiveGroup);
-                    ActiveGroup.Tasks.Remove(task);
-                }
-            }
+            _holdersService.ApplyChanges(_groups, _tasks, _groupDetailsControl.ShownGroup);
             SaveChanges();
             Activate();
         }
@@ -119,14 +96,12 @@ namespace Wilhelm.Frontend.Pages
             GroupsListView.ItemsSource = _groups;
             ShowCurrentGroup();
         }
-
         public void SaveChanges()
         {
             var config = new ConfigDto();
             _holdersService.UpdateConfigDto(config, _groups, _tasks);
             _configurationService.SaveConfig(config);
         }
-
         public void Save()
         {
         }

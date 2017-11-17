@@ -81,7 +81,8 @@
                 </ListView.ItemTemplate>
             </ListView>
 
-            <controls:TaskDetailsControl Grid.Row="0" Margin="10,0,0,0" Grid.Column="1" Grid.RowSpan="2" x:Name="TaskDetails"/>
+            <!--<controls:TaskDetailsControl Grid.Row="0" Margin="10,0,0,0" Grid.Column="1" Grid.RowSpan="2" x:Name="TaskDetails"/>-->
+            <ContentControl Grid.Row="0" Margin="10,0,0,0" Grid.Column="1" Grid.RowSpan="2" x:Name="TaskDetailsContentControl"/>
 
             <DockPanel Grid.Row="2" Grid.Column="1" Margin="10,0,0,0" LastChildFill="False" Name="TaskButtonsPanel" Height="40">
                 <Button DockPanel.Dock="Left" Content="Apply" Width="100" Click="Apply_Click"/>

@@ -15,6 +15,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Wilhelm.Frontend.Model;
+using Wilhelm.Frontend.Services.Interfaces;
 using Wilhelm.Frontend.Windows;
 
 namespace Wilhelm.Frontend.Controls
@@ -27,9 +28,12 @@ namespace Wilhelm.Frontend.Controls
         public event PropertyChangedEventHandler PropertyChanged;
         private List<GroupHolder> _availableGroupsToAdd;
         private TaskHolder _shownTask;
+        private readonly IHoldersService _holdersService;
 
-        public TaskDetailsControl()
+        public TaskDetailsControl(IHoldersService holdersService)
         {
+            _holdersService = holdersService;
+
             InitializeComponent();
             DataContext = this;
         }
@@ -44,38 +48,7 @@ namespace Wilhelm.Frontend.Controls
             TaskDetailsPanel.Visibility = Visibility.Visible;
             _availableGroupsToAdd = new List<GroupHolder>();
 
-            ShownTask = new TaskHolder()
-            {
-                Id = choosenTask.Id,
-                Name = choosenTask.Name,
-                Description = choosenTask.Description,
-                StartDate = choosenTask.StartDate,
-                Frequency = choosenTask.Frequency,
-                Archivized = choosenTask.Archivized,
-                Groups = new ObservableCollection<GroupHolder>(),
-            };
-
-            foreach (var group in groups)
-            {
-                var newGroup = new GroupHolder
-                {
-                    Id = group.Id,
-                    Name = group.Name,
-                    Description = group.Description,
-                    Archivized = group.Archivized,
-                    Tasks = new ObservableCollection<TaskHolder>(),
-                };
-
-                if (group.Tasks.Contains(choosenTask))
-                {
-                    newGroup.Tasks.Add(ShownTask);
-                    ShownTask.Groups.Add(newGroup);
-                }
-                else
-                {
-                    _availableGroupsToAdd.Add(newGroup);
-                }
-            }
+            ShownTask = _holdersService.InitializeTaskDetails(_availableGroupsToAdd, choosenTask, groups);
 
         }
 

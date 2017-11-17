@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
+using System.Data.Entity.Core.Objects;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -41,8 +43,8 @@ namespace Wilhelm.Backend.Services
                     db.WActivities.Add(activity);
                 db.SaveChanges();
 
-                //first ToList is to allow to compare dates
-                var todaysTask = db.WActivities.ToList().Where(x => x.Date.Date == DateTime.Now.Date).ToList();
+                // cannot take Date.Date in SQL
+                var todaysTask = db.WActivities.Where(x => DbFunctions.TruncateTime(x.Date) == DateTime.Today).ToList();
                 _entitiesService.UpdateDto(dto, todaysTask);
             }
             return dto;

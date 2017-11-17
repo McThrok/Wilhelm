@@ -80,7 +80,8 @@
                 </ListView.ItemTemplate>
             </ListView>
 
-            <controls:GroupDetailsControl Margin="10,0,0,0" Grid.Row="0" Grid.Column="1" Grid.RowSpan="2" x:Name="GroupDetails"/>
+            <!--<controls:GroupDetailsControl Margin="10,0,0,0" Grid.Row="0" Grid.Column="1" Grid.RowSpan="2" x:Name="GroupDetails"/>-->
+            <ContentControl Margin="10,0,0,0" Grid.Row="0" Grid.Column="1" Grid.RowSpan="2" x:Name="GroupDetailsContentControl"/>
 
             <DockPanel Margin="10,0,0,0" Height="40" Grid.Row="2" Grid.Column="1" LastChildFill="False" Name="GroupButtonsPanel">
                 <Button DockPanel.Dock="Left" Content="Apply" Width="100" Click="Apply_Click"/>

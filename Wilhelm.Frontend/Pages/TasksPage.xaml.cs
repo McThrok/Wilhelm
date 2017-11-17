@@ -17,6 +17,7 @@ using System.Windows.Shapes;
 using Wilhelm.Backend.Model;
 using Wilhelm.Backend.Model.Dto;
 using Wilhelm.Backend.Services.Interfaces;
+using Wilhelm.Frontend.Controls;
 using Wilhelm.Frontend.Model;
 using Wilhelm.Frontend.Services.Interfaces;
 
@@ -29,6 +30,7 @@ namespace Wilhelm.Frontend.Pages
         private TaskHolder _activeTask;
         private readonly IHoldersService _holdersService;
         private readonly IConfigurationService _configurationService;
+        private TaskDetailsControl _taskDetailsControl;
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -38,6 +40,8 @@ namespace Wilhelm.Frontend.Pages
             _configurationService = configurationService;
 
             InitializeComponent();
+            _taskDetailsControl = new TaskDetailsControl(_holdersService);
+            TaskDetailsContentControl.Content = _taskDetailsControl;
             DataContext = this;
         }
         public void ShowCurrentTask()
@@ -47,7 +51,7 @@ namespace Wilhelm.Frontend.Pages
             else
                 TaskButtonsPanel.Visibility = Visibility.Visible;
 
-            TaskDetails.Initialize(ActiveTask, _groups);
+            _taskDetailsControl.Initialize(ActiveTask, _groups);
         }
 
         private void TaskButton_Click(object sender, RoutedEventArgs e)
@@ -58,44 +62,12 @@ namespace Wilhelm.Frontend.Pages
         }
         private void AddNewTask_Click(object sender, RoutedEventArgs e)
         {
-            var addedTask = new TaskHolder()
-            {
-                Id = _holdersService.GenerateTemporaryId(_tasks),
-                Name = _holdersService.GetNameWithIndexIfNeeded("New task", _tasks),
-                Groups = new ObservableCollection<GroupHolder>(),
-                StartDate = DateTime.Now,
-                Frequency = 1,
-            };
-            ActiveTask = addedTask;
+            ActiveTask = _holdersService.CreateNewTask(_tasks);
             ShowCurrentTask();
         }
-
         private void Apply_Click(object sender, RoutedEventArgs e)
         {
-            var changedTask = TaskDetails.ShownTask;
-            if (!_tasks.Contains(ActiveTask))
-                _tasks.Insert(0, ActiveTask);
-            ActiveTask.Name = changedTask.Name;
-            ActiveTask.Description = changedTask.Description;
-            ActiveTask.StartDate = changedTask.StartDate;
-            ActiveTask.Frequency = changedTask.Frequency;
-
-            foreach (var group in _groups)
-            {
-                var taskInDetails = changedTask.Groups.Where(x => x.Id == group.Id).SingleOrDefault();
-
-                if (!ActiveTask.Groups.Contains(group) && taskInDetails != null)
-                {
-                    group.Tasks.Add(ActiveTask);
-                    ActiveTask.Groups.Add(group);
-                }
-
-                if (ActiveTask.Groups.Contains(group) && taskInDetails == null)
-                {
-                    group.Tasks.Remove(ActiveTask);
-                    ActiveTask.Groups.Remove(group);
-                }
-            }
+            _holdersService.ApplyChanges(_tasks, _groups, _taskDetailsControl.ShownTask);
             SaveChanges();
             Activate();
         }
@@ -124,7 +96,6 @@ namespace Wilhelm.Frontend.Pages
             TasksListView.ItemsSource = _tasks;
             ShowCurrentTask();
         }
-
         private void SaveChanges()
         {
             var config = new ConfigDto();

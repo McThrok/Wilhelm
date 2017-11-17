@@ -139,5 +139,165 @@ namespace Wilhelm.Frontend.Services
             }
             return startName;
         }
+
+        public void ApplyChanges(ICollection<TaskHolder> currnetTasks, IEnumerable<GroupHolder> currentGroups, TaskHolder updatedTask)
+        {
+            var taskToUpdate = currnetTasks.SingleOrDefault(x => x.Id == updatedTask.Id);
+            if (taskToUpdate == null)
+            {
+                taskToUpdate = new TaskHolder();
+                currnetTasks.Add(taskToUpdate);
+            }
+            taskToUpdate.Name = updatedTask.Name;
+            taskToUpdate.Description = updatedTask.Description;
+            taskToUpdate.StartDate = updatedTask.StartDate;
+            taskToUpdate.Frequency = updatedTask.Frequency;
+            if (taskToUpdate.Groups == null)
+                taskToUpdate.Groups = new ObservableCollection<GroupHolder>();
+
+            foreach (var group in currentGroups)
+            {
+                var taskInDetails = updatedTask.Groups.Where(x => x.Id == group.Id).SingleOrDefault();
+
+                if (!taskToUpdate.Groups.Contains(group) && taskInDetails != null)
+                {
+                    group.Tasks.Add(taskToUpdate);
+                    taskToUpdate.Groups.Add(group);
+                }
+
+                if (taskToUpdate.Groups.Contains(group) && taskInDetails == null)
+                {
+                    group.Tasks.Remove(taskToUpdate);
+                    taskToUpdate.Groups.Remove(group);
+                }
+            }
+        }
+        public void ApplyChanges(ICollection<GroupHolder> currentGroups, IEnumerable<TaskHolder> currnetTasks, GroupHolder updatedGroup)
+        {
+            var groupToUpdate = currentGroups.SingleOrDefault(x => x.Id == updatedGroup.Id);
+            if (groupToUpdate == null)
+            {
+                groupToUpdate = new GroupHolder();
+                currentGroups.Add(groupToUpdate);
+            }
+            groupToUpdate.Name = updatedGroup.Name;
+            groupToUpdate.Description = updatedGroup.Description;
+            if (groupToUpdate.Tasks == null)
+                groupToUpdate.Tasks = new ObservableCollection<TaskHolder>();
+
+
+            foreach (var task in currnetTasks)
+            {
+                var groupInDetails = updatedGroup.Tasks.Where(x => x.Id == task.Id).SingleOrDefault();
+
+                if (!groupToUpdate.Tasks.Contains(task) && groupInDetails != null)
+                {
+                    task.Groups.Add(groupToUpdate);
+                    groupToUpdate.Tasks.Add(task);
+                }
+
+                if (groupToUpdate.Tasks.Contains(task) && groupInDetails == null)
+                {
+                    task.Groups.Remove(groupToUpdate);
+                    groupToUpdate.Tasks.Remove(task);
+                }
+            }
+        }
+
+        public GroupHolder CreateNewGroup(IEnumerable<GroupHolder> groups)
+        {
+            var newGroup = new GroupHolder()
+            {
+                Id = GenerateTemporaryId(groups),
+                Name = GetNameWithIndexIfNeeded("New group", groups),
+                Tasks = new ObservableCollection<TaskHolder>(),
+            };
+            return newGroup;
+        }
+
+        public TaskHolder CreateNewTask(IEnumerable<TaskHolder> tasks)
+        {
+            var newTask = new TaskHolder()
+            {
+                Id = GenerateTemporaryId(tasks),
+                Name = GetNameWithIndexIfNeeded("New task", tasks),
+                Groups = new ObservableCollection<GroupHolder>(),
+                StartDate = DateTime.Now,
+                Frequency = 1,
+            };
+            return newTask;
+        }
+
+        public TaskHolder InitializeTaskDetails(List<GroupHolder> availableGroupsToAdd, TaskHolder choosenTask, List<GroupHolder> groups)
+        {
+            TaskHolder shownTask = new TaskHolder()
+            {
+                Id = choosenTask.Id,
+                Name = choosenTask.Name,
+                Description = choosenTask.Description,
+                StartDate = choosenTask.StartDate,
+                Frequency = choosenTask.Frequency,
+                Archivized = choosenTask.Archivized,
+                Groups = new ObservableCollection<GroupHolder>(),
+            };
+
+            foreach (var group in groups)
+            {
+                var newGroup = new GroupHolder
+                {
+                    Id = group.Id,
+                    Name = group.Name,
+                    Description = group.Description,
+                    Archivized = group.Archivized,
+                    Tasks = new ObservableCollection<TaskHolder>(),
+                };
+
+                if (group.Tasks.Contains(choosenTask))
+                {
+                    newGroup.Tasks.Add(shownTask);
+                    shownTask.Groups.Add(newGroup);
+                }
+                else
+                {
+                    availableGroupsToAdd.Add(newGroup);
+                }
+            }
+            return shownTask;
+        }
+
+        public GroupHolder InitializeGroupDetails(List<TaskHolder> availableTasksToAdd, GroupHolder chooosenGroup, List<TaskHolder> tasks)
+        {
+            GroupHolder shownGroup = new GroupHolder()
+            {
+                Id = chooosenGroup.Id,
+                Name = chooosenGroup.Name,
+                Description = chooosenGroup.Description,
+                Archivized = chooosenGroup.Archivized,
+                Tasks = new ObservableCollection<TaskHolder>(),
+            };
+
+            foreach (var task in tasks)
+            {
+                var newTask = new TaskHolder
+                {
+                    Id = task.Id,
+                    Name = task.Name,
+                    Description = task.Description,
+                    Archivized = task.Archivized,
+                    Groups = new ObservableCollection<GroupHolder>(),
+                };
+
+                if (task.Groups.Contains(chooosenGroup))
+                {
+                    newTask.Groups.Add(shownGroup);
+                    shownGroup.Tasks.Add(newTask);
+                }
+                else
+                {
+                    availableTasksToAdd.Add(newTask);
+                }
+            }
+            return shownGroup;
+        }
     }
 }

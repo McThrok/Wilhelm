@@ -79,7 +79,7 @@ namespace Wilhelm.MainDataSet
                 Link(g3, t7);
                 Link(g3, t8);
 
-                Link(g4, t2);
+                Link(g4, t1);
                 Link(g4, t7);
 
                 db.SaveChanges();
