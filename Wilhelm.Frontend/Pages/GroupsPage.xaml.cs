@@ -17,6 +17,7 @@ using System.Windows.Shapes;
 using Wilhelm.Backend.Model;
 using Wilhelm.Backend.Model.Dto;
 using Wilhelm.Backend.Services.Interfaces;
+using Wilhelm.Frontend.Controls;
 using Wilhelm.Frontend.Model;
 using Wilhelm.Frontend.Services.Interfaces;
 
@@ -29,6 +30,7 @@ namespace Wilhelm.Frontend.Pages
         private GroupHolder _activeGroup;
         private readonly IHoldersService _holdersService;
         private readonly IConfigurationService _configurationService;
+        private GroupDetailsControl _groupDetailsControl;
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -38,6 +40,8 @@ namespace Wilhelm.Frontend.Pages
             _configurationService = configurationService;
 
             InitializeComponent();
+            _groupDetailsControl = new GroupDetailsControl(holdersService);
+            GroupDetailsContentControl.Content = _groupDetailsControl;
             DataContext = this;
         }
         public void ShowCurrentGroup()
@@ -47,7 +51,7 @@ namespace Wilhelm.Frontend.Pages
             else
                 GroupButtonsPanel.Visibility = Visibility.Visible;
 
-            GroupDetails.Initialize(ActiveGroup, _tasks);
+            _groupDetailsControl.Initialize(ActiveGroup, _tasks);
         }
 
         private void GroupButton_Click(object sender, RoutedEventArgs e)
@@ -63,7 +67,7 @@ namespace Wilhelm.Frontend.Pages
         }
         private void Apply_Click(object sender, RoutedEventArgs e)
         {
-            _holdersService.ApplyChanges(_groups, _tasks, GroupDetails.ShownGroup);
+            _holdersService.ApplyChanges(_groups, _tasks, _groupDetailsControl.ShownGroup);
             SaveChanges();
             Activate();
         }

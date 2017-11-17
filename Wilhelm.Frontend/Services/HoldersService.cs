@@ -227,5 +227,77 @@ namespace Wilhelm.Frontend.Services
             };
             return newTask;
         }
+
+        public TaskHolder InitializeTaskDetails(List<GroupHolder> availableGroupsToAdd, TaskHolder choosenTask, List<GroupHolder> groups)
+        {
+            TaskHolder shownTask = new TaskHolder()
+            {
+                Id = choosenTask.Id,
+                Name = choosenTask.Name,
+                Description = choosenTask.Description,
+                StartDate = choosenTask.StartDate,
+                Frequency = choosenTask.Frequency,
+                Archivized = choosenTask.Archivized,
+                Groups = new ObservableCollection<GroupHolder>(),
+            };
+
+            foreach (var group in groups)
+            {
+                var newGroup = new GroupHolder
+                {
+                    Id = group.Id,
+                    Name = group.Name,
+                    Description = group.Description,
+                    Archivized = group.Archivized,
+                    Tasks = new ObservableCollection<TaskHolder>(),
+                };
+
+                if (group.Tasks.Contains(choosenTask))
+                {
+                    newGroup.Tasks.Add(shownTask);
+                    shownTask.Groups.Add(newGroup);
+                }
+                else
+                {
+                    availableGroupsToAdd.Add(newGroup);
+                }
+            }
+            return shownTask;
+        }
+
+        public GroupHolder InitializeGroupDetails(List<TaskHolder> availableTasksToAdd, GroupHolder chooosenGroup, List<TaskHolder> tasks)
+        {
+            GroupHolder shownGroup = new GroupHolder()
+            {
+                Id = chooosenGroup.Id,
+                Name = chooosenGroup.Name,
+                Description = chooosenGroup.Description,
+                Archivized = chooosenGroup.Archivized,
+                Tasks = new ObservableCollection<TaskHolder>(),
+            };
+
+            foreach (var task in tasks)
+            {
+                var newTask = new TaskHolder
+                {
+                    Id = task.Id,
+                    Name = task.Name,
+                    Description = task.Description,
+                    Archivized = task.Archivized,
+                    Groups = new ObservableCollection<GroupHolder>(),
+                };
+
+                if (task.Groups.Contains(chooosenGroup))
+                {
+                    newTask.Groups.Add(shownGroup);
+                    shownGroup.Tasks.Add(newTask);
+                }
+                else
+                {
+                    availableTasksToAdd.Add(newTask);
+                }
+            }
+            return shownGroup;
+        }
     }
 }

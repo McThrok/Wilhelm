@@ -28,9 +28,8 @@ namespace Wilhelm.Frontend.Services.Interfaces
         void ApplyChanges(ICollection<TaskHolder> currnetTasks, IEnumerable<GroupHolder> currentGroups, TaskHolder updatedTask);
         void ApplyChanges(ICollection<GroupHolder> currentGroups, IEnumerable<TaskHolder> currnetTasks, GroupHolder updatedGroup);
 
-
-
-
+        TaskHolder InitializeTaskDetails(List<GroupHolder> availableGroupsToAdd, TaskHolder choosenTask, List<GroupHolder> groups);
+        GroupHolder InitializeGroupDetails(List<TaskHolder> availableTasksToAdd, GroupHolder chooosenGroup, List<TaskHolder> tasks);
 
     }
 }
