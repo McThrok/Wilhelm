@@ -59,7 +59,7 @@
             <TextBlock Text="Login:" Grid.Row="0" Grid.Column="0" Style="{StaticResource DataText}"/>
             <TextBlock Text="Password:" Grid.Row="1" Grid.Column="0"  Style="{StaticResource DataText}"/>
             <TextBlock Text="Confirm Password:" Grid.Row="2" Grid.Column="0"  Style="{StaticResource DataText}"/>
-            <TextBox Grid.Row="0" Grid.Column="1" Style="{StaticResource DataInput}" Text="{Binding  Login, UpdateSourceTrigger=PropertyChanged}"/>
+            <TextBox Grid.Row="0" Grid.Column="1" Style="{StaticResource DataInput}" Text="{Binding  Login, Mode=OneWayToSource, UpdateSourceTrigger=PropertyChanged}"/>
             <PasswordBox Grid.Row="1" Grid.Column="1" Style="{StaticResource PasswordInput}" support:PasswordBoxAssistant.BindPassword="true" support:PasswordBoxAssistant.BoundPassword="{Binding Path=Password, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
             <PasswordBox Grid.Row="2" Grid.Column="1" Style="{StaticResource PasswordInput}" support:PasswordBoxAssistant.BindPassword="true" support:PasswordBoxAssistant.BoundPassword="{Binding Path=ConfirmPassword, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
         </Grid>

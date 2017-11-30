@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using Wilhelm.Backend.Services.Interfaces;
 using Wilhelm.Frontend.Support;
 
 namespace Wilhelm.Frontend.ViewModels.Signing
@@ -14,17 +15,19 @@ namespace Wilhelm.Frontend.ViewModels.Signing
         public string _login;
         public string _password;
 
+        public readonly IAccountsService _accountsService;
         public ICommand SignInCmd { get; private set; }
         public ICommand SignUpCmd { get; private set; }
 
-        public SignInViewModel(Action<object> signUp)
+        public SignInViewModel(IAccountsService accountsService, Action<object> signUp)
         {
             SignUpCmd = new DelegateCommand(signUp);
             SignInCmd = new DelegateCommand(SignIn);
+            _accountsService = accountsService;
         }
         private void SignIn(object obj)
         {
-
+            var result = _accountsService.VerifyUser(_login, _password);
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -41,7 +44,7 @@ namespace Wilhelm.Frontend.ViewModels.Signing
             }
             set
             {
-                _password = value;
+                _login = value;
                 OnPropertyChanged(nameof(Login));
             }
         }

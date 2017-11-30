@@ -47,13 +47,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Class1.cs" />
     <Compile Include="IWContext.cs" />
     <Compile Include="IWContextFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="WActivity.cs" />
     <Compile Include="WContext.cs" />
     <Compile Include="WContextFactory.cs" />
+    <Compile Include="WUser.cs" />
     <Compile Include="WGroup.cs" />
     <Compile Include="WModel.cs" />
     <Compile Include="WNamedModel.cs" />

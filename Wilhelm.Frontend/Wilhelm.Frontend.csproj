@@ -214,6 +214,10 @@
       <Project>{960d5eb6-6dbe-40f3-9052-a1754aa97c3f}</Project>
       <Name>Wilhelm.Backend</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Wilhelm.DataAccess\Wilhelm.DataAccess.csproj">
+      <Project>{C08B35D0-5E1C-4487-B8EB-E93E465457A4}</Project>
+      <Name>Wilhelm.DataAccess</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

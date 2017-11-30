@@ -13,12 +13,12 @@ using System.Globalization;
 
 namespace Wilhelm.Backend.Services
 {
-    public class AccountsService
+    public class AccountsService : IAccountsService
     {
         private readonly IWContextFactory _wContextFactory;
         private readonly IConversionService _conversionService;
         private readonly HashAlgorithm _cryptoServiceProvider = new SHA256CryptoServiceProvider();
-        private const int SaltValueSize = 16;
+        private const int SaltValueSize = 1;
         private const string ValidationPattern = "^[a-zA-Z0-9_]*$";
 
         public AccountsService(IWContextFactory wContextFactory, IConversionService conversionService)
@@ -31,16 +31,24 @@ namespace Wilhelm.Backend.Services
         {
             var validatedUser = CreateWUser(login, password, confirmPassword);
             var validatedUserDto = new Validated<UserDto>();
-            _conversionService.ConvertToDto(validatedUserDto.Object, validatedUser.Object);
+            validatedUserDto.Object = new UserDto();
+
+            if (validatedUser.Object != null)
+                _conversionService.ConvertToDto(validatedUserDto.Object, validatedUser.Object);
             validatedUserDto.ValidationViolations = validatedUser.ValidationViolations;
+
             return validatedUserDto;
         }
         public Validated<UserDto> VerifyUser(string login, string password)
         {
             var validatedUser = VerifyWUser(login, password);
             var validatedUserDto = new Validated<UserDto>();
-            _conversionService.ConvertToDto(validatedUserDto.Object, validatedUser.Object);
+            validatedUserDto.Object = new UserDto();
+
+            if (validatedUser.Object != null)
+                _conversionService.ConvertToDto(validatedUserDto.Object, validatedUser.Object);
             validatedUserDto.ValidationViolations = validatedUser.ValidationViolations;
+
             return validatedUserDto;
         }
         private Validated<WUser> CreateWUser(string login, string password, string confirmPassword)
@@ -51,7 +59,7 @@ namespace Wilhelm.Backend.Services
             validatedUser.ValidationViolations.AddRange(ValidateLogin(login));
             validatedUser.ValidationViolations.AddRange(ValidatePasswords(password, confirmPassword));
 
-            if (validatedUser.ValidationViolations.Count != 0)
+            if (validatedUser.ValidationViolations.Count == 0)
                 validatedUser.Object = CreateAccount(login, password);
             return validatedUser;
         }
@@ -89,6 +97,7 @@ namespace Wilhelm.Backend.Services
             using (var db = _wContextFactory.Create())
             {
                 db.Users.Add(user);
+                db.SaveChanges();
             }
 
             return user;
@@ -181,7 +190,7 @@ namespace Wilhelm.Backend.Services
 
             string saltValue = profilePassword.Substring(0, SaltValueSize);
 
-            string hashedPassword = HashPassword(password);
+            string hashedPassword = HashPassword(password, saltValue);
             if (profilePassword.Equals(hashedPassword, StringComparison.Ordinal))
                 return true;
 
