@@ -12,6 +12,7 @@ namespace Wilhelm.DataAccess
         IDbSet<WTask> WTasks { get; set; }
         IDbSet<WGroup> WGroups { get; set; }
         IDbSet<WActivity> WActivities { get; set; }
+        IDbSet<WUser> Users { get; set; }
 
         int SaveChanges();
     }

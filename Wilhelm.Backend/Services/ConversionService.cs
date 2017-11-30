@@ -164,6 +164,19 @@ namespace Wilhelm.Backend.Services
                 wTask.WGroups = new List<WGroup>();
         }
 
+        public void ConvertToDto(UserDto dto, WUser wUser)
+        {
+            ConvertToModelDto(dto, wUser);
+            dto.Name = wUser.Login;
+            dto.Password = wUser.Password;
+        }
+        public void ConvertFromDto(WUser wUser, UserDto dto)
+        {
+            ConvertFromDto(wUser, dto);
+            wUser.Login = dto.Name;
+            wUser.Password = dto.Password;
+        }
+
         public void ConvertToNamedModelDto(NamedModelDto dto, WNamedModel namedModel)
         {
             dto.Name = namedModel.Name;

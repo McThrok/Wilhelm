@@ -13,6 +13,7 @@ namespace Wilhelm.DataAccess
         public IDbSet<WTask> WTasks { get; set; }
         public IDbSet<WGroup> WGroups { get; set; }
         public IDbSet<WActivity> WActivities { get; set; }
+        public IDbSet<WUser> Users { get; set; }
     }
 
     //public class WilhelmContexInitializer : DropCreateDatabaseIfModelChanges<WilhelmContext>
