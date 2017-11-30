@@ -1,0 +1,4 @@
+﻿select* from Activities
+select * from Groups
+select * from Tasks
+select * from WGroupWTasks
