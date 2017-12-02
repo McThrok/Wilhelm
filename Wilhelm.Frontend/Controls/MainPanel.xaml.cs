@@ -58,7 +58,7 @@ namespace Wilhelm.Frontend.Controls
 
         private void ArchiveButton_Click(object sender, RoutedEventArgs e)
         {
-            ClickMenu(_pages.ArchivePage);
+          //  ClickMenu(_pages.ArchivePage);
         }
 
         private void ReportButton_Click(object sender, RoutedEventArgs e)

@@ -87,9 +87,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Pages\ArchivePage.xaml">
-      <Generator>MSBuild:Compile</Generator>
+    <Page Include="Views\Pages\ArchivePageView.xaml">
       <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Pages\GroupsPage.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -146,8 +146,8 @@
     <Compile Include="Model\Holder.cs" />
     <Compile Include="Model\NamedHolder.cs" />
     <Compile Include="Model\TaskHolder.cs" />
-    <Compile Include="Pages\ArchivePage.xaml.cs">
-      <DependentUpon>ArchivePage.xaml</DependentUpon>
+    <Compile Include="Views\Pages\ArchivePageView.xaml.cs">
+      <DependentUpon>ArchivePageView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pages\GroupsPage.xaml.cs">
       <DependentUpon>GroupsPage.xaml</DependentUpon>
@@ -168,6 +168,7 @@
     <Compile Include="Services\Interfaces\IHoldersConversionService.cs" />
     <Compile Include="Services\Interfaces\IHoldersService.cs" />
     <Compile Include="Support\DelegateCommand.cs" />
+    <Compile Include="ViewModels\Pages\ArchivePageViewModel.cs" />
     <Compile Include="ViewModels\Signing\BaseSignViewModel.cs" />
     <Compile Include="ViewModels\Signing\SignInViewModel.cs" />
     <Compile Include="ViewModels\Signing\SignUpViewModel.cs" />
