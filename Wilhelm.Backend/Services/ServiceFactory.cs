@@ -36,5 +36,6 @@ namespace Wilhelm.Backend.Services
         {
             return new ReportService(_wContextFactory);
         }
+
     }
 }

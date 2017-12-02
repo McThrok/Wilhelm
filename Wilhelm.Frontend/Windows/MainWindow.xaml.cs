@@ -18,6 +18,9 @@ using Wilhelm.Frontend.Services.Interfaces;
 using Wilhelm.Frontend.Services;
 using Wilhelm.Frontend.Pages;
 using System.ComponentModel;
+using Wilhelm.Frontend.Controls;
+using Wilhelm.Frontend.ViewModels.Signing;
+using Wilhelm.Backend.Model.Dto;
 
 namespace Wilhelm.Frontend.Windows
 {
@@ -26,66 +29,28 @@ namespace Wilhelm.Frontend.Windows
     /// </summary>
     public partial class MainWindow : Window
     {
-        private readonly MenuPagesCollection _pages;
-        private readonly IServiceFactory _serviceFactory;
-        private readonly IHoldersConversionService _holdersConversionService;//not used
-        private readonly IHoldersService _holdersService;
+        private readonly SignViewModel _signViewModel;
+        private MainPanel _maipanel;
+
 
         public MainWindow()
         {
-            _serviceFactory = new ServiceFactory();
-            _holdersConversionService = new HoldersConversionService();
-            _holdersService = new HoldersService(_holdersConversionService);
-            _pages = new MenuPagesCollection(_serviceFactory, _holdersConversionService, _holdersService);
-
             InitializeComponent();
-            ClickMenu(_pages.HomePage);
+            _signViewModel = new SignViewModel(SetMainManetASContent);
+            MainContent.Content = _signViewModel;
         }
 
-        private void HomeButto_Click(object sender, RoutedEventArgs e)
+        public void SetMainManetASContent(int userId)
         {
-            ClickMenu(_pages.HomePage);
+            _maipanel = new MainPanel(userId);
+            MainContent.Content = _maipanel;
+
         }
 
-        private void TasksButton_Click(object sender, RoutedEventArgs e)
-        {
-            ClickMenu(_pages.TasksPage);
-        }
-
-        private void GroupsButton_Click(object sender, RoutedEventArgs e)
-        {
-            ClickMenu(_pages.GroupsPage);
-        }
-
-        private void ArchiveButton_Click(object sender, RoutedEventArgs e)
-        {
-            ClickMenu(_pages.ArchivePage);
-        }
-
-        private void ReportButton_Click(object sender, RoutedEventArgs e)
-        {
-            ClickMenu(_pages.ReportPage);
-        }
-        private void ClickMenu(Page page)
-        {
-            var currentPage = MainFrame.Content;
-            if (currentPage == page)
-                return;
-
-            if (currentPage != null && currentPage is IMenuPage currentMenuPage)
-                currentMenuPage.Save();
-
-            if (page != null && page is IMenuPage newMenuPage)
-                newMenuPage.Activate();
-
-            MainFrame.Content = page;
-        }
         protected override void OnClosing(CancelEventArgs e)
         {
-            var currentPage = MainFrame.Content;
-            if (currentPage != null && currentPage is IMenuPage currentMenuPage)
-                currentMenuPage.Save();
-
+            if (MainContent.Content == _maipanel)
+                _maipanel.properClose();
             base.OnClosing(e);
         }
     }

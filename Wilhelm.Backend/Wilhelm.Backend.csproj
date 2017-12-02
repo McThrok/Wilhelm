@@ -48,16 +48,23 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="MockBase\MockBase.cs" />
+    <Compile Include="Model\Dto\ValidatedDto.cs" />
     <Compile Include="Model\Dto\ActivityDto.cs" />
     <Compile Include="Model\Dto\GroupDto.cs" />
     <Compile Include="Model\Dto\ModelDto.cs" />
     <Compile Include="Model\Dto\NamedModelDto.cs" />
+    <Compile Include="Model\Dto\UserDto.cs" />
     <Compile Include="Model\Dto\TaskDto.cs" />
     <Compile Include="Model\Dto\ReportDto.cs" />
     <Compile Include="Model\Dto\ConfigDto.cs" />
+    <Compile Include="Model\Validated.cs" />
+    <Compile Include="Services\HashService.cs" />
+    <Compile Include="Services\AccountsService.cs" />
     <Compile Include="Services\ActivityGenerationService.cs" />
     <Compile Include="Services\ConversionService.cs" />
     <Compile Include="Services\EntitiesService.cs" />
+    <Compile Include="Services\Interfaces\IHashService.cs" />
+    <Compile Include="Services\Interfaces\IAccountsService.cs" />
     <Compile Include="Services\Interfaces\IActivityGenerationService.cs" />
     <Compile Include="Services\Interfaces\IEntitiesService.cs" />
     <Compile Include="Services\Interfaces\IConversionService.cs" />

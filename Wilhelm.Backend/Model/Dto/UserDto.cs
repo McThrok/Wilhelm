@@ -2,15 +2,15 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Wilhelm.DataAccess
+namespace Wilhelm.Backend.Model.Dto
 {
-    public class Class1
+    public class UserDto: ModelDto
     {
-       
+        public string Name { get; set; }
+        public string Password { get; set; }
     }
 }

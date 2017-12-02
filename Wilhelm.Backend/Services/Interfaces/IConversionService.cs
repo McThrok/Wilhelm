@@ -13,23 +13,26 @@ namespace Wilhelm.Backend.Services.Interfaces
     public interface IConversionService
     {
         void ConvertToDto(ActivityDto dto, WActivity wActivity, IEnumerable<TaskDto> tasks);
-         void ConvertToDto(ActivityDto dto, WActivity wActivity);
-         void ConvertFromDto(WActivity wActivity, ActivityDto dto, IEnumerable<WTask> tasks);
-         void ConvertFromDto(WActivity wActivity, ActivityDto dto);
+        void ConvertToDto(ActivityDto dto, WActivity wActivity);
+        void ConvertFromDto(WActivity wActivity, ActivityDto dto, IEnumerable<WTask> tasks);
+        void ConvertFromDto(WActivity wActivity, ActivityDto dto);
 
-         void ConvertToDto(GroupDto dto, WGroup wGroup, IEnumerable<TaskDto> tasks, bool updateTasks);
-         void ConvertToDto(GroupDto dto, WGroup group);
-         void ConvertFromDto(WGroup wGroup, GroupDto dto, IEnumerable<WTask> tasks, bool updateTasks);
-         void ConvertFromDto(WGroup wGroup, GroupDto dto);
+        void ConvertToDto(GroupDto dto, WGroup wGroup, IEnumerable<TaskDto> tasks, bool updateTasks);
+        void ConvertToDto(GroupDto dto, WGroup group);
+        void ConvertFromDto(WGroup wGroup, GroupDto dto, IEnumerable<WTask> tasks, bool updateTasks);
+        void ConvertFromDto(WGroup wGroup, GroupDto dto);
 
-         void ConvertToDto(TaskDto dto, WTask wtask, IEnumerable<GroupDto> groups, bool updateGroups);
-         void ConvertToDto(TaskDto dto, WTask task);
-         void ConvertFromDto(WTask wTask, TaskDto dto, IEnumerable<WGroup> groups, bool updateGroups);
-         void ConvertFromDto(WTask wTask, TaskDto dto);
+        void ConvertToDto(TaskDto dto, WTask wtask, IEnumerable<GroupDto> groups, bool updateGroups);
+        void ConvertToDto(TaskDto dto, WTask task);
+        void ConvertFromDto(WTask wTask, TaskDto dto, IEnumerable<WGroup> groups, bool updateGroups);
+        void ConvertFromDto(WTask wTask, TaskDto dto);
 
-         void ConvertToNamedModelDto(NamedModelDto dto, WNamedModel namedModel);
-         void ConvertToModelDto(ModelDto dto, WModel model);
-         void ConvertFromNamedModelDto(WNamedModel namedModel, NamedModelDto dto);
-         void ConvertFromModelDto(WModel model, ModelDto dto);
+        void ConvertToDto(UserDto dto, WUser wUser);
+        void ConvertFromDto(WUser wUser, UserDto dto);
+
+        void ConvertToNamedModelDto(NamedModelDto dto, WNamedModel namedModel);
+        void ConvertToModelDto(ModelDto dto, WModel model);
+        void ConvertFromNamedModelDto(WNamedModel namedModel, NamedModelDto dto);
+        void ConvertFromModelDto(WModel model, ModelDto dto);
     }
 }

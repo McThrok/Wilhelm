@@ -79,6 +79,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Controls\MainPanel.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Controls\TaskDetailsControl.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -103,6 +107,18 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Views\Signing\SignInView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Signing\SignUpView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Signing\SignView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>XamlIntelliSenseFileGenerator</Generator>
+    </Page>
     <Page Include="Windows\ChooseItemWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -117,6 +133,9 @@
     </Compile>
     <Compile Include="Controls\GroupDetailsControl.xaml.cs">
       <DependentUpon>GroupDetailsControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\MainPanel.xaml.cs">
+      <DependentUpon>MainPanel.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\TaskDetailsControl.xaml.cs">
       <DependentUpon>TaskDetailsControl.xaml</DependentUpon>
@@ -148,6 +167,21 @@
     <Compile Include="Services\HoldersConversionService.cs" />
     <Compile Include="Services\Interfaces\IHoldersConversionService.cs" />
     <Compile Include="Services\Interfaces\IHoldersService.cs" />
+    <Compile Include="Support\DelegateCommand.cs" />
+    <Compile Include="ViewModels\Signing\SignInViewModel.cs" />
+    <Compile Include="ViewModels\Signing\SignUpViewModel.cs" />
+    <Compile Include="ViewModels\Signing\SignViewModel.cs" />
+    <Compile Include="Support\PasswordBoxAssistant.cs" />
+    <Compile Include="Views\Signing\SignInView.xaml.cs">
+      <DependentUpon>SignInView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Signing\SignUpView.xaml.cs">
+      <DependentUpon>SignUpView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Signing\SignView.xaml.cs">
+      <DependentUpon>SignView.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Windows\ChooseItemWindow.xaml.cs">
       <DependentUpon>ChooseItemWindow.xaml</DependentUpon>
     </Compile>
@@ -187,6 +221,10 @@
     <ProjectReference Include="..\Wilhelm.Backend\Wilhelm.Backend.csproj">
       <Project>{960d5eb6-6dbe-40f3-9052-a1754aa97c3f}</Project>
       <Name>Wilhelm.Backend</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Wilhelm.DataAccess\Wilhelm.DataAccess.csproj">
+      <Project>{C08B35D0-5E1C-4487-B8EB-E93E465457A4}</Project>
+      <Name>Wilhelm.DataAccess</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
