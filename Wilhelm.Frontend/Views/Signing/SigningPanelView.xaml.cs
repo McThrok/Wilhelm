@@ -18,9 +18,9 @@ namespace Wilhelm.Frontend.Views.Signing
     /// <summary>
     /// Interaction logic for SignView.xaml
     /// </summary>
-    public partial class SignView : UserControl
+    public partial class SigningPanelView : UserControl
     {
-        public SignView()
+        public SigningPanelView()
         {
             InitializeComponent();
         }

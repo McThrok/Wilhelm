@@ -115,7 +115,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\Signing\SignView.xaml">
+    <Page Include="Views\Signing\SigningPanelView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -168,9 +168,10 @@
     <Compile Include="Services\Interfaces\IHoldersConversionService.cs" />
     <Compile Include="Services\Interfaces\IHoldersService.cs" />
     <Compile Include="Support\DelegateCommand.cs" />
+    <Compile Include="ViewModels\Signing\BaseSignViewModel.cs" />
     <Compile Include="ViewModels\Signing\SignInViewModel.cs" />
     <Compile Include="ViewModels\Signing\SignUpViewModel.cs" />
-    <Compile Include="ViewModels\Signing\SignViewModel.cs" />
+    <Compile Include="ViewModels\Signing\SigningPanelViewModel.cs" />
     <Compile Include="Support\PasswordBoxAssistant.cs" />
     <Compile Include="Views\Signing\SignInView.xaml.cs">
       <DependentUpon>SignInView.xaml</DependentUpon>
@@ -178,8 +179,8 @@
     <Compile Include="Views\Signing\SignUpView.xaml.cs">
       <DependentUpon>SignUpView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Signing\SignView.xaml.cs">
-      <DependentUpon>SignView.xaml</DependentUpon>
+    <Compile Include="Views\Signing\SigningPanelView.xaml.cs">
+      <DependentUpon>SigningPanelView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Windows\ChooseItemWindow.xaml.cs">
       <DependentUpon>ChooseItemWindow.xaml</DependentUpon>

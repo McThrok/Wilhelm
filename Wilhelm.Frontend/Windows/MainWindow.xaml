@@ -13,8 +13,8 @@
 
     <Window.Resources>
 
-        <DataTemplate DataType="{x:Type viewModels:SignViewModel}">
-            <viewSigning:SignView/>
+        <DataTemplate DataType="{x:Type viewModels:SigningPanelViewModel}">
+            <viewSigning:SigningPanelView/>
         </DataTemplate>
     </Window.Resources>
 

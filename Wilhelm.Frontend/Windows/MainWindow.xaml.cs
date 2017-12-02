@@ -29,14 +29,14 @@ namespace Wilhelm.Frontend.Windows
     /// </summary>
     public partial class MainWindow : Window
     {
-        private readonly SignViewModel _signViewModel;
+        private readonly SigningPanelViewModel _signViewModel;
         private MainPanel _maipanel;
 
 
         public MainWindow()
         {
             InitializeComponent();
-            _signViewModel = new SignViewModel(SetMainManetASContent);
+            _signViewModel = new SigningPanelViewModel(SetMainManetASContent);
             MainContent.Content = _signViewModel;
         }
 

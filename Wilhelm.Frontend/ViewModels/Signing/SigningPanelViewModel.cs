@@ -12,32 +12,31 @@ using Wilhelm.DataAccess;
 
 namespace Wilhelm.Frontend.ViewModels.Signing
 {
-    public class SignViewModel : INotifyPropertyChanged
+    public class SigningPanelViewModel : INotifyPropertyChanged
     {
         public ICommand SwitchSignCmd { get; private set; }
         private readonly IAccountsService _accountsService;
-        private object selectedViewModel;
-        private Action<int> _logIn;
+        private BaseSignViewModel _selectedViewModel;
+        private Action<int> _logInAction;
 
-        public SignViewModel(Action<int> LogIn)
+        public SigningPanelViewModel(Action<int> LogInAction)
         {
             _accountsService = new AccountsService(new WContextFactory(), new ConversionService(), new HashService());
-            _logIn = LogIn;
+            _logInAction = LogInAction;
             ShowSighIn(null);
         }
 
         private void ShowSighIn(object obj)
         {
-            SelectedViewModel = new SignInViewModel(_accountsService, ShowSighUp, SetUser);
-
+            SelectedViewModel = new SignInViewModel(_accountsService, SetUser, ShowSighUp);
         }
         private void ShowSighUp(object obj)
         {
-            SelectedViewModel = new SignUpViewModel(_accountsService, ShowSighIn, SetUser);
+            SelectedViewModel = new SignUpViewModel(_accountsService, SetUser, ShowSighIn);
         }
         private void SetUser(int userId)
         {
-            _logIn(userId);
+            _logInAction(userId);
         }
 
 
@@ -47,15 +46,15 @@ namespace Wilhelm.Frontend.ViewModels.Signing
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propName));
         }
 
-        public object SelectedViewModel
+        public BaseSignViewModel SelectedViewModel
         {
             get
             {
-                return selectedViewModel;
+                return _selectedViewModel;
             }
             set
             {
-                selectedViewModel = value;
+                _selectedViewModel = value;
                 OnPropertyChanged(nameof(SelectedViewModel));
             }
         }
