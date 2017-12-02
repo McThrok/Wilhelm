@@ -58,10 +58,12 @@
     <Compile Include="Model\Dto\ReportDto.cs" />
     <Compile Include="Model\Dto\ConfigDto.cs" />
     <Compile Include="Model\Validated.cs" />
+    <Compile Include="Services\HashService.cs" />
     <Compile Include="Services\AccountsService.cs" />
     <Compile Include="Services\ActivityGenerationService.cs" />
     <Compile Include="Services\ConversionService.cs" />
     <Compile Include="Services\EntitiesService.cs" />
+    <Compile Include="Services\Interfaces\IHashService.cs" />
     <Compile Include="Services\Interfaces\IAccountsService.cs" />
     <Compile Include="Services\Interfaces\IActivityGenerationService.cs" />
     <Compile Include="Services\Interfaces\IEntitiesService.cs" />

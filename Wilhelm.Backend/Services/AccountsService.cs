@@ -79,7 +79,7 @@ namespace Wilhelm.Backend.Services
             {
                 validatedUser.ValidationViolations.Add("User does not exists.");
             }
-            else if (!VerifyHashedPassword(password, validatedUser.Object.Password))
+            else if (!_hashService.VerifyHashedPassword(password, validatedUser.Object.Password))
             {
                 validatedUser.Object = null;
                 validatedUser.ValidationViolations.Add("Password is invalid");
@@ -93,7 +93,7 @@ namespace Wilhelm.Backend.Services
             var user = new WUser
             {
                 Login = login,
-                Password = HashPassword(password)
+                Password = _hashService.HashPassword(password)
             };
 
             using (var db = _wContextFactory.Create())
