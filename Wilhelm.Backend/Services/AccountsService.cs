@@ -18,8 +18,6 @@ namespace Wilhelm.Backend.Services
         private readonly IWContextFactory _wContextFactory;
         private readonly IConversionService _conversionService;
         private readonly IHashService _hashService;
-        private readonly HashAlgorithm _cryptoServiceProvider = new SHA256CryptoServiceProvider();
-        private const int SaltValueSize = 1;
         private const string ValidationPattern = "^[a-zA-Z0-9_]*$";
 
         public AccountsService(IWContextFactory wContextFactory, IConversionService conversionService, IHashService hashService)
@@ -29,9 +27,9 @@ namespace Wilhelm.Backend.Services
             _hashService = hashService;
         }
 
-        public Validated<UserDto> CreateUser(string login, string password, string confirmPassword)
+        public Validated<UserDto> CreateUserDto(string login, string password, string confirmPassword)
         {
-            var validatedUser = CreateWUser(login, password, confirmPassword);
+            var validatedUser = CreateUser(login, password, confirmPassword);
             var validatedUserDto = new Validated<UserDto>();
 
             if (validatedUser.Object != null)
@@ -43,9 +41,9 @@ namespace Wilhelm.Backend.Services
 
             return validatedUserDto;
         }
-        public Validated<UserDto> VerifyUser(string login, string password)
+        public Validated<UserDto> VerifyUserDto(string login, string password)
         {
-            var validatedUser = VerifyWUser(login, password);
+            var validatedUser = VerifyUser(login, password);
             var validatedUserDto = new Validated<UserDto>();
 
             if (validatedUser.Object != null)
@@ -57,7 +55,7 @@ namespace Wilhelm.Backend.Services
 
             return validatedUserDto;
         }
-        private Validated<WUser> CreateWUser(string login, string password, string confirmPassword)
+        public Validated<WUser> CreateUser(string login, string password, string confirmPassword)
         {
             var validatedUser = new Validated<WUser>();
             validatedUser.ValidationViolations = new List<string>();
@@ -69,7 +67,7 @@ namespace Wilhelm.Backend.Services
                 validatedUser.Object = CreateAccount(login, password);
             return validatedUser;
         }
-        private Validated<WUser> VerifyWUser(string login, string password)
+        public Validated<WUser> VerifyUser(string login, string password)
         {
             var validatedUser = new Validated<WUser>();
             validatedUser.ValidationViolations = new List<string>();

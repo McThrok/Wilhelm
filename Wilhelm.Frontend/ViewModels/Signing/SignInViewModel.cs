@@ -21,7 +21,7 @@ namespace Wilhelm.Frontend.ViewModels.Signing
         }
         private void SignIn(object obj)
         {
-            var result = _accountsService.VerifyUser(_login, _password);
+            var result = _accountsService.VerifyUserDto(_login, _password);
             if (result.Object != null)
                 _logInAction(result.Object.Id);
         }

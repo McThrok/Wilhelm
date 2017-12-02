@@ -24,7 +24,7 @@ namespace Wilhelm.Frontend.ViewModels.Signing
 
         private void SignUp(object obj)
         {
-            var result = _accountsService.CreateUser(_login, _password, _confirmPassword);
+            var result = _accountsService.CreateUserDto(_login, _password, _confirmPassword);
             if (result.Object != null)
                 _logInAction(result.Object.Id);
         }

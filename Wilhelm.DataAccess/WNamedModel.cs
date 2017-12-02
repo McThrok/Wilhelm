@@ -11,6 +11,8 @@ namespace Wilhelm.DataAccess
     {
         [Required]
         public string Name { get; set; }
+        [Required]
+        public WUser Owner { get; set; }
         public string Description { get; set; }
         public bool Archivized { get; set; }
     }

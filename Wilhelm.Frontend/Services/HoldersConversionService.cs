@@ -168,6 +168,23 @@ namespace Wilhelm.Frontend.Services
                 dto.Groups = new List<GroupDto>();
         }
 
+        public void ConvertToDto(UserDto dto, UserHolder user)
+        {
+            ConvertToNamedModelDto(dto, task);
+            dto.Frequency = task.Frequency;
+            dto.StartDate = task.StartDate;
+            if (dto.Groups == null)
+                dto.Groups = new List<GroupDto>();
+        }
+        public void ConvertFromDto(UserHolder user, UserDto dto)
+        {
+            ConvertFromNamedModelDto(task, dto);
+            task.Frequency = dto.Frequency;
+            task.StartDate = dto.StartDate;
+            if (task.Groups == null)
+                task.Groups = new ObservableCollection<GroupHolder>();
+        }
+
         public void ConvertFromNamedModelDto(NamedHolder namedHolder, NamedModelDto dto)
         {
             ConvertFromModelDto(namedHolder, dto);
