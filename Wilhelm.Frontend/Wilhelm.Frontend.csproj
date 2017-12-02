@@ -113,7 +113,7 @@
     </Page>
     <Page Include="Views\Signing\SignView.xaml">
       <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
+      <Generator>XamlIntelliSenseFileGenerator</Generator>
     </Page>
     <Page Include="Windows\ChooseItemWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -173,6 +173,7 @@
     </Compile>
     <Compile Include="Views\Signing\SignView.xaml.cs">
       <DependentUpon>SignView.xaml</DependentUpon>
+      <SubType>Code</SubType>
     </Compile>
     <Compile Include="Windows\ChooseItemWindow.xaml.cs">
       <DependentUpon>ChooseItemWindow.xaml</DependentUpon>

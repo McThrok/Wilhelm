@@ -8,11 +8,6 @@
         mc:Ignorable="d"
         d:DesignHeight="300" d:DesignWidth="300">
 
-    <UserControl.DataContext>
-        <viewModels:SignViewModel />
-    </UserControl.DataContext>
-
-
     <UserControl.Resources>
         <DataTemplate DataType="{x:Type viewModels:SignInViewModel}">
             <local:SignInView/>

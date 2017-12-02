@@ -13,8 +13,8 @@
 
     <Window.Resources>
 
-        <DataTemplate DataType="{x:Type viewModels:SignInViewModel}">
-            <viewSigning:SignInView/>
+        <DataTemplate DataType="{x:Type viewModels:SignViewModel}">
+            <viewSigning:SignView/>
         </DataTemplate>
 
         <Style TargetType="Button" x:Key="MenuButon">
@@ -72,6 +72,6 @@
             </Grid>
         </DockPanel>
 
-        <ContentControl Name="MainFrame" Grid.Row="1" Grid.Column="1"/>
+        <Frame Name="MainFrame" NavigationUIVisibility="Hidden" Grid.Row="1" Grid.Column="1"/>
     </Grid>
 </Window>
