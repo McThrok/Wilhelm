@@ -16,7 +16,7 @@ namespace Wilhelm.Backend.Services
     public class HashService : IHashService
     {
         private readonly HashAlgorithm _cryptoServiceProvider = new SHA256CryptoServiceProvider();
-        private const int SaltValueSize = 1;
+        private const int SaltValueSize = 16;
 
         public string HashPassword(string password)
         {

@@ -79,6 +79,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Controls\MainPanel.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Controls\TaskDetailsControl.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -129,6 +133,9 @@
     </Compile>
     <Compile Include="Controls\GroupDetailsControl.xaml.cs">
       <DependentUpon>GroupDetailsControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\MainPanel.xaml.cs">
+      <DependentUpon>MainPanel.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\TaskDetailsControl.xaml.cs">
       <DependentUpon>TaskDetailsControl.xaml</DependentUpon>

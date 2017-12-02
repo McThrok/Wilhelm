@@ -16,62 +16,8 @@
         <DataTemplate DataType="{x:Type viewModels:SignViewModel}">
             <viewSigning:SignView/>
         </DataTemplate>
-
-        <Style TargetType="Button" x:Key="MenuButon">
-            <Setter Property="DockPanel.Dock" Value="Top"/>
-            <Setter Property="Width" Value="auto"/>
-            <Setter Property="Height" Value="auto"/>
-            <Setter Property="Margin" Value="0"/>
-            <Setter Property="Background" Value="#3b424c"/>
-            <Setter Property="Foreground" Value="#e5e9e6"/>
-            <Setter Property="FontSize" Value="16px"/>
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="{x:Type Button}">
-                        <Border Background="{TemplateBinding Background}" BorderThickness="0">
-                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                        </Border>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-            <Style.Triggers>
-                <Trigger Property="IsMouseOver" Value="True">
-                    <Setter Property="Background" Value="#1d181f"/>
-                </Trigger>
-            </Style.Triggers>
-        </Style>
-
     </Window.Resources>
 
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*"/>
-        </Grid.RowDefinitions>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="Auto"/>
-            <ColumnDefinition Width="*"/>
-        </Grid.ColumnDefinitions>
+    <ContentControl Name="MainContent"/>
 
-        <!--datetime control removed-->
-
-        <DockPanel Grid.Row="1" LastChildFill="False" Width="150" Margin="0,60,0,0">
-            <Grid Width="150" Margin="10,0,0,10">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="*"/>
-                </Grid.RowDefinitions>
-                <Button Grid.Row="0" Name="HomeButton" Content="Home" Style="{StaticResource ResourceKey=MenuButon}" Click="HomeButto_Click"/>
-                <Button Grid.Row="1" Name="TasksButton" Content="Tasks" Style="{StaticResource ResourceKey=MenuButon}" Click="TasksButton_Click"/>
-                <Button Grid.Row="2" Name="GroupsButton" Content="Groups" Style="{StaticResource ResourceKey=MenuButon}" Click="GroupsButton_Click"/>
-                <Button Grid.Row="3" Name="ArchivesButton" Content="Archives" Style="{StaticResource ResourceKey=MenuButon}" Click="ArchiveButton_Click"/>
-                <Button Grid.Row="4" Name="ReportsButton" Content="Reports" Style="{StaticResource ResourceKey=MenuButon}" Click="ReportButton_Click"/>
-            </Grid>
-        </DockPanel>
-
-        <Frame Name="MainFrame" NavigationUIVisibility="Hidden" Grid.Row="1" Grid.Column="1"/>
-    </Grid>
 </Window>
