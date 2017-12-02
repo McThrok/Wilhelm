@@ -30,7 +30,7 @@ namespace Wilhelm.Frontend.Controls
         private readonly IHoldersConversionService _holdersConversionService;
         private readonly IHoldersService _holdersService;
 
-        public MainPanel()
+        public MainPanel(int userId)
         {
             _serviceFactory = new ServiceFactory();
             _holdersConversionService = new HoldersConversionService();

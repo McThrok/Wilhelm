@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using Wilhelm.Backend.Model.Dto;
 using Wilhelm.Backend.Services.Interfaces;
 using Wilhelm.Frontend.Support;
 
@@ -20,16 +21,22 @@ namespace Wilhelm.Frontend.ViewModels.Signing
         public ICommand SignUpCmd { get; private set; }
         public ICommand SignInCmd { get; private set; }
 
-        public SignUpViewModel(IAccountsService accountsService, Action<object> signIn)
+        private Action<int> _setUser;
+
+        public SignUpViewModel(IAccountsService accountsService, Action<object> signIn, Action<int> setUser)
         {
             SignInCmd = new DelegateCommand(signIn);
             SignUpCmd = new DelegateCommand(SignUp);
+            _setUser = setUser;
             _accountsService = accountsService;
         }
 
         private void SignUp(object obj)
         {
             var result = _accountsService.CreateUser(_login, _password, _confirmPassword);
+            if (result.Object != null)
+                _setUser(result.Object.Id);
+                
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

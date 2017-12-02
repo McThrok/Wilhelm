@@ -20,6 +20,7 @@ using Wilhelm.Frontend.Pages;
 using System.ComponentModel;
 using Wilhelm.Frontend.Controls;
 using Wilhelm.Frontend.ViewModels.Signing;
+using Wilhelm.Backend.Model.Dto;
 
 namespace Wilhelm.Frontend.Windows
 {
@@ -28,15 +29,22 @@ namespace Wilhelm.Frontend.Windows
     /// </summary>
     public partial class MainWindow : Window
     {
-        private readonly MainPanel _maipanel;
         private readonly SignViewModel _signViewModel;
-        
+        private MainPanel _maipanel;
+
+
         public MainWindow()
         {
             InitializeComponent();
-            _maipanel = new MainPanel();
-            _signViewModel = new SignViewModel();
+            _signViewModel = new SignViewModel(SetMainManetASContent);
             MainContent.Content = _signViewModel;
+        }
+
+        public void SetMainManetASContent(int userId)
+        {
+            _maipanel = new MainPanel(userId);
+            MainContent.Content = _maipanel;
+
         }
 
         protected override void OnClosing(CancelEventArgs e)

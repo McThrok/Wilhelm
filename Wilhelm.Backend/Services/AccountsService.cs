@@ -33,10 +33,12 @@ namespace Wilhelm.Backend.Services
         {
             var validatedUser = CreateWUser(login, password, confirmPassword);
             var validatedUserDto = new Validated<UserDto>();
-            validatedUserDto.Object = new UserDto();
 
             if (validatedUser.Object != null)
+            {
+                validatedUserDto.Object = new UserDto();
                 _conversionService.ConvertToDto(validatedUserDto.Object, validatedUser.Object);
+            }
             validatedUserDto.ValidationViolations = validatedUser.ValidationViolations;
 
             return validatedUserDto;
@@ -45,10 +47,12 @@ namespace Wilhelm.Backend.Services
         {
             var validatedUser = VerifyWUser(login, password);
             var validatedUserDto = new Validated<UserDto>();
-            validatedUserDto.Object = new UserDto();
 
             if (validatedUser.Object != null)
+            {
+                validatedUserDto.Object = new UserDto();
                 _conversionService.ConvertToDto(validatedUserDto.Object, validatedUser.Object);
+            }
             validatedUserDto.ValidationViolations = validatedUser.ValidationViolations;
 
             return validatedUserDto;
