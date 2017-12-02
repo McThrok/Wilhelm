@@ -58,14 +58,28 @@ namespace Wilhelm.Frontend.Controls
 
         private void ArchiveButton_Click(object sender, RoutedEventArgs e)
         {
-          //  ClickMenu(_pages.ArchivePage);
+            ClickMenu(_pages.ArchivePage);
         }
 
         private void ReportButton_Click(object sender, RoutedEventArgs e)
         {
             ClickMenu(_pages.ReportPage);
         }
-        private void ClickMenu(Page page)
+        private void ClickMenu(UserControl page)
+        {
+            var currentPage = MainFrame.Content;
+            if (currentPage == page)
+                return;
+
+            if (currentPage != null && currentPage is IMenuPage currentMenuPage)
+                currentMenuPage.Save();
+
+            if (page != null && page is IMenuPage newMenuPage)
+                newMenuPage.Activate();
+
+            MainFrame.Content = page;
+        }
+        private void ClickMenu(Object page)
         {
             var currentPage = MainFrame.Content;
             if (currentPage == page)

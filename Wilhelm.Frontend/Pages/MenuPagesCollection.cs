@@ -7,6 +7,7 @@ using Wilhelm.Backend.Services.Interfaces;
 using Wilhelm.Backend.Services;
 using Wilhelm.Frontend.Services;
 using Wilhelm.Frontend.Services.Interfaces;
+using Wilhelm.Frontend.ViewModels.Pages;
 
 namespace Wilhelm.Frontend.Pages
 {
@@ -22,7 +23,7 @@ namespace Wilhelm.Frontend.Pages
         private TasksPage _tasksPage;
         private ReportPage _reportPage;
         private GroupsPage _groupsPage;
-       // private ArchivePage _archivePage;
+        private ArchivePageViewModel _archivePage;
 
         public MenuPagesCollection(IServiceFactory serviceFactory, IHoldersConversionService holdersConversionService, IHoldersService holdersService)
         {
@@ -70,14 +71,14 @@ namespace Wilhelm.Frontend.Pages
                 return _groupsPage;
             }
         }
-        //public ArchivePage ArchivePage
-        //{
-        //    get
-        //    {
-        //        if (_archivePage == null)
-        //            _archivePage = new ArchivePage(_holdersService, _activityService);
-        //        return _archivePage;
-        //    }
-        //}
+        public ArchivePageViewModel ArchivePage
+        {
+            get
+            {
+                if (_archivePage == null)
+                    _archivePage = new ArchivePageViewModel(_holdersService, _activityService);
+                return _archivePage;
+            }
+        }
     }
 }

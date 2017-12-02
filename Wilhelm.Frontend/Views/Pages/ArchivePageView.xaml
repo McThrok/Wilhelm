@@ -16,12 +16,13 @@
             <Grid.ColumnDefinitions>
                 <ColumnDefinition  Width="*"/>
             </Grid.ColumnDefinitions>
-            <ListView Grid.Column="0"  Name="TaskListView" HorizontalContentAlignment="Stretch" >
-                <ListView.ItemContainerStyle>
+            <ListView Grid.Column="0" HorizontalContentAlignment="Stretch" ItemsSource="{Binding CurrentList}">
+                <!--TODO: binding-->
+                <!--<ListView.ItemContainerStyle>
                     <Style TargetType="ListViewItem">
-                        <!--<EventSetter Event="PreviewMouseLeftButtonDown" Handler="ListViewItem_MouseDown"/>-->
+                        <EventSetter Event="PreviewMouseLeftButtonDown" Handler="ListViewItem_MouseDown"/>
                     </Style>
-                </ListView.ItemContainerStyle>
+                </ListView.ItemContainerStyle>-->
                 <ListView.View>
                     <GridView >
                         <GridViewColumn Header="Done">

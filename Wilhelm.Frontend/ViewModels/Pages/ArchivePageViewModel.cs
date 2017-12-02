@@ -15,7 +15,7 @@ using Wilhelm.Frontend.Services.Interfaces;
 
 namespace Wilhelm.Frontend.ViewModels.Pages
 {
-    class ArchivePageViewModel: IMenuPage
+    public class ArchivePageViewModel : IMenuPage
     {
         private readonly IHoldersService _holdersService;
         private readonly IActivityService _activityService;
@@ -50,14 +50,24 @@ namespace Wilhelm.Frontend.ViewModels.Pages
             _holdersService.UpdateArchiveHolders(archiveList, _activityService.GetArchive());
             archiveList.Sort((a, b) => DateTime.Compare(a.Date, b.Date));
             _currentList = new ObservableCollection<ActivityHolder>(archiveList.Where(x => !x.Task.Archivized));
-            //TaskListView.ItemsSource = _currentList;
-        }
+        }   
 
         public void Save()
         {
             var activities = new List<ActivityDto>();
             _holdersService.UpdateActivityDtos(activities, _currentList);
             _activityService.SaveActivities(activities);
+        }
+        public ObservableCollection<ActivityHolder> CurrentList//INotifyProperty?
+        {
+            get
+            {
+                return _currentList;
+            }
+            private set
+            {
+                _currentList = value;
+            }
         }
     }
 }

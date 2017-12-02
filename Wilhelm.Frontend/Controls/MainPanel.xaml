@@ -67,6 +67,6 @@
             </Grid>
         </DockPanel>
 
-        <Frame Name="MainFrame" NavigationUIVisibility="Hidden" Grid.Row="1" Grid.Column="1"/>
+        <ContentControl Name="MainFrame" Grid.Row="1" Grid.Column="1"/>
     </Grid>
 </UserControl>

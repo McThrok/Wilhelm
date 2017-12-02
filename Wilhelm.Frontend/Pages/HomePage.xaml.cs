@@ -23,7 +23,7 @@ namespace Wilhelm.Frontend.Pages
     /// <summary>
     /// Interaction logic for MenuPage.xaml
     /// </summary>
-    public partial class HomePage : Page, IMenuPage
+    public partial class HomePage : UserControl, IMenuPage
     {
         private readonly IHoldersService _holdersService;
         private readonly IActivityService _activityService;
