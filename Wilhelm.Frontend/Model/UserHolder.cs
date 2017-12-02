@@ -10,6 +10,7 @@ namespace Wilhelm.Frontend.Model
     public class UserHolder : Holder
     {
         private string _login;
+        private string _password;
 
         public string Login
         {
@@ -21,6 +22,18 @@ namespace Wilhelm.Frontend.Model
             {
                 _login = value;
                 OnChanged(nameof(Login));
+            }
+        }
+        public string Password
+        {
+            get
+            {
+                return _password;
+            }
+            set
+            {
+                _password = value;
+                OnChanged(nameof(Password));
             }
         }
     }

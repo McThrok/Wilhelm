@@ -167,21 +167,24 @@ namespace Wilhelm.Backend.Services
         public void ConvertToDto(UserDto dto, WUser wUser)
         {
             ConvertToModelDto(dto, wUser);
-            dto.Name = wUser.Login;
+            dto.Login = wUser.Login;
             dto.Password = wUser.Password;
         }
         public void ConvertFromDto(WUser wUser, UserDto dto)
         {
             ConvertFromDto(wUser, dto);
-            wUser.Login = dto.Name;
+            wUser.Login = dto.Login;
             wUser.Password = dto.Password;
         }
 
         public void ConvertToNamedModelDto(NamedModelDto dto, WNamedModel namedModel)
         {
             dto.Name = namedModel.Name;
-            dto.Owner = new UserDto();
-            ConvertToDto(dto.Owner, namedModel.Owner);
+            if (namedModel.Owner != null)
+            {
+                dto.Owner = new UserDto();
+                ConvertToDto(dto.Owner, namedModel.Owner);
+            }
             dto.Description = namedModel.Description;
             dto.Archivized = namedModel.Archivized;
             ConvertToModelDto(dto, namedModel);
@@ -194,8 +197,11 @@ namespace Wilhelm.Backend.Services
         public void ConvertFromNamedModelDto(WNamedModel namedModel, NamedModelDto dto)
         {
             namedModel.Name = dto.Name;
-            namedModel.Owner = new WUser();
-            ConvertFromDto(namedModel.Owner, dto.Owner);
+            if (dto.Owner != null)
+            {
+                namedModel.Owner = new WUser();
+                ConvertFromModelDto(namedModel.Owner, dto.Owner);
+            }
             namedModel.Description = dto.Description;
             namedModel.Archivized = dto.Archivized;
             ConvertFromModelDto(namedModel, dto);

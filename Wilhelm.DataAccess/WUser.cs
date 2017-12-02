@@ -11,7 +11,9 @@ namespace Wilhelm.DataAccess
     [Table("Users")]
     public class WUser : WModel
     {
+        [Required]
         public string Login { get; set; }
+        [Required]
         public string Password { get; set; }
     }
 }

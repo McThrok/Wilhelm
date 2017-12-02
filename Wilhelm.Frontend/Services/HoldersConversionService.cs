@@ -170,24 +170,26 @@ namespace Wilhelm.Frontend.Services
 
         public void ConvertToDto(UserDto dto, UserHolder user)
         {
-            ConvertToNamedModelDto(dto, task);
-            dto.Frequency = task.Frequency;
-            dto.StartDate = task.StartDate;
-            if (dto.Groups == null)
-                dto.Groups = new List<GroupDto>();
+            ConvertToModelDto(dto, user);
+            dto.Login = user.Login;
+            dto.Password = user.Password;
+
         }
         public void ConvertFromDto(UserHolder user, UserDto dto)
         {
-            ConvertFromNamedModelDto(task, dto);
-            task.Frequency = dto.Frequency;
-            task.StartDate = dto.StartDate;
-            if (task.Groups == null)
-                task.Groups = new ObservableCollection<GroupHolder>();
+            ConvertFromModelDto(user, dto);
+            user.Login = dto.Login;
+            user.Password = dto.Login;
         }
 
         public void ConvertFromNamedModelDto(NamedHolder namedHolder, NamedModelDto dto)
         {
             ConvertFromModelDto(namedHolder, dto);
+            if (dto.Owner != null)
+            {
+                namedHolder.Owner = new UserHolder();
+                ConvertFromDto(namedHolder.Owner, dto.Owner);
+            }
             namedHolder.Archivized = dto.Archivized;
             namedHolder.Name = dto.Name;
             namedHolder.Description = dto.Description;
@@ -199,6 +201,11 @@ namespace Wilhelm.Frontend.Services
         public void ConvertToNamedModelDto(NamedModelDto dto, NamedHolder namedHolder)
         {
             ConvertToModelDto(dto, namedHolder);
+            if (namedHolder.Owner != null)
+            {
+                dto.Owner = new UserDto();
+                ConvertToModelDto(dto.Owner, namedHolder.Owner);
+            }
             dto.Archivized = namedHolder.Archivized;
             dto.Name = namedHolder.Name;
             dto.Description = namedHolder.Description;

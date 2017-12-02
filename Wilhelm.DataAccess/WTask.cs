@@ -20,8 +20,6 @@ namespace Wilhelm.DataAccess
         public DateTime StartDate { get; set; }
         [Required]
         public int Frequency { get; set; }
-        [Required]
-        public WUser Owner { get; set; }
 
         public virtual List<WGroup> WGroups { get; set; }
     }
