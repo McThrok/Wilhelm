@@ -10,16 +10,17 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 namespace Wilhelm.Frontend.Views.Signing
 {
     /// <summary>
-    /// Interaction logic for SignWindow.xaml
+    /// Interaction logic for SignView.xaml
     /// </summary>
-    public partial class SignWindow : Window
+    public partial class SignView : UserControl
     {
-        public SignWindow()
+        public SignView()
         {
             InitializeComponent();
         }

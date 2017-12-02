@@ -13,15 +13,13 @@ namespace Wilhelm.Frontend.ViewModels.Signing
 {
     public class SignViewModel : INotifyPropertyChanged
     {
-        public readonly IConversionService _conversionService;
         public readonly IAccountsService _accountsService;
         public ICommand SwitchSignCmd { get; private set; }
         private object selectedViewModel;
 
         public SignViewModel()
         {
-            _conversionService = new ConversionService();
-            _accountsService = new AccountsService(new WContextFactory(), _conversionService);
+            _accountsService = new AccountsService(new WContextFactory(), new ConversionService(), new HashService());
             ShowSighIn(null);
         }
 

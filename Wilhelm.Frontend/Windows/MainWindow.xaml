@@ -4,12 +4,19 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Wilhelm.Frontend"
+        xmlns:viewModels="clr-namespace:Wilhelm.Frontend.ViewModels.Signing"
+        xmlns:viewSigning="clr-namespace:Wilhelm.Frontend.Views.Signing"
         mc:Ignorable="d"
         WindowStartupLocation="CenterScreen"
         Title="Wilhelm" Height="600" Width="850"
         Background="#ddd8c9">
     
     <Window.Resources>
+
+        <DataTemplate DataType="{x:Type viewModels:SignViewModel}">
+            <viewSigning:SignView/>
+        </DataTemplate>
+
 
         <Style TargetType="Button" x:Key="MenuButon">
             <Setter Property="DockPanel.Dock" Value="Top"/>

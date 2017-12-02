@@ -17,14 +17,16 @@ namespace Wilhelm.Backend.Services
     {
         private readonly IWContextFactory _wContextFactory;
         private readonly IConversionService _conversionService;
+        private readonly IHashService _hashService;
         private readonly HashAlgorithm _cryptoServiceProvider = new SHA256CryptoServiceProvider();
         private const int SaltValueSize = 1;
         private const string ValidationPattern = "^[a-zA-Z0-9_]*$";
 
-        public AccountsService(IWContextFactory wContextFactory, IConversionService conversionService)
+        public AccountsService(IWContextFactory wContextFactory, IConversionService conversionService, IHashService hashService)
         {
             _wContextFactory = wContextFactory;
             _conversionService = conversionService;
+            _hashService = hashService;
         }
 
         public Validated<UserDto> CreateUser(string login, string password, string confirmPassword)
@@ -148,53 +150,5 @@ namespace Wilhelm.Backend.Services
             return violations;
         }
 
-        private string HashPassword(string clearData, string saltValue = null)
-        {
-            if (saltValue == null)
-                saltValue = GenerateSaltValue();
-            byte[] hashValue = _cryptoServiceProvider.ComputeHash(PreparePasswordToHash(clearData, saltValue));
-
-            string hashedPassword = saltValue;
-            foreach (byte hexdigit in hashValue)
-                hashedPassword += hexdigit.ToString("X2", CultureInfo.InvariantCulture.NumberFormat);
-
-            return hashedPassword;
-        }
-        private string GenerateSaltValue()
-        {
-            UnicodeEncoding utf16 = new UnicodeEncoding();
-
-            var salt = new byte[SaltValueSize * UnicodeEncoding.CharSize];
-            using (var random = new RNGCryptoServiceProvider())
-                random.GetNonZeroBytes(salt);
-
-            return utf16.GetString(salt);
-        }
-        private byte[] PreparePasswordToHash(string clearData, string saltValue)
-        {
-            UnicodeEncoding utf16 = new UnicodeEncoding();
-
-            byte[] binarySaltValue = utf16.GetBytes(saltValue);
-            byte[] binaryPassword = utf16.GetBytes(clearData);
-            byte[] valueToHash = new byte[binarySaltValue.Length + binaryPassword.Length];
-
-            binaryPassword.CopyTo(valueToHash, binarySaltValue.Length);
-
-            return valueToHash;
-
-        }
-        private bool VerifyHashedPassword(string password, string profilePassword)
-        {
-            if (string.IsNullOrEmpty(profilePassword) || string.IsNullOrEmpty(password) || profilePassword.Length < SaltValueSize)
-                return false;
-
-            string saltValue = profilePassword.Substring(0, SaltValueSize);
-
-            string hashedPassword = HashPassword(password, saltValue);
-            if (profilePassword.Equals(hashedPassword, StringComparison.Ordinal))
-                return true;
-
-            return false;
-        }
     }
 }
