@@ -11,7 +11,9 @@ namespace Wilhelm.Backend.Services.Interfaces
 {
     public interface IAccountsService
     {
-        Validated<UserDto> CreateUser(string login, string password, string confirmPassword);
-        Validated<UserDto> VerifyUser(string login, string password);
+        Validated<UserDto> CreateUserDto(string login, string password, string confirmPassword);
+        Validated<UserDto> VerifyUserDto(string login, string password);
+        Validated<WUser> CreateUser(string login, string password, string confirmPassword);
+        Validated<WUser> VerifyUser(string login, string password);
     }
 }

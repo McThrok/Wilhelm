@@ -32,22 +32,30 @@ namespace Wilhelm.MainDataSet
             using (var db = new WContext())
             {
                 Random random = new Random(1);
-                WGroup g1 = new WGroup() { Name = "Zwierzęta", Description = "wszystkie moje domowe zwierzaki" };
-                WGroup g2 = new WGroup() { Name = "Rośliny", Description = "wszystkie rośliny doniczkowe" };
-                WGroup g3 = new WGroup() { Name = "Finanse" };
-                WGroup g4 = new WGroup() { Name = "Ważne", Description = "Lepiej o tym nie zapominać" };
+
+                //pass: user1
+                WUser User1 = new WUser() { Login = "user1", Password = "Ἱꏁ\u2438ꥅ䫥쪋邳躮Ᏺ껫ꪉ⏺꼿ᆴ넿BD106B80630350E9B080DFB569CD0C337814169FA9350774ECB50AEB0164BD38" };
+                
+                //pass: user2
+                WUser User2 = new WUser() { Login = "user2", Password = "碼爪�廡驴僁䬠䄑ꨡ㌸쵂줙䌎벟6D10221691D36BD398A5177D2404545D911661DF8E5A0975044DBBD50F8B2A97" };
+
+                WGroup g1 = new WGroup() { Name = "Zwierzęta", Owner = User1, Description = "wszystkie moje domowe zwierzaki" };
+                WGroup g2 = new WGroup() { Name = "Rośliny", Owner = User1, Description = "wszystkie rośliny doniczkowe" };
+                WGroup g3 = new WGroup() { Name = "Finanse", Owner = User1, };
+                WGroup g4 = new WGroup() { Name = "Ważne", Owner = User1, Description = "Lepiej o tym nie zapominać" };
 
 
-                WTask t1 = new WTask() { Name = "Nakarmić kota", Description = "Tom jest wybredny i je tylko Royal Canin", Frequency = 1, StartDate = DateTime.Today };
-                WTask t2 = new WTask() { Name = "Nakarmić psa", Description = "Burek zje wszystko", Frequency = 1, StartDate = DateTime.Today };
-                WTask t3 = new WTask() { Name = "Nakarmić rybki", Description = "Jeśli pływają brzuszkiem do góry to można przestać karmić", Frequency = 2, StartDate = DateTime.Today };
-                WTask t4 = new WTask() { Name = "Wymienić wodę rybkom", Frequency = 14, StartDate = DateTime.Today };
+                WTask t1 = new WTask() { Name = "Nakarmić kota", Owner = User1, Description = "Tom jest wybredny i je tylko Royal Canin", Frequency = 1, StartDate = DateTime.Today };
+                WTask t2 = new WTask() { Name = "Nakarmić psa", Owner = User1, Description = "Burek zje wszystko", Frequency = 1, StartDate = DateTime.Today };
+                WTask t3 = new WTask() { Name = "Nakarmić rybki", Owner = User1, Description = "Jeśli pływają brzuszkiem do góry to można przestać karmić", Frequency = 2, StartDate = DateTime.Today };
+                WTask t4 = new WTask() { Name = "Wymienić wodę rybkom", Owner = User1, Frequency = 14, StartDate = DateTime.Today };
+                WTask t5 = new WTask() { Name = "Podlać kwiaty", Owner = User1, Description = "Wszytkie oprócz rosiczki", Frequency = 3, StartDate = DateTime.Today };
+                WTask t6 = new WTask() { Name = "Podlać rosiczkę", Owner = User1, Description = "Rosiczka jest mięsożerna, ale można i trzeba ją regularnie podlewać", Frequency = 1, StartDate = DateTime.Today };
+                WTask t7 = new WTask() { Name = "Zapłacić czynsz", Owner = User1, Description = "1000zl plus ewentualne dopłaty", Frequency = 30, StartDate = DateTime.Today };
+                WTask t8 = new WTask() { Name = "Zapłacić za internet", Owner = User1, Description = "60 plus ewentualne dopłaty", Frequency = 30, StartDate = DateTime.Today };
 
-                WTask t5 = new WTask() { Name = "Podlać kwiaty", Description = "Wszytkie oprócz rosiczki", Frequency = 3, StartDate = DateTime.Today };
-                WTask t6 = new WTask() { Name = "Podlać rosiczkę", Description = "Rosiczka jest mięsożerna, ale można i trzeba ją regularnie podlewać", Frequency = 1, StartDate = DateTime.Today };
-
-                WTask t7 = new WTask() { Name = "Zapłacić czynsz", Description = "1000zl plus ewentualne dopłaty", Frequency = 30, StartDate = DateTime.Today };
-                WTask t8 = new WTask() { Name = "Zapłacić za internet", Description = "60 plus ewentualne dopłaty", Frequency = 30, StartDate = DateTime.Today };
+                db.Users.Add(User1);
+                db.Users.Add(User2);
 
                 db.WTasks.Add(t1);
                 db.WTasks.Add(t2);
@@ -83,7 +91,6 @@ namespace Wilhelm.MainDataSet
                 Link(g4, t7);
 
                 db.SaveChanges();
-                var a = db.WActivities.ToList();
             }
         }
         private void Link(WGroup group, WTask task)
@@ -97,7 +104,7 @@ namespace Wilhelm.MainDataSet
             int n = rd.Next() % 10 + 7;
 
             for (int i = 0; i < n; i++)
-                activities.Add(new WActivity() { WTask = task, IsDone = rd.Next() % 5 != 0, Date = DateTime.Today.Date.AddDays(- i * task.Frequency) });
+                activities.Add(new WActivity() { WTask = task, IsDone = rd.Next() % 5 != 0, Date = DateTime.Today.Date.AddDays(-i * task.Frequency) });
             return activities;
         }
     }

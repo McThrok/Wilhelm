@@ -15,8 +15,8 @@ namespace Wilhelm.Frontend.ViewModels.Signing
     {
         public string _confirmPassword;
 
-        public SignUpViewModel(IAccountsService accountsService, Action<int> logInAction, Action<object> signIn):
-            base(accountsService,logInAction)
+        public SignUpViewModel(IAccountsService accountsService, Action<int> logInAction, Action<object> signIn) :
+            base(accountsService, logInAction)
         {
             SignInCmd = new DelegateCommand(signIn);
             SignUpCmd = new DelegateCommand(SignUp);
@@ -24,8 +24,10 @@ namespace Wilhelm.Frontend.ViewModels.Signing
 
         private void SignUp(object obj)
         {
-            var result = _accountsService.CreateUser(_login, _password, _confirmPassword);
-            if (result.Object != null)
+            var result = _accountsService.CreateUserDto(Login, Password, _confirmPassword);
+            if (result.ValidationViolations != null && result.ValidationViolations.Count > 0)
+                ErrorMessage = string.Join(Environment.NewLine, result.ValidationViolations);
+            else if (result.Object != null)
                 _logInAction(result.Object.Id);
         }
 
@@ -38,6 +40,7 @@ namespace Wilhelm.Frontend.ViewModels.Signing
             set
             {
                 _confirmPassword = value;
+                ClearErrorMessage();
                 OnPropertyChanged(nameof(ConfirmPassword));
             }
         }

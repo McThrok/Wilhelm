@@ -13,6 +13,5 @@ namespace Wilhelm.Backend.Services.Interfaces
     {
         string HashPassword(string password);
         bool VerifyHashedPassword(string password, string hash);
-        
     }
 }

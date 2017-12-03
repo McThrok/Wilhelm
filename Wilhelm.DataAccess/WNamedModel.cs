@@ -11,6 +11,8 @@ namespace Wilhelm.DataAccess
     {
         [Required]
         public string Name { get; set; }
+        //[Required] specify on delete in fluent api, run whis and get exception for more details
+        public WUser Owner { get; set; }
         public string Description { get; set; }
         public bool Archivized { get; set; }
     }
