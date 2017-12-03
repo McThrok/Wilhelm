@@ -119,11 +119,11 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Windows\ChooseItemWindow.xaml">
-      <Generator>MSBuild:Compile</Generator>
+    <Page Include="Views\Windows\MainWindowView.xaml">
       <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Windows\MainWindow.xaml">
+    <Page Include="Windows\ChooseItemWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -144,6 +144,7 @@
     <Compile Include="ViewModels\Pages\HomePageViewModel.cs" />
     <Compile Include="ViewModels\Pages\ReportPageViewModel.cs" />
     <Compile Include="ViewModels\Pages\TaskPageViewModel.cs" />
+    <Compile Include="ViewModels\Windows\MainWindowViewModel.cs" />
     <Compile Include="Views\Controls\GroupDetailsView.xaml.cs">
       <DependentUpon>GroupDetailsView.xaml</DependentUpon>
     </Compile>
@@ -190,12 +191,11 @@
     <Compile Include="Views\Signing\SigningPanelView.xaml.cs">
       <DependentUpon>SigningPanelView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Windows\MainWindowView.xaml.cs">
+      <DependentUpon>MainWindowView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Windows\ChooseItemWindow.xaml.cs">
       <DependentUpon>ChooseItemWindow.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Windows\MainWindow.xaml.cs">
-      <DependentUpon>MainWindow.xaml</DependentUpon>
-      <SubType>Code</SubType>
     </Compile>
   </ItemGroup>
   <ItemGroup>
