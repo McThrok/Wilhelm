@@ -21,6 +21,9 @@
         <DataTemplate DataType="{x:Type viewModels:GroupPageViewModel}">
             <viewPages:GroupPageView/>
         </DataTemplate>
+        <DataTemplate DataType="{x:Type viewModels:TaskPageViewModel}">
+            <viewPages:TaskPageView/>
+        </DataTemplate>
 
 
         <Style TargetType="Button" x:Key="MenuButon">

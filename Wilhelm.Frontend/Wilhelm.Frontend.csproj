@@ -91,10 +91,6 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Pages\TasksPage.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
     <Page Include="Views\Pages\GroupPageView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -104,6 +100,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Pages\ReportPageView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Pages\TaskPageView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -143,6 +143,7 @@
     <Compile Include="ViewModels\Pages\GroupPageViewModel.cs" />
     <Compile Include="ViewModels\Pages\HomePageViewModel.cs" />
     <Compile Include="ViewModels\Pages\ReportPageViewModel.cs" />
+    <Compile Include="ViewModels\Pages\TaskPageViewModel.cs" />
     <Compile Include="Views\Controls\GroupDetailsView.xaml.cs">
       <DependentUpon>GroupDetailsView.xaml</DependentUpon>
     </Compile>
@@ -157,9 +158,6 @@
     </Compile>
     <Compile Include="Pages\IMenuPage.cs" />
     <Compile Include="Pages\MenuPagesCollection.cs" />
-    <Compile Include="Pages\TasksPage.xaml.cs">
-      <DependentUpon>TasksPage.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Services\HoldersService.cs" />
     <Compile Include="Services\HoldersConversionService.cs" />
     <Compile Include="Services\Interfaces\IHoldersConversionService.cs" />
@@ -179,6 +177,9 @@
     </Compile>
     <Compile Include="Views\Pages\ReportPageView.xaml.cs">
       <DependentUpon>ReportPageView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Pages\TaskPageView.xaml.cs">
+      <DependentUpon>TaskPageView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Signing\SignInView.xaml.cs">
       <DependentUpon>SignInView.xaml</DependentUpon>

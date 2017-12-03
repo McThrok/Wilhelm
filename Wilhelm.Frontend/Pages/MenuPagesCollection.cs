@@ -20,7 +20,7 @@ namespace Wilhelm.Frontend.Pages
         private readonly IActivityService _activityService;
         private readonly IReportService _reportService;
         private HomePageViewModel _homePage;
-        private TasksPage _tasksPage;
+        private TaskPageViewModel _tasksPage;
         private ReportPageViewModel _reportPage;
         private GroupPageViewModel _groupsPage;
         private ArchivePageViewModel _archivePage;
@@ -44,12 +44,12 @@ namespace Wilhelm.Frontend.Pages
                 return _homePage;
             }
         }
-        public TasksPage TasksPage
+        public TaskPageViewModel TasksPage
         {
             get
             {
                 if (_tasksPage == null)
-                    _tasksPage = new TasksPage(_holdersService, _configurationService);
+                    _tasksPage = new TaskPageViewModel(_holdersService, _configurationService);
                 return _tasksPage;
             }
         }

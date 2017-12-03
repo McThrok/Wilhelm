@@ -83,7 +83,7 @@
 
             <ContentControl Margin="10,0,0,0" Grid.Row="0" Grid.Column="1" Grid.RowSpan="2" Content="{Binding GroupDetailsContent}"/>
 
-            <DockPanel Margin="10,0,0,0" Height="40" Grid.Row="2" Grid.Column="1" LastChildFill="False"  Visibility="{Binding DataVisibility}">
+            <DockPanel Grid.Row="2" Grid.Column="1" Margin="10,0,0,0" LastChildFill="False" Visibility="{Binding DataVisibility}" Height="40">
                 <Button DockPanel.Dock="Left" Content="Apply" Width="100" Command="{Binding ApplyCmd}"/>
                 <Button DockPanel.Dock="Left" Content="Reset changes" Width="100" Command="{Binding ResetCmd}"/>
                 <Button DockPanel.Dock="Right" Content="Delete group" Width="100" Command="{Binding DeleteCmd}"/>

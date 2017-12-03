@@ -44,7 +44,7 @@
             </Grid>
         </DockPanel>
         
-        <ListView  Name="HoldersListView">
+        <ListView  Name="HoldersListView" SelectionMode="Single">
             <ListView.ItemContainerStyle>
                 <Style TargetType="{x:Type ListViewItem}">
                     <Setter Property="Margin" Value="5"/>
