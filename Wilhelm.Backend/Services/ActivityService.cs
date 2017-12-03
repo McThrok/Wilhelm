@@ -11,7 +11,7 @@ using Wilhelm.DataAccess;
 
 namespace Wilhelm.Backend.Services
 {
-    internal class ActivityService : IActivityService
+    public class ActivityService : IActivityService
     {
         private IWContextFactory _wContextFactory;
         private IEntitiesService _entitiesService;
@@ -51,20 +51,12 @@ namespace Wilhelm.Backend.Services
         }
         public void SaveActivities(IEnumerable<ActivityDto> activities)
         {
-            try
-            {
-
             using (var db = _wContextFactory.Create())
             {
                 var a = activities.ToList();
                 _entitiesService.UpdateEntities(db.WActivities, activities);
                 var b = db.WActivities.ToList();
                 db.SaveChanges();
-            }
-            }
-            catch(Exception e)
-            {
-
             }
         }
     }

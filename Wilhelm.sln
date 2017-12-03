@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.27004.2002
+VisualStudioVersion = 15.0.27004.2010
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wilhelm.Backend", "Wilhelm.Backend\Wilhelm.Backend.csproj", "{960D5EB6-6DBE-40F3-9052-A1754AA97C3F}"
 EndProject
@@ -14,6 +14,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wilhelm.MainDataSet", "Wilhelm.DataSet\Wilhelm.MainDataSet.csproj", "{EB4149D6-D17E-4337-A86A-51A7A612C703}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wilhelm.Frontend", "Wilhelm.Frontend\Wilhelm.Frontend.csproj", "{673AC60C-8B3D-46F0-B34A-EB4DAF7E2505}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wilhelm.Backend.Api", "Wilhelm.Backend.Api\Wilhelm.Backend.Api.csproj", "{CC6E200A-EBDB-40CC-8B0B-0BA4C5A34A5D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -97,6 +99,18 @@ Global
 		{673AC60C-8B3D-46F0-B34A-EB4DAF7E2505}.Release|x64.Build.0 = Release|Any CPU
 		{673AC60C-8B3D-46F0-B34A-EB4DAF7E2505}.Release|x86.ActiveCfg = Release|Any CPU
 		{673AC60C-8B3D-46F0-B34A-EB4DAF7E2505}.Release|x86.Build.0 = Release|Any CPU
+		{CC6E200A-EBDB-40CC-8B0B-0BA4C5A34A5D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CC6E200A-EBDB-40CC-8B0B-0BA4C5A34A5D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CC6E200A-EBDB-40CC-8B0B-0BA4C5A34A5D}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{CC6E200A-EBDB-40CC-8B0B-0BA4C5A34A5D}.Debug|x64.Build.0 = Debug|Any CPU
+		{CC6E200A-EBDB-40CC-8B0B-0BA4C5A34A5D}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{CC6E200A-EBDB-40CC-8B0B-0BA4C5A34A5D}.Debug|x86.Build.0 = Debug|Any CPU
+		{CC6E200A-EBDB-40CC-8B0B-0BA4C5A34A5D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CC6E200A-EBDB-40CC-8B0B-0BA4C5A34A5D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CC6E200A-EBDB-40CC-8B0B-0BA4C5A34A5D}.Release|x64.ActiveCfg = Release|Any CPU
+		{CC6E200A-EBDB-40CC-8B0B-0BA4C5A34A5D}.Release|x64.Build.0 = Release|Any CPU
+		{CC6E200A-EBDB-40CC-8B0B-0BA4C5A34A5D}.Release|x86.ActiveCfg = Release|Any CPU
+		{CC6E200A-EBDB-40CC-8B0B-0BA4C5A34A5D}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
