@@ -79,7 +79,7 @@ namespace Wilhelm.Backend.Services
 
             if (validatedUser.Object == null)
             {
-                validatedUser.ValidationViolations.Add("User does not exists.");
+                validatedUser.ValidationViolations.Add("User does not exist.");
             }
             else if (!_hashService.VerifyHashedPassword(password, validatedUser.Object.Password))
             {

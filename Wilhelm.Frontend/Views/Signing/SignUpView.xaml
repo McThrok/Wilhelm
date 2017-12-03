@@ -16,6 +16,21 @@
             <Setter Property="Margin" Value="10"/>
         </Style>
 
+        <Style TargetType="TextBlock" x:Key="ErrorLabel">
+            <Setter Property="TextAlignment" Value="Center"/>
+            <Setter Property="FontSize" Value="16"/>
+            <Setter Property="Margin" Value="2"/>
+            <Setter Property="Foreground" Value="Red"/>
+            <Style.Triggers>
+                <Trigger Property="Text" Value="">
+                    <Setter Property="Visibility" Value="Hidden" />
+                </Trigger>
+                <Trigger Property="Text" Value="{x:Null}">
+                    <Setter Property="Visibility" Value="Hidden" />
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
         <Style TargetType="TextBlock" x:Key="DataText">
             <Setter Property="FontSize" Value="16"/>
             <Setter Property="Margin" Value="5"/>
@@ -45,6 +60,7 @@
 
     <DockPanel LastChildFill="False" >
         <TextBlock Text="Sign Up" DockPanel.Dock="Top" Style="{StaticResource Title}"/>
+        <TextBlock Text="{Binding ErrorMessage}" DockPanel.Dock="Top" Style="{StaticResource ErrorLabel}"/>
 
         <Grid DockPanel.Dock="Top">
             <Grid.RowDefinitions>

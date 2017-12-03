@@ -21,8 +21,10 @@ namespace Wilhelm.Frontend.ViewModels.Signing
         }
         private void SignIn(object obj)
         {
-            var result = _accountsService.VerifyUserDto(_login, _password);
-            if (result.Object != null)
+            var result = _accountsService.VerifyUserDto(Login, Password);
+            if (result.ValidationViolations != null && result.ValidationViolations.Count > 0)
+                ErrorMessage = string.Join(Environment.NewLine, result.ValidationViolations);
+            else if (result.Object != null)
                 _logInAction(result.Object.Id);
         }
     }
