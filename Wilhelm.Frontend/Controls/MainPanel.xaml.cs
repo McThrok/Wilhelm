@@ -65,7 +65,21 @@ namespace Wilhelm.Frontend.Controls
         {
             ClickMenu(_pages.ReportPage);
         }
-        private void ClickMenu(Page page)
+        private void ClickMenu(UserControl page)
+        {
+            var currentPage = MainFrame.Content;
+            if (currentPage == page)
+                return;
+
+            if (currentPage != null && currentPage is IMenuPage currentMenuPage)
+                currentMenuPage.Save();
+
+            if (page != null && page is IMenuPage newMenuPage)
+                newMenuPage.Activate();
+
+            MainFrame.Content = page;
+        }
+        private void ClickMenu(Object page)
         {
             var currentPage = MainFrame.Content;
             if (currentPage == page)

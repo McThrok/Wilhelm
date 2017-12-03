@@ -29,7 +29,7 @@ namespace Wilhelm.Backend.Services
             List<ActivityDto> dto = new List<ActivityDto>();
             using (var db = _wContextFactory.Create())
             {
-                _entitiesService.UpdateDto(dto, db.WActivities);
+                _entitiesService.UpdateDto(dto, db.WActivities.Include(x => x.WTask).Include(x => x.WTask.Owner));
             }
             return dto;
         }
@@ -44,19 +44,27 @@ namespace Wilhelm.Backend.Services
                 db.SaveChanges();
 
                 // cannot take Date.Date in SQL
-                var todaysTask = db.WActivities.Where(x => DbFunctions.TruncateTime(x.Date) == DateTime.Today).ToList();
+                var todaysTask = db.WActivities.Where(x => DbFunctions.TruncateTime(x.Date) == DateTime.Today).Include(x => x.WTask).Include(x => x.WTask.Owner).ToList();
                 _entitiesService.UpdateDto(dto, todaysTask);
             }
             return dto;
         }
         public void SaveActivities(IEnumerable<ActivityDto> activities)
         {
+            try
+            {
+
             using (var db = _wContextFactory.Create())
             {
                 var a = activities.ToList();
                 _entitiesService.UpdateEntities(db.WActivities, activities);
                 var b = db.WActivities.ToList();
                 db.SaveChanges();
+            }
+            }
+            catch(Exception e)
+            {
+
             }
         }
     }

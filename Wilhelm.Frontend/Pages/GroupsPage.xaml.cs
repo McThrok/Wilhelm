@@ -23,7 +23,7 @@ using Wilhelm.Frontend.Services.Interfaces;
 
 namespace Wilhelm.Frontend.Pages
 {
-    public partial class GroupsPage : Page, INotifyPropertyChanged, IMenuPage
+    public partial class GroupsPage : UserControl, INotifyPropertyChanged, IMenuPage
     {
         private readonly ObservableCollection<GroupHolder> _groups = new ObservableCollection<GroupHolder>();
         private readonly List<TaskHolder> _tasks = new List<TaskHolder>();

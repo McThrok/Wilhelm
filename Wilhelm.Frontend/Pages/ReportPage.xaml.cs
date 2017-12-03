@@ -21,7 +21,7 @@ namespace Wilhelm.Frontend.Pages
     /// <summary>
     /// Interaction logic for ActionTypesPage.xaml
     /// </summary>
-    public partial class ReportPage : Page,IMenuPage
+    public partial class ReportPage : UserControl, IMenuPage
     {
         private readonly IReportService _reportService;
 

@@ -4,10 +4,17 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Wilhelm.Frontend.Controls"
+             xmlns:viewPages="clr-namespace:Wilhelm.Frontend.Views.Pages"
+             xmlns:viewModels="clr-namespace:Wilhelm.Frontend.ViewModels.Pages"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
     <UserControl.Resources>
-
+        <DataTemplate DataType="{x:Type viewModels:ArchivePageViewModel}">
+            <viewPages:ArchivePageView/>
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type viewModels:HomePageViewModel}">
+            <viewPages:HomePageView/>
+        </DataTemplate>
         <Style TargetType="Button" x:Key="MenuButon">
             <Setter Property="DockPanel.Dock" Value="Top"/>
             <Setter Property="Width" Value="auto"/>
@@ -63,6 +70,6 @@
             </Grid>
         </DockPanel>
 
-        <Frame Name="MainFrame" NavigationUIVisibility="Hidden" Grid.Row="1" Grid.Column="1"/>
+        <ContentControl Name="MainFrame" Grid.Row="1" Grid.Column="1"/>
     </Grid>
 </UserControl>

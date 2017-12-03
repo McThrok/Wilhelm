@@ -10,7 +10,7 @@ namespace Wilhelm.Backend.Model.Dto
 {
     public class UserDto: ModelDto
     {
-        public string Name { get; set; }
+        public string Login { get; set; }
         public string Password { get; set; }
     }
 }

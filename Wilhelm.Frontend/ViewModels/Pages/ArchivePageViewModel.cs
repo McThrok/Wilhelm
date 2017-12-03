@@ -4,38 +4,29 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using Wilhelm.Backend.Model.Dto;
 using Wilhelm.Backend.Services.Interfaces;
 using Wilhelm.Frontend.Model;
+using Wilhelm.Frontend.Pages;
 using Wilhelm.Frontend.Services.Interfaces;
 
-namespace Wilhelm.Frontend.Pages
+namespace Wilhelm.Frontend.ViewModels.Pages
 {
-    /// <summary>
-    /// Interaction logic for MenuPage.xaml
-    /// </summary>
-    public partial class HomePage : Page, IMenuPage
+    public class ArchivePageViewModel : IMenuPage
     {
         private readonly IHoldersService _holdersService;
         private readonly IActivityService _activityService;
         private ObservableCollection<ActivityHolder> _currentList;
 
-        public HomePage(IHoldersService holdersService, IActivityService activityService)
+        public ArchivePageViewModel(IHoldersService holdersService, IActivityService activityService)
         {
             _holdersService = holdersService;
             _activityService = activityService;
-            InitializeComponent();
-            DataContext = this;
         }
+
 
         private void ListViewItem_MouseDown(object sender, MouseButtonEventArgs e)
         {
@@ -55,11 +46,11 @@ namespace Wilhelm.Frontend.Pages
 
         public void Activate()
         {
-            var todayTasksList = new List<ActivityHolder>();
-            _holdersService.UpdateArchiveHolders(todayTasksList, _activityService.GetTodaysActivities());
-            _currentList = new ObservableCollection<ActivityHolder>(todayTasksList.Where(x => !x.Task.Archivized));
-            TaskListView.ItemsSource = _currentList;
-        }
+            var archiveList = new List<ActivityHolder>();
+            _holdersService.UpdateArchiveHolders(archiveList, _activityService.GetArchive());
+            archiveList.Sort((a, b) => DateTime.Compare(a.Date, b.Date));
+            _currentList = new ObservableCollection<ActivityHolder>(archiveList.Where(x => !x.Task.Archivized));
+        }   
 
         public void Save()
         {
@@ -67,6 +58,16 @@ namespace Wilhelm.Frontend.Pages
             _holdersService.UpdateActivityDtos(activities, _currentList);
             _activityService.SaveActivities(activities);
         }
-
+        public ObservableCollection<ActivityHolder> CurrentList// TODO INotifyProperty?
+        {
+            get
+            {
+                return _currentList;
+            }
+            private set
+            {
+                _currentList = value;
+            }
+        }
     }
 }

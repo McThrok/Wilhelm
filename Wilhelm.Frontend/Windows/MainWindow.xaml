@@ -12,7 +12,6 @@
         Background="#ddd8c9">
 
     <Window.Resources>
-
         <DataTemplate DataType="{x:Type viewModels:SigningPanelViewModel}">
             <viewSigning:SigningPanelView/>
         </DataTemplate>

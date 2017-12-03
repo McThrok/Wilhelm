@@ -25,7 +25,7 @@ namespace Wilhelm.Frontend.ViewModels.Signing
             _logInAction = LogInAction;
             ShowSighIn(null);
         }
-
+        
         private void ShowSighIn(object obj)
         {
             SelectedViewModel = new SignInViewModel(_accountsService, SetUser, ShowSighUp);
@@ -38,7 +38,6 @@ namespace Wilhelm.Frontend.ViewModels.Signing
         {
             _logInAction(userId);
         }
-
 
         public event PropertyChangedEventHandler PropertyChanged;
         private void OnPropertyChanged(string propName)
