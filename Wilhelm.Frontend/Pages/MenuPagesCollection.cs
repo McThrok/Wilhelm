@@ -21,7 +21,7 @@ namespace Wilhelm.Frontend.Pages
         private readonly IReportService _reportService;
         private HomePageViewModel _homePage;
         private TasksPage _tasksPage;
-        private ReportPage _reportPage;
+        private ReportPageViewModel _reportPage;
         private GroupsPage _groupsPage;
         private ArchivePageViewModel _archivePage;
 
@@ -53,12 +53,12 @@ namespace Wilhelm.Frontend.Pages
                 return _tasksPage;
             }
         }
-        public ReportPage ReportPage
+        public ReportPageViewModel ReportPage
         {
             get
             {
                 if (_reportPage == null)
-                    _reportPage = new ReportPage(_reportService);
+                    _reportPage = new ReportPageViewModel(_reportService);
                 return _reportPage;
             }
         }

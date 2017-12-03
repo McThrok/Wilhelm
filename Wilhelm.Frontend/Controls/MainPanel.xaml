@@ -15,6 +15,9 @@
         <DataTemplate DataType="{x:Type viewModels:HomePageViewModel}">
             <viewPages:HomePageView/>
         </DataTemplate>
+        <DataTemplate DataType="{x:Type viewModels:ReportPageViewModel}">
+            <viewPages:ReportPageView/>
+        </DataTemplate>
         <Style TargetType="Button" x:Key="MenuButon">
             <Setter Property="DockPanel.Dock" Value="Top"/>
             <Setter Property="Width" Value="auto"/>
