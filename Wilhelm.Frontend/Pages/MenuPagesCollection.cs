@@ -22,7 +22,7 @@ namespace Wilhelm.Frontend.Pages
         private HomePageViewModel _homePage;
         private TasksPage _tasksPage;
         private ReportPageViewModel _reportPage;
-        private GroupsPage _groupsPage;
+        private GroupPageViewModel _groupsPage;
         private ArchivePageViewModel _archivePage;
 
         public MenuPagesCollection(IServiceFactory serviceFactory, IHoldersConversionService holdersConversionService, IHoldersService holdersService)
@@ -62,12 +62,12 @@ namespace Wilhelm.Frontend.Pages
                 return _reportPage;
             }
         }
-        public GroupsPage GroupsPage
+        public GroupPageViewModel GroupsPage
         {
             get
             {
                 if (_groupsPage == null)
-                    _groupsPage = new GroupsPage(_holdersService,_configurationService);
+                    _groupsPage = new GroupPageViewModel(_holdersService,_configurationService);
                 return _groupsPage;
             }
         }

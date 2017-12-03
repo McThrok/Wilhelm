@@ -75,10 +75,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Page Include="Controls\TaskDetailsControl.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
     <Page Include="Views\Controls\GroupDetailsView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -87,17 +83,21 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\Controls\TaskDetailsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\Pages\ArchivePageView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Pages\GroupsPage.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
     <Page Include="Pages\TasksPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Pages\GroupPageView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Pages\HomePageView.xaml">
       <SubType>Designer</SubType>
@@ -131,9 +131,6 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Controls\TaskDetailsControl.xaml.cs">
-      <DependentUpon>TaskDetailsControl.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Model\ActivityHolder.cs" />
     <Compile Include="Model\ConfigHolder.cs" />
     <Compile Include="Model\GroupHolder.cs" />
@@ -142,6 +139,8 @@
     <Compile Include="Model\TaskHolder.cs" />
     <Compile Include="ViewModels\Controls\GroupDetailsViewModel.cs" />
     <Compile Include="ViewModels\Controls\MainPanelViewModel.cs" />
+    <Compile Include="ViewModels\Controls\TaskDetailsViewModel.cs" />
+    <Compile Include="ViewModels\Pages\GroupPageViewModel.cs" />
     <Compile Include="ViewModels\Pages\HomePageViewModel.cs" />
     <Compile Include="ViewModels\Pages\ReportPageViewModel.cs" />
     <Compile Include="Views\Controls\GroupDetailsView.xaml.cs">
@@ -150,11 +149,11 @@
     <Compile Include="Views\Controls\MainPanelView.xaml.cs">
       <DependentUpon>MainPanelView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Controls\TaskDetailsView.xaml.cs">
+      <DependentUpon>TaskDetailsView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Pages\ArchivePageView.xaml.cs">
       <DependentUpon>ArchivePageView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Pages\GroupsPage.xaml.cs">
-      <DependentUpon>GroupsPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pages\IMenuPage.cs" />
     <Compile Include="Pages\MenuPagesCollection.cs" />
@@ -172,6 +171,9 @@
     <Compile Include="ViewModels\Signing\SignUpViewModel.cs" />
     <Compile Include="ViewModels\Signing\SigningPanelViewModel.cs" />
     <Compile Include="Support\PasswordBoxAssistant.cs" />
+    <Compile Include="Views\Pages\GroupPageView.xaml.cs">
+      <DependentUpon>GroupPageView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Pages\HomePageView.xaml.cs">
       <DependentUpon>HomePageView.xaml</DependentUpon>
     </Compile>

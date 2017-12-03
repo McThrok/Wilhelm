@@ -17,9 +17,9 @@ using System.Windows.Shapes;
 using Wilhelm.Backend.Model;
 using Wilhelm.Backend.Model.Dto;
 using Wilhelm.Backend.Services.Interfaces;
-using Wilhelm.Frontend.Controls;
 using Wilhelm.Frontend.Model;
 using Wilhelm.Frontend.Services.Interfaces;
+using Wilhelm.Frontend.ViewModels.Controls;
 
 namespace Wilhelm.Frontend.Pages
 {
@@ -30,7 +30,7 @@ namespace Wilhelm.Frontend.Pages
         private TaskHolder _activeTask;
         private readonly IHoldersService _holdersService;
         private readonly IConfigurationService _configurationService;
-        private TaskDetailsControl _taskDetailsControl;
+        private TaskDetailsViewModel _taskDetailsControl;
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -40,7 +40,7 @@ namespace Wilhelm.Frontend.Pages
             _configurationService = configurationService;
 
             InitializeComponent();
-            _taskDetailsControl = new TaskDetailsControl(_holdersService);
+            _taskDetailsControl = new TaskDetailsViewModel(_holdersService);
             TaskDetailsContentControl.Content = _taskDetailsControl;
             DataContext = this;
         }
