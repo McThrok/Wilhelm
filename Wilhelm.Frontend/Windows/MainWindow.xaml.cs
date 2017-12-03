@@ -21,6 +21,7 @@ using System.ComponentModel;
 using Wilhelm.Frontend.Controls;
 using Wilhelm.Frontend.ViewModels.Signing;
 using Wilhelm.Backend.Model.Dto;
+using Wilhelm.Frontend.ViewModels.Controls;
 
 namespace Wilhelm.Frontend.Windows
 {
@@ -30,7 +31,7 @@ namespace Wilhelm.Frontend.Windows
     public partial class MainWindow : Window
     {
         private readonly SigningPanelViewModel _signViewModel;
-        private MainPanel _maipanel;
+        private MainPanelViewModel _maipanel;
 
 
         public MainWindow()
@@ -38,12 +39,12 @@ namespace Wilhelm.Frontend.Windows
             InitializeComponent();
             _signViewModel = new SigningPanelViewModel(SetMainManetASContent);
             //MainContent.Content = _signViewModel;
-            MainContent.Content = new MainPanel(123321); //DEBUG
+            MainContent.Content = new MainPanelViewModel(123321); //DEBUG
         }
 
         public void SetMainManetASContent(int userId)
         {
-            _maipanel = new MainPanel(userId);
+            _maipanel = new MainPanelViewModel(userId);
             MainContent.Content = _maipanel;
 
         }
@@ -51,7 +52,7 @@ namespace Wilhelm.Frontend.Windows
         protected override void OnClosing(CancelEventArgs e)
         {
             if (MainContent.Content == _maipanel)
-                _maipanel.properClose();
+                _maipanel.ProperClose();
             base.OnClosing(e);
         }
     }

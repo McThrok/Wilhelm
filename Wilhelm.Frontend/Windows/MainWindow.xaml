@@ -5,15 +5,20 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Wilhelm.Frontend"
         xmlns:viewSigning="clr-namespace:Wilhelm.Frontend.Views.Signing"
-        xmlns:viewModels="clr-namespace:Wilhelm.Frontend.ViewModels.Signing"
+        xmlns:viewModelsSigning="clr-namespace:Wilhelm.Frontend.ViewModels.Signing"
+        xmlns:viewControls="clr-namespace:Wilhelm.Frontend.Views.Controls"
+        xmlns:viewModelsControls="clr-namespace:Wilhelm.Frontend.ViewModels.Controls"
         mc:Ignorable="d"
         WindowStartupLocation="CenterScreen"
         Title="Wilhelm" Height="600" Width="850"
         Background="#ddd8c9">
 
     <Window.Resources>
-        <DataTemplate DataType="{x:Type viewModels:SigningPanelViewModel}">
+        <DataTemplate DataType="{x:Type viewModelsSigning:SigningPanelViewModel}">
             <viewSigning:SigningPanelView/>
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type viewModelsControls:MainPanelViewModel}">
+            <viewControls:MainPanelView/>
         </DataTemplate>
     </Window.Resources>
 
