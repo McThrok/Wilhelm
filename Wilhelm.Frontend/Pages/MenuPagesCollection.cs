@@ -19,7 +19,7 @@ namespace Wilhelm.Frontend.Pages
         private readonly IConfigurationService _configurationService;
         private readonly IActivityService _activityService;
         private readonly IReportService _reportService;
-        private HomePage _homePage;
+        private HomePageViewModel _homePage;
         private TasksPage _tasksPage;
         private ReportPage _reportPage;
         private GroupsPage _groupsPage;
@@ -35,12 +35,12 @@ namespace Wilhelm.Frontend.Pages
             _reportService = serviceFactory.CreateReportService();
         }
 
-        public HomePage HomePage
+        public HomePageViewModel HomePage
         {
             get
             {
                 if (_homePage == null)
-                    _homePage = new HomePage(_holdersService,_activityService);
+                    _homePage = new HomePageViewModel(_holdersService, _activityService);
                 return _homePage;
             }
         }

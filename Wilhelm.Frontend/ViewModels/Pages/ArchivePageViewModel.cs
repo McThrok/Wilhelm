@@ -58,7 +58,7 @@ namespace Wilhelm.Frontend.ViewModels.Pages
             _holdersService.UpdateActivityDtos(activities, _currentList);
             _activityService.SaveActivities(activities);
         }
-        public ObservableCollection<ActivityHolder> CurrentList//INotifyProperty?
+        public ObservableCollection<ActivityHolder> CurrentList// TODO INotifyProperty?
         {
             get
             {

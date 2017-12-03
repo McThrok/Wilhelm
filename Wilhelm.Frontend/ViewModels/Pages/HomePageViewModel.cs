@@ -2,39 +2,27 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using Wilhelm.Backend.Model.Dto;
 using Wilhelm.Backend.Services.Interfaces;
 using Wilhelm.Frontend.Model;
+using Wilhelm.Frontend.Pages;
 using Wilhelm.Frontend.Services.Interfaces;
 
-namespace Wilhelm.Frontend.Pages
+namespace Wilhelm.Frontend.ViewModels.Pages
 {
-    /// <summary>
-    /// Interaction logic for MenuPage.xaml
-    /// </summary>
-    public partial class HomePage : UserControl, IMenuPage
+    public class HomePageViewModel : IMenuPage
     {
         private readonly IHoldersService _holdersService;
         private readonly IActivityService _activityService;
         private ObservableCollection<ActivityHolder> _currentList;
 
-        public HomePage(IHoldersService holdersService, IActivityService activityService)
+        public HomePageViewModel(IHoldersService holdersService, IActivityService activityService)
         {
             _holdersService = holdersService;
             _activityService = activityService;
-            InitializeComponent();
-            DataContext = this;
         }
 
         private void ListViewItem_MouseDown(object sender, MouseButtonEventArgs e)
@@ -57,8 +45,7 @@ namespace Wilhelm.Frontend.Pages
         {
             var todayTasksList = new List<ActivityHolder>();
             _holdersService.UpdateArchiveHolders(todayTasksList, _activityService.GetTodaysActivities());
-            _currentList = new ObservableCollection<ActivityHolder>(todayTasksList.Where(x => !x.Task.Archivized));
-            TaskListView.ItemsSource = _currentList;
+            CurrentList = new ObservableCollection<ActivityHolder>(todayTasksList.Where(x => !x.Task.Archivized));
         }
 
         public void Save()
@@ -68,5 +55,16 @@ namespace Wilhelm.Frontend.Pages
             _activityService.SaveActivities(activities);
         }
 
+        public ObservableCollection<ActivityHolder> CurrentList
+        {
+            get
+            {
+                return _currentList;
+            }
+            private set
+            {
+                _currentList = value;
+            }
+        }
     }
 }
