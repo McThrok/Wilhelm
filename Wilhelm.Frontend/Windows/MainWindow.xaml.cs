@@ -37,7 +37,8 @@ namespace Wilhelm.Frontend.Windows
         {
             InitializeComponent();
             _signViewModel = new SigningPanelViewModel(SetMainManetASContent);
-            MainContent.Content = _signViewModel;
+            //MainContent.Content = _signViewModel;
+            MainContent.Content = new MainPanel(123321); //DEBUG
         }
 
         public void SetMainManetASContent(int userId)

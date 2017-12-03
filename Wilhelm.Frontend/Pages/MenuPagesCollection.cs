@@ -7,6 +7,7 @@ using Wilhelm.Backend.Services.Interfaces;
 using Wilhelm.Backend.Services;
 using Wilhelm.Frontend.Services;
 using Wilhelm.Frontend.Services.Interfaces;
+using Wilhelm.Frontend.ViewModels.Pages;
 
 namespace Wilhelm.Frontend.Pages
 {
@@ -18,11 +19,11 @@ namespace Wilhelm.Frontend.Pages
         private readonly IConfigurationService _configurationService;
         private readonly IActivityService _activityService;
         private readonly IReportService _reportService;
-        private HomePage _homePage;
+        private HomePageViewModel _homePage;
         private TasksPage _tasksPage;
         private ReportPage _reportPage;
         private GroupsPage _groupsPage;
-        private ArchivePage _archivePage;
+        private ArchivePageViewModel _archivePage;
 
         public MenuPagesCollection(IServiceFactory serviceFactory, IHoldersConversionService holdersConversionService, IHoldersService holdersService)
         {
@@ -34,12 +35,12 @@ namespace Wilhelm.Frontend.Pages
             _reportService = serviceFactory.CreateReportService();
         }
 
-        public HomePage HomePage
+        public HomePageViewModel HomePage
         {
             get
             {
                 if (_homePage == null)
-                    _homePage = new HomePage(_holdersService,_activityService);
+                    _homePage = new HomePageViewModel(_holdersService, _activityService);
                 return _homePage;
             }
         }
@@ -70,12 +71,12 @@ namespace Wilhelm.Frontend.Pages
                 return _groupsPage;
             }
         }
-        public ArchivePage ArchivePage
+        public ArchivePageViewModel ArchivePage
         {
             get
             {
                 if (_archivePage == null)
-                    _archivePage = new ArchivePage(_holdersService, _activityService);
+                    _archivePage = new ArchivePageViewModel(_holdersService, _activityService);
                 return _archivePage;
             }
         }
