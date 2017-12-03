@@ -75,13 +75,13 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Page Include="Controls\GroupDetailsControl.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
     <Page Include="Controls\TaskDetailsControl.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Controls\GroupDetailsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Controls\MainPanelView.xaml">
       <SubType>Designer</SubType>
@@ -131,9 +131,6 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Controls\GroupDetailsControl.xaml.cs">
-      <DependentUpon>GroupDetailsControl.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Controls\TaskDetailsControl.xaml.cs">
       <DependentUpon>TaskDetailsControl.xaml</DependentUpon>
     </Compile>
@@ -143,9 +140,13 @@
     <Compile Include="Model\Holder.cs" />
     <Compile Include="Model\NamedHolder.cs" />
     <Compile Include="Model\TaskHolder.cs" />
+    <Compile Include="ViewModels\Controls\GroupDetailsViewModel.cs" />
     <Compile Include="ViewModels\Controls\MainPanelViewModel.cs" />
     <Compile Include="ViewModels\Pages\HomePageViewModel.cs" />
     <Compile Include="ViewModels\Pages\ReportPageViewModel.cs" />
+    <Compile Include="Views\Controls\GroupDetailsView.xaml.cs">
+      <DependentUpon>GroupDetailsView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Controls\MainPanelView.xaml.cs">
       <DependentUpon>MainPanelView.xaml</DependentUpon>
     </Compile>

@@ -20,6 +20,7 @@ using Wilhelm.Backend.Services.Interfaces;
 using Wilhelm.Frontend.Controls;
 using Wilhelm.Frontend.Model;
 using Wilhelm.Frontend.Services.Interfaces;
+using Wilhelm.Frontend.ViewModels.Controls;
 
 namespace Wilhelm.Frontend.Pages
 {
@@ -30,7 +31,7 @@ namespace Wilhelm.Frontend.Pages
         private GroupHolder _activeGroup;
         private readonly IHoldersService _holdersService;
         private readonly IConfigurationService _configurationService;
-        private GroupDetailsControl _groupDetailsControl;
+        private GroupDetailsViewModel _groupDetailsControl;
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -40,7 +41,7 @@ namespace Wilhelm.Frontend.Pages
             _configurationService = configurationService;
 
             InitializeComponent();
-            _groupDetailsControl = new GroupDetailsControl(holdersService);
+            _groupDetailsControl = new GroupDetailsViewModel(holdersService);
             GroupDetailsContentControl.Content = _groupDetailsControl;
             DataContext = this;
         }

@@ -19,6 +19,7 @@
             <viewPages:ReportPageView/>
         </DataTemplate>
         
+        
         <Style TargetType="Button" x:Key="MenuButon">
             <Setter Property="DockPanel.Dock" Value="Top"/>
             <Setter Property="Width" Value="auto"/>
