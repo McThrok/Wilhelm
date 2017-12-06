@@ -95,8 +95,12 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+<<<<<<< HEAD
+=======
     <Page Include="Views\Pages\ArchivePageView.xaml">
       <SubType>Designer</SubType>
+    </Page>
+>>>>>>> W-23
     <Page Include="Views\Pages\HomePageView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -106,14 +110,7 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Pages\TaskPageView.xaml">
-    </Page>
-    <Page Include="Pages\ReportPage.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\Pages\HomePageView.xaml">
-      <SubType>Designer</SubType>
+	 <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Signing\SignInView.xaml">
@@ -154,10 +151,10 @@
     <Compile Include="ViewModels\Pages\ReportPageViewModel.cs" />
     <Compile Include="ViewModels\Pages\TaskPageViewModel.cs" />
     <Compile Include="ViewModels\Windows\MainWindowViewModel.cs" />
-    <Compile Include="Views\Controls\GroupDetailsView.xaml.cs">
+    <Compile Include="Views\Controls\GroupDetailsView.xaml.cs"/>
       <DependentUpon>GroupDetailsView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Model\UserHolder.cs" />
-    <Compile Include="ViewModels\Pages\HomePageViewModel.cs" />
     <Compile Include="Views\Pages\ArchivePageView.xaml.cs">
       <DependentUpon>ArchivePageView.xaml</DependentUpon>
     </Compile>
@@ -166,9 +163,6 @@
     </Compile>
     <Compile Include="Views\Controls\TaskDetailsView.xaml.cs">
       <DependentUpon>TaskDetailsView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\Pages\ArchivePageView.xaml.cs">
-      <DependentUpon>ArchivePageView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pages\IMenuPage.cs" />
     <Compile Include="Pages\MenuPagesCollection.cs" />
@@ -194,9 +188,6 @@
     </Compile>
     <Compile Include="Views\Pages\TaskPageView.xaml.cs">
       <DependentUpon>TaskPageView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\Pages\HomePageView.xaml.cs">
-      <DependentUpon>HomePageView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Signing\SignInView.xaml.cs">
       <DependentUpon>SignInView.xaml</DependentUpon>
