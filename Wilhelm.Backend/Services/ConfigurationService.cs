@@ -22,16 +22,18 @@ namespace Wilhelm.Backend.Services
             _entitiesService = entitiesService;
         }
 
-        public ConfigDto GetConfig()
+        public ConfigDto GetConfig(int userId)
         {
             ConfigDto dto = new ConfigDto();
             using (var db = _wContextFactory.Create())
             {
-                _entitiesService.UpdateDto(dto, db.WTasks.Where(x=>!x.Archivized).Include(x=>x.Owner), db.WGroups.Where(x => !x.Archivized).Include(x => x.Owner));
+                var tasks = db.WTasks.Where(x => x.Owner.Id == userId && !x.Archivized).Include(x => x.Owner);
+                var groups = db.WGroups.Where(x => x.Owner.Id == userId && !x.Archivized).Include(x => x.Owner);
+                _entitiesService.UpdateDto(dto, tasks, groups);
             }
             return dto;
         }
-        public void SaveConfig(ConfigDto config)
+        public void SaveConfig( ConfigDto config)
         {
             using (var db = _wContextFactory.Create())
             {

@@ -11,13 +11,12 @@ namespace Wilhelm.Frontend.ViewModels.Windows
 
         public MainWindowViewModel()
         {
-            _signViewModel = new SigningPanelViewModel(SetMainManetASContent);
-            //MainContent.Content = _signViewModel;
-            //MainContent.Content = new MainPanelViewModel(123321); //DEBUG
-            MainContent = new MainPanelViewModel(123321); //DEBUG
+            _signViewModel = new SigningPanelViewModel(SetContentForLoggedUser);
+            //MainContent = _signViewModel;
+            MainContent = new MainPanelViewModel(1); //DEBUG
         }
 
-        public void SetMainManetASContent(int userId)
+        public void SetContentForLoggedUser(int userId)
         {
             _mainPanel = new MainPanelViewModel(userId);
            // MainContent.Content = _mainPanel;
