@@ -97,6 +97,7 @@
     </Page>
     <Page Include="Views\Pages\ArchivePageView.xaml">
       <SubType>Designer</SubType>
+    </Page>
     <Page Include="Views\Pages\HomePageView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -154,7 +155,7 @@
     <Compile Include="ViewModels\Pages\ReportPageViewModel.cs" />
     <Compile Include="ViewModels\Pages\TaskPageViewModel.cs" />
     <Compile Include="ViewModels\Windows\MainWindowViewModel.cs" />
-    <Compile Include="Views\Controls\GroupDetailsView.xaml.cs">
+    <Compile Include="Views\Controls\GroupDetailsView.xaml.cs"/>
       <DependentUpon>GroupDetailsView.xaml</DependentUpon>
     <Compile Include="Model\UserHolder.cs" />
     <Compile Include="ViewModels\Pages\HomePageViewModel.cs" />
