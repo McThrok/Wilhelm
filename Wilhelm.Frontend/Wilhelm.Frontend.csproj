@@ -75,35 +75,35 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Page Include="Controls\GroupDetailsControl.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Controls\MainPanel.xaml">
+    <Page Include="Views\Controls\GroupDetailsView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Controls\TaskDetailsControl.xaml">
-      <Generator>MSBuild:Compile</Generator>
+    <Page Include="Views\Controls\MainPanelView.xaml">
       <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Controls\TaskDetailsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Pages\ArchivePageView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Pages\GroupsPage.xaml">
-      <Generator>MSBuild:Compile</Generator>
+    <Page Include="Views\Pages\GroupPageView.xaml">
       <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Pages\ReportPage.xaml">
       <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Pages\TasksPage.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\Pages\HomePageView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Pages\ReportPageView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Pages\TaskPageView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -119,11 +119,11 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Windows\ChooseItemWindow.xaml">
-      <Generator>MSBuild:Compile</Generator>
+    <Page Include="Views\Windows\MainWindowView.xaml">
       <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Windows\MainWindow.xaml">
+    <Page Include="Windows\ChooseItemWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -131,37 +131,35 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Controls\GroupDetailsControl.xaml.cs">
-      <DependentUpon>GroupDetailsControl.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Controls\MainPanel.xaml.cs">
-      <DependentUpon>MainPanel.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Controls\TaskDetailsControl.xaml.cs">
-      <DependentUpon>TaskDetailsControl.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Model\ActivityHolder.cs" />
     <Compile Include="Model\ConfigHolder.cs" />
     <Compile Include="Model\GroupHolder.cs" />
     <Compile Include="Model\Holder.cs" />
     <Compile Include="Model\NamedHolder.cs" />
     <Compile Include="Model\TaskHolder.cs" />
-    <Compile Include="Model\UserHolder.cs" />
+    <Compile Include="ViewModels\Controls\GroupDetailsViewModel.cs" />
+    <Compile Include="ViewModels\Controls\MainPanelViewModel.cs" />
+    <Compile Include="ViewModels\Controls\TaskDetailsViewModel.cs" />
+    <Compile Include="ViewModels\Pages\GroupPageViewModel.cs" />
     <Compile Include="ViewModels\Pages\HomePageViewModel.cs" />
+    <Compile Include="ViewModels\Pages\ReportPageViewModel.cs" />
+    <Compile Include="ViewModels\Pages\TaskPageViewModel.cs" />
+    <Compile Include="ViewModels\Windows\MainWindowViewModel.cs" />
+    <Compile Include="Views\Controls\GroupDetailsView.xaml.cs">
+      <DependentUpon>GroupDetailsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Model\UserHolder.cs" />
     <Compile Include="Views\Pages\ArchivePageView.xaml.cs">
       <DependentUpon>ArchivePageView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Pages\GroupsPage.xaml.cs">
-      <DependentUpon>GroupsPage.xaml</DependentUpon>
+    <Compile Include="Views\Controls\MainPanelView.xaml.cs">
+      <DependentUpon>MainPanelView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Controls\TaskDetailsView.xaml.cs">
+      <DependentUpon>TaskDetailsView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pages\IMenuPage.cs" />
     <Compile Include="Pages\MenuPagesCollection.cs" />
-    <Compile Include="Pages\ReportPage.xaml.cs">
-      <DependentUpon>ReportPage.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Pages\TasksPage.xaml.cs">
-      <DependentUpon>TasksPage.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Services\HoldersService.cs" />
     <Compile Include="Services\HoldersConversionService.cs" />
     <Compile Include="Services\Interfaces\IHoldersConversionService.cs" />
@@ -173,8 +171,17 @@
     <Compile Include="ViewModels\Signing\SignUpViewModel.cs" />
     <Compile Include="ViewModels\Signing\SigningPanelViewModel.cs" />
     <Compile Include="Support\PasswordBoxAssistant.cs" />
+    <Compile Include="Views\Pages\GroupPageView.xaml.cs">
+      <DependentUpon>GroupPageView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Pages\HomePageView.xaml.cs">
       <DependentUpon>HomePageView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Pages\ReportPageView.xaml.cs">
+      <DependentUpon>ReportPageView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Pages\TaskPageView.xaml.cs">
+      <DependentUpon>TaskPageView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Signing\SignInView.xaml.cs">
       <DependentUpon>SignInView.xaml</DependentUpon>
@@ -185,12 +192,11 @@
     <Compile Include="Views\Signing\SigningPanelView.xaml.cs">
       <DependentUpon>SigningPanelView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Windows\MainWindowView.xaml.cs">
+      <DependentUpon>MainWindowView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Windows\ChooseItemWindow.xaml.cs">
       <DependentUpon>ChooseItemWindow.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Windows\MainWindow.xaml.cs">
-      <DependentUpon>MainWindow.xaml</DependentUpon>
-      <SubType>Code</SubType>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -230,6 +236,7 @@
       <Name>Wilhelm.DataAccess</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>

@@ -1,73 +1,75 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using Wilhelm.Backend.Services;
 using Wilhelm.Backend.Services.Interfaces;
 using Wilhelm.Frontend.Pages;
 using Wilhelm.Frontend.Services;
 using Wilhelm.Frontend.Services.Interfaces;
+using Wilhelm.Frontend.Support;
 
-namespace Wilhelm.Frontend.Controls
+namespace Wilhelm.Frontend.ViewModels.Controls
 {
-    /// <summary>
-    /// Interaction logic for MainPanel.xaml
-    /// </summary>
-    public partial class MainPanel : UserControl
+    public class MainPanelViewModel : INotifyPropertyChanged
     {
         private readonly MenuPagesCollection _pages;
         private readonly IServiceFactory _serviceFactory;
         private readonly IHoldersConversionService _holdersConversionService;
         private readonly IHoldersService _holdersService;
+        private object _page;
 
-        public MainPanel(int userId)
+        public ICommand HomeCmd { get; protected set; }
+        public ICommand TasksCmd { get; protected set; }
+        public ICommand GroupsCmd { get; protected set; }
+        public ICommand ArchivesCmd { get; protected set; }
+        public ICommand ReportsCmd { get; protected set; }
+
+        public MainPanelViewModel(int userId)
         {
             _serviceFactory = new ServiceFactory();
             _holdersConversionService = new HoldersConversionService();
             _holdersService = new HoldersService(_holdersConversionService);
             _pages = new MenuPagesCollection(_serviceFactory, _holdersConversionService, _holdersService);
 
-            InitializeComponent();
+            HomeCmd = new DelegateCommand(Home);
+            TasksCmd = new DelegateCommand(Tasks);
+            GroupsCmd = new DelegateCommand(Groups);
+            ArchivesCmd = new DelegateCommand(Archives);
+            ReportsCmd = new DelegateCommand(Reports);
+
             ClickMenu(_pages.HomePage);
         }
 
-        private void HomeButto_Click(object sender, RoutedEventArgs e)
+        public event PropertyChangedEventHandler PropertyChanged;
+        protected void OnPropertyChanged(string propName)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propName));
+        }
+        private void Home(object obj)
         {
             ClickMenu(_pages.HomePage);
         }
-
-        private void TasksButton_Click(object sender, RoutedEventArgs e)
+        private void Tasks(object obj)
         {
             ClickMenu(_pages.TasksPage);
         }
-
-        private void GroupsButton_Click(object sender, RoutedEventArgs e)
+        private void Groups(object obj)
         {
             ClickMenu(_pages.GroupsPage);
         }
-
-        private void ArchiveButton_Click(object sender, RoutedEventArgs e)
+        private void Archives(object obj)
         {
             ClickMenu(_pages.ArchivePage);
         }
-
-        private void ReportButton_Click(object sender, RoutedEventArgs e)
+        private void Reports(object obj)
         {
             ClickMenu(_pages.ReportPage);
         }
         private void ClickMenu(UserControl page)
         {
-            var currentPage = MainFrame.Content;
+            var currentPage = MainPanelContent;
             if (currentPage == page)
                 return;
 
@@ -77,11 +79,11 @@ namespace Wilhelm.Frontend.Controls
             if (page != null && page is IMenuPage newMenuPage)
                 newMenuPage.Activate();
 
-            MainFrame.Content = page;
+            MainPanelContent = page;
         }
-        private void ClickMenu(Object page)
+        private void ClickMenu(object page)
         {
-            var currentPage = MainFrame.Content;
+            var currentPage = MainPanelContent;
             if (currentPage == page)
                 return;
 
@@ -91,13 +93,26 @@ namespace Wilhelm.Frontend.Controls
             if (page != null && page is IMenuPage newMenuPage)
                 newMenuPage.Activate();
 
-            MainFrame.Content = page;
+            MainPanelContent = page;
         }
-        public void properClose()
+        public void ProperClose()
         {
-            var currentPage = MainFrame.Content;
+            var currentPage = _page;
             if (currentPage != null && currentPage is IMenuPage currentMenuPage)
                 currentMenuPage.Save();
+        }
+
+        public object MainPanelContent
+        {
+            get
+            {
+                return _page;
+            }
+            set
+            {
+                _page = value;
+                OnPropertyChanged(nameof(MainPanelContent));
+            }
         }
     }
 }
