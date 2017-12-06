@@ -2,80 +2,83 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using Wilhelm.Backend.Model;
-using Wilhelm.Backend.Model.Dto;
 using Wilhelm.Backend.Services.Interfaces;
-using Wilhelm.Frontend.Controls;
 using Wilhelm.Frontend.Model;
+using Wilhelm.Frontend.Pages;
 using Wilhelm.Frontend.Services.Interfaces;
+using Wilhelm.Frontend.Support;
+using Wilhelm.Frontend.ViewModels.Controls;
 
-namespace Wilhelm.Frontend.Pages
+namespace Wilhelm.Frontend.ViewModels.Pages
 {
-    public partial class TasksPage : UserControl, INotifyPropertyChanged, IMenuPage
+    public class TaskPageViewModel : INotifyPropertyChanged, IMenuPage
     {
         private readonly ObservableCollection<TaskHolder> _tasks = new ObservableCollection<TaskHolder>();
         private readonly List<GroupHolder> _groups = new List<GroupHolder>();
         private TaskHolder _activeTask;
         private readonly IHoldersService _holdersService;
         private readonly IConfigurationService _configurationService;
-        private TaskDetailsControl _taskDetailsControl;
-
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        public TasksPage(IHoldersService holdersService, IConfigurationService configurationService)
+        private TaskDetailsViewModel _taskDetailsControl;
+        private Visibility _dataVisibility;
+        public ICommand AddNewTaskCmd { get; protected set; }
+        public ICommand ApplyCmd { get; protected set; }
+        public ICommand ResetCmd { get; protected set; }
+        public ICommand DeleteCmd { get; protected set; }
+        public ICommand TaskCmd { get; protected set; }
+        public TaskPageViewModel(IHoldersService holdersService, IConfigurationService configurationService)
         {
             _holdersService = holdersService;
             _configurationService = configurationService;
 
-            InitializeComponent();
-            _taskDetailsControl = new TaskDetailsControl(_holdersService);
-            TaskDetailsContentControl.Content = _taskDetailsControl;
-            DataContext = this;
+            _taskDetailsControl = new TaskDetailsViewModel(_holdersService);
+            TaskDetailsControl = _taskDetailsControl;
+            AddNewTaskCmd = new DelegateCommand(AddNewTask);
+            ApplyCmd = new DelegateCommand(Apply);
+            ResetCmd = new DelegateCommand(Reset);
+            DeleteCmd = new DelegateCommand(Delete);
+            TaskCmd = new DelegateCommand(Task);
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+        protected void OnPropertyChanged(string propName)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propName));
         }
         public void ShowCurrentTask()
         {
             if (ActiveTask == null)
-                TaskButtonsPanel.Visibility = Visibility.Hidden;
+                DataVisibility = Visibility.Hidden;
             else
-                TaskButtonsPanel.Visibility = Visibility.Visible;
+                DataVisibility = Visibility.Visible;
 
             _taskDetailsControl.Initialize(ActiveTask, _groups);
         }
 
-        private void TaskButton_Click(object sender, RoutedEventArgs e)
+        private void Task(object obj)
         {
-            var button = sender as Button;
-            ActiveTask = button.Tag as TaskHolder;
+            ActiveTask = obj as TaskHolder;
             ShowCurrentTask();
         }
-        private void AddNewTask_Click(object sender, RoutedEventArgs e)
+        private void AddNewTask(object obj)
         {
             ActiveTask = _holdersService.CreateNewTask(_tasks);
             ShowCurrentTask();
         }
-        private void Apply_Click(object sender, RoutedEventArgs e)
+        private void Apply(object obj)
         {
             _holdersService.ApplyChanges(_tasks, _groups, _taskDetailsControl.ShownTask);
             SaveChanges();
             Activate();
         }
-        private void RestetChanges_Click(object sender, RoutedEventArgs e)
+        private void Reset(object obj)
         {
             ShowCurrentTask();
         }
-        private void Delete_Task(object sender, RoutedEventArgs e)
+        private void Delete(object obj)
         {
             var result = MessageBox.Show("Do you really want to delete " + ActiveTask.Name + "?", "", MessageBoxButton.YesNo);
             if (result == MessageBoxResult.Yes)
@@ -93,7 +96,6 @@ namespace Wilhelm.Frontend.Pages
             _groups.Clear();
             _tasks.Clear();
             _holdersService.UpdateConfigHolders(_groups, _tasks, _configurationService.GetConfig());
-            TasksListView.ItemsSource = _tasks;
             ShowCurrentTask();
         }
         private void SaveChanges()
@@ -117,6 +119,36 @@ namespace Wilhelm.Frontend.Pages
             {
                 _activeTask = value;
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(ActiveTask)));
+            }
+        }
+        public TaskDetailsViewModel TaskDetailsControl
+        {
+            get
+            {
+                return _taskDetailsControl;
+            }
+            set
+            {
+                _taskDetailsControl = value;
+            }
+        }
+        public Visibility DataVisibility
+        {
+            get
+            {
+                return _dataVisibility;
+            }
+            set
+            {
+                _dataVisibility = value;
+                OnPropertyChanged(nameof(DataVisibility));
+            }
+        }
+        public ObservableCollection<TaskHolder> Tasks
+        {
+            get
+            {
+                return _tasks;
             }
         }
     }

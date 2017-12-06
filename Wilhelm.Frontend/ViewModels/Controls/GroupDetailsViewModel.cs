@@ -1,57 +1,54 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using Wilhelm.Frontend.Model;
 using Wilhelm.Frontend.Services.Interfaces;
+using Wilhelm.Frontend.Support;
 using Wilhelm.Frontend.Windows;
 
-namespace Wilhelm.Frontend.Controls
+namespace Wilhelm.Frontend.ViewModels.Controls
 {
-    /// <summary>
-    /// Interaction logic for TaskDetailsControl.xaml
-    /// </summary>
-    public partial class GroupDetailsControl : UserControl, INotifyPropertyChanged
+    public class GroupDetailsViewModel: INotifyPropertyChanged
     {
-        public event PropertyChangedEventHandler PropertyChanged;
         private List<TaskHolder> _availableTasksToAdd;
         private GroupHolder _showGroup;
         private IHoldersService _holdersService;
+        private Visibility _dataVisibility;
+        public ICommand AssignTaskCmd { get; protected set; }
+        public ICommand RemoveTaskCmd { get; protected set; }
 
-        public GroupDetailsControl(IHoldersService holdersService)
+        public GroupDetailsViewModel(IHoldersService holdersService)
         {
             _holdersService = holdersService;
-
-            InitializeComponent();
-            DataContext = this;
+            AssignTaskCmd = new DelegateCommand(AssignTask);
+            RemoveTaskCmd = new DelegateCommand(RemoveTask);
         }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+        protected void OnPropertyChanged(string propName)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propName));
+        }
+
         public void Initialize(GroupHolder chooosenGroup, List<TaskHolder> tasks)
         {
             if (chooosenGroup == null)
             {
-                GroupDetailsPanel.Visibility = Visibility.Hidden;
+               DataVisibility = Visibility.Hidden;
                 return;
             }
 
-            GroupDetailsPanel.Visibility = Visibility.Visible;
+            DataVisibility = Visibility.Visible;
             _availableTasksToAdd = new List<TaskHolder>();
 
             ShownGroup = _holdersService.InitializeGroupDetails(_availableTasksToAdd, chooosenGroup, tasks);
         }
 
-        private void AssignTask_Click(object sender, RoutedEventArgs e)
+        private void AssignTask(object obj)
         {
             var dialog = new ChooseItemWindow(_availableTasksToAdd.Cast<NamedHolder>().ToList());
             dialog.ShowDialog();
@@ -62,11 +59,9 @@ namespace Wilhelm.Frontend.Controls
                 taskToAdd.Groups.Add(ShownGroup);
             }
         }
-
-        private void RemoveTask_Click(object sender, RoutedEventArgs e)
+        private void RemoveTask(object obj)
         {
-            var button = sender as Button;
-            var task = button.Tag as TaskHolder;
+            var task = obj as TaskHolder;
             task.Groups.Remove(ShownGroup);
             ShownGroup.Tasks.Remove(task);
             _availableTasksToAdd.Add(task);
@@ -81,7 +76,17 @@ namespace Wilhelm.Frontend.Controls
             set
             {
                 _showGroup = value;
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(ShownGroup)));
+                OnPropertyChanged(nameof(ShownGroup));
+            }
+        }
+        public Visibility DataVisibility {
+            get
+            {
+                return _dataVisibility;
+            } set
+            {
+                _dataVisibility = value;
+                OnPropertyChanged(nameof(DataVisibility));
             }
         }
     }
