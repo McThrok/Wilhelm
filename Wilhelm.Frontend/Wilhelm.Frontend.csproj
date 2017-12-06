@@ -95,6 +95,8 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\Pages\ArchivePageView.xaml">
+      <SubType>Designer</SubType>
     <Page Include="Views\Pages\HomePageView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -104,6 +106,13 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Pages\TaskPageView.xaml">
+    </Page>
+    <Page Include="Pages\ReportPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Pages\HomePageView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -147,6 +156,10 @@
     <Compile Include="ViewModels\Windows\MainWindowViewModel.cs" />
     <Compile Include="Views\Controls\GroupDetailsView.xaml.cs">
       <DependentUpon>GroupDetailsView.xaml</DependentUpon>
+    <Compile Include="Model\UserHolder.cs" />
+    <Compile Include="ViewModels\Pages\HomePageViewModel.cs" />
+    <Compile Include="Views\Pages\ArchivePageView.xaml.cs">
+      <DependentUpon>ArchivePageView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Controls\MainPanelView.xaml.cs">
       <DependentUpon>MainPanelView.xaml</DependentUpon>
@@ -181,6 +194,9 @@
     </Compile>
     <Compile Include="Views\Pages\TaskPageView.xaml.cs">
       <DependentUpon>TaskPageView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Pages\HomePageView.xaml.cs">
+      <DependentUpon>HomePageView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Signing\SignInView.xaml.cs">
       <DependentUpon>SignInView.xaml</DependentUpon>

@@ -214,7 +214,6 @@ namespace Wilhelm.Frontend.Services
             };
             return newGroup;
         }
-
         public TaskHolder CreateNewTask(IEnumerable<TaskHolder> tasks)
         {
             var newTask = new TaskHolder()
@@ -227,7 +226,6 @@ namespace Wilhelm.Frontend.Services
             };
             return newTask;
         }
-
         public TaskHolder InitializeTaskDetails(List<GroupHolder> availableGroupsToAdd, TaskHolder choosenTask, List<GroupHolder> groups)
         {
             TaskHolder shownTask = new TaskHolder()
@@ -264,7 +262,6 @@ namespace Wilhelm.Frontend.Services
             }
             return shownTask;
         }
-
         public GroupHolder InitializeGroupDetails(List<TaskHolder> availableTasksToAdd, GroupHolder chooosenGroup, List<TaskHolder> tasks)
         {
             GroupHolder shownGroup = new GroupHolder()

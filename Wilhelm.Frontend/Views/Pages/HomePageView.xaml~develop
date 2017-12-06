@@ -11,6 +11,7 @@
         <ListView  DockPanel.Dock="Bottom" ItemsSource="{Binding CurrentList}" HorizontalContentAlignment="Stretch"  Margin="10,0,10,10" >
             <ListView.ItemContainerStyle>
                 <Style TargetType="ListViewItem">
+                    <!--TODO Binding-->
                     <!--<EventSetter Event="PreviewMouseLeftButtonDown" Handler="ListViewItem_MouseDown"/>-->
                     <Setter Property="HorizontalContentAlignment" Value="Stretch" />
                 </Style>

@@ -13,8 +13,9 @@ namespace Wilhelm.Frontend.ViewModels.Signing
 {
     public abstract class BaseSignViewModel : INotifyPropertyChanged
     {
-        protected string _login;
-        protected string _password;
+        private string _login;
+        private string _password;
+        private string _errorMessage;
         protected Action<int> _logInAction;
 
         protected readonly IAccountsService _accountsService;
@@ -33,6 +34,10 @@ namespace Wilhelm.Frontend.ViewModels.Signing
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propName));
         }
+        protected void ClearErrorMessage()
+        {
+            ErrorMessage = null;
+        }
 
         public string Login
         {
@@ -43,6 +48,7 @@ namespace Wilhelm.Frontend.ViewModels.Signing
             set
             {
                 _login = value;
+                ClearErrorMessage();
                 OnPropertyChanged(nameof(Login));
             }
         }
@@ -55,7 +61,20 @@ namespace Wilhelm.Frontend.ViewModels.Signing
             set
             {
                 _password = value;
+                ClearErrorMessage();
                 OnPropertyChanged(nameof(Password));
+            }
+        }
+        public string ErrorMessage
+        {
+            get
+            {
+                return _errorMessage;
+            }
+            set
+            {
+                _errorMessage = value;
+                OnPropertyChanged(nameof(ErrorMessage));
             }
         }
     }
