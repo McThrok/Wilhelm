@@ -95,12 +95,6 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-<<<<<<< HEAD
-=======
-    <Page Include="Views\Pages\ArchivePageView.xaml">
-      <SubType>Designer</SubType>
-    </Page>
->>>>>>> W-23
     <Page Include="Views\Pages\HomePageView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -110,7 +104,7 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Pages\TaskPageView.xaml">
-	 <SubType>Designer</SubType>
+      <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Signing\SignInView.xaml">
@@ -151,7 +145,7 @@
     <Compile Include="ViewModels\Pages\ReportPageViewModel.cs" />
     <Compile Include="ViewModels\Pages\TaskPageViewModel.cs" />
     <Compile Include="ViewModels\Windows\MainWindowViewModel.cs" />
-    <Compile Include="Views\Controls\GroupDetailsView.xaml.cs"/>
+    <Compile Include="Views\Controls\GroupDetailsView.xaml.cs">
       <DependentUpon>GroupDetailsView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Model\UserHolder.cs" />
