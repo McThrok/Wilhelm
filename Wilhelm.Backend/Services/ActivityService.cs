@@ -11,7 +11,7 @@ using Wilhelm.DataAccess;
 
 namespace Wilhelm.Backend.Services
 {
-    internal class ActivityService : IActivityService
+    public class ActivityService : IActivityService
     {
         private IWContextFactory _wContextFactory;
         private IEntitiesService _entitiesService;
@@ -24,47 +24,38 @@ namespace Wilhelm.Backend.Services
             _activityGenerationService = activityGenerationService;
         }
 
-        public List<ActivityDto> GetArchive()
+        public List<ActivityDto> GetArchive(int userId)
         {
             List<ActivityDto> dto = new List<ActivityDto>();
             using (var db = _wContextFactory.Create())
             {
-                _entitiesService.UpdateDto(dto, db.WActivities.Include(x => x.WTask).Include(x => x.WTask.Owner));
+                var archive = db.WActivities.Where(x => x.WTask.Owner.Id == userId).Include(x => x.WTask).Include(x => x.WTask.Owner);
+                _entitiesService.UpdateDto(dto, archive);
             }
             return dto;
         }
-        public List<ActivityDto> GetTodaysActivities()
+        public List<ActivityDto> GetTodaysActivities(int userId)
         {
             List<ActivityDto> dto = new List<ActivityDto>();
             using (var db = _wContextFactory.Create())
             {
-                var generated = _activityGenerationService.GenerateActivities(db.WActivities, db.WTasks, DateTime.Today);
+                var generated = _activityGenerationService.GenerateActivities(db.WActivities, db.WTasks.Where(x => x.Owner.Id == userId), DateTime.Today);
                 foreach (var activity in generated)
                     db.WActivities.Add(activity);
                 db.SaveChanges();
 
                 // cannot take Date.Date in SQL
-                var todaysTask = db.WActivities.Where(x => DbFunctions.TruncateTime(x.Date) == DateTime.Today).Include(x => x.WTask).Include(x => x.WTask.Owner).ToList();
+                var todaysTask = db.WActivities.Where(x => x.WTask.Owner.Id == userId).Where(x => DbFunctions.TruncateTime(x.Date) == DateTime.Today).Include(x => x.WTask).Include(x => x.WTask.Owner).ToList();
                 _entitiesService.UpdateDto(dto, todaysTask);
             }
             return dto;
         }
         public void SaveActivities(IEnumerable<ActivityDto> activities)
         {
-            try
-            {
-
             using (var db = _wContextFactory.Create())
             {
-                var a = activities.ToList();
                 _entitiesService.UpdateEntities(db.WActivities, activities);
-                var b = db.WActivities.ToList();
                 db.SaveChanges();
-            }
-            }
-            catch(Exception e)
-            {
-
             }
         }
     }

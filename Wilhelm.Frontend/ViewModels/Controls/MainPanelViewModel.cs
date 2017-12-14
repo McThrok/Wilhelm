@@ -19,6 +19,7 @@ namespace Wilhelm.Frontend.ViewModels.Controls
         private readonly IHoldersConversionService _holdersConversionService;
         private readonly IHoldersService _holdersService;
         private object _page;
+        private int _userId;
 
         public ICommand HomeCmd { get; protected set; }
         public ICommand TasksCmd { get; protected set; }
@@ -28,6 +29,7 @@ namespace Wilhelm.Frontend.ViewModels.Controls
 
         public MainPanelViewModel(int userId)
         {
+            _userId = userId;
             _serviceFactory = new ServiceFactory();
             _holdersConversionService = new HoldersConversionService();
             _holdersService = new HoldersService(_holdersConversionService);
@@ -77,7 +79,7 @@ namespace Wilhelm.Frontend.ViewModels.Controls
                 currentMenuPage.Save();
 
             if (page != null && page is IMenuPage newMenuPage)
-                newMenuPage.Activate();
+                newMenuPage.Activate(_userId);
 
             MainPanelContent = page;
         }
@@ -91,7 +93,7 @@ namespace Wilhelm.Frontend.ViewModels.Controls
                 currentMenuPage.Save();
 
             if (page != null && page is IMenuPage newMenuPage)
-                newMenuPage.Activate();
+                newMenuPage.Activate(_userId);
 
             MainPanelContent = page;
         }
