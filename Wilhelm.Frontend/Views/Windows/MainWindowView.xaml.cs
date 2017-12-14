@@ -11,6 +11,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using Wilhelm.Frontend.ViewModels.Windows;
 
 namespace Wilhelm.Frontend.Views.Windows
 {
@@ -22,6 +23,11 @@ namespace Wilhelm.Frontend.Views.Windows
         public MainWindowView()
         {
             InitializeComponent();
+        }
+        protected override void OnClosing(System.ComponentModel.CancelEventArgs e)
+        {
+            (DataContext as MainWindowViewModel).OnWindowClosing();
+            base.OnClosing(e);
         }
     }
 }

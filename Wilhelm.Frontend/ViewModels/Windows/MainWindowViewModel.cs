@@ -12,7 +12,7 @@ namespace Wilhelm.Frontend.ViewModels.Windows
         public MainWindowViewModel()
         {
             _signViewModel = new SigningPanelViewModel(SetMainManetASContent);
-            //MainContent.Content = _signViewModel;
+            MainContent = _signViewModel;
             //MainContent.Content = new MainPanelViewModel(123321); //DEBUG
             MainContent = new MainPanelViewModel(123321); //DEBUG
         }
@@ -20,26 +20,15 @@ namespace Wilhelm.Frontend.ViewModels.Windows
         public void SetMainManetASContent(int userId)
         {
             _mainPanel = new MainPanelViewModel(userId);
-           // MainContent.Content = _mainPanel;
+            // MainContent.Content = _mainPanel;
         }
 
-        //protected override void OnClosing(CancelEventArgs e)
-        //{
-        //    //if (MainContent.Content == _mainPanel)
-        //    if (MainContent == _mainPanel)
-        //        _mainPanel.ProperClose();
-        //    base.OnClosing(e);
-        //}
-        public MainPanelViewModel MainContent
+        public void OnWindowClosing()
         {
-            get
-            {
-                return _mainPanel;
-            }
-            set
-            {
-                _mainPanel = value;
-            }
+            //if (MainContent.Content == _mainPanel)
+            if (MainContent == _mainPanel)
+                _mainPanel.ProperClose();
         }
+        public object MainContent { get; private set; }
     }
 }
