@@ -80,8 +80,8 @@
             <PasswordBox Grid.Row="2" Grid.Column="1" Style="{StaticResource PasswordInput}" support:PasswordBoxAssistant.BindPassword="true" support:PasswordBoxAssistant.BoundPassword="{Binding Path=ConfirmPassword, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
         </Grid>
 
-        <Button Content="SignUp" DockPanel.Dock="Top" Command="{Binding SignUpCmd}" Style="{StaticResource MainButton}"/>
-        <Button Content="SignIn" DockPanel.Dock="Top" Command="{Binding SignInCmd}" Style="{StaticResource SercondButton}"/>
+        <Button Content="Sign Up" DockPanel.Dock="Top" Command="{Binding SignUpCmd}" Style="{StaticResource MainButton}"/>
+        <Button Content="Sign In" DockPanel.Dock="Top" Command="{Binding SignInCmd}" Style="{StaticResource SercondButton}"/>
 
     </DockPanel>
 </UserControl>

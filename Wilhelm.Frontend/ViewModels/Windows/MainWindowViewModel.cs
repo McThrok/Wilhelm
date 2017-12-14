@@ -24,28 +24,12 @@ namespace Wilhelm.Frontend.ViewModels.Windows
             MainContent = _mainContent;
         }
 
-        //protected override void OnClosing(CancelEventArgs e)
-        //{
-        //    //if (MainContent.Content == _mainPanel)
-        //    if (MainContent == _mainPanel)
-        //        _mainPanel.ProperClose();
-        //    base.OnClosing(e);
-        //}
-        protected void OnPropertyChanged(string propName)
+        public void OnWindowClosing()
         {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propName));
+            //if (MainContent.Content == _mainPanel)
+            if (MainContent == _mainPanel)
+                _mainPanel.ProperClose();
         }
-        public object MainContent
-        {
-            get
-            {
-                return _mainContent;
-            }
-            set
-            {
-                _mainContent = value;
-                OnPropertyChanged(nameof(MainContent));
-            }
-        }
+        public object MainContent { get; private set; }
     }
 }
