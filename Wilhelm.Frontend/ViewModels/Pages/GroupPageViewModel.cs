@@ -29,6 +29,7 @@ namespace Wilhelm.Frontend.ViewModels.Pages
         public ICommand ResetCmd { get; protected set; }
         public ICommand DeleteCmd { get; protected set; }
         public ICommand GroupCmd { get; protected set; }
+        private int _userId;
 
         public GroupPageViewModel(IHoldersService holdersService, IConfigurationService configurationService)
         {
@@ -74,7 +75,7 @@ namespace Wilhelm.Frontend.ViewModels.Pages
         {
             _holdersService.ApplyChanges(_groups, _tasks, _groupDetailsControl.ShownGroup);
             SaveChanges();
-            Activate();
+            Activate(_userId);
         }
         private void Reset(object obj)
         {
@@ -92,12 +93,13 @@ namespace Wilhelm.Frontend.ViewModels.Pages
             SaveChanges();
         }
 
-        public void Activate()
+        public void Activate(int userId)
         {
+            _userId = userId;
             ActiveGroup = null;
             _groups.Clear();
             _tasks.Clear();
-            _holdersService.UpdateConfigHolders(_groups, _tasks, _configurationService.GetConfig());
+            _holdersService.UpdateConfigHolders(_groups, _tasks, _configurationService.GetConfig(_userId));
             //GroupsListView.ItemsSource = _groups;
             ShowCurrentGroup();
         }

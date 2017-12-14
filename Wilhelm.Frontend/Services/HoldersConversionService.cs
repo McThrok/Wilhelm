@@ -179,7 +179,7 @@ namespace Wilhelm.Frontend.Services
         {
             ConvertFromModelDto(user, dto);
             user.Login = dto.Login;
-            user.Password = dto.Login;
+            user.Password = dto.Password;
         }
 
         public void ConvertFromNamedModelDto(NamedHolder namedHolder, NamedModelDto dto)
@@ -204,7 +204,7 @@ namespace Wilhelm.Frontend.Services
             if (namedHolder.Owner != null)
             {
                 dto.Owner = new UserDto();
-                ConvertToModelDto(dto.Owner, namedHolder.Owner);
+                ConvertToDto(dto.Owner, namedHolder.Owner);
             }
             dto.Archivized = namedHolder.Archivized;
             dto.Name = namedHolder.Name;

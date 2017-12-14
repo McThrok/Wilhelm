@@ -18,6 +18,7 @@ namespace Wilhelm.Frontend.ViewModels.Pages
         private readonly IHoldersService _holdersService;
         private readonly IActivityService _activityService;
         private ObservableCollection<ActivityHolder> _currentList;
+        private int _userId;
 
         public HomePageViewModel(IHoldersService holdersService, IActivityService activityService)
         {
@@ -41,10 +42,11 @@ namespace Wilhelm.Frontend.ViewModels.Pages
             }
         }
 
-        public void Activate()
+        public void Activate(int userId)
         {
+            _userId = userId;
             var todayTasksList = new List<ActivityHolder>();
-            _holdersService.UpdateArchiveHolders(todayTasksList, _activityService.GetTodaysActivities());
+            _holdersService.UpdateArchiveHolders(todayTasksList, _activityService.GetTodaysActivities(_userId));
             CurrentList = new ObservableCollection<ActivityHolder>(todayTasksList.Where(x => !x.Task.Archivized));
         }
 

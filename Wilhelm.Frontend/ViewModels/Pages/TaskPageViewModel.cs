@@ -29,6 +29,8 @@ namespace Wilhelm.Frontend.ViewModels.Pages
         public ICommand ResetCmd { get; protected set; }
         public ICommand DeleteCmd { get; protected set; }
         public ICommand TaskCmd { get; protected set; }
+        private int _userId;
+
         public TaskPageViewModel(IHoldersService holdersService, IConfigurationService configurationService)
         {
             _holdersService = holdersService;
@@ -72,7 +74,7 @@ namespace Wilhelm.Frontend.ViewModels.Pages
         {
             _holdersService.ApplyChanges(_tasks, _groups, _taskDetailsControl.ShownTask);
             SaveChanges();
-            Activate();
+            Activate(_userId);
         }
         private void Reset(object obj)
         {
@@ -90,12 +92,13 @@ namespace Wilhelm.Frontend.ViewModels.Pages
             SaveChanges();
         }
 
-        public void Activate()
+        public void Activate(int userId)
         {
+            _userId = userId;
             ActiveTask = null;
             _groups.Clear();
             _tasks.Clear();
-            _holdersService.UpdateConfigHolders(_groups, _tasks, _configurationService.GetConfig());
+            _holdersService.UpdateConfigHolders(_groups, _tasks, _configurationService.GetConfig(_userId));
             ShowCurrentTask();
         }
         private void SaveChanges()
