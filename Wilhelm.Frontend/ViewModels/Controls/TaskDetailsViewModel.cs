@@ -7,7 +7,8 @@ using System.Windows.Input;
 using Wilhelm.Frontend.Model;
 using Wilhelm.Frontend.Services.Interfaces;
 using Wilhelm.Frontend.Support;
-using Wilhelm.Frontend.Windows;
+using Wilhelm.Frontend.ViewModels.Windows;
+using Wilhelm.Frontend.Views.Windows;
 
 namespace Wilhelm.Frontend.ViewModels.Controls
 {
@@ -49,10 +50,18 @@ namespace Wilhelm.Frontend.ViewModels.Controls
 
         private void AssignGroup(object obj)
         {
-            var dialog = new ChooseItemWindow(_availableGroupsToAdd.Cast<NamedHolder>().ToList());
+            var dialogContext = new ChooseItemWindowViewModel
+            {
+                Holders = _availableGroupsToAdd.Cast<NamedHolder>().ToList()
+            };
+            var dialog = new ChooseItemWindowView
+            {
+                DataContext = dialogContext
+            };
+            dialogContext.CloseAction = () => dialog.Close();
             dialog.ShowDialog();
 
-            if (dialog.SelectedHolder is GroupHolder groupToAdd)
+            if (dialogContext.SelectedHolder is GroupHolder groupToAdd)
             {
                 _availableGroupsToAdd.Remove(groupToAdd);
                 ShownTask.Groups.Add(groupToAdd);
