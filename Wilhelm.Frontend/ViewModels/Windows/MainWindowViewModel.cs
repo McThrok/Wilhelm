@@ -4,9 +4,10 @@ using Wilhelm.Frontend.ViewModels.Controls;
 
 namespace Wilhelm.Frontend.ViewModels.Windows
 {
-    class MainWindowViewModel: INotifyPropertyChanged
+    class MainWindowViewModel : INotifyPropertyChanged
     {
         private readonly SigningPanelViewModel _signViewModel;
+        private MainPanelViewModel _mainPanel;
         private object _mainContent;
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -20,16 +21,31 @@ namespace Wilhelm.Frontend.ViewModels.Windows
 
         public void SetContentForLoggedUser(int userId)
         {
-            _mainContent = new MainPanelViewModel(userId);
-            MainContent = _mainContent;
+            _mainPanel = new MainPanelViewModel(userId);
+            MainContent = _mainPanel;
         }
 
         public void OnWindowClosing()
         {
-            //if (MainContent.Content == _mainPanel)
             if (MainContent == _mainPanel)
                 _mainPanel.ProperClose();
         }
-        public object MainContent { get; private set; }
+
+        protected void OnChanged(string propertyName)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+        public object MainContent
+        {
+            get
+            {
+                return _mainContent;
+            }
+            private set
+            {
+                _mainContent = value;
+                OnChanged(nameof(MainContent));
+            }
+        }
     }
 }
