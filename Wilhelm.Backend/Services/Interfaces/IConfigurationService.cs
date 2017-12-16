@@ -10,7 +10,7 @@ namespace Wilhelm.Backend.Services.Interfaces
 {
     public interface IConfigurationService
     {
-        ConfigDto GetConfig();
+        ConfigDto GetConfig(int userId);
         void SaveConfig(ConfigDto config);
     }
 }

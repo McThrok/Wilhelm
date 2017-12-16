@@ -127,7 +127,7 @@ namespace Wilhelm.Backend.Services
                 if (activityModelToUpdate.WTask == null)
                     activityModelToUpdate.WTask = new WTask();
 
-                if (dto.Task != null)
+                if (dto.Task != null && dto.Task.Owner == null)
                     _conversionService.ConvertFromDto(activityModelToUpdate.WTask, dto.Task);
                 _conversionService.ConvertFromDto(activityModelToUpdate, dto);
             }

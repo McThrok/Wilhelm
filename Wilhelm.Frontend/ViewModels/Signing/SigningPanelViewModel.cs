@@ -23,16 +23,16 @@ namespace Wilhelm.Frontend.ViewModels.Signing
         {
             _accountsService = new AccountsService(new WContextFactory(), new ConversionService(), new HashService());
             _logInAction = LogInAction;
-            ShowSighIn(null);
+            ShowSignIn(null);
         }
         
-        private void ShowSighIn(object obj)
+        private void ShowSignIn(object obj)
         {
             SelectedViewModel = new SignInViewModel(_accountsService, SetUser, ShowSighUp);
         }
         private void ShowSighUp(object obj)
         {
-            SelectedViewModel = new SignUpViewModel(_accountsService, SetUser, ShowSighIn);
+            SelectedViewModel = new SignUpViewModel(_accountsService, SetUser, ShowSignIn);
         }
         private void SetUser(int userId)
         {

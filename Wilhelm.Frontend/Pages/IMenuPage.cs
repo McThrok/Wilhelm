@@ -8,7 +8,7 @@ namespace Wilhelm.Frontend.Pages
 {
     public interface IMenuPage
     {
-        void Activate();
+        void Activate(int userId);
         void Save();
     }
 }
