@@ -2,12 +2,14 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 using Wilhelm.Backend.Services.Interfaces;
 using Wilhelm.Frontend.Model;
 using Wilhelm.Frontend.Pages;
+using Wilhelm.Frontend.Services;
 using Wilhelm.Frontend.Services.Interfaces;
 using Wilhelm.Shared.Dto;
 
@@ -42,12 +44,16 @@ namespace Wilhelm.Frontend.ViewModels.Pages
             }
         }
 
-        public void Activate(int userId)
+        public async Task Activate(int userId)
         {
             _userId = userId;
             var todayTasksList = new List<ActivityHolder>();
-            _holdersService.UpdateArchiveHolders(todayTasksList, _activityService.GetTodaysActivities(_userId));
-            CurrentList = new ObservableCollection<ActivityHolder>(todayTasksList.Where(x => !x.Task.Archivized));
+            ProxyService p = new ProxyService();
+            //_holdersService.UpdateArchiveHolders(todayTasksList, _activityService.GetTodaysActivities(_userId));
+            var a = p.GetTodaysTasks(_userId);
+             _holdersService.UpdateArchiveHolders(todayTasksList,await a);//GetAwaiter().GetResult() vs getResut();
+             //CurrentList = new ObservableCollection<ActivityHolder>(todayTasksList.Where(x => !x.Task.Archivized));
+             CurrentList = new ObservableCollection<ActivityHolder>();
         }
 
         public void Save()

@@ -13,6 +13,10 @@ using Wilhelm.Shared.Dto;
 using System.Net.Http;
 using System.Net;
 using System.Net.Http.Headers;
+using Newtonsoft.Json;
+using System.Web;
+using System.Collections.Specialized;
+using System.Threading;
 
 namespace Wilhelm.Frontend.Services
 {
@@ -20,9 +24,18 @@ namespace Wilhelm.Frontend.Services
     {
         public async Task<IEnumerable<ActivityDto>> GetTodaysTasks(int userId)
         {
-            ActivityDto[] products = null;
-            HttpResponseMessage response = await GetClient().GetAsync($"api/ActiveActivities/{userId}");
-            
+            ActivityDto[] products = new ActivityDto[0];
+            //var query = HttpUtility.ParseQueryString("");
+            //query["userId"] = userId.ToString();
+            //var builder = GetBaseUri();
+            //builder.Path += "/ActiveActivities";
+            //builder.Query = query.ToString();
+            //var a = builder.ToString();
+           // HttpResponseMessage response = GetClient().GetAsync(a).Result;
+
+            var a = "http://localhost:55378/api/ActiveActivities?userId=1";
+            HttpResponseMessage response = await new HttpClient().GetAsync(a);
+
             if (response.IsSuccessStatusCode)
             {
                 products = await response.Content.ReadAsAsync<ActivityDto[]>();
@@ -31,7 +44,7 @@ namespace Wilhelm.Frontend.Services
         }
         public async Task SaveTodaysTasks(int userId, IEnumerable<ActivityDto> archive)
         {
-
+            HttpResponseMessage response = await GetClient().PostAsJsonAsync($"api/ActiveActivities/{userId}", JsonConvert.SerializeObject(archive));
         }
 
         public async Task<IEnumerable<ActivityDto>> GetArchive(int userId)
@@ -63,13 +76,16 @@ namespace Wilhelm.Frontend.Services
             return null;
         }
 
-
+        private UriBuilder GetBaseUri()
+        {
+            UriBuilder builder = new UriBuilder("http://localhost:55378/api");
+            return builder;
+        }
         private HttpClient GetClient()
         {
             HttpClient client = new HttpClient();
-            client.BaseAddress = new Uri("http://localhost:60869/");
-            client.DefaultRequestHeaders.Accept.Clear();
-            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+            //client.DefaultRequestHeaders.Accept.Clear();
+            //client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
             return client;
         }
 
