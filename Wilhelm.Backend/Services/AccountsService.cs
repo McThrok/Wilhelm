@@ -74,13 +74,7 @@ namespace Wilhelm.Backend.Services
 
             using (var db = _wContextFactory.Create())
             {
-                var a = db.Users.Where(x => x.Login == login).ToList();
-                if(a.Count>1)
-                {
-
-                }
-                validatedUser.Object = db.Users.Where(x => x.Login == login).First();//DEBUG
-               //qwe validatedUser.Object = db.Users.Where(x => x.Login == login).SingleOrDefault();
+                validatedUser.Object = db.Users.Where(x => x.Login == login).SingleOrDefault();
             }
 
             if (validatedUser.Object == null)
