@@ -13,11 +13,13 @@ namespace Wilhelm.Frontend.ViewModels.Pages
     public class ReportPageViewModel : IMenuPage
     {
         private readonly IReportService _reportService;
+        private int _userId;
+
         public List<ReportDto> ReportList
         {
             get
             {
-                return _reportService.GetReports();
+                return _reportService.GetReports(_userId);
             }
         }
         public ReportPageViewModel(IReportService reportService)
@@ -25,8 +27,9 @@ namespace Wilhelm.Frontend.ViewModels.Pages
             _reportService = reportService;
         }
 
-        public void Activate()
+        public void Activate(int userId)
         {
+            _userId = userId;
         }
 
         public void Save()

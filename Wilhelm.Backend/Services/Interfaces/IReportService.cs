@@ -9,6 +9,6 @@ namespace Wilhelm.Backend.Services.Interfaces
 {
     public interface IReportService
     {
-        List<ReportDto> GetReports();
+        List<ReportDto> GetReports(int userId);
     }
 }
