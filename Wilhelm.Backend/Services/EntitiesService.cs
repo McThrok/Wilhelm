@@ -8,7 +8,6 @@ using Wilhelm.Backend.Model;
 using Wilhelm.Backend.Services.Interfaces;
 using Wilhelm.DataAccess;
 using Wilhelm.Shared.Dto;
-using Wilhelm.Shared.Model;
 
 namespace Wilhelm.Backend.Services
 {

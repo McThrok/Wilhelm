@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using Wilhelm.Backend.Model;
 using Wilhelm.Backend.Services.Interfaces;
 using Wilhelm.DataAccess;
-using Wilhelm.Shared.Model;
+using Wilhelm.Shared.Dto;
 
 namespace Wilhelm.Backend.Services
 {

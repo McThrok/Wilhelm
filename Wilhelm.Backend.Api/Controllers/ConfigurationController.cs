@@ -6,8 +6,8 @@ using System.Net.Http;
 using System.Web.Http;
 using Wilhelm.Backend.Services.Interfaces;
 using Wilhelm.Backend.Services;
-using Wilhelm.Backend.Model.Dto;
 using Wilhelm.Backend.Model;
+using Wilhelm.Shared.Dto;
 
 namespace Wilhelm.Backend.Api.Controllers
 {
@@ -19,9 +19,9 @@ namespace Wilhelm.Backend.Api.Controllers
             _configurationService = new ServiceFactory().CreateConfigurationService();
         }
 
-        public ConfigDto GetConfig()
+        public ConfigDto GetConfig(int userId)
         {
-            return _configurationService.GetConfig();
+            return _configurationService.GetConfig(userId);
         }
         public void SaveConfig(ConfigDto config)
         {

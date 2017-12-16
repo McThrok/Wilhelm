@@ -10,7 +10,6 @@ using Wilhelm.Frontend.Services.Interfaces;
 using Wilhelm.Frontend.Model;
 using Wilhelm.Backend.Services.Interfaces;
 using Wilhelm.Shared.Dto;
-using Wilhelm.Shared.Model;
 
 namespace Wilhelm.Frontend.Services
 {

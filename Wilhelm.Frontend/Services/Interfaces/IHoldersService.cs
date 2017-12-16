@@ -8,7 +8,6 @@ using Wilhelm.Backend.MockBase;
 using Wilhelm.Backend.Model;
 using Wilhelm.Frontend.Model;
 using Wilhelm.Shared.Dto;
-using Wilhelm.Shared.Model;
 
 namespace Wilhelm.Frontend.Services.Interfaces
 {

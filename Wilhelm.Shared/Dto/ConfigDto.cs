@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Wilhelm.Shared.Dto;
 
-namespace Wilhelm.Shared.Model
+namespace Wilhelm.Shared.Dto
 {
     public class ConfigDto
     {
