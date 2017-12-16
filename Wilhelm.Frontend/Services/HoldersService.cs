@@ -6,10 +6,11 @@ using System.Text;
 using System.Threading.Tasks;
 using Wilhelm.Backend.MockBase;
 using Wilhelm.Backend.Model;
-using Wilhelm.Backend.Model.Dto;
 using Wilhelm.Frontend.Services.Interfaces;
 using Wilhelm.Frontend.Model;
 using Wilhelm.Backend.Services.Interfaces;
+using Wilhelm.Shared.Dto;
+using Wilhelm.Shared.Model;
 
 namespace Wilhelm.Frontend.Services
 {

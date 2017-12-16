@@ -5,9 +5,9 @@ using System.Data.Entity.Core.Objects;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Wilhelm.Backend.Model.Dto;
 using Wilhelm.Backend.Services.Interfaces;
 using Wilhelm.DataAccess;
+using Wilhelm.Shared.Dto;
 
 namespace Wilhelm.Backend.Services
 {

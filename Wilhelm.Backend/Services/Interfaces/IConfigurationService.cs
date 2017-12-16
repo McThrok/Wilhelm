@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Wilhelm.Backend.Model;
 using Wilhelm.DataAccess;
+using Wilhelm.Shared.Model;
 
 namespace Wilhelm.Backend.Services.Interfaces
 {

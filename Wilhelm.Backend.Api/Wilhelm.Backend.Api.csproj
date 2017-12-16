@@ -86,9 +86,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\ArchiveActivitiesController.cs" />
     <Compile Include="Controllers\ConfigurationController.cs" />
     <Compile Include="Controllers\ReportController.cs" />
-    <Compile Include="Controllers\ActivityController.cs" />
+    <Compile Include="Controllers\ActiveActivitiesController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -111,6 +112,10 @@
     <ProjectReference Include="..\Wilhelm.Backend\Wilhelm.Backend.csproj">
       <Project>{960d5eb6-6dbe-40f3-9052-a1754aa97c3f}</Project>
       <Name>Wilhelm.Backend</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Wilhelm.Shared\Wilhelm.Shared.csproj">
+      <Project>{F8D1DFFC-9F1A-48F8-AA22-8C694F5FFBA6}</Project>
+      <Name>Wilhelm.Shared</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>

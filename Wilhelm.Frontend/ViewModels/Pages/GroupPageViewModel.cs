@@ -12,6 +12,7 @@ using Wilhelm.Frontend.Pages;
 using Wilhelm.Frontend.Services.Interfaces;
 using Wilhelm.Frontend.Support;
 using Wilhelm.Frontend.ViewModels.Controls;
+using Wilhelm.Shared.Model;
 
 namespace Wilhelm.Frontend.ViewModels.Pages
 {

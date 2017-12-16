@@ -6,8 +6,9 @@ using System.Text;
 using System.Threading.Tasks;
 using Wilhelm.Backend.MockBase;
 using Wilhelm.Backend.Model;
-using Wilhelm.Backend.Model.Dto;
 using Wilhelm.Frontend.Model;
+using Wilhelm.Shared.Dto;
+using Wilhelm.Shared.Model;
 
 namespace Wilhelm.Frontend.Services.Interfaces
 {

@@ -5,7 +5,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
-using Wilhelm.Backend.Model.Dto;
 using Wilhelm.Backend.Services;
 using Wilhelm.Backend.Services.Interfaces;
 using Wilhelm.DataAccess;

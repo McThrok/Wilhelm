@@ -5,11 +5,11 @@ using System.Linq;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
-using Wilhelm.Backend.Model.Dto;
 using Wilhelm.Backend.Services.Interfaces;
 using Wilhelm.Frontend.Model;
 using Wilhelm.Frontend.Pages;
 using Wilhelm.Frontend.Services.Interfaces;
+using Wilhelm.Shared.Dto;
 
 namespace Wilhelm.Frontend.ViewModels.Pages
 {

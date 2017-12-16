@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
-using Wilhelm.Backend.Model.Dto;
 using Wilhelm.Backend.Services.Interfaces;
 using Wilhelm.Frontend.Pages;
+using Wilhelm.Shared.Dto;
 
 namespace Wilhelm.Frontend.ViewModels.Pages
 {

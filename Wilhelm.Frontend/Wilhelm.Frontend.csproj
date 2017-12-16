@@ -137,6 +137,7 @@
     <Compile Include="Model\Holder.cs" />
     <Compile Include="Model\NamedHolder.cs" />
     <Compile Include="Model\TaskHolder.cs" />
+    <Compile Include="Services\ProxyService.cs" />
     <Compile Include="ViewModels\Controls\GroupDetailsViewModel.cs" />
     <Compile Include="ViewModels\Controls\MainPanelViewModel.cs" />
     <Compile Include="ViewModels\Controls\TaskDetailsViewModel.cs" />
@@ -234,6 +235,10 @@
     <ProjectReference Include="..\Wilhelm.DataAccess\Wilhelm.DataAccess.csproj">
       <Project>{C08B35D0-5E1C-4487-B8EB-E93E465457A4}</Project>
       <Name>Wilhelm.DataAccess</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Wilhelm.Shared\Wilhelm.Shared.csproj">
+      <Project>{f8d1dffc-9f1a-48f8-aa22-8c694f5ffba6}</Project>
+      <Name>Wilhelm.Shared</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup />

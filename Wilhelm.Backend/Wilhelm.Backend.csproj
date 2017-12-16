@@ -48,15 +48,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="MockBase\MockBase.cs" />
-    <Compile Include="Model\Dto\ValidatedDto.cs" />
-    <Compile Include="Model\Dto\ActivityDto.cs" />
-    <Compile Include="Model\Dto\GroupDto.cs" />
-    <Compile Include="Model\Dto\ModelDto.cs" />
-    <Compile Include="Model\Dto\NamedModelDto.cs" />
-    <Compile Include="Model\Dto\UserDto.cs" />
-    <Compile Include="Model\Dto\TaskDto.cs" />
-    <Compile Include="Model\Dto\ReportDto.cs" />
-    <Compile Include="Model\Dto\ConfigDto.cs" />
     <Compile Include="Model\Validated.cs" />
     <Compile Include="Services\HashService.cs" />
     <Compile Include="Services\AccountsService.cs" />
@@ -82,6 +73,10 @@
     <ProjectReference Include="..\Wilhelm.DataAccess\Wilhelm.DataAccess.csproj">
       <Project>{c08b35d0-5e1c-4487-b8eb-e93e465457a4}</Project>
       <Name>Wilhelm.DataAccess</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Wilhelm.Shared\Wilhelm.Shared.csproj">
+      <Project>{f8d1dffc-9f1a-48f8-aa22-8c694f5ffba6}</Project>
+      <Name>Wilhelm.Shared</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

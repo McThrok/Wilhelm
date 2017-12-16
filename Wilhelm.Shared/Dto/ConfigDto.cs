@@ -1,15 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Wilhelm.Shared.Dto;
 
-namespace Wilhelm.Backend.Model.Dto
+namespace Wilhelm.Shared.Model
 {
-    public class GroupDto : NamedModelDto
+    public class ConfigDto
     {
         public List<TaskDto> Tasks { get; set; }
+        public List<GroupDto> Groups { get; set; }
     }
 }
