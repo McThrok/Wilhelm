@@ -24,6 +24,7 @@ namespace Wilhelm.Backend.Services
             using (var db = _wContextFactory.Create())
             {
                 var data = db.WActivities.Where(x=>x.WTask.OwnerId == userId).Include(a => a.WTask);
+                var aaaa = data.ToList();
                 var tasks = db.WTasks;
                 reports.Add(GetTotalNumberOfAcitivitiesReport(data));
                 reports.Add(GetCountOfDoneActivities(data));
