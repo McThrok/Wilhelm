@@ -15,7 +15,7 @@ namespace Wilhelm.Frontend.ViewModels.Signing
     {
         public string _confirmPassword;
 
-        public SignUpViewModel(IAccountsService accountsService, Action<int> logInAction, Action<object> signIn) :
+        public SignUpViewModel(IAccountsService accountsService, Action<int, string> logInAction, Action<object> signIn) :
             base(accountsService, logInAction)
         {
             SignInCmd = new DelegateCommand(signIn);
@@ -28,7 +28,7 @@ namespace Wilhelm.Frontend.ViewModels.Signing
             if (result.ValidationViolations != null && result.ValidationViolations.Count > 0)
                 ErrorMessage = string.Join(Environment.NewLine, result.ValidationViolations);
             else if (result.Object != null)
-                _logInAction(result.Object.Id);
+                _logInAction(result.Object.Id, Login);
         }
 
         public string ConfirmPassword

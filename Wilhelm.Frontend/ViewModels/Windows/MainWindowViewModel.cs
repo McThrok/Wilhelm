@@ -19,9 +19,9 @@ namespace Wilhelm.Frontend.ViewModels.Windows
             //MainContent = new MainPanelViewModel(1); //DEBUG
         }
 
-        public void SetContentForLoggedUser(int userId)
+        public void SetContentForLoggedUser(int userId, string login)
         {
-            _mainPanel = new MainPanelViewModel(userId);
+            _mainPanel = new MainPanelViewModel(userId, login);
             MainContent = _mainPanel;
         }
 

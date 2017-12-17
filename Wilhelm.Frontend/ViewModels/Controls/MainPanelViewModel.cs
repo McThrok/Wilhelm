@@ -20,6 +20,7 @@ namespace Wilhelm.Frontend.ViewModels.Controls
         private readonly IHoldersService _holdersService;
         private object _page;
         private int _userId;
+        public string UserName { get; private set; }
 
         public ICommand HomeCmd { get; protected set; }
         public ICommand TasksCmd { get; protected set; }
@@ -27,13 +28,14 @@ namespace Wilhelm.Frontend.ViewModels.Controls
         public ICommand ArchivesCmd { get; protected set; }
         public ICommand ReportsCmd { get; protected set; }
 
-        public MainPanelViewModel(int userId)
+        public MainPanelViewModel(int userId, string login)
         {
             _userId = userId;
             _serviceFactory = new ServiceFactory();
             _holdersConversionService = new HoldersConversionService();
             _holdersService = new HoldersService(_holdersConversionService);
             _pages = new MenuPagesCollection(_serviceFactory, _holdersConversionService, _holdersService);
+            UserName = login;
 
             HomeCmd = new DelegateCommand(Home);
             TasksCmd = new DelegateCommand(Tasks);

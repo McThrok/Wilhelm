@@ -13,7 +13,7 @@ namespace Wilhelm.Frontend.ViewModels.Signing
 {
     public class SignInViewModel : BaseSignViewModel
     {
-        public SignInViewModel(IAccountsService accountsService, Action<int> logInAction, Action<object> signUp) :
+        public SignInViewModel(IAccountsService accountsService, Action<int,string> logInAction, Action<object> signUp) :
             base(accountsService, logInAction)
         {
             SignUpCmd = new DelegateCommand(signUp);
@@ -25,7 +25,7 @@ namespace Wilhelm.Frontend.ViewModels.Signing
             if (result.ValidationViolations != null && result.ValidationViolations.Count > 0)
                 ErrorMessage = string.Join(Environment.NewLine, result.ValidationViolations);
             else if (result.Object != null)
-                _logInAction(result.Object.Id);
+                _logInAction(result.Object.Id, Login);
         }
     }
 }
