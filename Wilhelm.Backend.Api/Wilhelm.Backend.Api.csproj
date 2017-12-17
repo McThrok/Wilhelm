@@ -82,14 +82,16 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Global.asax" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\ActiveActivitiesController.cs" />
     <Compile Include="Controllers\ArchiveActivitiesController.cs" />
     <Compile Include="Controllers\ConfigurationController.cs" />
     <Compile Include="Controllers\ReportController.cs" />
-    <Compile Include="Controllers\ActiveActivitiesController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -114,7 +116,7 @@
       <Name>Wilhelm.Backend</Name>
     </ProjectReference>
     <ProjectReference Include="..\Wilhelm.Shared\Wilhelm.Shared.csproj">
-      <Project>{F8D1DFFC-9F1A-48F8-AA22-8C694F5FFBA6}</Project>
+      <Project>{1b33a92e-e355-4f0b-a113-b71fa570d9ad}</Project>
       <Name>Wilhelm.Shared</Name>
     </ProjectReference>
   </ItemGroup>

@@ -20,7 +20,7 @@ namespace Wilhelm.Backend.Api.Controllers
 
         public List<ActivityDto> GetTodaysActivities(int userId)
         {
-            // return _activityService.GetTodaysActivities(userId);
+             //return _activityService.GetTodaysActivities(userId);
             UserDto User1 = new UserDto() { Login = "user1", Password = "Ἱꏁ\u2438ꥅ䫥쪋邳躮Ᏺ껫ꪉ⏺꼿ᆴ넿BD106B80630350E9B080DFB569CD0C337814169FA9350774ECB50AEB0164BD38" };
             TaskDto t1 = new TaskDto() { Name = "Nakarmić kota", Owner = User1, Description = "Tom jest wybredny i je tylko Royal Canin", Frequency = 1, StartDate = DateTime.Today };
             ActivityDto act = new ActivityDto() { Id = 1, Task = t1, IsDone = true, Date = DateTime.Now };

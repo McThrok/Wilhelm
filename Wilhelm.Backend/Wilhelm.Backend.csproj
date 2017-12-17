@@ -75,7 +75,7 @@
       <Name>Wilhelm.DataAccess</Name>
     </ProjectReference>
     <ProjectReference Include="..\Wilhelm.Shared\Wilhelm.Shared.csproj">
-      <Project>{f8d1dffc-9f1a-48f8-aa22-8c694f5ffba6}</Project>
+      <Project>{1b33a92e-e355-4f0b-a113-b71fa570d9ad}</Project>
       <Name>Wilhelm.Shared</Name>
     </ProjectReference>
   </ItemGroup>
