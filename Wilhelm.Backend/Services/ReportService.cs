@@ -23,7 +23,7 @@ namespace Wilhelm.Backend.Services
             var reports = new List<ReportDto>();
             using (var db = _wContextFactory.Create())
             {
-                var data = db.WActivities.Where(x=>x.WTask.Owner.Id == userId).Include(a => a.WTask);
+                var data = db.WActivities.Where(x=>x.WTask.OwnerId == userId).Include(a => a.WTask);
                 var tasks = db.WTasks;
                 reports.Add(GetTotalNumberOfAcitivitiesReport(data));
                 reports.Add(GetCountOfDoneActivities(data));

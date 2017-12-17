@@ -125,7 +125,9 @@ namespace Wilhelm.Frontend.Services
 
         public int GenerateTemporaryId(IEnumerable<Holder> holders)
         {
-            int minId = Math.Min(holders.Min(x => x.Id), 0);
+            int minId = 0;
+            if (holders.Count() > 0)
+                 minId = Math.Min(holders.Min(x => x.Id), 0);
             return minId - 1;
         }
         public string GetNameWithIndexIfNeeded(string startName, IEnumerable<NamedHolder> holders)

@@ -10,7 +10,7 @@ namespace Wilhelm.Backend.Model.Dto
     public abstract class NamedModelDto : ModelDto
     {
         public string Name { get; set; }
-        public UserDto Owner {get;set;}
+        public int OwnerId {get;set;}
         public string Description { get; set; }
         public bool Archivized { get; set; }
     }
