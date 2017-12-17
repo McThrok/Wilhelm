@@ -24,27 +24,29 @@ namespace Wilhelm.Frontend.Services
     {
         public async Task<IEnumerable<ActivityDto>> GetTodaysTasks(int userId)
         {
-            ActivityDto[] products = new ActivityDto[0];
-            //var query = HttpUtility.ParseQueryString("");
-            //query["userId"] = userId.ToString();
-            //var builder = GetBaseUri();
-            //builder.Path += "/ActiveActivities";
-            //builder.Query = query.ToString();
-            //var a = builder.ToString();
-           // HttpResponseMessage response = GetClient().GetAsync(a).Result;
 
-            var a = "http://localhost:55378/api/ActiveActivities?userId=1";
-            HttpResponseMessage response = await new HttpClient().GetAsync(a);
+            var activities = new ActivityDto[0];
+            var query = HttpUtility.ParseQueryString("");
+            query["userId"] = userId.ToString();
+            var builder = GetBaseUri();
+            builder.Path += "/ActiveActivities";
+            builder.Query = query.ToString();
+            HttpResponseMessage response = await GetClient().GetAsync(builder.ToString());
+
+            //var client = new HttpClient();
+            //var a = "http://localhost:55378/api/ActiveActivities?userId=1";
+            //HttpResponseMessage response = await GetClient().GetAsync(a);
 
             if (response.IsSuccessStatusCode)
             {
-                products = await response.Content.ReadAsAsync<ActivityDto[]>();
+                activities = await response.Content.ReadAsAsync<ActivityDto[]>();
             }
-            return products;
+            return activities;
         }
+
         public async Task SaveTodaysTasks(int userId, IEnumerable<ActivityDto> archive)
         {
-            HttpResponseMessage response = await GetClient().PostAsJsonAsync($"api/ActiveActivities/{userId}", JsonConvert.SerializeObject(archive));
+           // HttpResponseMessage response = await GetClient().PostAsJsonAsync($"api/ActiveActivities/{userId}", JsonConvert.SerializeObject(archive));
         }
 
         public async Task<IEnumerable<ActivityDto>> GetArchive(int userId)

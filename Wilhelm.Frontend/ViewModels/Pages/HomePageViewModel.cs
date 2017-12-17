@@ -26,6 +26,7 @@ namespace Wilhelm.Frontend.ViewModels.Pages
         {
             _holdersService = holdersService;
             _activityService = activityService;
+            _currentList = new ObservableCollection<ActivityHolder>();
         }
 
         private void ListViewItem_MouseDown(object sender, MouseButtonEventArgs e)
@@ -44,23 +45,25 @@ namespace Wilhelm.Frontend.ViewModels.Pages
             }
         }
 
-        public async Task Activate(int userId)
+        public async void Activate(int userId)
         {
             _userId = userId;
-            var todayTasksList = new List<ActivityHolder>();
             ProxyService p = new ProxyService();
             //_holdersService.UpdateArchiveHolders(todayTasksList, _activityService.GetTodaysActivities(_userId));
-            var a = p.GetTodaysTasks(_userId);
-             _holdersService.UpdateArchiveHolders(todayTasksList,await a);//GetAwaiter().GetResult() vs getResut();
-             //CurrentList = new ObservableCollection<ActivityHolder>(todayTasksList.Where(x => !x.Task.Archivized));
-             CurrentList = new ObservableCollection<ActivityHolder>();
+            CurrentList.Clear();
+            var todayTasksList = new List<ActivityHolder>();
+            _holdersService.UpdateArchiveHolders(todayTasksList, await p.GetTodaysTasks(_userId));
+            foreach (var activity in todayTasksList.Where(x => !x.Task.Archivized))
+                CurrentList.Add(activity);
         }
 
-        public void Save()
+        public async void Save()
         {
             var activities = new List<ActivityDto>();
             _holdersService.UpdateActivityDtos(activities, _currentList);
-            _activityService.SaveActivities(activities);
+            ProxyService p = new ProxyService();
+            await p.SaveTodaysTasks(_userId,activities);
+            //_activityService.SaveActivities(activities);
         }
 
         public ObservableCollection<ActivityHolder> CurrentList
