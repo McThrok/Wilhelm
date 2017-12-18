@@ -75,8 +75,11 @@ namespace Wilhelm.Frontend.ViewModels.Controls
         {
             ClickMenu(_pages.ReportPage);
         }
-        private void LogOut(object obj)
+        private void LogOut(object page)
         {
+            var currentPage = MainPanelContent;
+            if (currentPage != null && currentPage is IMenuPage currentMenuPage)
+                currentMenuPage.Save();
             _changeMainWIndowContent();
         }
         private void ClickMenu(UserControl page)
