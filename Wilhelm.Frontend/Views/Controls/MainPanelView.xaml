@@ -71,12 +71,14 @@
                     <RowDefinition Height="*"/>
                     <RowDefinition Height="*"/>
                     <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
                 <Button Grid.Row="0" Name="HomeButton" Content="Home" Command="{Binding HomeCmd}" Style="{StaticResource ResourceKey=MenuButon}" />
                 <Button Grid.Row="1" Name="TasksButton" Content="Tasks" Command="{Binding TasksCmd}" Style="{StaticResource ResourceKey=MenuButon}"/>
                 <Button Grid.Row="2" Name="GroupsButton" Content="Groups" Command="{Binding GroupsCmd}" Style="{StaticResource ResourceKey=MenuButon}"/>
                 <Button Grid.Row="3" Name="ArchivesButton" Content="Archives" Command="{Binding ArchivesCmd}" Style="{StaticResource ResourceKey=MenuButon}"/>
                 <Button Grid.Row="4" Name="ReportsButton" Content="Reports" Command="{Binding ReportsCmd}" Style="{StaticResource ResourceKey=MenuButon}"/>
+                <Button Grid.Row="5" Name="LogOutButton" Content="Log Out" Command="{Binding LogOutCmd}" Style="{StaticResource ResourceKey=MenuButon}"/>
             </Grid>
         </DockPanel>
 
