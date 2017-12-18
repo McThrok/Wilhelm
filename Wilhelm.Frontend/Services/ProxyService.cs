@@ -32,16 +32,16 @@ namespace Wilhelm.Frontend.Services
             builder.Path += "/ActiveActivities";
             builder.Query = query.ToString();
             var a = builder.ToString();
-          //  HttpResponseMessage response = await GetClient().GetAsync(builder.ToString());
+            HttpResponseMessage response = await GetClient().GetAsync(builder.ToString());
 
             //var client = new HttpClient();
             //var a = "http://localhost:55378/api/ActiveActivities?userId=1";
             //HttpResponseMessage response = await GetClient().GetAsync(a);
 
-            //if (response.IsSuccessStatusCode)
-            //{
-            //    activities = await response.Content.ReadAsAsync<ActivityDto[]>();
-            //}
+            if (response.IsSuccessStatusCode)
+            {
+                activities = await response.Content.ReadAsAsync<ActivityDto[]>();
+            }
             return activities;
         }
 
@@ -81,7 +81,7 @@ namespace Wilhelm.Frontend.Services
 
         private UriBuilder GetBaseUri()
         {
-            UriBuilder builder = new UriBuilder("http://localhost:55378/api");
+            UriBuilder builder = new UriBuilder("http://localhost:8080/api");
             return builder;
         }
         private HttpClient GetClient()
