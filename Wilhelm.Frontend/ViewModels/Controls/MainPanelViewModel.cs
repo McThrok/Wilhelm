@@ -15,7 +15,7 @@ namespace Wilhelm.Frontend.ViewModels.Controls
     public class MainPanelViewModel : INotifyPropertyChanged
     {
         private readonly MenuPagesCollection _pages;
-        private readonly IServiceFactory _serviceFactory;
+        private readonly IProxyService _proxyService;
         private readonly IHoldersConversionService _holdersConversionService;
         private readonly IHoldersService _holdersService;
         private object _page;
@@ -30,10 +30,10 @@ namespace Wilhelm.Frontend.ViewModels.Controls
         public MainPanelViewModel(int userId)
         {
             _userId = userId;
-            _serviceFactory = new ServiceFactory();
+            _proxyService = new ProxyService();
             _holdersConversionService = new HoldersConversionService();
             _holdersService = new HoldersService(_holdersConversionService);
-            _pages = new MenuPagesCollection(_serviceFactory, _holdersConversionService, _holdersService);
+            _pages = new MenuPagesCollection(_proxyService, _holdersConversionService, _holdersService);
 
             HomeCmd = new DelegateCommand(Home);
             TasksCmd = new DelegateCommand(Tasks);

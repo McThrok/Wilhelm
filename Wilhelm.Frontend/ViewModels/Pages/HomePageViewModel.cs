@@ -18,14 +18,14 @@ namespace Wilhelm.Frontend.ViewModels.Pages
     public class HomePageViewModel : IMenuPage
     {
         private readonly IHoldersService _holdersService;
-        private readonly IActivityService _activityService;
         private ObservableCollection<ActivityHolder> _currentList;
+        private readonly IProxyService _proxyService;
         private int _userId;
 
-        public HomePageViewModel(IHoldersService holdersService, IActivityService activityService)
+        public HomePageViewModel(IHoldersService holdersService, IProxyService proxyService)
         {
             _holdersService = holdersService;
-            _activityService = activityService;
+            _proxyService = proxyService;
             _currentList = new ObservableCollection<ActivityHolder>();
         }
 
@@ -48,11 +48,9 @@ namespace Wilhelm.Frontend.ViewModels.Pages
         public async void Activate(int userId)
         {
             _userId = userId;
-            ProxyService p = new ProxyService();
-            //_holdersService.UpdateArchiveHolders(todayTasksList, _activityService.GetTodaysActivities(_userId));
             CurrentList.Clear();
             var todayTasksList = new List<ActivityHolder>();
-            _holdersService.UpdateArchiveHolders(todayTasksList, await p.GetTodaysTasks(_userId));
+            _holdersService.UpdateArchiveHolders(todayTasksList, await _proxyService.GetArchive(_userId));
             foreach (var activity in todayTasksList.Where(x => !x.Task.Archivized))
                 CurrentList.Add(activity);
         }
@@ -61,9 +59,7 @@ namespace Wilhelm.Frontend.ViewModels.Pages
         {
             var activities = new List<ActivityDto>();
             _holdersService.UpdateActivityDtos(activities, _currentList);
-            ProxyService p = new ProxyService();
-            await p.SaveTodaysTasks(_userId,activities);
-            //_activityService.SaveActivities(activities);
+            await _proxyService.SaveArchive(_userId, activities);
         }
 
         public ObservableCollection<ActivityHolder> CurrentList

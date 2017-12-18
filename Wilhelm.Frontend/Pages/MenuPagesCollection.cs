@@ -13,26 +13,20 @@ namespace Wilhelm.Frontend.Pages
 {
     public class MenuPagesCollection
     {
-        private readonly IServiceFactory _serviceFactory;
-        private readonly IHoldersConversionService _holdersConversionService;//not used
+        private readonly IHoldersConversionService _holdersConversionService;
         private readonly IHoldersService _holdersService;
-        private readonly IConfigurationService _configurationService;
-        private readonly IActivityService _activityService;
-        private readonly IReportService _reportService;
+        private readonly IProxyService _proxyService;
         private HomePageViewModel _homePage;
         private TaskPageViewModel _tasksPage;
         private ReportPageViewModel _reportPage;
         private GroupPageViewModel _groupsPage;
         private ArchivePageViewModel _archivePage;
 
-        public MenuPagesCollection(IServiceFactory serviceFactory, IHoldersConversionService holdersConversionService, IHoldersService holdersService)
+        public MenuPagesCollection(IProxyService proxyService, IHoldersConversionService holdersConversionService, IHoldersService holdersService)
         {
-            _serviceFactory = serviceFactory;
             _holdersConversionService = holdersConversionService;
             _holdersService = holdersService;
-            _configurationService = serviceFactory.CreateConfigurationService();
-            _activityService = _serviceFactory.CreateActivityService();
-            _reportService = serviceFactory.CreateReportService();
+            _proxyService = proxyService;
         }
 
         public HomePageViewModel HomePage
@@ -40,7 +34,7 @@ namespace Wilhelm.Frontend.Pages
             get
             {
                 if (_homePage == null)
-                    _homePage = new HomePageViewModel(_holdersService, _activityService);
+                    _homePage = new HomePageViewModel(_holdersService, _proxyService);
                 return _homePage;
             }
         }
@@ -49,7 +43,7 @@ namespace Wilhelm.Frontend.Pages
             get
             {
                 if (_tasksPage == null)
-                    _tasksPage = new TaskPageViewModel(_holdersService, _configurationService);
+                    _tasksPage = new TaskPageViewModel(_holdersService, _proxyService);
                 return _tasksPage;
             }
         }
@@ -58,7 +52,7 @@ namespace Wilhelm.Frontend.Pages
             get
             {
                 if (_reportPage == null)
-                    _reportPage = new ReportPageViewModel(_reportService);
+                    _reportPage = new ReportPageViewModel(_proxyService);
                 return _reportPage;
             }
         }
@@ -67,7 +61,7 @@ namespace Wilhelm.Frontend.Pages
             get
             {
                 if (_groupsPage == null)
-                    _groupsPage = new GroupPageViewModel(_holdersService,_configurationService);
+                    _groupsPage = new GroupPageViewModel(_holdersService, _proxyService);
                 return _groupsPage;
             }
         }
@@ -76,7 +70,7 @@ namespace Wilhelm.Frontend.Pages
             get
             {
                 if (_archivePage == null)
-                    _archivePage = new ArchivePageViewModel(_holdersService, _activityService);
+                    _archivePage = new ArchivePageViewModel(_holdersService, _proxyService);
                 return _archivePage;
             }
         }

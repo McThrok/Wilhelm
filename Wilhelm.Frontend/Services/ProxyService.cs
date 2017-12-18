@@ -17,26 +17,20 @@ using Newtonsoft.Json;
 using System.Web;
 using System.Collections.Specialized;
 using System.Threading;
+using System.Net.Http.Formatting;
 
 namespace Wilhelm.Frontend.Services
 {
-    public class ProxyService
+    public class ProxyService : IProxyService
     {
         public async Task<IEnumerable<ActivityDto>> GetTodaysTasks(int userId)
         {
-
             var activities = new ActivityDto[0];
             var query = HttpUtility.ParseQueryString("");
             query["userId"] = userId.ToString();
-            var builder = GetBaseUri();
-            builder.Path += "/ActiveActivities";
+            var builder = GetBaseUriBuilder("ActiveActivities");
             builder.Query = query.ToString();
-            var a = builder.ToString();
             HttpResponseMessage response = await GetClient().GetAsync(builder.ToString());
-
-            //var client = new HttpClient();
-            //var a = "http://localhost:55378/api/ActiveActivities?userId=1";
-            //HttpResponseMessage response = await GetClient().GetAsync(a);
 
             if (response.IsSuccessStatusCode)
             {
@@ -44,51 +38,94 @@ namespace Wilhelm.Frontend.Services
             }
             return activities;
         }
-
-        public async Task SaveTodaysTasks(int userId, IEnumerable<ActivityDto> archive)
+        public async Task SaveTodaysTasks(int userId, IEnumerable<ActivityDto> activities)
         {
-           // HttpResponseMessage response = await GetClient().PostAsJsonAsync($"api/ActiveActivities/{userId}", JsonConvert.SerializeObject(archive));
+            var query = HttpUtility.ParseQueryString("");
+            query["userId"] = userId.ToString();
+            var builder = GetBaseUriBuilder("ActiveActivities");
+            builder.Query = query.ToString();
+
+            HttpResponseMessage postResponse = await GetClient().PostAsJsonAsync(builder.ToString(), JsonConvert.SerializeObject(activities));
+            postResponse.EnsureSuccessStatusCode();
         }
 
         public async Task<IEnumerable<ActivityDto>> GetArchive(int userId)
         {
-            ActivityDto[] products = null;
-            HttpResponseMessage response = await GetClient().GetAsync("api/ArchiveActivities/");
+            var activities = new ActivityDto[0];
+            var query = HttpUtility.ParseQueryString("");
+            query["userId"] = userId.ToString();
+            var builder = GetBaseUriBuilder("ArchiveActivities");
+            builder.Query = query.ToString();
+            HttpResponseMessage response = await GetClient().GetAsync(builder.ToString());
+
             if (response.IsSuccessStatusCode)
             {
-                products = await response.Content.ReadAsAsync<ActivityDto[]>();
+                activities = await response.Content.ReadAsAsync<ActivityDto[]>();
             }
-            return products;
+            return activities;
         }
         public async Task SaveArchive(int userId, IEnumerable<ActivityDto> archive)
         {
+            var query = HttpUtility.ParseQueryString("");
+            query["userId"] = userId.ToString();
+            var builder = GetBaseUriBuilder("ArchiveActivities");
+            builder.Query = query.ToString();
 
+            HttpResponseMessage postResponse = await GetClient().PostAsJsonAsync(builder.ToString(), JsonConvert.SerializeObject(archive));
+            postResponse.EnsureSuccessStatusCode();
         }
 
         public async Task<ConfigDto> GetConfig(int userId)
         {
-            return null;
+            ConfigDto config = null;
+            var query = HttpUtility.ParseQueryString("");
+            query["userId"] = userId.ToString();
+            var builder = GetBaseUriBuilder("Configuration");
+            builder.Query = query.ToString();
+            HttpResponseMessage response = await GetClient().GetAsync(builder.ToString());
+
+            if (response.IsSuccessStatusCode)
+            {
+                config = await response.Content.ReadAsAsync<ConfigDto>();
+            }
+            return config;
         }
         public async Task SaveConfig(int userId, ConfigDto config)
         {
+            var query = HttpUtility.ParseQueryString("");
+            query["userId"] = userId.ToString();
+            var builder = GetBaseUriBuilder("Configuration");
+            builder.Query = query.ToString();
 
+            HttpResponseMessage postResponse = await GetClient().PostAsJsonAsync(builder.ToString(), JsonConvert.SerializeObject(config));
+            postResponse.EnsureSuccessStatusCode();
         }
 
-        public async Task<ConfigDto> GetReports(int userId)
+        public async Task<IEnumerable<ReportDto>> GetReports(int userId)
         {
-            return null;
+            ReportDto[] config = null;
+            var query = HttpUtility.ParseQueryString("");
+            query["userId"] = userId.ToString();
+            var builder = GetBaseUriBuilder("Report");
+            builder.Query = query.ToString();
+            HttpResponseMessage response = await GetClient().GetAsync(builder.ToString());
+
+            if (response.IsSuccessStatusCode)
+            {
+                config = await response.Content.ReadAsAsync<ReportDto[]>();
+            }
+            return config;
         }
 
-        private UriBuilder GetBaseUri()
+        private UriBuilder GetBaseUriBuilder(string controller)
         {
             UriBuilder builder = new UriBuilder("http://localhost:8080/api");
+            builder.Path += "/"+ controller;
             return builder;
         }
         private HttpClient GetClient()
         {
             HttpClient client = new HttpClient();
-            //client.DefaultRequestHeaders.Accept.Clear();
-            //client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
             return client;
         }
 
