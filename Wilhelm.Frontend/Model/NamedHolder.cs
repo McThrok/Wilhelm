@@ -9,7 +9,7 @@ namespace Wilhelm.Frontend.Model
     public abstract class NamedHolder : Holder
     {
         private string _name;
-        private UserHolder _owner;
+        private int _ownerId;
         private string _description;
         private bool _archivized;
 
@@ -25,16 +25,16 @@ namespace Wilhelm.Frontend.Model
                 OnChanged(nameof(Name));
             }
         }
-        public UserHolder Owner
+        public int OwnerId
         {
             get
             {
-                return _owner;
+                return _ownerId;
             }
             set
             {
-                _owner = value;
-                OnChanged(nameof(Owner));
+                _ownerId = value;
+                OnChanged(nameof(OwnerId));
             }
         }
         public string Description

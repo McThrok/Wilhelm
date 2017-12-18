@@ -20,26 +20,32 @@ namespace Wilhelm.Frontend.ViewModels.Controls
         private readonly IHoldersService _holdersService;
         private object _page;
         private int _userId;
+        private Action _changeMainWIndowContent;
+        public string UserName { get; private set; }
 
         public ICommand HomeCmd { get; protected set; }
         public ICommand TasksCmd { get; protected set; }
         public ICommand GroupsCmd { get; protected set; }
         public ICommand ArchivesCmd { get; protected set; }
         public ICommand ReportsCmd { get; protected set; }
+        public ICommand LogOutCmd { get; protected set; }
 
-        public MainPanelViewModel(int userId)
+        public MainPanelViewModel(int userId, string login, Action changeMainWindowContent)
         {
             _userId = userId;
             _serviceFactory = new ServiceFactory();
             _holdersConversionService = new HoldersConversionService();
             _holdersService = new HoldersService(_holdersConversionService);
             _pages = new MenuPagesCollection(_serviceFactory, _holdersConversionService, _holdersService);
+            _changeMainWIndowContent = changeMainWindowContent;
+            UserName = login;
 
             HomeCmd = new DelegateCommand(Home);
             TasksCmd = new DelegateCommand(Tasks);
             GroupsCmd = new DelegateCommand(Groups);
             ArchivesCmd = new DelegateCommand(Archives);
             ReportsCmd = new DelegateCommand(Reports);
+            LogOutCmd = new DelegateCommand(LogOut);
 
             ClickMenu(_pages.HomePage);
         }
@@ -68,6 +74,10 @@ namespace Wilhelm.Frontend.ViewModels.Controls
         private void Reports(object obj)
         {
             ClickMenu(_pages.ReportPage);
+        }
+        private void LogOut(object obj)
+        {
+            _changeMainWIndowContent();
         }
         private void ClickMenu(UserControl page)
         {

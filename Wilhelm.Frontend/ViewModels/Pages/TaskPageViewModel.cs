@@ -67,7 +67,7 @@ namespace Wilhelm.Frontend.ViewModels.Pages
         }
         private void AddNewTask(object obj)
         {
-            ActiveTask = _holdersService.CreateNewTask(_tasks);
+            ActiveTask = _holdersService.CreateNewTask(_tasks, _userId);
             ShowCurrentTask();
         }
         private void Apply(object obj)

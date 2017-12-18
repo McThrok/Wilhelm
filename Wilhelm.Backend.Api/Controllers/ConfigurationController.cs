@@ -13,20 +13,20 @@ namespace Wilhelm.Backend.Api.Controllers
 {
     public class ConfigurationController : ApiController
     {
-        private readonly IConfigurationService _configurationService;
-        public ConfigurationController()
-        {
-            _configurationService = new ServiceFactory().CreateConfigurationService();
-        }
+        //private readonly IConfigurationService _configurationService;
+        //public ConfigurationController()
+        //{
+        //    _configurationService = new ServiceFactory().CreateConfigurationService();
+        //}
 
-        public ConfigDto GetConfig()
-        {
-            return _configurationService.GetConfig();
-        }
-        public void SaveConfig(ConfigDto config)
-        {
-            _configurationService.SaveConfig(config);
-        }
+        //public ConfigDto GetConfig()
+        //{
+        //    return _configurationService.GetConfig();
+        //}
+        //public void SaveConfig(ConfigDto config)
+        //{
+        //    _configurationService.SaveConfig(config);
+        //}
 
     }
 }

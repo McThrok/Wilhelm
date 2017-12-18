@@ -27,8 +27,8 @@ namespace Wilhelm.Backend.Services
             ConfigDto dto = new ConfigDto();
             using (var db = _wContextFactory.Create())
             {
-                var tasks = db.WTasks.Where(x => x.Owner.Id == userId && !x.Archivized).Include(x => x.Owner);
-                var groups = db.WGroups.Where(x => x.Owner.Id == userId && !x.Archivized).Include(x => x.Owner);
+                var tasks = db.WTasks.Where(x => x.OwnerId == userId && !x.Archivized);
+                var groups = db.WGroups.Where(x => x.OwnerId == userId && !x.Archivized);
                 _entitiesService.UpdateDto(dto, tasks, groups);
             }
             return dto;

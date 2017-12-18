@@ -17,9 +17,9 @@ namespace Wilhelm.Frontend.ViewModels.Signing
         public ICommand SwitchSignCmd { get; private set; }
         private readonly IAccountsService _accountsService;
         private BaseSignViewModel _selectedViewModel;
-        private Action<int> _logInAction;
+        private Action<int, string> _logInAction;
 
-        public SigningPanelViewModel(Action<int> LogInAction)
+        public SigningPanelViewModel(Action<int,string> LogInAction)
         {
             _accountsService = new AccountsService(new WContextFactory(), new ConversionService(), new HashService());
             _logInAction = LogInAction;
@@ -34,9 +34,9 @@ namespace Wilhelm.Frontend.ViewModels.Signing
         {
             SelectedViewModel = new SignUpViewModel(_accountsService, SetUser, ShowSignIn);
         }
-        private void SetUser(int userId)
+        private void SetUser(int userId, string login)
         {
-            _logInAction(userId);
+            _logInAction(userId, login);
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

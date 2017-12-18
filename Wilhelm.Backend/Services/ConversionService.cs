@@ -180,11 +180,7 @@ namespace Wilhelm.Backend.Services
         public void ConvertToNamedModelDto(NamedModelDto dto, WNamedModel namedModel)
         {
             dto.Name = namedModel.Name;
-            if (namedModel.Owner != null)
-            {
-                dto.Owner = new UserDto();
-                ConvertToDto(dto.Owner, namedModel.Owner);
-            }
+            dto.OwnerId = namedModel.OwnerId;
             dto.Description = namedModel.Description;
             dto.Archivized = namedModel.Archivized;
             ConvertToModelDto(dto, namedModel);
@@ -197,11 +193,7 @@ namespace Wilhelm.Backend.Services
         public void ConvertFromNamedModelDto(WNamedModel namedModel, NamedModelDto dto)
         {
             namedModel.Name = dto.Name;
-            if (dto.Owner != null)
-            {
-                namedModel.Owner = new WUser();
-                ConvertFromDto(namedModel.Owner, dto.Owner);
-            }
+            namedModel.OwnerId = dto.OwnerId;
             namedModel.Description = dto.Description;
             namedModel.Archivized = dto.Archivized;
             ConvertFromModelDto(namedModel, dto);

@@ -12,15 +12,15 @@ namespace Wilhelm.Backend.Api.Controllers
 {
     public class ReportController : ApiController
     {
-        private readonly IReportService _reportService;
-        public ReportController()
-        {
-            _reportService = new ServiceFactory().CreateReportService();
-        }
+        //private readonly IReportService _reportService;
+        //public ReportController()
+        //{
+        //    _reportService = new ServiceFactory().CreateReportService();
+        //}
 
-        public List<ReportDto> GetReports()
-        {
-            return _reportService.GetReports();
-        }
+        //public List<ReportDto> GetReports()
+        //{
+        //    return _reportService.GetReports();
+        //}
     }
 }
