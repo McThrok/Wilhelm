@@ -9,7 +9,11 @@ namespace Wilhelm.DataAccess
 {
     public class WContext : DbContext, IWContext
     {
-        public WContext() { }
+        public WContext() : base("WContext")
+        {
+            Database.SetInitializer<WContext>(new CreateDatabaseIfNotExists<WContext>());
+        }
+
         public IDbSet<WTask> WTasks { get; set; }
         public IDbSet<WGroup> WGroups { get; set; }
         public IDbSet<WActivity> WActivities { get; set; }
