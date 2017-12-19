@@ -5,37 +5,37 @@ using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Wilhelm.Backend.Services.Interfaces;
 using Wilhelm.Backend.Services;
+using Wilhelm.Backend.Services.Interfaces;
 using Wilhelm.DataAccess;
 using Wilhelm.Frontend.Services;
 using Wilhelm.Frontend.Services.Interfaces;
 using Wilhelm.Frontend.ViewModels.Pages;
-using Wilhelm.Frontend.Model;
 
 namespace Wilhelm.IntegrationTests.PagesTests
 {
-    [TestFixture]
-    class TaskPageTests
+    class HomePageTests
     {
         IConversionService _convs;
 
         IHoldersConversionService _hcs;
-        IWContextFactory _cf;
         IEntitiesService _es;
+        IWContextFactory _cf;
+        IActivityGenerationService _ags;
 
         IHoldersService _hs;
-        IConfigurationService _cs;
-        public TaskPageTests()
+        IActivityService _ac;
+        public HomePageTests()
         {
             _convs = new ConversionService();
 
             _hcs = new HoldersConversionService();
-            _cf = new WContextFactory();
             _es = new EntitiesService(_convs);
+            _cf = new WContextFactory();
+            _ags = new ActivityGenerationService();
 
             _hs = new HoldersService(_hcs);
-            _cs = new ConfigurationService(_cf, _es);
+            _ac = new ActivityService(_cf, _es, _ags);
         }
 
         [SetUp]
@@ -45,24 +45,39 @@ namespace Wilhelm.IntegrationTests.PagesTests
         }
 
         [Test]
-        public void TaskPageActivateFunctionTest()
+        public void HomePageSaveActivityTest()
         {
-            TaskPageViewModel tpvm = new TaskPageViewModel(_hs, _cs);
+            HomePageViewModel hpvm = new HomePageViewModel(_hs, _ac);
             int ownerId = -1;
-            List<WTask> wtasks = new List<WTask>();
             using (WContext db = new WContext())
             {
                 ownerId = db.Users.Where(x => x.Login == "user1").Single().Id;
-                var cos = db.WTasks.ToList();
-                wtasks = db.WTasks.Where(x => x.OwnerId == ownerId).OrderBy(x => x.Id).ToList();
             }
-            tpvm.Activate(ownerId);
-            var tasks = tpvm.Tasks.OrderBy(x => x.Id).ToList();
-            if (tasks.Count != wtasks.Count)
-                Assert.IsTrue(false);
-            for (int i = 0; i < tasks.Count; i++)
+            hpvm.Activate(ownerId);
+            hpvm.CurrentList[0].IsDone = true;
+            hpvm.Save();
+            bool result = false;
+            using (WContext db = new WContext())
             {
-                if (!CompareTasks(tasks[i], wtasks[i]))
+                if (db.WActivities.First().IsDone)
+                    result = true;
+            }
+            Assert.IsTrue(result);
+        }
+
+        [Test]
+        public void HomePageActivateArchivizedActivitiesTest()
+        {
+            HomePageViewModel hpvm = new HomePageViewModel(_hs, _ac);
+            int ownerId = -1;
+            using (WContext db = new WContext())
+            {
+                ownerId = db.Users.Where(x => x.Login == "user1").Single().Id;
+            }
+            hpvm.Activate(ownerId);
+            foreach(var el in hpvm.CurrentList)
+            {
+                if (el.Task.Archivized)
                     Assert.IsTrue(false);
             }
             Assert.IsTrue(true);
@@ -76,27 +91,9 @@ namespace Wilhelm.IntegrationTests.PagesTests
                 db.Database.Delete();
             }
         }
-        private bool CompareTasks(TaskHolder th, WTask wt)
-        {
-            if (th.Archivized != wt.Archivized)
-                return false;
-            if (th.Description != wt.Description)
-                return false;
-            if (th.Frequency != wt.Frequency)
-                return false;
-            if (th.Id != wt.Id)
-                return false;
-            if (th.Name != wt.Name)
-                return false;
-            if (th.OwnerId != wt.OwnerId)
-                return false;
-            if (th.StartDate != wt.StartDate)
-                return false;
-            return true;
-        }
     }
 
-    public class TaskPageTestContexInitializer : DropCreateDatabaseAlways<WContext>
+    public class WilhelmHomePageTestContexInitializer : DropCreateDatabaseAlways<WContext>
     {
         protected override void Seed(WContext db)
         {
@@ -105,12 +102,13 @@ namespace Wilhelm.IntegrationTests.PagesTests
             db.SaveChanges();
 
             WTask t1 = new WTask() { Name = "t1", OwnerId = User1.Id, Frequency = 1, StartDate = DateTime.Today };
-            WTask t2 = new WTask() { Name = "t2", OwnerId = User1.Id, Frequency = 1, StartDate = DateTime.Today };
-            WTask t3 = new WTask() { Name = "t3", OwnerId = User1.Id, Frequency = 2, StartDate = DateTime.Today };
+            WActivity a1 = new WActivity() { WTask = t1, Date = DateTime.Today, IsDone = false };
 
+            WTask t2 = new WTask() { Name = "t2", OwnerId = User1.Id, Frequency = 1, StartDate = DateTime.Today, Archivized=true};
+            WActivity a2 = new WActivity() { WTask = t1, Date = DateTime.Today, IsDone = false };
+
+            db.WActivities.Add(a1);
             db.WTasks.Add(t1);
-            db.WTasks.Add(t2);
-            db.WTasks.Add(t3);
 
             db.SaveChanges();
         }

@@ -57,6 +57,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BackedDataAccessTests.cs" />
+    <Compile Include="PagesTests\HomePageTests.cs" />
     <Compile Include="PagesTests\TaskPageTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
