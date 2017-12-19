@@ -11,7 +11,7 @@ using Wilhelm.DataAccess;
 
 namespace Wilhelm.Backend.Services
 {
-    internal class ConfigurationService : IConfigurationService
+    public class ConfigurationService : IConfigurationService
     {
         private IWContextFactory _wContextFactory;
         private IEntitiesService _entitiesService;

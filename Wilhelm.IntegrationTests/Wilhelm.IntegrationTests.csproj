@@ -57,6 +57,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BackedDataAccessTests.cs" />
+    <Compile Include="PagesTests\HomePageTests.cs" />
+    <Compile Include="PagesTests\TaskPageTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -72,6 +74,10 @@
       <Project>{c08b35d0-5e1c-4487-b8eb-e93e465457a4}</Project>
       <Name>Wilhelm.DataAccess</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Wilhelm.Frontend\Wilhelm.Frontend.csproj">
+      <Project>{673AC60C-8B3D-46F0-B34A-EB4DAF7E2505}</Project>
+      <Name>Wilhelm.Frontend</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
@@ -79,5 +85,6 @@
   <ItemGroup>
     <Content Include="Query.txt" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
