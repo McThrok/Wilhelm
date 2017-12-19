@@ -18,15 +18,15 @@ namespace Wilhelm.Frontend.ViewModels.Windows
         public Action CloseAction { get; set; }
         public ChooseItemWindowViewModel()
         {
-            OkCmd = new DelegateCommand(Ok);
+            OkCmd = new DelegateCommand<int>(Ok);
             CancelCmd = new DelegateCommand(Cancel);
         }
-        private void Ok(object obj)
+        private void Ok(int index)
         {
-            SelectedHolder = Holders[(int)obj];
+            SelectedHolder = Holders[index];
             CloseAction();
         }
-        private void Cancel(object obj)
+        private void Cancel()
         {
             SelectedHolder = null;
             CloseAction();
