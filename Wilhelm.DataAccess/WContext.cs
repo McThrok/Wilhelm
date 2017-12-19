@@ -11,7 +11,7 @@ namespace Wilhelm.DataAccess
     {
         public WContext() : base("WContext")
         {
-            Database.SetInitializer<WContext>(new CreateDatabaseIfNotExists<WContext>());
+            Database.SetInitializer<WContext>(new DropCreateDatabaseIfModelChanges<WContext>());
         }
 
         public IDbSet<WTask> WTasks { get; set; }

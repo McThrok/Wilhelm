@@ -18,24 +18,12 @@ namespace Wilhelm.IntegrationTests.PagesTests
     [TestFixture]
     class TaskPageTests
     {
-        IConversionService _convs;
-
-        IHoldersConversionService _hcs;
-        IWContextFactory _cf;
-        IEntitiesService _es;
-
         IHoldersService _hs;
-        IConfigurationService _cs;
+        IProxyService _ps;
         public TaskPageTests()
         {
-            _convs = new ConversionService();
-
-            _hcs = new HoldersConversionService();
-            _cf = new WContextFactory();
-            _es = new EntitiesService(_convs);
-
-            _hs = new HoldersService(_hcs);
-            _cs = new ConfigurationService(_cf, _es);
+            _hs = new HoldersService(new HoldersConversionService());
+            _ps = new ProxyService();
         }
 
         [SetUp]
@@ -47,7 +35,7 @@ namespace Wilhelm.IntegrationTests.PagesTests
         [Test]
         public void TaskPageActivateFunctionTest()
         {
-            TaskPageViewModel tpvm = new TaskPageViewModel(_hs, _cs);
+            TaskPageViewModel tpvm = new TaskPageViewModel(_hs, _ps);
             int ownerId = -1;
             List<WTask> wtasks = new List<WTask>();
             using (WContext db = new WContext())

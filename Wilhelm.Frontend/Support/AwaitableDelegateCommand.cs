@@ -11,8 +11,7 @@ namespace Wilhelm.Frontend.Support
     {
         void RaiseCanExecuteChanged();
     }
-
-    // And an extension method to make it easy to raise changed events
+    
     public static class CommandExtensions
     {
         public static void RaiseCanExecuteChanged(this ICommand command)
@@ -51,7 +50,7 @@ namespace Wilhelm.Frontend.Support
     public class AwaitableDelegateCommand<T> : IAsyncCommand<T>, ICommand
     {
         private readonly Func<T, Task> _executeMethod;
-        private readonly DelegateCommand<T> _underlyingCommand;
+        private readonly DelegateCommandd<T> _underlyingCommand;
         private bool _isExecuting;
 
         public AwaitableDelegateCommand(Func<T, Task> executeMethod)
@@ -62,7 +61,7 @@ namespace Wilhelm.Frontend.Support
         public AwaitableDelegateCommand(Func<T, Task> executeMethod, Func<T, bool> canExecuteMethod)
         {
             _executeMethod = executeMethod;
-            _underlyingCommand = new DelegateCommand<T>(x => { }, canExecuteMethod);
+            _underlyingCommand = new DelegateCommandd<T>(x => { }, canExecuteMethod);
         }
 
         public async Task ExecuteAsync(T obj)

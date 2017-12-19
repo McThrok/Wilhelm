@@ -34,7 +34,7 @@ namespace Wilhelm.Frontend.ViewModels.Windows
         public List<NamedHolder> Holders
         {
             get { return _holders; }
-            set{ _holders = value; }
+            set { _holders = value; }
         }
     }
 }

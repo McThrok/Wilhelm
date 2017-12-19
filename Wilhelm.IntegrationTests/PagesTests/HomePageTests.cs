@@ -16,26 +16,12 @@ namespace Wilhelm.IntegrationTests.PagesTests
 {
     class HomePageTests
     {
-        IConversionService _convs;
-
-        IHoldersConversionService _hcs;
-        IEntitiesService _es;
-        IWContextFactory _cf;
-        IActivityGenerationService _ags;
-
         IHoldersService _hs;
-        IActivityService _ac;
+        IProxyService _ps;
         public HomePageTests()
         {
-            _convs = new ConversionService();
-
-            _hcs = new HoldersConversionService();
-            _es = new EntitiesService(_convs);
-            _cf = new WContextFactory();
-            _ags = new ActivityGenerationService();
-
-            _hs = new HoldersService(_hcs);
-            _ac = new ActivityService(_cf, _es, _ags);
+            _hs = new HoldersService(new HoldersConversionService());
+            _ps = new ProxyService();
         }
 
         [SetUp]
@@ -47,7 +33,7 @@ namespace Wilhelm.IntegrationTests.PagesTests
         [Test]
         public void HomePageSaveActivityTest()
         {
-            HomePageViewModel hpvm = new HomePageViewModel(_hs, _ac);
+            HomePageViewModel hpvm = new HomePageViewModel(_hs, _ps);
             int ownerId = -1;
             using (WContext db = new WContext())
             {
@@ -68,14 +54,14 @@ namespace Wilhelm.IntegrationTests.PagesTests
         [Test]
         public void HomePageActivateArchivizedActivitiesTest()
         {
-            HomePageViewModel hpvm = new HomePageViewModel(_hs, _ac);
+            HomePageViewModel hpvm = new HomePageViewModel(_hs, _ps);
             int ownerId = -1;
             using (WContext db = new WContext())
             {
                 ownerId = db.Users.Where(x => x.Login == "user1").Single().Id;
             }
             hpvm.Activate(ownerId);
-            foreach(var el in hpvm.CurrentList)
+            foreach (var el in hpvm.CurrentList)
             {
                 if (el.Task.Archivized)
                     Assert.IsTrue(false);
@@ -104,7 +90,7 @@ namespace Wilhelm.IntegrationTests.PagesTests
             WTask t1 = new WTask() { Name = "t1", OwnerId = User1.Id, Frequency = 1, StartDate = DateTime.Today };
             WActivity a1 = new WActivity() { WTask = t1, Date = DateTime.Today, IsDone = false };
 
-            WTask t2 = new WTask() { Name = "t2", OwnerId = User1.Id, Frequency = 1, StartDate = DateTime.Today, Archivized=true};
+            WTask t2 = new WTask() { Name = "t2", OwnerId = User1.Id, Frequency = 1, StartDate = DateTime.Today, Archivized = true };
             WActivity a2 = new WActivity() { WTask = t1, Date = DateTime.Today, IsDone = false };
 
             db.WActivities.Add(a1);
