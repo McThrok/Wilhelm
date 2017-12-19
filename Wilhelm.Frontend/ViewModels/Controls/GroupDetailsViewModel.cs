@@ -8,11 +8,12 @@ using System.Windows.Input;
 using Wilhelm.Frontend.Model;
 using Wilhelm.Frontend.Services.Interfaces;
 using Wilhelm.Frontend.Support;
-using Wilhelm.Frontend.Windows;
+using Wilhelm.Frontend.ViewModels.Windows;
+using Wilhelm.Frontend.Views.Windows;
 
 namespace Wilhelm.Frontend.ViewModels.Controls
 {
-    public class GroupDetailsViewModel: INotifyPropertyChanged
+    public class GroupDetailsViewModel : INotifyPropertyChanged
     {
         private List<TaskHolder> _availableTasksToAdd;
         private GroupHolder _showGroup;
@@ -38,7 +39,7 @@ namespace Wilhelm.Frontend.ViewModels.Controls
         {
             if (chooosenGroup == null)
             {
-               DataVisibility = Visibility.Hidden;
+                DataVisibility = Visibility.Hidden;
                 return;
             }
 
@@ -50,9 +51,17 @@ namespace Wilhelm.Frontend.ViewModels.Controls
 
         private void AssignTask(object obj)
         {
-            var dialog = new ChooseItemWindow(_availableTasksToAdd.Cast<NamedHolder>().ToList());
+            var dialogContext = new ChooseItemWindowViewModel
+            {
+                Holders = _availableTasksToAdd.Cast<NamedHolder>().ToList()
+            };
+            var dialog = new ChooseItemWindowView
+            {
+                DataContext = dialogContext
+            };
+            dialogContext.CloseAction = () => dialog.Close();
             dialog.ShowDialog();
-            if (dialog.SelectedHolder is TaskHolder taskToAdd)
+            if (dialogContext.SelectedHolder is TaskHolder taskToAdd)
             {
                 _availableTasksToAdd.Remove(taskToAdd);
                 ShownGroup.Tasks.Add(taskToAdd);
@@ -79,11 +88,13 @@ namespace Wilhelm.Frontend.ViewModels.Controls
                 OnPropertyChanged(nameof(ShownGroup));
             }
         }
-        public Visibility DataVisibility {
+        public Visibility DataVisibility
+        {
             get
             {
                 return _dataVisibility;
-            } set
+            }
+            set
             {
                 _dataVisibility = value;
                 OnPropertyChanged(nameof(DataVisibility));

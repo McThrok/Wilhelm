@@ -5,38 +5,36 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
-using Wilhelm.Backend.Model.Dto;
-using Wilhelm.Backend.Services;
-using Wilhelm.Backend.Services.Interfaces;
-using Wilhelm.DataAccess;
+using Wilhelm.Frontend.Services.Interfaces;
+using Wilhelm.Frontend.Services;
 
 namespace Wilhelm.Frontend.ViewModels.Signing
 {
     public class SigningPanelViewModel : INotifyPropertyChanged
     {
         public ICommand SwitchSignCmd { get; private set; }
-        private readonly IAccountsService _accountsService;
+        private readonly IAccountProxyService _accountProxyService;
         private BaseSignViewModel _selectedViewModel;
-        private Action<int> _logInAction;
+        private Action<int, string> _logInAction;
 
-        public SigningPanelViewModel(Action<int> LogInAction)
+        public SigningPanelViewModel(Action<int,string> LogInAction)
         {
-            _accountsService = new AccountsService(new WContextFactory(), new ConversionService(), new HashService());
+            _accountProxyService = new AccountProxyService();
             _logInAction = LogInAction;
             ShowSignIn(null);
         }
         
         private void ShowSignIn(object obj)
         {
-            SelectedViewModel = new SignInViewModel(_accountsService, SetUser, ShowSighUp);
+            SelectedViewModel = new SignInViewModel(_accountProxyService, SetUser, ShowSighUp);
         }
         private void ShowSighUp(object obj)
         {
-            SelectedViewModel = new SignUpViewModel(_accountsService, SetUser, ShowSignIn);
+            SelectedViewModel = new SignUpViewModel(_accountProxyService, SetUser, ShowSignIn);
         }
-        private void SetUser(int userId)
+        private void SetUser(int userId, string login)
         {
-            _logInAction(userId);
+            _logInAction(userId, login);
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

@@ -39,24 +39,29 @@
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Net.Http, Version=4.1.1.2, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Net.Http.4.3.3\lib\net46\System.Net.Http.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Security.Cryptography.Algorithms, Version=4.1.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Security.Cryptography.Algorithms.4.3.0\lib\net461\System.Security.Cryptography.Algorithms.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Security.Cryptography.Encoding, Version=4.0.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Security.Cryptography.Encoding.4.3.0\lib\net46\System.Security.Cryptography.Encoding.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Security.Cryptography.Primitives, Version=4.0.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Security.Cryptography.Primitives.4.3.0\lib\net46\System.Security.Cryptography.Primitives.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Security.Cryptography.X509Certificates, Version=4.1.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Security.Cryptography.X509Certificates.4.3.0\lib\net461\System.Security.Cryptography.X509Certificates.dll</HintPath>
+    </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
-    <Reference Include="System.Net.Http" />
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="MockBase\MockBase.cs" />
-    <Compile Include="Model\Dto\ValidatedDto.cs" />
-    <Compile Include="Model\Dto\ActivityDto.cs" />
-    <Compile Include="Model\Dto\GroupDto.cs" />
-    <Compile Include="Model\Dto\ModelDto.cs" />
-    <Compile Include="Model\Dto\NamedModelDto.cs" />
-    <Compile Include="Model\Dto\UserDto.cs" />
-    <Compile Include="Model\Dto\TaskDto.cs" />
-    <Compile Include="Model\Dto\ReportDto.cs" />
-    <Compile Include="Model\Dto\ConfigDto.cs" />
     <Compile Include="Model\Validated.cs" />
     <Compile Include="Services\HashService.cs" />
     <Compile Include="Services\AccountsService.cs" />
@@ -82,6 +87,10 @@
     <ProjectReference Include="..\Wilhelm.DataAccess\Wilhelm.DataAccess.csproj">
       <Project>{c08b35d0-5e1c-4487-b8eb-e93e465457a4}</Project>
       <Name>Wilhelm.DataAccess</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Wilhelm.Shared\Wilhelm.Shared.csproj">
+      <Project>{1b33a92e-e355-4f0b-a113-b71fa570d9ad}</Project>
+      <Name>Wilhelm.Shared</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

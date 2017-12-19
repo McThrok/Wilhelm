@@ -5,7 +5,6 @@ using System.Text;
 using System.Threading.Tasks;
 using Wilhelm.DataAccess;
 using Wilhelm.Backend.Services.Interfaces;
-using Wilhelm.Backend.Model.Dto;
 using Wilhelm.Backend.Model;
 using System.Security.Cryptography;
 using System.Text.RegularExpressions;

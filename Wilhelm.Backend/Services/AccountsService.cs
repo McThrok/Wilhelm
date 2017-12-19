@@ -5,11 +5,11 @@ using System.Text;
 using System.Threading.Tasks;
 using Wilhelm.DataAccess;
 using Wilhelm.Backend.Services.Interfaces;
-using Wilhelm.Backend.Model.Dto;
 using Wilhelm.Backend.Model;
 using System.Security.Cryptography;
 using System.Text.RegularExpressions;
 using System.Globalization;
+using Wilhelm.Shared.Dto;
 
 namespace Wilhelm.Backend.Services
 {
@@ -27,29 +27,29 @@ namespace Wilhelm.Backend.Services
             _hashService = hashService;
         }
 
-        public Validated<UserDto> CreateUserDto(string login, string password, string confirmPassword)
+        public ValidatedDto<UserDto> CreateUserDto(string login, string password, string confirmPassword)
         {
             var validatedUser = CreateUser(login, password, confirmPassword);
-            var validatedUserDto = new Validated<UserDto>();
+            var validatedUserDto = new ValidatedDto<UserDto>();
 
             if (validatedUser.Object != null)
             {
-                validatedUserDto.Object = new UserDto();
-                _conversionService.ConvertToDto(validatedUserDto.Object, validatedUser.Object);
+                validatedUserDto.Dto = new UserDto();
+                _conversionService.ConvertToDto(validatedUserDto.Dto, validatedUser.Object);
             }
             validatedUserDto.ValidationViolations = validatedUser.ValidationViolations;
 
             return validatedUserDto;
         }
-        public Validated<UserDto> VerifyUserDto(string login, string password)
+        public ValidatedDto<UserDto> VerifyUserDto(string login, string password)
         {
             var validatedUser = VerifyUser(login, password);
-            var validatedUserDto = new Validated<UserDto>();
+            var validatedUserDto = new ValidatedDto<UserDto>();
 
             if (validatedUser.Object != null)
             {
-                validatedUserDto.Object = new UserDto();
-                _conversionService.ConvertToDto(validatedUserDto.Object, validatedUser.Object);
+                validatedUserDto.Dto = new UserDto();
+                _conversionService.ConvertToDto(validatedUserDto.Dto, validatedUser.Object);
             }
             validatedUserDto.ValidationViolations = validatedUser.ValidationViolations;
 

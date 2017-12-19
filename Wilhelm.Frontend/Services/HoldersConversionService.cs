@@ -4,11 +4,9 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Wilhelm.Backend.MockBase;
-using Wilhelm.Backend.Model;
-using Wilhelm.Backend.Model.Dto;
 using Wilhelm.Frontend.Services.Interfaces;
 using Wilhelm.Frontend.Model;
+using Wilhelm.Shared.Dto;
 
 namespace Wilhelm.Frontend.Services
 {
@@ -185,14 +183,10 @@ namespace Wilhelm.Frontend.Services
         public void ConvertFromNamedModelDto(NamedHolder namedHolder, NamedModelDto dto)
         {
             ConvertFromModelDto(namedHolder, dto);
-            if (dto.Owner != null)
-            {
-                namedHolder.Owner = new UserHolder();
-                ConvertFromDto(namedHolder.Owner, dto.Owner);
-            }
             namedHolder.Archivized = dto.Archivized;
             namedHolder.Name = dto.Name;
             namedHolder.Description = dto.Description;
+            namedHolder.OwnerId = dto.OwnerId;
         }
         public void ConvertFromModelDto(Holder holder, ModelDto dto)
         {
@@ -201,14 +195,10 @@ namespace Wilhelm.Frontend.Services
         public void ConvertToNamedModelDto(NamedModelDto dto, NamedHolder namedHolder)
         {
             ConvertToModelDto(dto, namedHolder);
-            if (namedHolder.Owner != null)
-            {
-                dto.Owner = new UserDto();
-                ConvertToDto(dto.Owner, namedHolder.Owner);
-            }
             dto.Archivized = namedHolder.Archivized;
             dto.Name = namedHolder.Name;
             dto.Description = namedHolder.Description;
+            dto.OwnerId = namedHolder.OwnerId;
         }
         public void ConvertToModelDto(ModelDto dto, Holder holder)
         {

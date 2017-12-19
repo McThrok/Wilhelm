@@ -5,13 +5,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Wilhelm.Backend.Model;
-using Wilhelm.Backend.Model.Dto;
 using Wilhelm.Backend.Services.Interfaces;
 using Wilhelm.DataAccess;
+using Wilhelm.Shared.Dto;
 
 namespace Wilhelm.Backend.Services
 {
-    internal class ConfigurationService : IConfigurationService
+    public class ConfigurationService : IConfigurationService
     {
         private IWContextFactory _wContextFactory;
         private IEntitiesService _entitiesService;
@@ -27,8 +27,8 @@ namespace Wilhelm.Backend.Services
             ConfigDto dto = new ConfigDto();
             using (var db = _wContextFactory.Create())
             {
-                var tasks = db.WTasks.Where(x => x.Owner.Id == userId && !x.Archivized).Include(x => x.Owner);
-                var groups = db.WGroups.Where(x => x.Owner.Id == userId && !x.Archivized).Include(x => x.Owner);
+                var tasks = db.WTasks.Where(x => x.OwnerId == userId && !x.Archivized);
+                var groups = db.WGroups.Where(x => x.OwnerId == userId && !x.Archivized);
                 _entitiesService.UpdateDto(dto, tasks, groups);
             }
             return dto;

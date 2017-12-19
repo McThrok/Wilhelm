@@ -5,13 +5,12 @@ using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
-using Wilhelm.Backend.Model;
-using Wilhelm.Backend.Services.Interfaces;
 using Wilhelm.Frontend.Model;
 using Wilhelm.Frontend.Pages;
 using Wilhelm.Frontend.Services.Interfaces;
 using Wilhelm.Frontend.Support;
 using Wilhelm.Frontend.ViewModels.Controls;
+using Wilhelm.Shared.Dto;
 
 namespace Wilhelm.Frontend.ViewModels.Pages
 {
@@ -21,7 +20,7 @@ namespace Wilhelm.Frontend.ViewModels.Pages
         private readonly List<TaskHolder> _tasks = new List<TaskHolder>();
         private GroupHolder _activeGroup;
         private readonly IHoldersService _holdersService;
-        private readonly IConfigurationService _configurationService;
+        private readonly IProxyService _proxyService;
         private GroupDetailsViewModel _groupDetailsControl;
         private Visibility _dataVisibility;
         public ICommand AddNewGroupCmd { get; protected set; }
@@ -31,10 +30,10 @@ namespace Wilhelm.Frontend.ViewModels.Pages
         public ICommand GroupCmd { get; protected set; }
         private int _userId;
 
-        public GroupPageViewModel(IHoldersService holdersService, IConfigurationService configurationService)
+        public GroupPageViewModel(IHoldersService holdersService, IProxyService proxyService)
         {
             _holdersService = holdersService;
-            _configurationService = configurationService;
+            _proxyService = proxyService;
 
             _groupDetailsControl = new GroupDetailsViewModel(holdersService);
             GroupDetailsContent = _groupDetailsControl;
@@ -68,7 +67,7 @@ namespace Wilhelm.Frontend.ViewModels.Pages
         }
         private void AddNewGroup(object obj)
         {
-            ActiveGroup = _holdersService.CreateNewGroup(_groups);
+            ActiveGroup = _holdersService.CreateNewGroup(_groups, _userId);
             ShowCurrentGroup();
         }
         private void Apply(object obj)
@@ -93,21 +92,21 @@ namespace Wilhelm.Frontend.ViewModels.Pages
             SaveChanges();
         }
 
-        public void Activate(int userId)
+        public async void Activate(int userId)
         {
             _userId = userId;
             ActiveGroup = null;
             _groups.Clear();
             _tasks.Clear();
-            _holdersService.UpdateConfigHolders(_groups, _tasks, _configurationService.GetConfig(_userId));
+            _holdersService.UpdateConfigHolders(_groups, _tasks, await _proxyService.GetConfig(_userId));
             //GroupsListView.ItemsSource = _groups;
             ShowCurrentGroup();
         }
-        public void SaveChanges()
+        public async void SaveChanges()
         {
             var config = new ConfigDto();
             _holdersService.UpdateConfigDto(config, _groups, _tasks);
-            _configurationService.SaveConfig(config);
+            await _proxyService.SaveConfig(_userId, config);
         }
         public void Save()
         {

@@ -6,27 +6,24 @@ using System.Net.Http;
 using System.Web.Http;
 using Wilhelm.Backend.Services.Interfaces;
 using Wilhelm.Backend.Services;
-using Wilhelm.Backend.Model.Dto;
+using Wilhelm.Shared.Dto;
 
 namespace Wilhelm.Backend.Api.Controllers
 {
-    public class ActivityController : ApiController
+    public class ArchiveActivitiesController : ApiController
     {
         private readonly IActivityService _activityService;
-        public ActivityController()
+        public ArchiveActivitiesController()
         {
             _activityService = new ServiceFactory().CreateActivityService();
         }
 
-        public List<ActivityDto> GetArchive()
+        public List<ActivityDto> GetArchive(int userId)
         {
-            return _activityService.GetArchive();
+            return _activityService.GetArchive(userId);
         }
-        public List<ActivityDto> GetTodaysActivities()
-        {
-            return _activityService.GetTodaysActivities();
-        }
-        public void SaveActivities(IEnumerable<ActivityDto> activities)
+
+        public void PostActivities(int userId, IEnumerable<ActivityDto> activities)
         {
             _activityService.SaveActivities(activities);
         }

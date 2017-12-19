@@ -4,10 +4,8 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Wilhelm.Backend.MockBase;
-using Wilhelm.Backend.Model;
-using Wilhelm.Backend.Model.Dto;
 using Wilhelm.Frontend.Model;
+using Wilhelm.Shared.Dto;
 
 namespace Wilhelm.Frontend.Services.Interfaces
 {

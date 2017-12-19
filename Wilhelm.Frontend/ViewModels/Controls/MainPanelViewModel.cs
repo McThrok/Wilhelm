@@ -3,8 +3,6 @@ using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
-using Wilhelm.Backend.Services;
-using Wilhelm.Backend.Services.Interfaces;
 using Wilhelm.Frontend.Pages;
 using Wilhelm.Frontend.Services;
 using Wilhelm.Frontend.Services.Interfaces;
@@ -15,31 +13,37 @@ namespace Wilhelm.Frontend.ViewModels.Controls
     public class MainPanelViewModel : INotifyPropertyChanged
     {
         private readonly MenuPagesCollection _pages;
-        private readonly IServiceFactory _serviceFactory;
+        private readonly IProxyService _proxyService;
         private readonly IHoldersConversionService _holdersConversionService;
         private readonly IHoldersService _holdersService;
         private object _page;
         private int _userId;
+        private Action _changeMainWIndowContent;
+        public string UserName { get; private set; }
 
         public ICommand HomeCmd { get; protected set; }
         public ICommand TasksCmd { get; protected set; }
         public ICommand GroupsCmd { get; protected set; }
         public ICommand ArchivesCmd { get; protected set; }
         public ICommand ReportsCmd { get; protected set; }
+        public ICommand LogOutCmd { get; protected set; }
 
-        public MainPanelViewModel(int userId)
+        public MainPanelViewModel(int userId, string login, Action changeMainWindowContent)
         {
             _userId = userId;
-            _serviceFactory = new ServiceFactory();
+            _proxyService = new ProxyService();
             _holdersConversionService = new HoldersConversionService();
             _holdersService = new HoldersService(_holdersConversionService);
-            _pages = new MenuPagesCollection(_serviceFactory, _holdersConversionService, _holdersService);
+            _pages = new MenuPagesCollection(_proxyService, _holdersConversionService, _holdersService);
+            _changeMainWIndowContent = changeMainWindowContent;
+            UserName = login;
 
             HomeCmd = new DelegateCommand(Home);
             TasksCmd = new DelegateCommand(Tasks);
             GroupsCmd = new DelegateCommand(Groups);
             ArchivesCmd = new DelegateCommand(Archives);
             ReportsCmd = new DelegateCommand(Reports);
+            LogOutCmd = new DelegateCommand(LogOut);
 
             ClickMenu(_pages.HomePage);
         }
@@ -68,6 +72,13 @@ namespace Wilhelm.Frontend.ViewModels.Controls
         private void Reports(object obj)
         {
             ClickMenu(_pages.ReportPage);
+        }
+        private void LogOut(object page)
+        {
+            var currentPage = MainPanelContent;
+            if (currentPage != null && currentPage is IMenuPage currentMenuPage)
+                currentMenuPage.Save();
+            _changeMainWIndowContent();
         }
         private void ClickMenu(UserControl page)
         {

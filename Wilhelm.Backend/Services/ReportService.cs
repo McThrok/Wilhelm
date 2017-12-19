@@ -4,9 +4,9 @@ using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Wilhelm.Backend.Model.Dto;
 using Wilhelm.Backend.Services.Interfaces;
 using Wilhelm.DataAccess;
+using Wilhelm.Shared.Dto;
 
 namespace Wilhelm.Backend.Services
 {
@@ -23,7 +23,8 @@ namespace Wilhelm.Backend.Services
             var reports = new List<ReportDto>();
             using (var db = _wContextFactory.Create())
             {
-                var data = db.WActivities.Where(x=>x.WTask.Owner.Id == userId).Include(a => a.WTask);
+                var data = db.WActivities.Where(x => x.WTask.OwnerId == userId).Include(a => a.WTask);
+                var aaaa = data.ToList();
                 var tasks = db.WTasks;
                 reports.Add(GetTotalNumberOfAcitivitiesReport(data));
                 reports.Add(GetCountOfDoneActivities(data));
@@ -68,7 +69,7 @@ namespace Wilhelm.Backend.Services
             var report = new ReportDto
             {
                 Category = "Percent of done activities",
-                Value = percent.ToString() + "%"
+                Value = data.Count() == 0 ? "No activities :(" : percent.ToString() + "%"
             };
             return report;
         }
@@ -88,23 +89,24 @@ namespace Wilhelm.Backend.Services
             var report = new ReportDto
             {
                 Category = "Percent of skip activities",
-                Value = percent.ToString() + "%"
+                Value = data.Count() == 0 ? "No activities :(" : percent.ToString() + "%"
             };
             return report;
         }
         public List<ReportDto> GetCountOfActivities(IEnumerable<WActivity> data, IEnumerable<WTask> tasks)
         {
-            var doneActivity = data.Where(a => a.IsDone == true).GroupBy(a => a.WTask.Id).Select(r => new { Id = r.Key, count = r.Count() }).ToList();
-            doneActivity = doneActivity.OrderByDescending(a => a.count).ToList();
+            var activities = data.GroupBy(a => a.WTask.Id).Select(r => new { Id = r.Key, count = r.Count() }).ToList();
+            activities = activities.OrderByDescending(a => a.count).ToList();
             List<ReportDto> reports = new List<ReportDto>();
-            for (int i = 0; i < doneActivity.Count; i++)
+            for (int i = 0; i < activities.Count; i++)
             {
-                var task = tasks.Where(t => t.Id == doneActivity[i].Id).Single();
+                var doneCount = data.Where(a => a.IsDone == true && a.Id == activities[i].Id).Count();
+                var task = tasks.Where(t => t.Id == activities[i].Id).Single();
                 var taskCount = data.Where(a => a.WTask.Id == task.Id).Count();
                 var report = new ReportDto
                 {
                     Category = "Activity: " + task.Name.ToUpper(),
-                    Value = "Done " + doneActivity[i].count.ToString() + " / " + taskCount.ToString() + " times"
+                    Value = "Done " + doneCount + " / " + taskCount.ToString() + " times"
                 };
                 reports.Add(report);
             }
@@ -112,19 +114,20 @@ namespace Wilhelm.Backend.Services
         }
         public List<ReportDto> GetPercentActivities(IEnumerable<WActivity> data, IEnumerable<WTask> tasks)
         {
-            var doneActivity = data.Where(a => a.IsDone == true).GroupBy(a => a.WTask.Id).Select(r => new { Id = r.Key, count = r.Count() }).ToList();
-            doneActivity = doneActivity.OrderByDescending(a => a.count).ToList();
+            var activities = data.GroupBy(a => a.WTask.Id).Select(r => new { Id = r.Key, count = r.Count() }).ToList();
+            activities = activities.OrderByDescending(a => a.count).ToList();
             double maxPercent = 0;
             int maxPercentIndex = -1;
-            string maxPersentTaskName="";
+            string maxPersentTaskName = "";
             double minPercent = 100;
             int minPercentIndex = -1;
-            string minPersentTaskName="";
-            for (int i = 0; i < doneActivity.Count; i++)
+            string minPersentTaskName = "";
+            for (int i = 0; i < activities.Count; i++)
             {
-                var task = tasks.Where(t => t.Id == doneActivity[i].Id).Single();
+                var doneCount = data.Where(a => a.IsDone == true && a.Id == activities[i].Id).Count();
+                var task = tasks.Where(t => t.Id == activities[i].Id).Single();
                 var taskCount = data.Where(a => a.WTask.Id == task.Id).Count();
-                double percent = doneActivity[i].count / (double)taskCount;
+                double percent = doneCount / (double)taskCount;
                 if (percent < minPercent)
                 {
                     minPercent = percent;
@@ -143,7 +146,7 @@ namespace Wilhelm.Backend.Services
                 reports.Add(new ReportDto
                 {
                     Category = "Activity with lowest percentage: " + minPersentTaskName.ToUpper(),
-                    Value = "Done " + Math.Round(minPercent*100, 2) + " % "
+                    Value = "Done " + Math.Round(minPercent * 100, 2) + " % "
                 });
             if (maxPercentIndex != -1)
                 reports.Add(new ReportDto

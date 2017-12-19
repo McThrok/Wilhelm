@@ -6,7 +6,7 @@ using System.Net.Http;
 using System.Web.Http;
 using Wilhelm.Backend.Services.Interfaces;
 using Wilhelm.Backend.Services;
-using Wilhelm.Backend.Model.Dto;
+using Wilhelm.Shared.Dto;
 
 namespace Wilhelm.Backend.Api.Controllers
 {
@@ -18,9 +18,9 @@ namespace Wilhelm.Backend.Api.Controllers
             _reportService = new ServiceFactory().CreateReportService();
         }
 
-        public List<ReportDto> GetReports()
+        public List<ReportDto> GetReports(int userId)
         {
-            return _reportService.GetReports();
+            return _reportService.GetReports(userId);
         }
     }
 }

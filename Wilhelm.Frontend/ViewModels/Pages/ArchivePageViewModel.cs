@@ -7,27 +7,26 @@ using System.Threading.Tasks;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
-using Wilhelm.Backend.Model.Dto;
-using Wilhelm.Backend.Services.Interfaces;
 using Wilhelm.Frontend.Model;
 using Wilhelm.Frontend.Pages;
 using Wilhelm.Frontend.Services.Interfaces;
+using Wilhelm.Shared.Dto;
 
 namespace Wilhelm.Frontend.ViewModels.Pages
 {
     public class ArchivePageViewModel : IMenuPage
     {
         private readonly IHoldersService _holdersService;
-        private readonly IActivityService _activityService;
+        private readonly IProxyService _proxyService;
         private ObservableCollection<ActivityHolder> _currentList;
         private int _userId;
 
-        public ArchivePageViewModel(IHoldersService holdersService, IActivityService activityService)
+        public ArchivePageViewModel(IHoldersService holdersService, IProxyService proxyService)
         {
             _holdersService = holdersService;
-            _activityService = activityService;
+            _proxyService = proxyService;
+            _currentList = new ObservableCollection<ActivityHolder>();
         }
-
 
         private void ListViewItem_MouseDown(object sender, MouseButtonEventArgs e)
         {
@@ -45,22 +44,24 @@ namespace Wilhelm.Frontend.ViewModels.Pages
             }
         }
 
-        public void Activate(int userId)
+        public async void Activate(int userId)
         {
-            _userId = userId;
+            _userId = userId; CurrentList.Clear();
             var archiveList = new List<ActivityHolder>();
-            _holdersService.UpdateArchiveHolders(archiveList, _activityService.GetArchive(_userId));
+            _holdersService.UpdateArchiveHolders(archiveList, await _proxyService.GetArchive(_userId));
             archiveList.Sort((a, b) => DateTime.Compare(a.Date, b.Date));
-            _currentList = new ObservableCollection<ActivityHolder>(archiveList.Where(x => !x.Task.Archivized));
+            foreach (var activity in archiveList.Where(x => !x.Task.Archivized))
+                CurrentList.Add(activity);
         }   
 
-        public void Save()
+        public async void Save()
         {
             var activities = new List<ActivityDto>();
             _holdersService.UpdateActivityDtos(activities, _currentList);
-            _activityService.SaveActivities(activities);
+            await _proxyService.SaveArchive(_userId,activities);
         }
-        public ObservableCollection<ActivityHolder> CurrentList// TODO INotifyProperty?
+
+        public ObservableCollection<ActivityHolder> CurrentList
         {
             get
             {

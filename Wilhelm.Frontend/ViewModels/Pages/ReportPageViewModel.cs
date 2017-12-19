@@ -1,39 +1,53 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
-using Wilhelm.Backend.Model.Dto;
-using Wilhelm.Backend.Services.Interfaces;
 using Wilhelm.Frontend.Pages;
+using Wilhelm.Frontend.Services.Interfaces;
+using Wilhelm.Shared.Dto;
 
 namespace Wilhelm.Frontend.ViewModels.Pages
 {
-    public class ReportPageViewModel : IMenuPage
+    public class ReportPageViewModel : IMenuPage, INotifyPropertyChanged
     {
-        private readonly IReportService _reportService;
-        private int _userId;
+        private readonly IProxyService _proxyService;
+        private List<ReportDto> _reportList;
+
+        public ReportPageViewModel(IProxyService proxyService)
+        {
+            _proxyService = proxyService;
+        }
+
+        public async void Activate(int userId)
+        {
+            _reportList = (await _proxyService.GetReports(userId)).ToList();
+        }
+
+        public async void Save()
+        {
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+        protected void OnPropertyChanged(string propName)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propName));
+        }
+
 
         public List<ReportDto> ReportList
         {
             get
             {
-                return _reportService.GetReports(_userId);
+                return _reportList;
             }
-        }
-        public ReportPageViewModel(IReportService reportService)
-        {
-            _reportService = reportService;
-        }
+            private set
+            {
+                _reportList = value;
 
-        public void Activate(int userId)
-        {
-            _userId = userId;
-        }
-
-        public void Save()
-        {
+            }
         }
     }
 }

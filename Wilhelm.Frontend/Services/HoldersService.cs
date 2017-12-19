@@ -4,12 +4,9 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Wilhelm.Backend.MockBase;
-using Wilhelm.Backend.Model;
-using Wilhelm.Backend.Model.Dto;
 using Wilhelm.Frontend.Services.Interfaces;
 using Wilhelm.Frontend.Model;
-using Wilhelm.Backend.Services.Interfaces;
+using Wilhelm.Shared.Dto;
 
 namespace Wilhelm.Frontend.Services
 {
@@ -125,7 +122,9 @@ namespace Wilhelm.Frontend.Services
 
         public int GenerateTemporaryId(IEnumerable<Holder> holders)
         {
-            int minId = Math.Min(holders.Min(x => x.Id), 0);
+            int minId = 0;
+            if (holders.Count() > 0)
+                 minId = Math.Min(holders.Min(x => x.Id), 0);
             return minId - 1;
         }
         public string GetNameWithIndexIfNeeded(string startName, IEnumerable<NamedHolder> holders)
@@ -152,6 +151,7 @@ namespace Wilhelm.Frontend.Services
             taskToUpdate.Description = updatedTask.Description;
             taskToUpdate.StartDate = updatedTask.StartDate;
             taskToUpdate.Frequency = updatedTask.Frequency;
+            taskToUpdate.OwnerId = updatedTask.OwnerId;
             if (taskToUpdate.Groups == null)
                 taskToUpdate.Groups = new ObservableCollection<GroupHolder>();
 
@@ -184,6 +184,7 @@ namespace Wilhelm.Frontend.Services
             groupToUpdate.Description = updatedGroup.Description;
             if (groupToUpdate.Tasks == null)
                 groupToUpdate.Tasks = new ObservableCollection<TaskHolder>();
+            groupToUpdate.OwnerId = updatedGroup.OwnerId;
 
 
             foreach (var task in currnetTasks)
@@ -204,17 +205,18 @@ namespace Wilhelm.Frontend.Services
             }
         }
 
-        public GroupHolder CreateNewGroup(IEnumerable<GroupHolder> groups)
+        public GroupHolder CreateNewGroup(IEnumerable<GroupHolder> groups, int userId)
         {
             var newGroup = new GroupHolder()
             {
                 Id = GenerateTemporaryId(groups),
                 Name = GetNameWithIndexIfNeeded("New group", groups),
                 Tasks = new ObservableCollection<TaskHolder>(),
+                OwnerId = userId,
             };
             return newGroup;
         }
-        public TaskHolder CreateNewTask(IEnumerable<TaskHolder> tasks)
+        public TaskHolder CreateNewTask(IEnumerable<TaskHolder> tasks, int userId)
         {
             var newTask = new TaskHolder()
             {
@@ -223,6 +225,7 @@ namespace Wilhelm.Frontend.Services
                 Groups = new ObservableCollection<GroupHolder>(),
                 StartDate = DateTime.Now,
                 Frequency = 1,
+                OwnerId = userId,
             };
             return newTask;
         }
@@ -236,6 +239,7 @@ namespace Wilhelm.Frontend.Services
                 StartDate = choosenTask.StartDate,
                 Frequency = choosenTask.Frequency,
                 Archivized = choosenTask.Archivized,
+                OwnerId = choosenTask.OwnerId,
                 Groups = new ObservableCollection<GroupHolder>(),
             };
 
@@ -270,6 +274,7 @@ namespace Wilhelm.Frontend.Services
                 Name = chooosenGroup.Name,
                 Description = chooosenGroup.Description,
                 Archivized = chooosenGroup.Archivized,
+                OwnerId = chooosenGroup.OwnerId,
                 Tasks = new ObservableCollection<TaskHolder>(),
             };
 

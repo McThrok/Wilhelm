@@ -4,10 +4,8 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Wilhelm.Backend.MockBase;
-using Wilhelm.Backend.Model;
-using Wilhelm.Backend.Model.Dto;
 using Wilhelm.Frontend.Model;
+using Wilhelm.Shared.Dto;
 
 namespace Wilhelm.Frontend.Services.Interfaces
 {
@@ -22,8 +20,8 @@ namespace Wilhelm.Frontend.Services.Interfaces
 
         int GenerateTemporaryId(IEnumerable<Holder> holders);
         string GetNameWithIndexIfNeeded(string startName, IEnumerable<NamedHolder> holders);
-        GroupHolder CreateNewGroup(IEnumerable<GroupHolder> groups);
-        TaskHolder CreateNewTask(IEnumerable<TaskHolder> tasks);
+        GroupHolder CreateNewGroup(IEnumerable<GroupHolder> groups, int userId);
+        TaskHolder CreateNewTask(IEnumerable<TaskHolder> tasks, int userId);
 
         void ApplyChanges(ICollection<TaskHolder> currnetTasks, IEnumerable<GroupHolder> currentGroups, TaskHolder updatedTask);
         void ApplyChanges(ICollection<GroupHolder> currentGroups, IEnumerable<TaskHolder> currnetTasks, GroupHolder updatedGroup);
