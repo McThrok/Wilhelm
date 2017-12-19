@@ -107,7 +107,6 @@ namespace Wilhelm.Frontend.ViewModels.Pages
             var config = new ConfigDto();
             _holdersService.UpdateConfigDto(config, _groups, _tasks);
             await _proxyService.SaveConfig(_userId, config);
-
         }
         public void Save()
         {

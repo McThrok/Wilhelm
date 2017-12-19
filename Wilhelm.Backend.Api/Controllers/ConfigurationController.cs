@@ -19,14 +19,14 @@ namespace Wilhelm.Backend.Api.Controllers
             _configurationService = new ServiceFactory().CreateConfigurationService();
         }
 
-        //public ConfigDto GetConfig(int userId)
-        //{
-        //    return _configurationService.GetConfig(userId);
-        //}
-        //public void SaveConfig(ConfigDto config)
-        //{
-        //    _configurationService.SaveConfig(config);
-        //}
+        public ConfigDto GetConfig(int userId)
+        {
+            return _configurationService.GetConfig(userId);
+        }
+        public void PostConfig(ConfigDto config)
+        {
+            _configurationService.SaveConfig(config);
+        }
 
     }
 }

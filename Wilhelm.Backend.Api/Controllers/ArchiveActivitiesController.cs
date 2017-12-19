@@ -18,15 +18,15 @@ namespace Wilhelm.Backend.Api.Controllers
             _activityService = new ServiceFactory().CreateActivityService();
         }
 
-        //public List<ActivityDto> GetArchive(int userId)
-        //{
-        //    return _activityService.GetArchive(userId);
-        //}
+        public List<ActivityDto> GetArchive(int userId)
+        {
+            return _activityService.GetArchive(userId);
+        }
 
-        //public void SaveActivities(int userId,IEnumerable<ActivityDto> activities)
-        //{
-        //    _activityService.SaveActivities(activities);
-        //}
+        public void PostActivities(int userId, IEnumerable<ActivityDto> activities)
+        {
+            _activityService.SaveActivities(activities);
+        }
 
     }
 }

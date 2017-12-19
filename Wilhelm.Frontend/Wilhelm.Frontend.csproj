@@ -158,7 +158,10 @@
     <Compile Include="Model\Holder.cs" />
     <Compile Include="Model\NamedHolder.cs" />
     <Compile Include="Model\TaskHolder.cs" />
+    <Compile Include="Services\Interfaces\IAccountProxyService.cs" />
     <Compile Include="Services\Interfaces\IProxyService.cs" />
+    <Compile Include="Services\AccountProxyService.cs" />
+    <Compile Include="Services\BaseProxyService.cs" />
     <Compile Include="Services\ProxyService.cs" />
     <Compile Include="ViewModels\Controls\GroupDetailsViewModel.cs" />
     <Compile Include="ViewModels\Controls\MainPanelViewModel.cs" />

@@ -21,7 +21,7 @@ using System.Net.Http.Formatting;
 
 namespace Wilhelm.Frontend.Services
 {
-    public class ProxyService : IProxyService
+    public class ProxyService : BaseProxyService, IProxyService
     {
         public async Task<IEnumerable<ActivityDto>> GetTodaysTasks(int userId)
         {
