@@ -21,12 +21,12 @@ namespace Wilhelm.Frontend.ViewModels.Pages
             _proxyService = proxyService;
         }
 
-        public async void Activate(int userId)
+        public async Task Activate(int userId)
         {
             _reportList = (await _proxyService.GetReports(userId)).ToList();
         }
 
-        public async void Save()
+        public async Task Save()
         {
         }
 

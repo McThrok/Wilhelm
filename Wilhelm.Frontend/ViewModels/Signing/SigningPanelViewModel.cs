@@ -21,14 +21,14 @@ namespace Wilhelm.Frontend.ViewModels.Signing
         {
             _accountProxyService = new AccountProxyService();
             _logInAction = LogInAction;
-            ShowSignIn(null);
+            ShowSignIn();
         }
         
-        private void ShowSignIn(object obj)
+        private void ShowSignIn()
         {
             SelectedViewModel = new SignInViewModel(_accountProxyService, SetUser, ShowSighUp);
         }
-        private void ShowSighUp(object obj)
+        private void ShowSighUp()
         {
             SelectedViewModel = new SignUpViewModel(_accountProxyService, SetUser, ShowSignIn);
         }

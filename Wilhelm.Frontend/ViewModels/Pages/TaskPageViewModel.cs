@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -18,9 +19,10 @@ namespace Wilhelm.Frontend.ViewModels.Pages
     {
         private readonly ObservableCollection<TaskHolder> _tasks = new ObservableCollection<TaskHolder>();
         private readonly List<GroupHolder> _groups = new List<GroupHolder>();
-        private TaskHolder _activeTask;
+
         private readonly IHoldersService _holdersService;
         private readonly IProxyService _proxyService;
+
         private TaskDetailsViewModel _taskDetailsControl;
         private Visibility _dataVisibility;
         public ICommand AddNewTaskCmd { get; protected set; }
@@ -28,6 +30,8 @@ namespace Wilhelm.Frontend.ViewModels.Pages
         public ICommand ResetCmd { get; protected set; }
         public ICommand DeleteCmd { get; protected set; }
         public ICommand TaskCmd { get; protected set; }
+
+        private TaskHolder _activeTask;
         private int _userId;
 
         public TaskPageViewModel(IHoldersService holdersService, IProxyService proxyService)
@@ -38,10 +42,10 @@ namespace Wilhelm.Frontend.ViewModels.Pages
             _taskDetailsControl = new TaskDetailsViewModel(_holdersService);
             TaskDetailsControl = _taskDetailsControl;
             AddNewTaskCmd = new DelegateCommand(AddNewTask);
-            ApplyCmd = new DelegateCommand(Apply);
+            ApplyCmd = new AwaitableDelegateCommand(Apply);
             ResetCmd = new DelegateCommand(Reset);
-            DeleteCmd = new DelegateCommand(Delete);
-            TaskCmd = new DelegateCommand(Task);
+            DeleteCmd = new AwaitableDelegateCommand(Delete);
+            TaskCmd = new DelegateCommand<object>(Task);
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -59,27 +63,27 @@ namespace Wilhelm.Frontend.ViewModels.Pages
             _taskDetailsControl.Initialize(ActiveTask, _groups);
         }
 
-        private void Task(object obj)
+        private void Task(object task)
         {
-            ActiveTask = obj as TaskHolder;
+            ActiveTask = task as TaskHolder;
             ShowCurrentTask();
         }
-        private void AddNewTask(object obj)
+        private void AddNewTask()
         {
-            ActiveTask = _holdersService.CreateNewTask(_tasks, _userId);
+            ActiveTask = _holdersService.CreateNewTask(Tasks, _userId);
             ShowCurrentTask();
         }
-        private void Apply(object obj)
+        private async Task Apply()
         {
-            _holdersService.ApplyChanges(_tasks, _groups, _taskDetailsControl.ShownTask);
-            SaveChanges();
-            Activate(_userId);
+            _holdersService.ApplyChanges(Tasks, _groups, _taskDetailsControl.ShownTask);
+            await SaveChanges();
+            await Activate(_userId);
         }
-        private void Reset(object obj)
+        private void Reset()
         {
             ShowCurrentTask();
         }
-        private void Delete(object obj)
+        private async Task Delete()
         {
             var result = MessageBox.Show("Do you really want to delete " + ActiveTask.Name + "?", "", MessageBoxButton.YesNo);
             if (result == MessageBoxResult.Yes)
@@ -88,25 +92,25 @@ namespace Wilhelm.Frontend.ViewModels.Pages
                 ActiveTask = null;
                 ShowCurrentTask();
             }
-            SaveChanges();
+            await SaveChanges();
         }
 
-        public async void Activate(int userId)
+        public async Task Activate(int userId)
         {
             _userId = userId;
             ActiveTask = null;
             _groups.Clear();
             _tasks.Clear();
-            _holdersService.UpdateConfigHolders(_groups, _tasks, await _proxyService.GetConfig(_userId));
+            _holdersService.UpdateConfigHolders(_groups, Tasks, await _proxyService.GetConfig(_userId));
             ShowCurrentTask();
         }
-        private async void SaveChanges()
+        private async Task SaveChanges()
         {
             var config = new ConfigDto();
-            _holdersService.UpdateConfigDto(config, _groups, _tasks);
+            _holdersService.UpdateConfigDto(config, _groups, Tasks);
             await _proxyService.SaveConfig(_userId, config);
         }
-        public void Save()
+        public async Task Save()
         {
         }
 

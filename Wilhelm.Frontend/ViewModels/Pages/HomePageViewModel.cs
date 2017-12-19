@@ -44,7 +44,7 @@ namespace Wilhelm.Frontend.ViewModels.Pages
             }
         }
 
-        public async void Activate(int userId)
+        public async Task Activate(int userId)
         {
             _userId = userId;
             CurrentList.Clear();
@@ -54,7 +54,7 @@ namespace Wilhelm.Frontend.ViewModels.Pages
                 CurrentList.Add(activity);
         }
 
-        public async void Save()
+        public async Task Save()
         {
             var activities = new List<ActivityDto>();
             _holdersService.UpdateActivityDtos(activities, _currentList);
