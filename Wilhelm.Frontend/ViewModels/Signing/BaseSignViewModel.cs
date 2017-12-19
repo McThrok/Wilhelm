@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
-using Wilhelm.Backend.Services.Interfaces;
+using Wilhelm.Frontend.Services.Interfaces;
 using Wilhelm.Frontend.Support;
 
 namespace Wilhelm.Frontend.ViewModels.Signing
@@ -17,15 +17,15 @@ namespace Wilhelm.Frontend.ViewModels.Signing
         private string _errorMessage;
         protected Action<int> _logInAction;
 
-        protected readonly IAccountsService _accountsService;
+        protected readonly IAccountProxyService _accountProxyService;
         public ICommand SignInCmd { get; protected set; }
         public ICommand SignUpCmd { get; protected set; }
 
 
-        public BaseSignViewModel(IAccountsService accountsService, Action<int> logInAction)
+        public BaseSignViewModel(IAccountProxyService accountProxyService , Action<int> logInAction)
         {
             _logInAction = logInAction;
-            _accountsService = accountsService;
+            _accountProxyService = accountProxyService;
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

@@ -5,8 +5,6 @@ using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
-using Wilhelm.Backend.Model;
-using Wilhelm.Backend.Services.Interfaces;
 using Wilhelm.Frontend.Model;
 using Wilhelm.Frontend.Pages;
 using Wilhelm.Frontend.Services.Interfaces;

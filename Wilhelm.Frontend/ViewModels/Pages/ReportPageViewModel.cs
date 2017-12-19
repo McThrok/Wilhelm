@@ -5,7 +5,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
-using Wilhelm.Backend.Services.Interfaces;
 using Wilhelm.Frontend.Pages;
 using Wilhelm.Frontend.Services.Interfaces;
 using Wilhelm.Shared.Dto;

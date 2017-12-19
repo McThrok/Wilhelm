@@ -3,8 +3,6 @@ using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
-using Wilhelm.Backend.Services;
-using Wilhelm.Backend.Services.Interfaces;
 using Wilhelm.Frontend.Pages;
 using Wilhelm.Frontend.Services;
 using Wilhelm.Frontend.Services.Interfaces;

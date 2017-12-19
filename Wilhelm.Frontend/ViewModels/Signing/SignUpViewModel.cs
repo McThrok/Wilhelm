@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
-using Wilhelm.Backend.Services.Interfaces;
+using Wilhelm.Frontend.Services.Interfaces;
 using Wilhelm.Frontend.Support;
 
 namespace Wilhelm.Frontend.ViewModels.Signing
@@ -14,16 +14,16 @@ namespace Wilhelm.Frontend.ViewModels.Signing
     {
         public string _confirmPassword;
 
-        public SignUpViewModel(IAccountsService accountsService, Action<int> logInAction, Action<object> signIn) :
-            base(accountsService, logInAction)
+        public SignUpViewModel(IAccountProxyService accountProxyService, Action<int> logInAction, Action<object> signIn) :
+            base(accountProxyService, logInAction)
         {
             SignInCmd = new DelegateCommand(signIn);
-            SignUpCmd = new DelegateCommand(SignUp);
+            SignUpCmd = new AwaitableDelegateCommand(SignUp);
         }
 
-        private void SignUp(object obj)
+        private async Task SignUp()
         {
-            var result = _accountsService.CreateUserDto(Login, Password, _confirmPassword);
+            var result = await _accountProxyService.GetNewUer(Login, Password, _confirmPassword);
             if (result.ValidationViolations != null && result.ValidationViolations.Count > 0)
                 ErrorMessage = string.Join(Environment.NewLine, result.ValidationViolations);
             else if (result.Dto != null)

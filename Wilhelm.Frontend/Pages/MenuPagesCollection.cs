@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Wilhelm.Backend.Services.Interfaces;
-using Wilhelm.Backend.Services;
 using Wilhelm.Frontend.Services;
 using Wilhelm.Frontend.Services.Interfaces;
 using Wilhelm.Frontend.ViewModels.Pages;

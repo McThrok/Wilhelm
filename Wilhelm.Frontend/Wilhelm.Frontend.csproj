@@ -163,6 +163,7 @@
     <Compile Include="Services\AccountProxyService.cs" />
     <Compile Include="Services\BaseProxyService.cs" />
     <Compile Include="Services\ProxyService.cs" />
+    <Compile Include="Support\AwaitableDelegateCommand.cs" />
     <Compile Include="ViewModels\Controls\GroupDetailsViewModel.cs" />
     <Compile Include="ViewModels\Controls\MainPanelViewModel.cs" />
     <Compile Include="ViewModels\Controls\TaskDetailsViewModel.cs" />
@@ -253,14 +254,6 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Wilhelm.Backend\Wilhelm.Backend.csproj">
-      <Project>{960d5eb6-6dbe-40f3-9052-a1754aa97c3f}</Project>
-      <Name>Wilhelm.Backend</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Wilhelm.DataAccess\Wilhelm.DataAccess.csproj">
-      <Project>{C08B35D0-5E1C-4487-B8EB-E93E465457A4}</Project>
-      <Name>Wilhelm.DataAccess</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Wilhelm.Shared\Wilhelm.Shared.csproj">
       <Project>{1b33a92e-e355-4f0b-a113-b71fa570d9ad}</Project>
       <Name>Wilhelm.Shared</Name>
