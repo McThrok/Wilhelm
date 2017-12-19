@@ -6,7 +6,7 @@ namespace Wilhelm.Frontend.ViewModels.Windows
 {
     class MainWindowViewModel : INotifyPropertyChanged
     {
-        private readonly SigningPanelViewModel _signViewModel;
+        private SigningPanelViewModel _signViewModel;
         private MainPanelViewModel _mainPanel;
         private object _mainContent;
 
@@ -14,14 +14,17 @@ namespace Wilhelm.Frontend.ViewModels.Windows
 
         public MainWindowViewModel()
         {
+            SetContentForNotLoggedUser();
+        }
+        public void SetContentForNotLoggedUser()
+        {
             _signViewModel = new SigningPanelViewModel(SetContentForLoggedUser);
             MainContent = _signViewModel;
-            //MainContent = new MainPanelViewModel(1); //DEBUG
         }
 
-        public void SetContentForLoggedUser(int userId)
+        public void SetContentForLoggedUser(int userId, string login)
         {
-            _mainPanel = new MainPanelViewModel(userId);
+            _mainPanel = new MainPanelViewModel(userId, login, SetContentForNotLoggedUser);
             MainContent = _mainPanel;
         }
 

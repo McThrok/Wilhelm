@@ -27,6 +27,5 @@ namespace Wilhelm.Backend.Api.Controllers
         {
             _configurationService.SaveConfig(config);
         }
-
     }
 }

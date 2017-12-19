@@ -67,7 +67,7 @@ namespace Wilhelm.Frontend.ViewModels.Pages
         }
         private void AddNewGroup(object obj)
         {
-            ActiveGroup = _holdersService.CreateNewGroup(_groups);
+            ActiveGroup = _holdersService.CreateNewGroup(_groups, _userId);
             ShowCurrentGroup();
         }
         private void Apply(object obj)

@@ -62,10 +62,11 @@
         </Grid.ColumnDefinitions>
 
         <!--datetime control removed-->
-
+        <Label Foreground="#3b424c" MaxWidth="150" FontSize="20" FontWeight="Bold" Grid.Row="1" HorizontalAlignment="Center" Margin="10,10,0,0" Content="{Binding UserName}"></Label>
         <DockPanel Grid.Row="1" LastChildFill="False" Width="150" Margin="0,60,0,0">
             <Grid Width="150" Margin="10,0,0,10">
                 <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
                     <RowDefinition Height="*"/>
                     <RowDefinition Height="*"/>
                     <RowDefinition Height="*"/>
@@ -77,6 +78,7 @@
                 <Button Grid.Row="2" Name="GroupsButton" Content="Groups" Command="{Binding GroupsCmd}" Style="{StaticResource ResourceKey=MenuButon}"/>
                 <Button Grid.Row="3" Name="ArchivesButton" Content="Archives" Command="{Binding ArchivesCmd}" Style="{StaticResource ResourceKey=MenuButon}"/>
                 <Button Grid.Row="4" Name="ReportsButton" Content="Reports" Command="{Binding ReportsCmd}" Style="{StaticResource ResourceKey=MenuButon}"/>
+                <Button Grid.Row="5" Name="LogOutButton" Content="Log Out" Command="{Binding LogOutCmd}" Style="{StaticResource ResourceKey=MenuButon}"/>
             </Grid>
         </DockPanel>
 

@@ -26,5 +26,6 @@ namespace Wilhelm.Backend.Api.Controllers
             _activityService.SaveActivities(activities);
         }
 
+
     }
 }

@@ -15,9 +15,9 @@ namespace Wilhelm.Frontend.ViewModels.Signing
         public ICommand SwitchSignCmd { get; private set; }
         private readonly IAccountProxyService _accountProxyService;
         private BaseSignViewModel _selectedViewModel;
-        private Action<int> _logInAction;
+        private Action<int, string> _logInAction;
 
-        public SigningPanelViewModel(Action<int> LogInAction)
+        public SigningPanelViewModel(Action<int,string> LogInAction)
         {
             _accountProxyService = new AccountProxyService();
             _logInAction = LogInAction;
@@ -32,9 +32,9 @@ namespace Wilhelm.Frontend.ViewModels.Signing
         {
             SelectedViewModel = new SignUpViewModel(_accountProxyService, SetUser, ShowSignIn);
         }
-        private void SetUser(int userId)
+        private void SetUser(int userId, string login)
         {
-            _logInAction(userId);
+            _logInAction(userId, login);
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
