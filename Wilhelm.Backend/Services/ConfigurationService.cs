@@ -40,6 +40,7 @@ namespace Wilhelm.Backend.Services
                 _entitiesService.UpdateEntities(db.WTasks, db.WGroups, config);
                 _entitiesService.PrepareConfigToSave(db.WTasks, db.WGroups);
                 db.SaveChanges();
+                var a = db.WTasks.ToList();
             }
         }
     }

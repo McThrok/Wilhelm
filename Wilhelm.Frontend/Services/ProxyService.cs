@@ -42,7 +42,7 @@ namespace Wilhelm.Frontend.Services
             var builder = GetBaseUriBuilder("ActiveActivities");
             builder.Query = query.ToString();
 
-            HttpResponseMessage postResponse = await GetClient().PostAsJsonAsync(builder.ToString(), JsonConvert.SerializeObject(activities));
+            HttpResponseMessage postResponse = await GetClient().PostAsJsonAsync(builder.ToString(), activities);
             postResponse.EnsureSuccessStatusCode();
         }
 
@@ -68,7 +68,7 @@ namespace Wilhelm.Frontend.Services
             var builder = GetBaseUriBuilder("ArchiveActivities");
             builder.Query = query.ToString();
 
-            HttpResponseMessage postResponse = await GetClient().PostAsJsonAsync(builder.ToString(), JsonConvert.SerializeObject(archive));
+            HttpResponseMessage postResponse = await GetClient().PostAsJsonAsync(builder.ToString(), archive);
             postResponse.EnsureSuccessStatusCode();
         }
 
@@ -94,7 +94,7 @@ namespace Wilhelm.Frontend.Services
             var builder = GetBaseUriBuilder("Configuration");
             builder.Query = query.ToString();
 
-            HttpResponseMessage postResponse = await GetClient().PostAsJsonAsync(builder.ToString(), JsonConvert.SerializeObject(config));
+            HttpResponseMessage postResponse = await GetClient().PostAsJsonAsync(builder.ToString(), config);
             postResponse.EnsureSuccessStatusCode();
         }
 
@@ -114,17 +114,6 @@ namespace Wilhelm.Frontend.Services
             return config;
         }
 
-        private UriBuilder GetBaseUriBuilder(string controller)
-        {
-            UriBuilder builder = new UriBuilder("http://localhost:8080/api");
-            builder.Path += "/"+ controller;
-            return builder;
-        }
-        private HttpClient GetClient()
-        {
-            HttpClient client = new HttpClient();
-            return client;
-        }
 
     }
 }
