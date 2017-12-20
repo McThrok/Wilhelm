@@ -12,6 +12,10 @@ namespace Wilhelm.Backend.Api.Controllers
 {
     public class ReportController : ApiController
     {
+        public string GetData()
+        {
+            return "sdfsdg";
+        }
         private readonly IReportService _reportService;
         public ReportController()
         {

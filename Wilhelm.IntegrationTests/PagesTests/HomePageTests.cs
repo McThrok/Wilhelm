@@ -8,9 +8,9 @@ using System.Threading.Tasks;
 using Wilhelm.Backend.Services;
 using Wilhelm.Backend.Services.Interfaces;
 using Wilhelm.DataAccess;
-using Wilhelm.Frontend.Services;
-using Wilhelm.Frontend.Services.Interfaces;
-using Wilhelm.Frontend.ViewModels.Pages;
+using Wilhelm.Client.Services;
+using Wilhelm.Client.Services.Interfaces;
+using Wilhelm.Client.ViewModels.Pages;
 
 namespace Wilhelm.IntegrationTests.PagesTests
 {
