@@ -23,7 +23,7 @@ namespace Wilhelm.Client.ViewModels.Pages
 
         public async void Activate(int userId)
         {
-            _reportList = (await _proxyService.GetReports(userId)).ToList();
+            ReportList = (await _proxyService.GetReports(userId)).ToList();
         }
 
         public async void Save()
@@ -46,6 +46,7 @@ namespace Wilhelm.Client.ViewModels.Pages
             private set
             {
                 _reportList = value;
+                OnPropertyChanged(nameof(ReportList));
 
             }
         }
