@@ -9,8 +9,9 @@ namespace Wilhelm.DataAccess
 {
     public class WContext : DbContext, IWContext
     {
-        public WContext() : base("WContext")
+        public WContext() : base("Wilhelm")
         {
+            
             Database.SetInitializer<WContext>(new DropCreateDatabaseIfModelChanges<WContext>());
         }
 
