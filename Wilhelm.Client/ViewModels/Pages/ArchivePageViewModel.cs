@@ -44,17 +44,17 @@ namespace Wilhelm.Client.ViewModels.Pages
             }
         }
 
-        public async void Activate(int userId)
+        public async Task Activate(int userId)
         {
             _userId = userId; CurrentList.Clear();
             var archiveList = new List<ActivityHolder>();
             _holdersService.UpdateArchiveHolders(archiveList, await _proxyService.GetArchive(_userId));
-            archiveList.Sort((a, b) => DateTime.Compare(a.Date, b.Date));
+            archiveList.Sort((a, b) => DateTime.Compare(b.Date, a.Date));
             foreach (var activity in archiveList.Where(x => !x.Task.Archivized))
                 CurrentList.Add(activity);
         }   
 
-        public async void Save()
+        public async Task Save()
         {
             var activities = new List<ActivityDto>();
             _holdersService.UpdateActivityDtos(activities, _currentList);

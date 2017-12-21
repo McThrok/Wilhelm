@@ -14,7 +14,7 @@ namespace Wilhelm.Client.ViewModels.Signing
     {
         public string _confirmPassword;
 
-        public SignUpViewModel(IAccountProxyService accountProxyService, Action<int, string> logInAction, Action<object> signIn) :
+        public SignUpViewModel(IAccountProxyService accountProxyService, Action<int, string> logInAction, Action signIn) :
             base(accountProxyService, logInAction)
         {
             SignInCmd = new DelegateCommand(signIn);

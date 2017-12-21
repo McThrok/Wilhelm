@@ -31,7 +31,7 @@ namespace Wilhelm.IntegrationTests
         [SetUp]
         protected void SetUp()
         {
-            new WilhelmTestContexInitializer();
+            Init();
         }
 
 
@@ -84,6 +84,7 @@ namespace Wilhelm.IntegrationTests
 
             using (WContext db = new WContext(connectionString))
             {
+                var a = db.Database.Connection.ConnectionString;
                 db.WGroups.Add(g1);
                 db.SaveChanges();
             }
@@ -98,23 +99,12 @@ namespace Wilhelm.IntegrationTests
             Assert.IsTrue(resut);
         }
 
-        [TearDown]
-        public void TearDown()
+
+        private void Init()
         {
             using (var db = new WContext(connectionString))
             {
                 db.Database.Delete();
-            }
-        }
-    }
-
-    public class WilhelmTestContexInitializer
-    {
-        public const string connectionString = "Data Source=localhost;Integrated Security=SSPI;Initial Catalog=TestWilhelm";
-        public WilhelmTestContexInitializer()
-        {
-            using (var db = new WContext(connectionString))
-            {
                 WGroup g1 = new WGroup() { Name = "Group1", Description = "Animals" };
                 WGroup g2 = new WGroup() { Name = "Group2", Description = "Plants" };
 

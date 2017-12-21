@@ -26,7 +26,7 @@ namespace Wilhelm.Client.ViewModels.Controls
         {
             _holdersService = holdersService;
             AssignTaskCmd = new DelegateCommand(AssignTask);
-            RemoveTaskCmd = new DelegateCommand(RemoveTask);
+            RemoveTaskCmd = new DelegateCommand<object>(RemoveTask);
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -49,7 +49,7 @@ namespace Wilhelm.Client.ViewModels.Controls
             ShownGroup = _holdersService.InitializeGroupDetails(_availableTasksToAdd, chooosenGroup, tasks);
         }
 
-        private void AssignTask(object obj)
+        private void AssignTask()
         {
             var dialogContext = new ChooseItemWindowViewModel
             {
@@ -68,9 +68,9 @@ namespace Wilhelm.Client.ViewModels.Controls
                 taskToAdd.Groups.Add(ShownGroup);
             }
         }
-        private void RemoveTask(object obj)
+        private void RemoveTask(object t)
         {
-            var task = obj as TaskHolder;
+            var task = t as TaskHolder;
             task.Groups.Remove(ShownGroup);
             ShownGroup.Tasks.Remove(task);
             _availableTasksToAdd.Add(task);

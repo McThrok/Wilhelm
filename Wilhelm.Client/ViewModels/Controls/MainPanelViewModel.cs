@@ -53,27 +53,27 @@ namespace Wilhelm.Client.ViewModels.Controls
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propName));
         }
-        private void Home(object obj)
+        private void Home()
         {
             ClickMenu(_pages.HomePage);
         }
-        private void Tasks(object obj)
+        private void Tasks()
         {
             ClickMenu(_pages.TasksPage);
         }
-        private void Groups(object obj)
+        private void Groups()
         {
             ClickMenu(_pages.GroupsPage);
         }
-        private void Archives(object obj)
+        private void Archives()
         {
             ClickMenu(_pages.ArchivePage);
         }
-        private void Reports(object obj)
+        private void Reports()
         {
             ClickMenu(_pages.ReportPage);
         }
-        private void LogOut(object page)
+        private void LogOut()
         {
             var currentPage = MainPanelContent;
             if (currentPage != null && currentPage is IMenuPage currentMenuPage)

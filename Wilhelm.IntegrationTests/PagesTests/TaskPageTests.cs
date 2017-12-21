@@ -29,11 +29,11 @@ namespace Wilhelm.IntegrationTests.PagesTests
         [SetUp]
         protected void SetUp()
         {
-            Database.SetInitializer(new TaskPageTestContexInitializer());
+            Init();
         }
 
         [Test]
-        public void TaskPageActivateFunctionTest()
+        public async Task TaskPageActivateFunctionTest()
         {
             TaskPageViewModel tpvm = new TaskPageViewModel(_hs, _ps);
             int ownerId = -1;
@@ -44,7 +44,7 @@ namespace Wilhelm.IntegrationTests.PagesTests
                 var cos = db.WTasks.ToList();
                 wtasks = db.WTasks.Where(x => x.OwnerId == ownerId).OrderBy(x => x.Id).ToList();
             }
-            tpvm.Activate(ownerId);
+           await tpvm.Activate(ownerId);
             var tasks = tpvm.Tasks.OrderBy(x => x.Id).ToList();
             if (tasks.Count != wtasks.Count)
                 Assert.IsTrue(false);
@@ -56,14 +56,6 @@ namespace Wilhelm.IntegrationTests.PagesTests
             Assert.IsTrue(true);
         }
 
-        [TearDown]
-        public void TearDown()
-        {
-            using (var db = new WContext())
-            {
-                db.Database.Delete();
-            }
-        }
         private bool CompareTasks(TaskHolder th, WTask wt)
         {
             if (th.Archivized != wt.Archivized)
@@ -82,25 +74,28 @@ namespace Wilhelm.IntegrationTests.PagesTests
                 return false;
             return true;
         }
-    }
-
-    public class TaskPageTestContexInitializer : DropCreateDatabaseAlways<WContext>
-    {
-        protected override void Seed(WContext db)
+        private void Init()
         {
-            WUser User1 = new WUser() { Login = "user1", Password = "Ἱꏁ\u2438ꥅ䫥쪋邳躮Ᏺ껫ꪉ⏺꼿ᆴ넿BD106B80630350E9B080DFB569CD0C337814169FA9350774ECB50AEB0164BD38" };
-            db.Users.Add(User1);
-            db.SaveChanges();
+            using (var db = new WContext())
+            {
+                db.Database.Delete();
+            }
+            using (var db = new WContext())
+            {
+                WUser User1 = new WUser() { Login = "user1", Password = "Ἱꏁ\u2438ꥅ䫥쪋邳躮Ᏺ껫ꪉ⏺꼿ᆴ넿BD106B80630350E9B080DFB569CD0C337814169FA9350774ECB50AEB0164BD38" };
+                db.Users.Add(User1);
+                db.SaveChanges();
 
-            WTask t1 = new WTask() { Name = "t1", OwnerId = User1.Id, Frequency = 1, StartDate = DateTime.Today };
-            WTask t2 = new WTask() { Name = "t2", OwnerId = User1.Id, Frequency = 1, StartDate = DateTime.Today };
-            WTask t3 = new WTask() { Name = "t3", OwnerId = User1.Id, Frequency = 2, StartDate = DateTime.Today };
+                WTask t1 = new WTask() { Name = "t1", OwnerId = User1.Id, Frequency = 1, StartDate = DateTime.Today };
+                WTask t2 = new WTask() { Name = "t2", OwnerId = User1.Id, Frequency = 1, StartDate = DateTime.Today };
+                WTask t3 = new WTask() { Name = "t3", OwnerId = User1.Id, Frequency = 2, StartDate = DateTime.Today };
 
-            db.WTasks.Add(t1);
-            db.WTasks.Add(t2);
-            db.WTasks.Add(t3);
+                db.WTasks.Add(t1);
+                db.WTasks.Add(t2);
+                db.WTasks.Add(t3);
 
-            db.SaveChanges();
+                db.SaveChanges();
+            }
         }
     }
 }

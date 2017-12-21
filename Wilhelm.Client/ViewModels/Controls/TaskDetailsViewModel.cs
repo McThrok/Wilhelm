@@ -25,7 +25,7 @@ namespace Wilhelm.Client.ViewModels.Controls
         {
             _holdersService = holdersService;
             AssignGroupCmd = new DelegateCommand(AssignGroup);
-            RemoveGroupCmd = new DelegateCommand(RemoveGroup);
+            RemoveGroupCmd = new DelegateCommand<object>(RemoveGroup);
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -48,7 +48,7 @@ namespace Wilhelm.Client.ViewModels.Controls
 
         }
 
-        private void AssignGroup(object obj)
+        private void AssignGroup()
         {
             var dialogContext = new ChooseItemWindowViewModel
             {
