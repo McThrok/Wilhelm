@@ -7,11 +7,11 @@ using System.Threading.Tasks;
 
 namespace Wilhelm.DataAccess
 {
-    public class WContextFactory: IWContextFactory
+    public class WContextFactory : IWContextFactory
     {
         public IWContext Create()
         {
-          return new WContext();
+            return new WContext();
         }
     }
 }

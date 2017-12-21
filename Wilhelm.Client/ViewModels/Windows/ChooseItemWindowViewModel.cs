@@ -18,7 +18,7 @@ namespace Wilhelm.Client.ViewModels.Windows
         public Action CloseAction { get; set; }
         public ChooseItemWindowViewModel()
         {
-            OkCmd = new DelegateCommand(Ok);
+            OkCmd = new DelegateCommand<object>(Ok);
             CancelCmd = new DelegateCommand(Cancel);
         }
         private void Ok(object obj)
@@ -26,7 +26,7 @@ namespace Wilhelm.Client.ViewModels.Windows
             SelectedHolder = Holders[(int)obj];
             CloseAction();
         }
-        private void Cancel(object obj)
+        private void Cancel()
         {
             SelectedHolder = null;
             CloseAction();

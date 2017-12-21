@@ -12,7 +12,7 @@ namespace Wilhelm.Client.ViewModels.Signing
 {
     public class SignInViewModel : BaseSignViewModel
     {
-        public SignInViewModel(IAccountProxyService accountProxyService, Action<int,string> logInAction, Action<object> signUp) :
+        public SignInViewModel(IAccountProxyService accountProxyService, Action<int,string> logInAction, Action signUp) :
             base(accountProxyService, logInAction)
         {
             SignUpCmd = new DelegateCommand(signUp);

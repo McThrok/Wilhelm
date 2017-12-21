@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -38,10 +39,10 @@ namespace Wilhelm.Client.ViewModels.Pages
             _taskDetailsControl = new TaskDetailsViewModel(_holdersService);
             TaskDetailsControl = _taskDetailsControl;
             AddNewTaskCmd = new DelegateCommand(AddNewTask);
-            ApplyCmd = new DelegateCommand(Apply);
+            ApplyCmd = new AwaitableDelegateCommand<object>(Apply);
             ResetCmd = new DelegateCommand(Reset);
-            DeleteCmd = new DelegateCommand(Delete);
-            TaskCmd = new DelegateCommand(Task);
+            DeleteCmd = new AwaitableDelegateCommand(Delete);
+            TaskCmd = new DelegateCommand<object>(Task);
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -59,27 +60,27 @@ namespace Wilhelm.Client.ViewModels.Pages
             _taskDetailsControl.Initialize(ActiveTask, _groups);
         }
 
-        private void Task(object obj)
+        private void Task(object task)
         {
-            ActiveTask = obj as TaskHolder;
+            ActiveTask = task as TaskHolder;
             ShowCurrentTask();
         }
-        private void AddNewTask(object obj)
+        private void AddNewTask()
         {
             ActiveTask = _holdersService.CreateNewTask(_tasks, _userId);
             ShowCurrentTask();
         }
-        private void Apply(object obj)
+        private async Task Apply(object obj)
         {
             _holdersService.ApplyChanges(_tasks, _groups, _taskDetailsControl.ShownTask);
-            SaveChanges();
-            Activate(_userId);
+            await SaveChanges();
+            await Activate(_userId);
         }
-        private void Reset(object obj)
+        private void Reset()
         {
             ShowCurrentTask();
         }
-        private void Delete(object obj)
+        private async Task Delete()
         {
             var result = MessageBox.Show("Do you really want to delete " + ActiveTask.Name + "?", "", MessageBoxButton.YesNo);
             if (result == MessageBoxResult.Yes)
@@ -88,10 +89,10 @@ namespace Wilhelm.Client.ViewModels.Pages
                 ActiveTask = null;
                 ShowCurrentTask();
             }
-            SaveChanges();
+            await SaveChanges();
         }
 
-        public async void Activate(int userId)
+        public async Task Activate(int userId)
         {
             _userId = userId;
             ActiveTask = null;
@@ -100,13 +101,13 @@ namespace Wilhelm.Client.ViewModels.Pages
             _holdersService.UpdateConfigHolders(_groups, _tasks, await _proxyService.GetConfig(_userId));
             ShowCurrentTask();
         }
-        private async void SaveChanges()
+        private async Task SaveChanges()
         {
             var config = new ConfigDto();
             _holdersService.UpdateConfigDto(config, _groups, _tasks);
             await _proxyService.SaveConfig(_userId, config);
         }
-        public void Save()
+        public async Task Save()
         {
         }
 

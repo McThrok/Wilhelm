@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -39,10 +40,10 @@ namespace Wilhelm.Client.ViewModels.Pages
             GroupDetailsContent = _groupDetailsControl;
 
             AddNewGroupCmd = new DelegateCommand(AddNewGroup);
-            ApplyCmd = new DelegateCommand(Apply);
+            ApplyCmd = new AwaitableDelegateCommand(Apply);
             ResetCmd = new DelegateCommand(Reset);
-            DeleteCmd = new DelegateCommand(Delete);
-            GroupCmd = new DelegateCommand(Group);
+            DeleteCmd = new AwaitableDelegateCommand(Delete);
+            GroupCmd = new DelegateCommand<object>(Group);
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -65,22 +66,22 @@ namespace Wilhelm.Client.ViewModels.Pages
             ActiveGroup = obj as GroupHolder;
             ShowCurrentGroup();
         }
-        private void AddNewGroup(object obj)
+        private void AddNewGroup()
         {
             ActiveGroup = _holdersService.CreateNewGroup(_groups, _userId);
             ShowCurrentGroup();
         }
-        private void Apply(object obj)
+        private async Task Apply()
         {
             _holdersService.ApplyChanges(_groups, _tasks, _groupDetailsControl.ShownGroup);
-            SaveChanges();
-            Activate(_userId);
+            await SaveChanges();
+            await Activate(_userId);
         }
-        private void Reset(object obj)
+        private void Reset()
         {
             ShowCurrentGroup();
         }
-        private void Delete(object obj)
+        private async Task Delete()
         {
             var result = MessageBox.Show("Do you really want to delete " + ActiveGroup.Name + "?", "", MessageBoxButton.YesNo);
             if (result == MessageBoxResult.Yes)
@@ -89,26 +90,25 @@ namespace Wilhelm.Client.ViewModels.Pages
                 ActiveGroup = null;
                 ShowCurrentGroup();
             }
-            SaveChanges();
+            await SaveChanges();
         }
 
-        public async void Activate(int userId)
+        public async Task Activate(int userId)
         {
             _userId = userId;
             ActiveGroup = null;
             _groups.Clear();
             _tasks.Clear();
             _holdersService.UpdateConfigHolders(_groups, _tasks, await _proxyService.GetConfig(_userId));
-            //GroupsListView.ItemsSource = _groups;
             ShowCurrentGroup();
         }
-        public async void SaveChanges()
+        public async Task SaveChanges()
         {
             var config = new ConfigDto();
             _holdersService.UpdateConfigDto(config, _groups, _tasks);
             await _proxyService.SaveConfig(_userId, config);
         }
-        public void Save()
+        public async Task Save()
         {
         }
 

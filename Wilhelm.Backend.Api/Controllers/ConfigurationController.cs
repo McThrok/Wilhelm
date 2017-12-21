@@ -8,6 +8,7 @@ using Wilhelm.Backend.Services.Interfaces;
 using Wilhelm.Backend.Services;
 using Wilhelm.Backend.Model;
 using Wilhelm.Shared.Dto;
+using Newtonsoft.Json;
 
 namespace Wilhelm.Backend.Api.Controllers
 {
@@ -16,6 +17,8 @@ namespace Wilhelm.Backend.Api.Controllers
         private readonly IConfigurationService _configurationService;
         public ConfigurationController()
         {
+            GlobalConfiguration.Configuration.Formatters.JsonFormatter.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
+
             _configurationService = new ServiceFactory().CreateConfigurationService();
         }
 
@@ -23,8 +26,14 @@ namespace Wilhelm.Backend.Api.Controllers
         {
             return _configurationService.GetConfig(userId);
         }
-        public void PostConfig(ConfigDto config)
+
+        public void PostConfig(int userId, [FromBody]string serializedConfig)
         {
+            ConfigDto config = JsonConvert.DeserializeObject<ConfigDto>(serializedConfig, new JsonSerializerSettings()
+            {
+                PreserveReferencesHandling = PreserveReferencesHandling.Objects,
+                Formatting = Formatting.Indented
+            });
             _configurationService.SaveConfig(config);
         }
     }

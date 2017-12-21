@@ -94,7 +94,13 @@ namespace Wilhelm.Client.Services
             var builder = GetBaseUriBuilder("Configuration");
             builder.Query = query.ToString();
 
-            HttpResponseMessage postResponse = await GetClient().PostAsJsonAsync(builder.ToString(), config);
+            string serializedConfig = JsonConvert.SerializeObject(config, new JsonSerializerSettings()
+            {
+                PreserveReferencesHandling = PreserveReferencesHandling.Objects,
+                Formatting = Formatting.Indented
+            });
+
+            HttpResponseMessage postResponse = await GetClient().PostAsJsonAsync(builder.ToString(), serializedConfig);
             postResponse.EnsureSuccessStatusCode();
         }
 

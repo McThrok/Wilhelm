@@ -29,7 +29,7 @@ namespace Wilhelm.Backend.Services
             {
                 var tasks = db.WTasks.Where(x => x.OwnerId == userId && !x.Archivized);
                 var groups = db.WGroups.Where(x => x.OwnerId == userId && !x.Archivized);
-                _entitiesService.UpdateDto(dto, tasks, groups);
+                _entitiesService.UpdateDto(dto, tasks.ToList(), groups.ToList());
             }
             return dto;
         }
