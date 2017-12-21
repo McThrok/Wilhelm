@@ -5,11 +5,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
-using Wilhelm.Frontend.Pages;
-using Wilhelm.Frontend.Services.Interfaces;
+using Wilhelm.Client.Pages;
+using Wilhelm.Client.Services.Interfaces;
 using Wilhelm.Shared.Dto;
 
-namespace Wilhelm.Frontend.ViewModels.Pages
+namespace Wilhelm.Client.ViewModels.Pages
 {
     public class ReportPageViewModel : IMenuPage, INotifyPropertyChanged
     {

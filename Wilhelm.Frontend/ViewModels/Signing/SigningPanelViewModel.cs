@@ -5,10 +5,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
-using Wilhelm.Frontend.Services.Interfaces;
-using Wilhelm.Frontend.Services;
+using Wilhelm.Client.Services.Interfaces;
+using Wilhelm.Client.Services;
 
-namespace Wilhelm.Frontend.ViewModels.Signing
+namespace Wilhelm.Client.ViewModels.Signing
 {
     public class SigningPanelViewModel : INotifyPropertyChanged
     {

@@ -4,8 +4,8 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Wilhelm.Frontend.Services.Interfaces;
-using Wilhelm.Frontend.Model;
+using Wilhelm.Client.Services.Interfaces;
+using Wilhelm.Client.Model;
 using Wilhelm.Shared.Dto;
 using System.Net.Http;
 using System.Net;
@@ -16,7 +16,7 @@ using System.Collections.Specialized;
 using System.Threading;
 using System.Net.Http.Formatting;
 
-namespace Wilhelm.Frontend.Services
+namespace Wilhelm.Client.Services
 {
     public class ProxyService : BaseProxyService, IProxyService
     {

@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 
-namespace Wilhelm.Frontend.Support
+namespace Wilhelm.Client.Support
 {
     public interface IRaiseCanExecuteChanged
     {

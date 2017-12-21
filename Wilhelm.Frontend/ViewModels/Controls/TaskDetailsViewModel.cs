@@ -4,13 +4,13 @@ using System.ComponentModel;
 using System.Linq;
 using System.Windows;
 using System.Windows.Input;
-using Wilhelm.Frontend.Model;
-using Wilhelm.Frontend.Services.Interfaces;
-using Wilhelm.Frontend.Support;
-using Wilhelm.Frontend.ViewModels.Windows;
-using Wilhelm.Frontend.Views.Windows;
+using Wilhelm.Client.Model;
+using Wilhelm.Client.Services.Interfaces;
+using Wilhelm.Client.Support;
+using Wilhelm.Client.ViewModels.Windows;
+using Wilhelm.Client.Views.Windows;
 
-namespace Wilhelm.Frontend.ViewModels.Controls
+namespace Wilhelm.Client.ViewModels.Controls
 {
     public class TaskDetailsViewModel: INotifyPropertyChanged
     {

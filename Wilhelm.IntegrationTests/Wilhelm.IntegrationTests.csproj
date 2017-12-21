@@ -70,13 +70,13 @@
       <Project>{960d5eb6-6dbe-40f3-9052-a1754aa97c3f}</Project>
       <Name>Wilhelm.Backend</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Wilhelm.Client\Wilhelm.Client.csproj">
+      <Project>{dfb275da-d717-419c-b19c-e1b427778be8}</Project>
+      <Name>Wilhelm.Client</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Wilhelm.DataAccess\Wilhelm.DataAccess.csproj">
       <Project>{c08b35d0-5e1c-4487-b8eb-e93e465457a4}</Project>
       <Name>Wilhelm.DataAccess</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Wilhelm.Frontend\Wilhelm.Frontend.csproj">
-      <Project>{673AC60C-8B3D-46F0-B34A-EB4DAF7E2505}</Project>
-      <Name>Wilhelm.Frontend</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
