@@ -15,8 +15,17 @@ namespace Wilhelm.MainDataSet
     {
         static void Main(string[] args)
         {
+            new DataSetInitializer();
+        }
+        public DataSetInitializer()
+        {
+            Task.Run(async () => await Init()).Wait();
+        }
+        public static async Task Init()
+        {
             var builder = GetBaseUriBuilder("MainDataSet");
-            GetClient().GetAsync(builder.ToString());
+            var a = builder.ToString();
+            var response = await GetClient().GetAsync(builder.ToString());
 
         }
         protected static UriBuilder GetBaseUriBuilder(string controller)
