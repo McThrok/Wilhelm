@@ -9,9 +9,12 @@ namespace Wilhelm.DataAccess
 {
     public class WContext : DbContext, IWContext
     {
-        public WContext() : base("Wilhelm")
+        public WContext(string connectionString) : base(connectionString)
         {
-            
+            Database.SetInitializer<WContext>(new DropCreateDatabaseIfModelChanges<WContext>());
+        }
+        public WContext() : base("Data Source = localhost; Integrated Security = SSPI; Initial Catalog = Wilhelm")
+        {
             Database.SetInitializer<WContext>(new DropCreateDatabaseIfModelChanges<WContext>());
         }
 
