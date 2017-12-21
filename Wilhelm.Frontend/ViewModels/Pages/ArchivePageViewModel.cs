@@ -7,12 +7,12 @@ using System.Threading.Tasks;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
-using Wilhelm.Frontend.Model;
-using Wilhelm.Frontend.Pages;
-using Wilhelm.Frontend.Services.Interfaces;
+using Wilhelm.Client.Model;
+using Wilhelm.Client.Pages;
+using Wilhelm.Client.Services.Interfaces;
 using Wilhelm.Shared.Dto;
 
-namespace Wilhelm.Frontend.ViewModels.Pages
+namespace Wilhelm.Client.ViewModels.Pages
 {
     public class ArchivePageViewModel : IMenuPage
     {

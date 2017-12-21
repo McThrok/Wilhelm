@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Wilhelm.Frontend.Properties {
+namespace Wilhelm.Client.Properties {
     using System;
     
     

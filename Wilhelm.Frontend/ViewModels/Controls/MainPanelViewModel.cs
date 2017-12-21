@@ -3,12 +3,12 @@ using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
-using Wilhelm.Frontend.Pages;
-using Wilhelm.Frontend.Services;
-using Wilhelm.Frontend.Services.Interfaces;
-using Wilhelm.Frontend.Support;
+using Wilhelm.Client.Pages;
+using Wilhelm.Client.Services;
+using Wilhelm.Client.Services.Interfaces;
+using Wilhelm.Client.Support;
 
-namespace Wilhelm.Frontend.ViewModels.Controls
+namespace Wilhelm.Client.ViewModels.Controls
 {
     public class MainPanelViewModel : INotifyPropertyChanged
     {

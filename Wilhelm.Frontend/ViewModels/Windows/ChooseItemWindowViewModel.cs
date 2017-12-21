@@ -4,10 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
-using Wilhelm.Frontend.Model;
-using Wilhelm.Frontend.Support;
+using Wilhelm.Client.Model;
+using Wilhelm.Client.Support;
 
-namespace Wilhelm.Frontend.ViewModels.Windows
+namespace Wilhelm.Client.ViewModels.Windows
 {
     class ChooseItemWindowViewModel
     {
