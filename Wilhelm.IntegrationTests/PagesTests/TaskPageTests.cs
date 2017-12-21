@@ -26,12 +26,6 @@ namespace Wilhelm.IntegrationTests.PagesTests
             _ps = new ProxyService();
         }
 
-        [SetUp]
-        protected void SetUp()
-        {
-            Init();
-        }
-
         [Test]
         public async Task TaskPageActivateFunctionTest()
         {
@@ -73,29 +67,6 @@ namespace Wilhelm.IntegrationTests.PagesTests
             if (th.StartDate != wt.StartDate)
                 return false;
             return true;
-        }
-        private void Init()
-        {
-            using (var db = new WContext())
-            {
-                db.Database.Delete();
-            }
-            using (var db = new WContext())
-            {
-                WUser User1 = new WUser() { Login = "user1", Password = "Ἱꏁ\u2438ꥅ䫥쪋邳躮Ᏺ껫ꪉ⏺꼿ᆴ넿BD106B80630350E9B080DFB569CD0C337814169FA9350774ECB50AEB0164BD38" };
-                db.Users.Add(User1);
-                db.SaveChanges();
-
-                WTask t1 = new WTask() { Name = "t1", OwnerId = User1.Id, Frequency = 1, StartDate = DateTime.Today };
-                WTask t2 = new WTask() { Name = "t2", OwnerId = User1.Id, Frequency = 1, StartDate = DateTime.Today };
-                WTask t3 = new WTask() { Name = "t3", OwnerId = User1.Id, Frequency = 2, StartDate = DateTime.Today };
-
-                db.WTasks.Add(t1);
-                db.WTasks.Add(t2);
-                db.WTasks.Add(t3);
-
-                db.SaveChanges();
-            }
         }
     }
 }
