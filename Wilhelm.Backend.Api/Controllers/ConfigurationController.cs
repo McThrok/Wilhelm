@@ -27,10 +27,9 @@ namespace Wilhelm.Backend.Api.Controllers
             return _configurationService.GetConfig(userId);
         }
 
-        [HttpPost]
-        public void PostConfig(string serializedConfig)
+        public void PostConfig(int userId, [FromBody]string serializedConfig)
         {
-            ConfigDto config = (ConfigDto)JsonConvert.DeserializeObject(serializedConfig, new JsonSerializerSettings()
+            ConfigDto config = JsonConvert.DeserializeObject<ConfigDto>(serializedConfig, new JsonSerializerSettings()
             {
                 PreserveReferencesHandling = PreserveReferencesHandling.Objects,
                 Formatting = Formatting.Indented
