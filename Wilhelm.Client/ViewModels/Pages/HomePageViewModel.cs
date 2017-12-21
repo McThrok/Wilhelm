@@ -49,7 +49,7 @@ namespace Wilhelm.Client.ViewModels.Pages
             _userId = userId;
             CurrentList.Clear();
             var todayTasksList = new List<ActivityHolder>();
-            _holdersService.UpdateArchiveHolders(todayTasksList, await _proxyService.GetArchive(_userId));
+            _holdersService.UpdateArchiveHolders(todayTasksList, await _proxyService.GetTodaysTasks(_userId));
             foreach (var activity in todayTasksList.Where(x => !x.Task.Archivized))
                 CurrentList.Add(activity);
         }
@@ -58,7 +58,7 @@ namespace Wilhelm.Client.ViewModels.Pages
         {
             var activities = new List<ActivityDto>();
             _holdersService.UpdateActivityDtos(activities, _currentList);
-            await _proxyService.SaveArchive(_userId, activities);
+            await _proxyService.SaveTodaysTasks(_userId, activities);
         }
 
         public ObservableCollection<ActivityHolder> CurrentList
