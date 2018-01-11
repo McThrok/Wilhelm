@@ -1,0 +1,56 @@
+﻿body {
+    height: 100vh;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    padding: 0;
+}
+
+table {
+    background-color: #eee;
+    margin-top: 10%;
+    margin-left: auto;
+    margin-right: auto;
+    width: 450px;
+    height: 100%;
+    text-align: center;
+    table-layout: fixed;
+}
+
+    table td {
+        vertical-align: top;
+    }
+
+.right {
+    padding-right: 60px;
+    text-align: right;
+}
+
+.left {
+    text-align: left;
+}
+
+table th {
+    height: 50px;
+    color: #3b424c;
+    font-size: 20px;
+}
+
+table #first_button {
+    margin: 5px;
+    width: 200px;
+    height: 30px;
+}
+
+table #second_button {
+    margin: 3px;
+    margin-bottom: 15px;
+    width: 200px;
+    height: 25px;
+}
+#incorrect{
+    margin:0;
+    visibility:collapse;
+}
+    #incorrect label {
+        color: red;
+    }

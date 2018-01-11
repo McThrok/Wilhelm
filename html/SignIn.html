@@ -1,0 +1,52 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="Loging.css" type="text/css" />
+    <script type="text/javascript" src="loging.js"></script>
+    <title>Wilhelm</title>
+</head>
+<body onload="SetValidation();">
+    <form method="get" action="Home.html" id="sign_in_form">
+        <table>
+            <tr>
+                <th colspan="2">
+                    <h2>Sign In</h2>
+                </th>
+            </tr>
+            <tr id="incorrect">
+                <th colspan="2">
+                    <label> Incorrect login or password </label>
+                </th>
+            </tr>
+            <tr>
+                <td class="right">
+                    <label>Login:</label>
+                </td>
+                <td class="left">
+                    <input name="login" id="login" type="text" />
+                </td>
+            </tr>
+            <tr>
+                <td class="right">
+                    <label>Password:</label>
+                </td>
+                <td class="left">
+                    <input name="password" id="login" type="password" />
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <input type="submit" value="Sign In" id="first_button" />
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <a href="SignUp.html"> <input type="button" value="Sign Up" id="second_button" /></a>
+                </td>
+            </tr>
+        </table>
+    </form>
+</body>
+</html>

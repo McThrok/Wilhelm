@@ -1,0 +1,55 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="Home.css" type="text/css" />
+    <title>Wilhelm</title>
+</head>
+<body>
+    <table>
+        <tr>
+            <th>
+                <label>Name</label>
+            </th>
+
+            <th colspan="2">
+                <label>Today's tasks</label>
+            </th>
+        </tr>
+        <tr>
+            <td class="menu">
+                <a href="Home.html"> Home </a>
+                <a href="Tasks.html"> Tasks </a>
+                <a href="Groups.html" class="active"> Groups </a>
+                <a href="Archives.html"> Archives </a>
+                <a href="Reports.html"> Reports </a>
+                <a href="SignIn.html"> Log Out </a>
+            </td>
+            <td class="groups">
+                <a href="/" class="active">New Group </a>
+                <a href="/"> Zwierzęta </a>
+                <a href="/"> Rachunki </a>
+                <a href="/"> Kwiaty </a>
+            </td>
+            <td class="active_group">
+                <label for="name">Name</label>  <input id="name" name="name" type="text" value="New Group" />
+                <label for="description">Description</label>  <input id="description" name="description" type="text" />
+
+                <label><strong>Tasks</strong> <input id="assign_task" name="assign_task" type="button" value="Assign task" /></label>
+                <div class="group_tasks">
+                    <div class="column_group">
+                        <label>Task1</label>
+                        <p>Some text..</p>
+                    </div>
+                    <div class="column_group">
+                        <label>Task2</label>
+                        <p>Some text..</p>
+                    </div>
+                </div>
+            </td>
+        </tr>
+
+    </table>
+</body>
+</html>
