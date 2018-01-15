@@ -1,0 +1,39 @@
+﻿body{
+
+}
+
+button {
+    background-color: #eee;
+    color: black;
+    padding: 12px;
+    width: 100%;
+    text-decoration: none;
+    border: 0;
+}
+button:hover {
+    background-color: #ccc;
+}
+    button.active_task {
+        background-color: #3b424c;
+        color: white;
+    }
+
+#task_groups {
+    min-height:350px;
+    border: 5px;
+    border-style: solid;
+    border-color: white;
+}
+
+    #task_groups label {
+        font-weight: bold;
+    }
+
+    #task_groups .column_group {
+        padding: 5px;
+        /*border:0;*/
+    }
+
+        #task_groups .column_group:hover {
+            background-color: #ccc;
+        }
