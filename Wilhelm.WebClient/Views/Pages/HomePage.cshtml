@@ -1,0 +1,18 @@
+﻿@model{
+    ViewBag.Title = "HomePage";
+}
+@using (Html.BeginForm())
+{
+    foreach (var activity in ViewBag.Activities)
+    {
+        <div>
+            <input type="checkbox" name="checkbox" id="a" checked="@activity.IsDone">
+            <label for="checkbox">@activity.Task.Name</label>
+        </div>
+    }
+    <button id="applyButton">Apply</button>
+}
+
+@section Scripts
+{
+}

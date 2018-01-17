@@ -1,3 +1,14 @@
 ﻿@{
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    var controller = HttpContext.Current.Request.RequestContext.RouteData.Values["Controller"].ToString();
+    string cLayout = "";
+
+    if (controller == "pages" || controller == "Pages")
+    {
+        cLayout = "~/Views/Shared/_pagesLayout.cshtml";
+    }
+    else
+    {
+        cLayout = "~/Views/Shared/_blankLayout.cshtml";
+    }
+    Layout = cLayout;
 }
