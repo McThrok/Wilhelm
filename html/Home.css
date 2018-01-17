@@ -1,0 +1,193 @@
+﻿body {
+    height: 600px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    padding: 0;
+}
+
+table {
+    margin-left: auto;
+    margin-right: auto;
+    width: 750px;
+    height: 600px;
+}
+
+    table td {
+        margin: 0;
+        padding: 0;
+        background-color: #eee;
+        vertical-align: top;
+    }
+
+    table th {
+        height: 50px;
+        background-color: white;
+        color: #3b424c;
+        font-size: 20px;
+    }
+
+.menu {
+    width: 150px;
+}
+
+    .menu a {
+        color: black;
+        display: block;
+        padding: 12px;
+        text-decoration: none;
+    }
+
+        .menu a:hover {
+            background-color: #ccc;
+        }
+
+        .menu a.active {
+            background-color: #3b424c;
+            color: white;
+        }
+
+.home {
+        overflow-y:scroll;
+}
+
+    .home .column {
+        color: black;
+        display: block;
+        padding: 12px;
+        text-decoration: none;
+    }
+
+.home .column:hover {
+    background-color: #ccc;
+}
+
+.home .column label {
+    font-size: 18px;
+    font-weight: bold;
+}
+
+/* TASKS */
+.tasks {
+    width: 150px;
+}
+
+    .tasks a {
+        color: black;
+        display: block;
+        padding: 12px;
+        text-decoration: none;
+    }
+
+        .tasks a:hover {
+            background-color: #ccc;
+        }
+
+        .tasks a.active {
+            background-color: #3b424c;
+            color: white;
+        }
+
+.active_task {
+    padding: 10px;
+}
+
+    .active_task label {
+        margin: 5px;
+        display: inline-block;
+        width: 50%;
+        overflow: hidden;
+    }
+
+    .active_task input {
+        margin: 5px;
+    }
+
+    .active_task input {
+        /*float: right;*/
+    }
+
+    .active_task label:after {
+        /*content: "----";*/
+        float: right;
+    }
+
+.task_groups {
+    border: 5px;
+    border-style:solid;
+    border-color:white;
+}
+.task_groups label{
+    font-weight:bold;
+}
+    .task_groups .column_group {
+        padding:5px;
+        /*border:0;*/
+    }
+
+    .task_groups .column_group:hover {
+        background-color: #ccc;
+    }
+
+/* GROUPS */
+.groups {
+    width: 150px;
+}
+
+    .groups a {
+        color: black;
+        display: block;
+        padding: 12px;
+        text-decoration: none;
+    }
+
+        .groups a:hover {
+            background-color: #ccc;
+        }
+
+        .groups a.active {
+            background-color: #3b424c;
+            color: white;
+        }
+
+.active_group {
+    padding: 10px;
+}
+
+    .active_group label {
+        margin: 5px;
+        display: inline-block;
+        width: 50%;
+        overflow: hidden;
+    }
+
+    .active_group input {
+        margin: 5px;
+    }
+
+    .active_group input {
+        /*float: right;*/
+    }
+
+    .active_group label:after {
+        /*content: "----";*/
+        float: right;
+    }
+
+.group_tasks {
+    border: 5px;
+    border-style: solid;
+    border-color: white;
+}
+
+    .group_tasks label {
+        font-weight: bold;
+    }
+
+    .group_tasks .column_group {
+        padding: 5px;
+        /*border:0;*/
+    }
+
+        .group_tasks .column_group:hover {
+            background-color: #ccc;
+        }

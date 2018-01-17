@@ -1,0 +1,61 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="Home.css" type="text/css" />
+    <title>Wilhelm</title>
+</head>
+<body>
+    <table>
+        <tr>
+            <th>
+                <label>Name</label>
+            </th>
+
+            <th colspan="2">
+                <label>Today's tasks</label>
+            </th>
+        </tr>
+        <tr>
+            <td class="menu">
+                <a href="Home.html"> Home </a>
+                <a href="Tasks.html" class="active"> Tasks </a>
+                <a href="Groups.html"> Groups </a>
+                <a href="Archives.html"> Archives </a>
+                <a href="Reports.html"> Reports </a>
+                <a href="SignIn.html"> Log Out </a>
+            </td>
+            <td class="tasks">
+                <a href="/" class="active">New Task </a>
+                <a href="/"> Nakarmic kota </a>
+                <a href="/"> Podlac Kwiaty </a>
+                <a href="/"> Internet </a>
+                <a href="/"> Nauka </a>
+            </td>
+            <td class="active_task">
+                <label for="name">Name</label>  <input id="name" name="name" type="text" value="New Task" />
+                <label for="description">Description</label>  <input id="description" name="description" type="text" />
+                <label for="start_date">Sart date</label>  <input id="start_date" name="start_date" type="date" />
+                <label for="frequency">Frequency</label>  <input id="frequency" name="frequency" type="number" value="1" />
+
+                <label><strong>Groups</strong> <input id="assign_to_group" name="assign_to_group" type="button" value="Assign to group" /></label>
+                <div class="task_groups">
+                    <div class="column_group">
+                        <label>Group1</label>
+                        <p>Some text..</p>
+                    </div>
+                    <div class="column_group">
+                        <label>Group2</label>
+                        <p>Some text..</p>
+                    </div>
+                </div>
+                <input name="apply" type="button" value="Apply" />
+                <input name="reset_changes" type="button" value="Reset changes" />
+                <input name="delete_task" type="button" value="Detele task" />
+            </td>
+        </tr>
+
+    </table>
+</body>
+</html>
