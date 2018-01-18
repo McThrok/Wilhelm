@@ -6,10 +6,10 @@
     foreach (var activity in ViewBag.Activities)
     {
         <div>
-            <label data-activity =><input type="checkbox" checked="@activity.IsDone">@activity.Task.Name</label>
+            <label ><input data-activityid="@activity.Id" class="qwe" type="checkbox" checked="@activity.IsDone">@activity.Task.Name</label>
         </div>
     }
-    <button type="button" id="applyButton">Apply</button>
+    <button type="button" data-activities="@ViewBag.JsonActivities" id="applyButton">Apply</button>
 }
 
 @section scripts{

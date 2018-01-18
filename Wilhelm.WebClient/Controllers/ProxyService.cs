@@ -31,6 +31,7 @@ namespace Wilhelm.Client.Services
             {
                 activities = await response.Content.ReadAsAsync<ActivityDto[]>();
             }
+            //var a = JsonConvert.SerializeObject(activities);
             return activities;
         }
         public async Task SaveTodaysTasks(int userId, IEnumerable<ActivityDto> activities)
