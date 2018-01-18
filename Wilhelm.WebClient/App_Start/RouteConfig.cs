@@ -11,6 +11,8 @@ namespace Wilhelm.WebClient
     {
         public static void RegisterRoutes(RouteCollection routes)
         {
+//            IIS->Authentication-- > Set Anonymous Authentication to Application Pool Identity.
+
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
             routes.MapRoute(
