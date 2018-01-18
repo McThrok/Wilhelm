@@ -14,9 +14,9 @@ namespace Wilhelm.WebClient.Controllers
     {
         private ProxyService _proxy = new ProxyService();
 
-        public async Task<ActionResult> HomePage()
+        public async Task<ActionResult> HomePage(int userId)
         {
-            ViewBag.Activities = await _proxy.GetTodaysTasks(1);
+            ViewBag.Activities = await _proxy.GetTodaysTasks(userId);
             ViewBag.JsonActivities = JsonConvert.SerializeObject(ViewBag.Activities);
             return View();
         }
