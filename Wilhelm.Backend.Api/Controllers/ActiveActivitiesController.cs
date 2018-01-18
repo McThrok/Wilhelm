@@ -20,11 +20,12 @@ namespace Wilhelm.Backend.Api.Controllers
 
         public List<ActivityDto> GetTodaysActivities(int userId)
         {
+           // return new List<ActivityDto>();
             return _activityService.GetTodaysActivities(userId);
         }
-        public void PostActivities(IEnumerable<ActivityDto> activities)
+        public void PostActivities([FromBody]IEnumerable<ActivityDto> activities)
         {
-            //_activityService.SaveActivities(activities);
+            _activityService.SaveActivities(activities);
         }
 
 

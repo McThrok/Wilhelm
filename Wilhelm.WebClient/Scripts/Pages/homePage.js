@@ -11,7 +11,6 @@
             for (var j = 0; j < activities.length; j++)
                 if (Number(checkBoxes[i].dataset.activityid) === activities[j].Id) {
                     activities[j].IsDone = checkBoxes[i].checked;
-                    console.log(activities[j].IsDone);
                     break;
                 }
 
@@ -20,7 +19,13 @@
         //    console.log("qwe");
         //});
 
-        $.post("http://localhost:8080/api/ActiveActivities?userId=1", activities);
+        $.ajax({
+            url: "http://localhost:8080/api/ActiveActivities?userId=1",
+            type: "POST",
+            contentType: "application/json;charset=utf-8",
+            data: JSON.stringify(activities),
+        })
+        //$.post("http://localhost:8080/api/ActiveActivities?userId=1", JSON.stringify(activities), function () { }, "application/json;charset=utf-8");
 
         //$.ajax({
         //    type: "POST",
