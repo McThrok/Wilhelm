@@ -15,15 +15,19 @@
                     break;
                 }
 
-        var jsonToSend = JSON.stringify(activities);
+        //var jsonToSend = JSON.stringify(activities);
+        //$.get("http://localhost:8080/api/ActiveActivities?userId=1").done(() => {
+        //    console.log("qwe");
+        //});
 
-        $.ajax({
-            type: "POST",
-            url:"http://localhost:8080/api/ActiveActivities",
-            data: activities,
-            crossDomain: true,
-            dataType: "jsonp",
-        });
+        $.post("http://localhost:8080/api/ActiveActivities?userId=1", activities);
+
+        //$.ajax({
+        //    type: "POST",
+        //    url: "http://localhost:8080/api/ActiveActivities",
+        //    data: activities,
+        //    crossDomain: true,
+        //});
     }
 
 })();

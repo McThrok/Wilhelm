@@ -11,6 +11,9 @@ namespace Wilhelm.Backend.Api
         {
             // Web API configuration and services
 
+           // var cors = new EnableCorsAttribute("*", "*", "*");
+            //config.EnableCors(cors);
+
             // Web API routes
             config.MapHttpAttributeRoutes();
 
