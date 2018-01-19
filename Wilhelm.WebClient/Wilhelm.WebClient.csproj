@@ -194,6 +194,7 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\Pages\archivePage.js" />
+    <Content Include="Scripts\Pages\tasksPage.js" />
     <Content Include="Scripts\Sign\signUp.js" />
     <Content Include="Scripts\Sign\signIn.js" />
     <Content Include="Scripts\Pages\homePage.js" />
