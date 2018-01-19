@@ -3,15 +3,26 @@
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="utf-8" />
-    <link rel="stylesheet" href="Loging.css" type="text/css" />
+    <link rel="stylesheet" href="Signing.css" type="text/css" />
+    <script type="text/javascript" src="SignUp.js"></script>
     <title>Wilhelm</title>
 </head>
-<body>
-    <form method="get" action="Home.html">
+<body onload="SetValidation();">
+    <form method="get" action="Home.html" id="sign_in_form">
         <table>
             <tr>
                 <th colspan="2">
                     <h2>Sign Up</h2>
+                </th>
+            </tr>
+            <tr id="incorrect">
+                <th colspan="2">
+                    <label> User already exist </label>
+                </th>
+            </tr>
+            <tr id="empty">
+                <th colspan="2">
+                    <label> User and password can not be empty </label>
                 </th>
             </tr>
             <tr>
@@ -19,7 +30,7 @@
                     <label>Login:</label>
                 </td>
                 <td class="left">
-                    <input name="login" type="text" />
+                    <input name="login" id="login" type="text" />
                 </td>
             </tr>
             <tr>
@@ -27,7 +38,7 @@
                     <label>Password:</label>
                 </td>
                 <td class="left">
-                    <input name="password" type="password" />
+                    <input name="password" id="password" type="password" />
                 </td>
             </tr>
             <tr>
@@ -35,7 +46,7 @@
                     <label>Confirm Password:</label>
                 </td>
                 <td class="left">
-                    <input name="confirm_password" type="password" />
+                    <input name="confirm_password" id="confirm_password" type="password" />
                 </td>
             </tr>
             <tr>

@@ -4,6 +4,9 @@
 <head>
     <meta charset="utf-8" />
     <link rel="stylesheet" href="Home.css" type="text/css" />
+    <link rel="stylesheet" href="Tasks.css" type="text/css" />
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script type="text/javascript" src="Tasks.js"></script>
     <title>Wilhelm</title>
 </head>
 <body>
@@ -26,33 +29,25 @@
                 <a href="Reports.html"> Reports </a>
                 <a href="SignIn.html"> Log Out </a>
             </td>
-            <td class="tasks">
-                <a href="/" class="active">New Task </a>
-                <a href="/"> Nakarmic kota </a>
-                <a href="/"> Podlac Kwiaty </a>
-                <a href="/"> Internet </a>
-                <a href="/"> Nauka </a>
-            </td>
-            <td class="active_task">
-                <label for="name">Name</label>  <input id="name" name="name" type="text" value="New Task" />
-                <label for="description">Description</label>  <input id="description" name="description" type="text" />
-                <label for="start_date">Sart date</label>  <input id="start_date" name="start_date" type="date" />
-                <label for="frequency">Frequency</label>  <input id="frequency" name="frequency" type="number" value="1" />
-
-                <label><strong>Groups</strong> <input id="assign_to_group" name="assign_to_group" type="button" value="Assign to group" /></label>
-                <div class="task_groups">
-                    <div class="column_group">
-                        <label>Group1</label>
-                        <p>Some text..</p>
-                    </div>
-                    <div class="column_group">
-                        <label>Group2</label>
-                        <p>Some text..</p>
-                    </div>
+            <td>
+                <div id="tasks">
+                   <!-- <button class="active_task">New Task</button>-->
                 </div>
-                <input name="apply" type="button" value="Apply" />
-                <input name="reset_changes" type="button" value="Reset changes" />
-                <input name="delete_task" type="button" value="Detele task" />
+            </td>
+            <td>
+                <div id="active_task_details">
+                    <label for="name">Name</label>  <input id="name" name="name" type="text" value="New Task" />
+                    <label for="description">Description</label>  <input id="description" name="description" type="text" />
+                    <label for="start_date">Sart date</label>  <input id="start_date" name="start_date" type="date" />
+                    <label for="frequency">Frequency</label>  <input id="frequency" name="frequency" type="number" value="1" />
+
+                    <label><strong>Groups</strong> <input id="assign_to_group" name="assign_to_group" type="button" value="Assign to group" /></label>
+                    <div id="task_groups">
+                    </div>
+                    <input id="apply_task" type="button" value="Apply" />
+                    <input id="reset_task" type="button" value="Reset changes" />
+                    <input id="delete_task" type="button" value="Detele task" />
+                </div>
             </td>
         </tr>
 
