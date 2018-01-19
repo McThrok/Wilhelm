@@ -54,3 +54,11 @@ table #second_button {
     #incorrect label {
         color: red;
     }
+#empty {
+    margin: 0;
+    visibility: collapse;
+}
+
+    #empty label {
+        color: red;
+    }

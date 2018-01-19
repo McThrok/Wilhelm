@@ -23,7 +23,7 @@ namespace Wilhelm.Backend.Api.Controllers
             return _activityService.GetArchive(userId);
         }
 
-        public void PostActivities(int userId, IEnumerable<ActivityDto> activities)
+        public void PostActivities(int userId, [FromBody]IEnumerable<ActivityDto> activities)
         {
             _activityService.SaveActivities(activities);
         }

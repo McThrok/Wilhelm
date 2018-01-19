@@ -1,0 +1,13 @@
+﻿@{
+    ViewBag.Title = "SignInPage";
+}
+<input id="login" type="text" />
+<input id="password" type="password" />
+<button type="button" id="signInBtn">Sign In</button>
+<button type="button" id="signUpBtn">Sign Up</button>
+
+@section scripts{
+    @Scripts.Render("~/Scripts/Sign/signIn.js")
+}
+
+

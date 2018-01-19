@@ -39,7 +39,7 @@ namespace Wilhelm.Client.Services
         {
             var query = HttpUtility.ParseQueryString("");
             query["userId"] = userId.ToString();
-            var builder = GetBaseUriBuilder("ActiveActivities");
+            var builder = GetBaseUriBuilder("ActiveActivities");    
             builder.Query = query.ToString();
 
             HttpResponseMessage postResponse = await GetClient().PostAsJsonAsync(builder.ToString(), activities);

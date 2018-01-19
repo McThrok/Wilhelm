@@ -17,11 +17,12 @@ namespace Wilhelm.Backend.Api.Controllers
         {
             _activityService = new ServiceFactory().CreateActivityService();
         }
+
         public List<ActivityDto> GetTodaysActivities(int userId)
         {
             return _activityService.GetTodaysActivities(userId);
         }
-        public void PostActivities(IEnumerable<ActivityDto> activities)
+        public void PostActivities([FromBody]IEnumerable<ActivityDto> activities)
         {
             _activityService.SaveActivities(activities);
         }
