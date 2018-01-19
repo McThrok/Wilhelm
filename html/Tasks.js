@@ -9,6 +9,11 @@ $(function () {
         });
     };
 
+    document.getElementById("assign_to_group").onclick = function () {
+        var groups = document.getElementById("task_groups");
+        groups.style.boxShadow = "0 0 0 100px rgba(0,0,0,0.25)";
+    }
+
     document.getElementById("apply_task").onclick = function () {
         var selectedTaskId = document.getElementsByClassName("active_task")[0].taskId;
         tasks[selectedTaskId].name = document.getElementById("name").value;

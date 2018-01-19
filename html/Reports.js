@@ -24,7 +24,10 @@ $(function () {
         return button;
     };
 
+    function ShowStats(el) {
+        var statsDiv = document.getElementById("task_reports");
 
+    };
 
     function CreateTasks() {
         var tasks = [];
