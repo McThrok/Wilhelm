@@ -164,7 +164,6 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
-    <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ProxyService.cs" />
     <Compile Include="Controllers\SignController.cs" />
     <Compile Include="Controllers\PagesController.cs" />
@@ -194,6 +193,7 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
+    <Content Include="Scripts\Pages\archivePage.js" />
     <Content Include="Scripts\Sign\signUp.js" />
     <Content Include="Scripts\Sign\signIn.js" />
     <Content Include="Scripts\Pages\homePage.js" />

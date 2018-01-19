@@ -1,3 +1,10 @@
 ﻿@{
     ViewBag.Title = "ReportPage";
 }
+@foreach (var report in ViewBag.Reports)
+{
+    <div>
+        <label>@report.Category</label>
+        <label>@report.Value</label>
+    </div>
+}

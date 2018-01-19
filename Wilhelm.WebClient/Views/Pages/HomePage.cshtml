@@ -1,16 +1,16 @@
 ﻿@{
     ViewBag.Title = "HomePage";
 }
-@using (Html.BeginForm())
+@foreach (var activity in ViewBag.Activities)
 {
-    foreach (var activity in ViewBag.Activities)
-    {
-        <div>
-            <label><input data-activityid="@activity.Id" class="qwe" type="checkbox" checked="@activity.IsDone">@activity.Task.Name</label>
-        </div>
-    }
-    <button type="button" data-activities="@ViewBag.JsonActivities" id="applyButton">Apply</button>
+    <div>
+        <input data-activityid="@activity.Id" class="qwe" type="checkbox" checked="@activity.IsDone">
+        <label>@activity.Task.Name</label>
+        <label>@activity.Task.Description</label>
+    </div>
+
 }
+<button type="button" data-activities="@ViewBag.JsonActivities" data-userId="@ViewBag.UserId" id="applyButton">Apply</button>
 
 @section scripts{
     @Scripts.Render("~/Scripts/Pages/homePage.js")

@@ -16,25 +16,39 @@ namespace Wilhelm.WebClient.Controllers
 
         public async Task<ActionResult> HomePage(int userId)
         {
+            ViewBag.UserId = userId;
             ViewBag.Activities = await _proxy.GetTodaysTasks(userId);
             ViewBag.JsonActivities = JsonConvert.SerializeObject(ViewBag.Activities);
             return View();
         }
 
-        public ActionResult TasksPage()
+        public async Task<ActionResult> TasksPage(int userId)
         {
+            ViewBag.UserId = userId;
+            ViewBag.Config = await _proxy.GetConfig(userId);
+            ViewBag.JsonConfig = JsonConvert.SerializeObject(ViewBag.Config);
             return View();
         }
-        public ActionResult GroupsPage()
+        public async Task<ActionResult> GroupsPage(int userId)
         {
+            ViewBag.UserId = userId;
+            ViewBag.Config = await _proxy.GetConfig(userId);
+            ViewBag.JsonConfig = JsonConvert.SerializeObject(ViewBag.Config);
             return View();
         }
-        public ActionResult ArchivePage()
+        public async Task<ActionResult> ArchivePage(int userId)
         {
+            ViewBag.UserId = userId;
+            var archive = (await _proxy.GetArchive(userId)).ToList();
+            archive.Sort((a, b) => DateTime.Compare(b.Date, a.Date));
+            ViewBag.Activities = archive;
+            ViewBag.JsonActivities = JsonConvert.SerializeObject(ViewBag.Activities);
             return View();
         }
-        public ActionResult ReportPage()
+        public async Task<ActionResult> ReportPage(int userId)
         {
+            ViewBag.UserId = userId;
+            ViewBag.Reports = await _proxy.GetReports(userId);
             return View();
         }
 

@@ -18,7 +18,7 @@ namespace Wilhelm.WebClient
             routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",
-                defaults: new { controller = "Pages", action = "HomePage", id = UrlParameter.Optional }
+                defaults: new { controller = "Sign", action = "SignInPage", id = UrlParameter.Optional }
             );
         }
     }

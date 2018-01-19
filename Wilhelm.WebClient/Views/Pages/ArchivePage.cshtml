@@ -1,3 +1,18 @@
 ﻿@{
     ViewBag.Title = "ArchivePage";
 }
+@foreach (var activity in ViewBag.Activities)
+{
+    <div>
+        <input data-activityid="@activity.Id" class="qwe" type="checkbox" checked="@activity.IsDone">
+        <label>@activity.Date</label>
+        <label>@activity.Task.Name</label>
+        <label>@activity.Task.Description</label>
+    </div>
+
+}
+<button type="button" data-activities="@ViewBag.JsonActivities" data-userId="@ViewBag.UserId" id="applyButton">Apply</button>
+
+@section scripts{
+    @Scripts.Render("~/Scripts/Pages/activitiesPage.js")
+}

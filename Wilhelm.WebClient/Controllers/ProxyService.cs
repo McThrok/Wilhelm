@@ -33,17 +33,6 @@ namespace Wilhelm.Client.Services
             }
             return activities;
         }
-        public async Task SaveTodaysTasks(int userId, IEnumerable<ActivityDto> activities)
-        {
-            var query = HttpUtility.ParseQueryString("");
-            query["userId"] = userId.ToString();
-            var builder = GetBaseUriBuilder("ActiveActivities");
-            builder.Query = query.ToString();
-
-            HttpResponseMessage postResponse = await GetClient().PostAsJsonAsync(builder.ToString(), activities);
-            postResponse.EnsureSuccessStatusCode();
-        }
-
         public async Task<IEnumerable<ActivityDto>> GetArchive(int userId)
         {
             var activities = new ActivityDto[0];
@@ -59,17 +48,6 @@ namespace Wilhelm.Client.Services
             }
             return activities;
         }
-        public async Task SaveArchive(int userId, IEnumerable<ActivityDto> archive)
-        {
-            var query = HttpUtility.ParseQueryString("");
-            query["userId"] = userId.ToString();
-            var builder = GetBaseUriBuilder("ArchiveActivities");
-            builder.Query = query.ToString();
-
-            HttpResponseMessage postResponse = await GetClient().PostAsJsonAsync(builder.ToString(), archive);
-            postResponse.EnsureSuccessStatusCode();
-        }
-
         public async Task<ConfigDto> GetConfig(int userId)
         {
             ConfigDto config = null;
@@ -85,23 +63,6 @@ namespace Wilhelm.Client.Services
             }
             return config;
         }
-        public async Task SaveConfig(int userId, ConfigDto config)
-        {
-            var query = HttpUtility.ParseQueryString("");
-            query["userId"] = userId.ToString();
-            var builder = GetBaseUriBuilder("Configuration");
-            builder.Query = query.ToString();
-
-            string serializedConfig = JsonConvert.SerializeObject(config, new JsonSerializerSettings()
-            {
-                PreserveReferencesHandling = PreserveReferencesHandling.Objects,
-                Formatting = Formatting.Indented
-            });
-
-            HttpResponseMessage postResponse = await GetClient().PostAsJsonAsync(builder.ToString(), serializedConfig);
-            postResponse.EnsureSuccessStatusCode();
-        }
-
         public async Task<IEnumerable<ReportDto>> GetReports(int userId)
         {
             ReportDto[] config = null;

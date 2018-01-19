@@ -15,7 +15,7 @@
                 }
 
         $.ajax({
-            url: "http://localhost:8080/api/ActiveActivities?userId=" + id,
+            url: "http://localhost:8080/api/ArchiveActivities?userId=" + id,
             type: "POST",
             contentType: "application/json;charset=utf-8",
             data: JSON.stringify(activities),

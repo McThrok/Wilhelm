@@ -10,12 +10,11 @@
 <body>
 
     <div>@ViewBag.Title</div>
-
-    <div>@Html.ActionLink("Home", "HomePage", "Pages")</div>
-    <div>@Html.ActionLink("Tasks", "TasksPage", "Pages")</div>
-    <div>@Html.ActionLink("Groups", "GroupsPage", "Pages")</div>
-    <div>@Html.ActionLink("Archive", "ArchivePage", "Pages")</div>
-    <div>@Html.ActionLink("Report", "ReportPage", "Pages")</div>
+    <div>@Html.ActionLink("Home", "HomePage", "Pages", new { userId = ViewBag.UserId },null)</div>
+    <div>@Html.ActionLink("Tasks", "TasksPage", "Pages", new { userId = ViewBag.UserId },null)</div>
+    <div>@Html.ActionLink("Groups", "GroupsPage", "Pages", new { userId = ViewBag.UserId }, null)</div>
+    <div>@Html.ActionLink("Archive", "ArchivePage", "Pages", new { userId = ViewBag.UserId },null)</div>
+    <div>@Html.ActionLink("Report", "ReportPage", "Pages", new { userId = ViewBag.UserId }, null)</div>
 
     @RenderBody()
 
