@@ -46,87 +46,72 @@ table {
             color: white;
         }
 
-.home {
+#home {
         overflow-y:scroll;
 }
 
-    .home .column {
+    #home .column {
         color: black;
         display: block;
         padding: 12px;
         text-decoration: none;
     }
 
-.home .column:hover {
+#home .column:hover {
     background-color: #ccc;
 }
 
-.home .column label {
+#home .column label {
     font-size: 18px;
     font-weight: bold;
 }
 
 /* TASKS */
-.tasks {
+#tasks {
     width: 150px;
 }
 
-    .tasks a {
+    #tasks a {
         color: black;
         display: block;
         padding: 12px;
         text-decoration: none;
     }
 
-        .tasks a:hover {
+        #tasks a:hover {
             background-color: #ccc;
         }
 
-        .tasks a.active {
+        #tasks a.active {
             background-color: #3b424c;
             color: white;
         }
 
-.active_task {
+#active_task_details {
     padding: 10px;
 }
 
-    .active_task label {
+    #active_task_details label {
         margin: 5px;
         display: inline-block;
         width: 50%;
         overflow: hidden;
     }
 
-    .active_task input {
+    #active_task_details input {
         margin: 5px;
     }
 
-    .active_task input {
+    #active_task_details input {
         /*float: right;*/
     }
 
-    .active_task label:after {
+    #active_task_details label:after {
         /*content: "----";*/
         float: right;
     }
 
-.task_groups {
-    border: 5px;
-    border-style:solid;
-    border-color:white;
-}
-.task_groups label{
-    font-weight:bold;
-}
-    .task_groups .column_group {
-        padding:5px;
-        /*border:0;*/
-    }
 
-    .task_groups .column_group:hover {
-        background-color: #ccc;
-    }
 
 /* GROUPS */
 .groups {

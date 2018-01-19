@@ -3,34 +3,42 @@
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="utf-8" />
+    <title>Reports</title>
     <link rel="stylesheet" href="Home.css" type="text/css" />
-    <script type="text/javascript" src="Home.js"></script>
-    <title>Wilhelm</title>
+    <link rel="stylesheet" href="Tasks.css" type="text/css" />
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script type="text/javascript" src="Reports.js"></script>
 </head>
-<body onload="LoadHome();">
+<body>
     <table>
         <tr>
             <th>
                 <label>Name</label>
             </th>
-            <th>
-                <label>Today's tasks</label>
+
+            <th colspan="2">
+                <label>Reports</label>
             </th>
         </tr>
         <tr>
             <td class="menu">
-                <a href="Home.html" class="active"> Home </a>
+                <a href="Home.html"> Home </a>
                 <a href="Tasks.html"> Tasks </a>
                 <a href="Groups.html"> Groups </a>
                 <a href="Archives.html"> Archives </a>
-                <a href="Reports.html"> Reports </a>
+                <a href="Reports.html" class="active"> Reports </a>
                 <a href="SignIn.html"> Log Out </a>
             </td>
             <td>
-                <div id="home">
+                <div id="tasks">
+                </div>
+            </td>
+            <td>
+                <div id="task_reports">
                 </div>
             </td>
         </tr>
+
     </table>
 </body>
 </html>
