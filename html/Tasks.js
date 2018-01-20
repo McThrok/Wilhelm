@@ -1,5 +1,6 @@
 $(function () {
     var tasks = CreateTasks(); // TODO willl be load tasks from server
+    var groups = CreateGroups();
     LoadTasks(tasks);
 
     function LoadTasks(tasks) {
@@ -10,8 +11,24 @@ $(function () {
     };
 
     document.getElementById("assign_to_group").onclick = function () {
-        var groups = document.getElementById("task_groups");
-        groups.style.boxShadow = "0 0 0 100px rgba(0,0,0,0.25)";
+        //var selectedTassGroups = document.getElementsByClassName("active_task")[0].groups;
+
+        //var groupsDiv = document.getElementById("task_groups");
+        //while (groupsDiv.firstChild)
+        //    groupsDiv.removeChild(groupsDiv.firstChild);
+        //for (var i = 0; i < groups.length; i++) {
+        //    var group = document.createElement("div");
+        //    group.classList.add("column_group");
+        //    var label = document.createElement("label");
+        //    var labelNode = document.createTextNode(groups[i].name);
+        //    label.appendChild(labelNode);
+        //    var p = document.createElement("p");
+        //    var pNode = document.createTextNode(groups[i].description);
+        //    p.appendChild(pNode);
+        //    group.appendChild(label);
+        //    group.appendChild(p);
+        //    groupsDiv.appendChild(group);
+        //}
     }
 
     document.getElementById("apply_task").onclick = function () {
@@ -61,7 +78,6 @@ $(function () {
         var description = $("#active_task_details").find("#description");
         description[0].value = el.description;
         var startDate = $("#active_task_details").find("#start_date");
-        //startDate[0].value = el.startDate.toISOString().substr(0, 10);
         startDate[0].value = el.startDate;
         var frequency = $("#active_task_details").find("#frequency");
         frequency[0].value = el.frequency;
@@ -84,12 +100,26 @@ $(function () {
         }
     };
 
+    function CreateGroups() {
+        var groups=[];
+        for (var i = 0; i < 5; i++) {
+            var group = {
+                id: i,
+                name: "Group" + i,
+                description: "Group " + i + " description"
+            }
+            groups.push(group);
+        }
+        return groups;
+    }
+
     function CreateTasks() {
         var tasks = [];
         for (var i = 0; i < 5; i++) {
             var groups = [];
             for (var j = 0; j < i + 1; j++) {
                 var group = {
+                    id: j,
                     name: "Group" + j,
                     description: "Group " + j + " description"
                 }
