@@ -9,44 +9,21 @@
         var resetBtn = document.getElementById("reset_task");
         var deleteBtn = document.getElementById("delete_task");
 
-        document.getElementById("newTask").taskId = -1;
+        var newTask = document.getElementById("newTask");
+        newTask.taskId = -1;
+
 
         var dataDiv = document.getElementById("dataDiv");
         config = JSON.parse(dataDiv.dataset.config);
         userId = dataDiv.dataset.userid;
-        sendNewConfig(1);
 
         LoadTasks();
+        NewTaskClick();
         applyBtn.onclick = () => applyCLick();
         resetBtn.onclick = () => resetCLick();
         deleteBtn.onclick = () => deleteCLick();
 
-        var taskButtons = $("#tasks").find(".taskButton")
-        // var taskButtons = document.getElementsByClassName("taskButton");
-        for (let i = 0; i < taskButtons.length; i++) {
-            taskButtons[i].onclick = function () {
-                if (taskButtons[i].taskId == -1) {
-                    $("#taskDetails").find("#taskName")[0].value = "New Task";
-                    $("#taskDetails").find("#taskDescription")[0].value = "";
-                    //$("#taskDetails").find("#taskStartDate")[0].value = ;
-                    $("#taskDetails").find("#taskFrequency")[0].value=1;
 
-                    var groupsDiv = document.getElementById("taskGroups");
-                    while (groupsDiv.firstChild)
-                        groupsDiv.removeChild(groupsDiv.firstChild);
-                }
-                else {
-                    var task = config.Tasks.filter(function (el) {
-                        return el.Id == taskButtons[i].taskId
-                    });
-                    ShowTaskDetails(task[0]);
-                }
-                var selected = document.getElementsByClassName("activeTask");
-                if (selected.length > 0)
-                    selected[0].classList.remove("activeTask");
-                taskButtons[i].classList.add("activeTask");
-            };
-        }
 
         var assignToGroup = document.getElementById("assignToGroup");
         assignToGroup.onclick = function () {
@@ -72,6 +49,26 @@
             newButton.taskId = config.Tasks[i].Id;
             newButton.innerText = config.Tasks[i].Name;
             tasksDiv.appendChild(newButton);
+        }
+        var taskButtons = $("#tasks").find(".taskButton")
+        // var taskButtons = document.getElementsByClassName("taskButton");
+        for (let i = 0; i < taskButtons.length; i++) {
+            taskButtons[i].onclick = function () {
+                shownAllGroups = false;
+                if (taskButtons[i].taskId == -1) {
+                    NewTaskClick();
+                }
+                else {
+                    var task = config.Tasks.filter(function (el) {
+                        return el.Id == taskButtons[i].taskId
+                    });
+                    ShowTaskDetails(task[0]);
+                }
+                var selected = document.getElementsByClassName("activeTask");
+                if (selected.length > 0)
+                    selected[0].classList.remove("activeTask");
+                taskButtons[i].classList.add("activeTask");
+            };
         }
     }
 
@@ -107,26 +104,42 @@
     }
 
     function applyCLick() {
-        //var selectedId = document.getElementsByClassName("activeTask")[0].taskId;
-        //var weer = userId;
-        //if (selectedId == -1) {
-        //    var task = {
-        //        Archivized: false,
-        //        Description: document.getElementById("taskDescription").value,
-        //        Frequency: document.getElementById("taskFrequency").value,
-        //        groups: null,
-        //        Id: -1,
-        //        Name: document.getElementById("taskName").value,
-        //        OwnerId: userId,
-        //        StartDate: document.getElementById("taskStartDate").value,
-        //    };
-        //   // config.Tasks.push(task);
-        //}
-        //else {
-
-        //}
+        var selectedTaskId = document.getElementsByClassName("activeTask")[0].taskId;
+        var groupsDivs = $("#taskGroups").find(".groupInTask");
+        var groups = [];
+        for (var i = 0; i < groupsDivs.length; i++) {
+            var group = {
+                Id: groupsDivs[i].groupId,
+                Name: groupsDivs[i].firstChild.innerText,
+                Description: groupsDivs[i].lastChild.innerText
+            }
+            groups.push(group);
+        }
+        var task = {
+            Archivized: false,
+            Description: document.getElementById("taskDescription").value,
+            Frequency: document.getElementById("taskFrequency").value,
+            Groups: groups,
+            Id: selectedTaskId,
+            Name: document.getElementById("taskName").value,
+            OwnerId: userId,
+            StartDate: document.getElementById("taskStartDate").value,
+        };
+        if (selectedTaskId == -1) {
+            config.Tasks.push(task);
+        }
+        else {
+            for (var j = 0; j < config.Tasks.length; j++) {
+                if (config.Tasks[j].Id == selectedTaskId) {
+                    config.Tasks[j] = task;
+                    break;
+                }
+            }
+        }
         sendNewConfig(userId);
-      //  LoadTasks();
+        LoadTasks();
+        NewTaskClick();
+        shownAllGroups = true;
     }
 
     function resetCLick() {
@@ -134,6 +147,19 @@
     }
 
     function deleteCLick() {
+    }
+
+    function NewTaskClick() {
+        SetNewTaskValues();
+        var groupsDiv = document.getElementById("taskGroups");
+        while (groupsDiv.firstChild)
+            groupsDiv.removeChild(groupsDiv.firstChild);
+
+            var newTask = document.getElementById("newTask");
+        var selected = document.getElementsByClassName("activeTask");
+        if (selected.length > 0)
+            selected[0].classList.remove("activeTask");
+        newTask.classList.add("activeTask");
     }
 
     function ShowGroups(groups) {
@@ -172,23 +198,20 @@
             groupsDiv.appendChild(group);
         }
     }
-    //function ConvertDatesToIso(config) {
-    //    for (var i = 0; i < config.Tasks.length; i++) {
-    //        config.Tasks[i].StartData = config.Tasks[i].StartData.substring(0, 10).split("-").join("/");
-    //    }
-    //}
-    //function ConvertDatesFromIso{
-    //    for (var i = 0; i < config.Tasks.length; i++) {
-    //        config.Tasks[i].StartData = config.Tasks[i].StartData.split("/").join("-") + "";
-    //    }
-    //}
-    function sendNewConfig(id) {
+    function SetNewTaskValues() {
+        $("#taskDetails").find("#taskName")[0].value = "New Task";
+        $("#taskDetails").find("#taskDescription")[0].value = "";
+        $("#taskDetails").find("#taskStartDate")[0].value = new Date().toISOString().substr(0, 16);
+        $("#taskDetails").find("#taskFrequency")[0].value = 1;
+    }
 
+    function sendNewConfig(id) {
+        var a = JSON.stringify(config);
         $.ajax({
             url: "http://localhost:8080/api/Configuration?userId=" + id,
             type: "POST",
             contentType: "application/json;charset=utf-8",
-             data: JSON.stringify(config),
+            data: JSON.stringify(config),
         })
     }
 
