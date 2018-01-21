@@ -27,13 +27,8 @@ namespace Wilhelm.Backend.Api.Controllers
             return _configurationService.GetConfig(userId);
         }
 
-        public void PostConfig(int userId, [FromBody]string serializedConfig)
+        public void PostConfig(int userId, [FromBody]ConfigDto config)
         {
-            ConfigDto config = JsonConvert.DeserializeObject<ConfigDto>(serializedConfig, new JsonSerializerSettings()
-            {
-                PreserveReferencesHandling = PreserveReferencesHandling.Objects,
-                Formatting = Formatting.Indented
-            });
             _configurationService.SaveConfig(config);
         }
     }

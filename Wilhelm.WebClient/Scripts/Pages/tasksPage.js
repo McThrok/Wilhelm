@@ -13,7 +13,6 @@
 
         var dataDiv = document.getElementById("dataDiv");
         config = JSON.parse(dataDiv.dataset.config);
-        var a = dataDiv.dataset.config;
         userId = dataDiv.dataset.userid;
         sendNewConfig(1);
 
@@ -185,12 +184,11 @@
     //}
     function sendNewConfig(id) {
 
-        var a = JSON.stringify(config);
         $.ajax({
             url: "http://localhost:8080/api/Configuration?userId=" + id,
             type: "POST",
             contentType: "application/json;charset=utf-8",
-            data: JSON.stringify(config),
+             data: JSON.stringify(config),
         })
     }
 
