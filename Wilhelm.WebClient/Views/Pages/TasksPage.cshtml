@@ -7,13 +7,7 @@
     <tr>
         <td>
             <div id="tasks">
-                <button id="newTask" class="taskButton activeTask" data-taskid="-1">New Task</button>
-                @foreach (var task in ViewBag.Config.Tasks)
-                {
-                    <div>
-                    <button class="taskButton" data-taskid="@task.Id">@task.Name</button>
-                    </div>
-                }
+                <button id="newTask" class="taskButton activeTask">New Task</button>
             </div>
         </td>
         <td>
