@@ -25,6 +25,7 @@ namespace Wilhelm.WebClient.Controllers
         public async Task<ActionResult> TasksPage(int userId)
         {
             ViewBag.UserId = userId;
+            ViewBag.Name = "TuWojtekZrobiMagie";
             ViewBag.Config = await _proxy.GetConfig(userId);
             string jsonConfig = JsonConvert.SerializeObject(ViewBag.Config, new JsonSerializerSettings()
             {
@@ -37,6 +38,7 @@ namespace Wilhelm.WebClient.Controllers
         public async Task<ActionResult> GroupsPage(int userId)
         {
             ViewBag.UserId = userId;
+            ViewBag.Name = "TuWojtekZrobiMagie";
             ViewBag.Config = await _proxy.GetConfig(userId);
             string jsonConfig = JsonConvert.SerializeObject(ViewBag.Config, new JsonSerializerSettings()
             {
@@ -49,6 +51,7 @@ namespace Wilhelm.WebClient.Controllers
         public async Task<ActionResult> ArchivePage(int userId)
         {
             ViewBag.UserId = userId;
+            ViewBag.Name = "TuWojtekZrobiMagie";
             var archive = (await _proxy.GetArchive(userId)).ToList();
             archive.Sort((a, b) => DateTime.Compare(b.Date, a.Date));
             ViewBag.Activities = archive;
@@ -58,6 +61,7 @@ namespace Wilhelm.WebClient.Controllers
         public async Task<ActionResult> ReportPage(int userId)
         {
             ViewBag.UserId = userId;
+            ViewBag.Name = "TuWojtekZrobiMagie";
             ViewBag.Reports = await _proxy.GetReports(userId);
             return View();
         }

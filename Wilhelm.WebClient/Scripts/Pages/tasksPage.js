@@ -1,6 +1,6 @@
 (() => {
     var shownAllGroups = false;
-
+    var newTaskId = -1;
     var config = "";
     var userId = "";
 
@@ -44,6 +44,8 @@
         while (tasksDiv.children.length > 1)
             tasksDiv.removeChild(tasksDiv.lastChild);
         for (var i = 0; i < config.Tasks.length; i++) {
+            if (config.Tasks[i].Archivized == true)
+                continue;
             var newButton = document.createElement("button");
             newButton.classList.add("taskButton");
             newButton.taskId = config.Tasks[i].Id;
@@ -126,6 +128,8 @@
             StartDate: document.getElementById("taskStartDate").value,
         };
         if (selectedTaskId == -1) {
+            task.Id = newTaskId;
+            newTaskId--;
             config.Tasks.push(task);
         }
         else {
@@ -139,14 +143,29 @@
         sendNewConfig(userId);
         LoadTasks();
         NewTaskClick();
-        shownAllGroups = true;
+        shownAllGroups = false;
     }
 
     function resetCLick() {
-
+        var selectedTaskId = document.getElementsByClassName("activeTask")[0].taskId;
+        var task = config.Tasks.filter(function (el) {
+            return el.Id == selectedTaskId
+        });
+        ShowTaskDetails(task[0]);
     }
 
     function deleteCLick() {
+        var selectedTaskId = document.getElementsByClassName("activeTask")[0].taskId;
+        for (var j = 0; j < config.Tasks.length; j++) {
+            if (config.Tasks[j].Id == selectedTaskId) {
+                config.Tasks[j].Archivized = true;
+                break;
+            }
+        }
+        sendNewConfig(userId);
+        LoadTasks();
+        NewTaskClick();
+        shownAllGroups = false;
     }
 
     function NewTaskClick() {
@@ -155,7 +174,7 @@
         while (groupsDiv.firstChild)
             groupsDiv.removeChild(groupsDiv.firstChild);
 
-            var newTask = document.getElementById("newTask");
+        var newTask = document.getElementById("newTask");
         var selected = document.getElementsByClassName("activeTask");
         if (selected.length > 0)
             selected[0].classList.remove("activeTask");
@@ -206,13 +225,14 @@
     }
 
     function sendNewConfig(id) {
-        var a = JSON.stringify(config);
         $.ajax({
             url: "http://localhost:8080/api/Configuration?userId=" + id,
             type: "POST",
             contentType: "application/json;charset=utf-8",
             data: JSON.stringify(config),
+            success: function () {
+                location.reload();
+            }
         })
     }
-
 })();
