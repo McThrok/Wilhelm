@@ -1,0 +1,49 @@
+﻿body {
+    height: 600px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    padding: 0;
+}
+
+table {
+    border:0;
+    margin-left: auto;
+    margin-right: auto;
+    width: 750px;
+    height: 600px;
+}
+
+    table td {
+        margin: 0;
+        padding: 0;
+        background-color: #eee;
+        vertical-align: top;
+    }
+
+    table th {
+        height: 50px;
+        background-color: white;
+        color: #3b424c;
+        font-size: 20px;
+    }
+
+#menu {
+    width: 120px;
+}
+
+    #menu a {
+        text-align:center;
+        color: black;
+        display: block;
+        padding: 12px;
+        text-decoration: none;
+    }
+
+        #menu a:hover {
+            background-color: #ccc;
+        }
+
+        #menu .selectedMenu {
+            background-color: #3b424c;
+            color: white;
+        }

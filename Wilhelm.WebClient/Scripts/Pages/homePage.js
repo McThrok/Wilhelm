@@ -2,6 +2,11 @@
     window.onload = function () {
         var applyBtn = document.getElementById("applyButton");
         applyBtn.onclick = () => apply(JSON.parse(applyBtn.dataset.activities), applyBtn.dataset.userId);
+
+        var selectedMenu = document.getElementsByClassName("selectedMenu");
+        if (selectedMenu.length > 0)
+            selectedMenu[0].classList.remove("selectedMenu");
+        document.getElementById("homeButton").classList.add("selectedMenu");
     }
 
     function apply(activities, id) {

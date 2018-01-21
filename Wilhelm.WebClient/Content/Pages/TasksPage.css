@@ -1,0 +1,73 @@
+﻿table {
+    border: 0;
+}
+
+    table td {
+        border-left: 5px;
+        border-left-color: white;
+        border-left-style: solid;
+        margin: 0;
+        padding: 0;
+        vertical-align: top;
+    }
+
+#tasks button {
+    background-color: #eee;
+    color: black;
+    padding: 12px;
+    width: 150px;
+    text-decoration: none;
+    border-width: 0;
+}
+
+    #tasks button:hover {
+        background-color: #ccc;
+    }
+
+    #tasks button.activeTask {
+        background-color: #3b424c;
+        color: white;
+    }
+
+#taskDetails {
+    padding: 10px;
+}
+
+    #taskDetails label {
+        vertical-align: central;
+        margin: 5px;
+        display: inline-block;
+        width: 50%;
+        overflow: hidden;
+        /*text-align: right;*/
+    }
+
+    #taskDetails input {
+        vertical-align: central;
+        margin: 5px;
+        width: 150px;
+    }
+
+    #taskDetails label:after {
+        /*float: right;*/
+    }
+
+#taskGroups {
+    min-height: 350px;
+    border: 5px;
+    border-style: solid;
+    border-color: white;
+}
+
+    #taskGroups label {
+        font-weight: bold;
+    }
+
+    #taskGroups .taskGroupItem {
+        padding: 5px;
+        /*border:0;*/
+    }
+
+        #taskGroups .taskGroupItem:hover {
+            background-color: #ccc;
+        }
