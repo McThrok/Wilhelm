@@ -39,7 +39,7 @@ namespace Wilhelm.Client.Services
         {
             var query = HttpUtility.ParseQueryString("");
             query["userId"] = userId.ToString();
-            var builder = GetBaseUriBuilder("ActiveActivities");    
+            var builder = GetBaseUriBuilder("ActiveActivities");
             builder.Query = query.ToString();
 
             HttpResponseMessage postResponse = await GetClient().PostAsJsonAsync(builder.ToString(), activities);
@@ -100,7 +100,8 @@ namespace Wilhelm.Client.Services
                 Formatting = Formatting.Indented
             });
 
-            HttpResponseMessage postResponse = await GetClient().PostAsJsonAsync(builder.ToString(), serializedConfig);
+            var httpcontent = new StringContent(serializedConfig, Encoding.UTF8, "application/json");
+            HttpResponseMessage postResponse = await GetClient().PostAsync(builder.ToString(), httpcontent);
             postResponse.EnsureSuccessStatusCode();
         }
 
