@@ -1,3 +1,30 @@
 ﻿@{
     ViewBag.Title = "GroupsPage";
 }
+<div data-config="@ViewBag.JsonConfig" data-userId="@ViewBag.UserId" id="dataDiv" />
+<table>
+    <tr>
+        <td>
+            <div id="groups">
+                <button id="newGroup" class="groupButton">New Group</button>
+            </div>
+        </td>
+        <td>
+            <div id="groupDetails">
+                <label>Name</label> <input id="groupName" name="groupName" type="text" />
+                <label>Description</label> <input id="groupDescription" name="groupDescription" type="text" />
+
+                <label><strong>Tasks</strong> <input id="assignToTask" name="assignToTask" type="button" value="Assign to task" /></label>
+                <div id="groupTasks"></div>
+
+                <input id="applyGroup" type="button" value="Apply" />
+                <input id="resetGroup" type="button" value="Reset changes" />
+                <input id="deleteGroup" type="button" value="Detele group" />
+            </div>
+        </td>
+    </tr>
+</table>
+@section scripts{
+    @Scripts.Render("~/Scripts/Pages/groupsPage.js")
+    @Styles.Render("~/Content/Pages/GroupsPage.css")
+}

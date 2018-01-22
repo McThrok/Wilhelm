@@ -17,7 +17,8 @@ namespace Wilhelm.WebClient.Controllers
         public async Task<ActionResult> HomePage(int userId)
         {
             ViewBag.UserId = userId;
-            ViewBag.JsonActivities = JsonConvert.SerializeObject(await _proxy.GetTodaysTasks(userId));
+            ViewBag.Activities = await _proxy.GetTodaysTasks(userId);
+            ViewBag.JsonActivities = JsonConvert.SerializeObject(ViewBag.Activities);
             return View();
         }
 
@@ -25,8 +26,7 @@ namespace Wilhelm.WebClient.Controllers
         {
             ViewBag.UserId = userId;
             ViewBag.Name = "TuWojtekZrobiMagie";
-            ViewBag.Config = await _proxy.GetConfig(userId);
-            string jsonConfig = JsonConvert.SerializeObject(ViewBag.Config, new JsonSerializerSettings()
+            string jsonConfig = JsonConvert.SerializeObject(await _proxy.GetConfig(userId), new JsonSerializerSettings()
             {
                 PreserveReferencesHandling = PreserveReferencesHandling.Objects,
                 Formatting = Formatting.Indented
