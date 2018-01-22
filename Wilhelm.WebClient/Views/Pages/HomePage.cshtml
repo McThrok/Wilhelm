@@ -6,7 +6,7 @@
     @foreach (var activity in ViewBag.Activities)
     {
         <div class="homeItem">
-            <input data-activityid="@activity.Id" class="qwe" type="checkbox" checked="@activity.IsDone">
+            <input data-activityid="@activity.Id"  class="qwe" type="checkbox" checked="@activity.IsDone">
             <label>@activity.Task.Name</label>
             <p>@activity.Task.Description</p>
         </div>

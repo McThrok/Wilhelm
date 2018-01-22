@@ -1,7 +1,7 @@
 (() => {
     window.onload = function () {
         var applyBtn = document.getElementById("applyButton");
-        applyBtn.onclick = () => apply(JSON.parse(applyBtn.dataset.activities), applyBtn.dataset.userId);
+        applyBtn.onclick = () => apply(JSON.parse(applyBtn.dataset.activities), applyBtn.dataset.userid);
 
         var selectedMenu = document.getElementsByClassName("selectedMenu");
         if (selectedMenu.length > 0)

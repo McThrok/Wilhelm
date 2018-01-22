@@ -54,7 +54,7 @@ namespace Wilhelm.WebClient.Controllers
             ViewBag.Name = (await _proxy.GetUser(userId))?.Login;
             var archive = (await _proxy.GetArchive(userId)).ToList();
             archive.Sort((a, b) => DateTime.Compare(b.Date, a.Date));
-            ViewBag.Activities = archive;
+            //ViewBag.Activities = archive;
             ViewBag.JsonActivities = JsonConvert.SerializeObject(ViewBag.Activities);
             return View();
         }
