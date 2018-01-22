@@ -33,35 +33,33 @@
     }
     //buttons
     function ApplyCLick() {
-        var selectedTaskId = document.getElementsByClassName("activeTask")[0].taskId;
-        var groupsDivs = $("#taskGroups").find(".groupInTask");
-        var groups = [];
-        for (var i = 0; i < groupsDivs.length; i++) {
-            var group = {
-                Id: groupsDivs[i].groupId,
-                Name: groupsDivs[i].firstChild.innerText,
-                Description: groupsDivs[i].lastChild.innerText
+        var selectedGroupId = document.getElementsByClassName("activeGroup")[0].groupId;
+        var tasksDivs = $("#groupTasks").find(".taskInGroup");
+        var tasks = [];
+        for (var i = 0; i < tasksDivs.length; i++) {
+            var task = {
+                Id: tasksDivs[i].taskId,
+                Name: tasksDivs[i].firstChild.innerText,
+                Description: tasksDivs[i].lastChild.innerText
             }
-            groups.push(group);
+            tasks.push(task);
         }
-        var task = {
+        var group = {
             Archivized: false,
-            Description: document.getElementById("taskDescription").value,
-            Frequency: document.getElementById("taskFrequency").value,
-            Groups: groups,
-            Id: selectedTaskId,
+            Description: document.getElementById("groupDescription").value,
+            Tasks: tasks,
+            Id: selectedGroupId,
             Name: document.getElementById("taskName").value,
             OwnerId: userId,
-            StartDate: document.getElementById("taskStartDate").value,
         };
-        if (selectedTaskId == -1) {
-            task.Id = -1;
-            config.Tasks.push(task);
+        if (selectedGroupId == -1) {
+            group.Id = -1;
+            config.Tasks.push(group);
         }
         else {
-            for (var j = 0; j < config.Tasks.length; j++) {
-                if (config.Tasks[j].Id == selectedTaskId) {
-                    config.Tasks[j] = task;
+            for (var j = 0; j < config.Groups.length; j++) {
+                if (config.Groups[j].Id == selectedGroupId) {
+                    config.GRoups[j] = group;
                     break;
                 }
             }
@@ -72,18 +70,18 @@
         shownAllTasks = false;
     }
     function ResetCLick() {
-        var selectedTaskId = document.getElementsByClassName("activeTask")[0].taskId;
-        var task = config.Tasks.filter(function (el) {
-            return el.Id == selectedTaskId
+        var selectedGroupId = document.getElementsByClassName("activeGroup")[0].groupId;
+        var group = config.GRoups.filter(function (el) {
+            return el.Id == selectedGroupId
         });
-        ShowTaskDetails(task[0]);
+        ShowGroupDetails(group[0]);
         shownAllTasks = false;
     }
     function DeleteCLick() {
-        var selectedTaskId = document.getElementsByClassName("activeTask")[0].taskId;
+        var selectedGroupId = document.getElementsByClassName("activeGroup")[0].groupId;
         for (var j = 0; j < config.Tasks.length; j++) {
-            if (config.Tasks[j].Id == selectedTaskId) {
-                config.Tasks[j].Archivized = true;
+            if (config.Groups[j].Id == selectedGroupId) {
+                config.Groups[j].Archivized = true;
                 break;
             }
         }
@@ -96,32 +94,33 @@
         if (shownAllTasks)
             return;
         shownAllTasks = true;
-        ShowAllGroups(config.Groups);
+        ShowAllTasks);
     }
     // used in AssignClick
-    function ShowAllGroups(groups) {
-        var groupsDivs = $("#taskGroups").find(".taskGroupItem");
-        for (let i = 0; i < groupsDivs.length; i++) {
-            groupsDivs[i].onclick = function () { AddDeleteGroupFromTask(groupsDivs[i]); };
-            groups = groups.filter(function (el) { return el.Id != groupsDivs[i].groupId; });
+    function ShowAllTasks() {
+        tasks = config.Tasks;
+        var tasksDivs = $("#groupTasks").find(".groupTaskItem");
+        for (let i = 0; i < tasksDivs.length; i++) {
+            tasksDivs[i].onclick = function () { AddDeleteGroupFromGroup(tasksDivs[i]); };
+            tasks = tasks.filter(function (el) { return el.Id != tasksDivs[i].taskId; });
         }
 
         var groupsDiv = document.getElementById("taskGroups");
-        for (var i = 0; i < groups.length; i++) {
+        for (var i = 0; i < tasks.length; i++) {
             let group = document.createElement("div");
-            group.groupId = groups[i].Id;
+            group.groupId = tasks[i].Id;
             group.classList.add("taskGroupItem");
             var label = document.createElement("label");
-            label.innerText = groups[i].Name;
+            label.innerText = tasks[i].Name;
             var p = document.createElement("p");
-            p.innerText = groups[i].Description;
+            p.innerText = tasks[i].Description;
             group.appendChild(label);
             group.appendChild(p);
-            group.onclick = function () { AddDeleteGroupFromTask(group); };
+            group.onclick = function () { AddDeleteGroupFromGroup(group); };
             groupsDiv.appendChild(group);
         }
     }
-    function AddDeleteGroupFromTask(group) {
+    function AddDeleteGroupFromGroup(group) {
         if (group.classList.contains("groupInTask"))
             group.classList.remove("groupInTask");
         else
@@ -145,19 +144,19 @@
             newButton.onclick = function () {
                 shownAllTasks = false;
                 var task = tasks.filter(function (el) { return el.Id == newButton.taskId; })[0];
-                ShowTaskDetails(task);
-                SetActiveTask(newButton);
+                ShowGroupDetails(task);
+                SetactiveGroup(newButton);
             }
             tasksDiv.appendChild(newButton);
         }
     };
-    function SetActiveTask(task) {
-        var selected = document.getElementsByClassName("activeTask");
+    function SetactiveGroup(task) {
+        var selected = document.getElementsByClassName("activeGroup");
         if (selected.length > 0)
-            selected[0].classList.remove("activeTask");
-        task.classList.add("activeTask");
+            selected[0].classList.remove("activeGroup");
+        task.classList.add("activeGroup");
     };
-    function ShowTaskDetails(el) {
+    function ShowGroupDetails(el) {
         document.getElementById("taskName").value = el.Name;
         document.getElementById("taskDescription").value = el.Description;
         document.getElementById("taskStartDate").value = el.StartDate;
@@ -183,7 +182,7 @@
     }
     function NewGroupClick() {
         shownAllTasks = false;
-        SetActiveTask(document.getElementById("newTask"));
+        SetactiveGroup(document.getElementById("newTask"));
 
         document.getElementById("taskName").value = "New Task";
         document.getElementById("taskDescription").value = "Your description";
