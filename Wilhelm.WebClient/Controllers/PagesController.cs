@@ -17,6 +17,7 @@ namespace Wilhelm.WebClient.Controllers
         public async Task<ActionResult> HomePage(int userId)
         {
             ViewBag.UserId = userId;
+            ViewBag.Name = (await _proxy.GetUser(userId))?.Login;
             ViewBag.Activities = await _proxy.GetTodaysTasks(userId);
             ViewBag.JsonActivities = JsonConvert.SerializeObject(ViewBag.Activities);
             return View();

@@ -36,6 +36,13 @@
         var selectedGroupId = document.getElementsByClassName("activeGroup")[0].groupId;
         var tasksDivs = $("#groupTasks").find(".taskInGroup");
         var tasks = [];
+        //telete choosen feoup from all tasks
+        for (var i = 0; i < config.Tasks.length; i++) {
+            config.Tasks[i].Groups = config.Tasks[i].Groups.filter(function (el) {
+                return el.Id != selectedGroupId;
+            })
+        }
+        //
         for (var i = 0; i < tasksDivs.length; i++) {
             var task = {
                 Id: tasksDivs[i].taskId,
@@ -54,7 +61,7 @@
         };
         if (selectedGroupId == -1) {
             group.Id = -1;
-            config.Tasks.push(group);
+            config.Groups.push(group);
         }
         else {
             for (var j = 0; j < config.Groups.length; j++) {
@@ -64,6 +71,14 @@
                 }
             }
         }
+        //
+        for (var i = 0; i < config.Tasks.length; i++) {
+            if (group.Tasks.filter(function (el) {
+                return config.Tasks[i].Id === el.Id;
+            }).length == 1)
+                config.Tasks[i].Groups.push(group);
+        }
+        //
         sendNewConfig(userId);
         LoadGroups();
         NewGroupClick();
