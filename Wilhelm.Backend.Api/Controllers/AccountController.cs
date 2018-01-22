@@ -28,5 +28,10 @@ namespace Wilhelm.Backend.Api.Controllers
             return _accountsService.VerifyUserDto(login, password);
 
         }
+        public UserDto GetUser(int userId)
+        {
+            return _accountsService.GetUser(userId);
+
+        }
     }
 }
