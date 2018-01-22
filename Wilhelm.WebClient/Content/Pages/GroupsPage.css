@@ -25,7 +25,7 @@
         background-color: #ccc;
     }
 
-    #groups button.activeTask {
+    #groups button.activeGroup {
         background-color: #3b424c;
         color: white;
     }

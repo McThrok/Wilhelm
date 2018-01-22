@@ -49,7 +49,7 @@
             Description: document.getElementById("groupDescription").value,
             Tasks: tasks,
             Id: selectedGroupId,
-            Name: document.getElementById("taskName").value,
+            Name: document.getElementById("groupName").value,
             OwnerId: userId,
         };
         if (selectedGroupId == -1) {
@@ -59,7 +59,7 @@
         else {
             for (var j = 0; j < config.Groups.length; j++) {
                 if (config.Groups[j].Id == selectedGroupId) {
-                    config.GRoups[j] = group;
+                    config.Groups[j] = group;
                     break;
                 }
             }
@@ -71,7 +71,7 @@
     }
     function ResetCLick() {
         var selectedGroupId = document.getElementsByClassName("activeGroup")[0].groupId;
-        var group = config.GRoups.filter(function (el) {
+        var group = config.Groups.filter(function (el) {
             return el.Id == selectedGroupId
         });
         ShowGroupDetails(group[0]);
@@ -94,108 +94,106 @@
         if (shownAllTasks)
             return;
         shownAllTasks = true;
-        ShowAllTasks);
+        ShowAllTasks();
     }
     // used in AssignClick
     function ShowAllTasks() {
         tasks = config.Tasks;
         var tasksDivs = $("#groupTasks").find(".groupTaskItem");
         for (let i = 0; i < tasksDivs.length; i++) {
-            tasksDivs[i].onclick = function () { AddDeleteGroupFromGroup(tasksDivs[i]); };
+            tasksDivs[i].onclick = function () { AddDeleteTaskFromGroup(tasksDivs[i]); };
             tasks = tasks.filter(function (el) { return el.Id != tasksDivs[i].taskId; });
         }
 
-        var groupsDiv = document.getElementById("taskGroups");
+        var tasksDiv = document.getElementById("groupTasks");
         for (var i = 0; i < tasks.length; i++) {
-            let group = document.createElement("div");
-            group.groupId = tasks[i].Id;
-            group.classList.add("taskGroupItem");
+            let task = document.createElement("div");
+            task.taskId = tasks[i].Id;
+            task.classList.add("groupTaskItem");
             var label = document.createElement("label");
             label.innerText = tasks[i].Name;
             var p = document.createElement("p");
             p.innerText = tasks[i].Description;
-            group.appendChild(label);
-            group.appendChild(p);
-            group.onclick = function () { AddDeleteGroupFromGroup(group); };
-            groupsDiv.appendChild(group);
+            task.appendChild(label);
+            task.appendChild(p);
+            task.onclick = function () { AddDeleteTaskFromGroup(task); };
+            tasksDiv.appendChild(task);
         }
     }
-    function AddDeleteGroupFromGroup(group) {
-        if (group.classList.contains("groupInTask"))
-            group.classList.remove("groupInTask");
+    function AddDeleteTaskFromGroup(group) {
+        if (group.classList.contains("taskInGroup"))
+            group.classList.remove("taskInGroup");
         else
-            group.classList.add("groupInTask");
+            group.classList.add("taskInGroup");
     }
     //~buttons
 
     //tasks
     function LoadGroups() {
-        var tasks = config.Tasks;
-        var tasksDiv = document.getElementById("tasks");
-        while (tasksDiv.children.length > 1) // 0 - New task
-            tasksDiv.removeChild(tasksDiv.lastChild);
-        for (var i = 0; i < tasks.length; i++) {
-            if (tasks[i].Archivized === true)
+        var groups = config.Groups;
+        var groupsDiv = document.getElementById("groups");
+        while (groupsDiv.children.length > 1) // 0 - New group
+            groupsDiv.removeChild(groupsDiv.lastChild);
+        for (var i = 0; i < groups.length; i++) {
+            if (groups[i].Archivized === true)
                 continue;
             let newButton = document.createElement("button");
-            newButton.classList.add("taskButton");
-            newButton.taskId = tasks[i].Id;
-            newButton.innerText = tasks[i].Name;
+            newButton.classList.add("groupButton");
+            newButton.groupId = groups[i].Id;
+            newButton.innerText = groups[i].Name;
             newButton.onclick = function () {
                 shownAllTasks = false;
-                var task = tasks.filter(function (el) { return el.Id == newButton.taskId; })[0];
-                ShowGroupDetails(task);
-                SetactiveGroup(newButton);
+                var group = groups.filter(function (el) { return el.Id == newButton.groupId; })[0];
+                ShowGroupDetails(group);
+                SetActiveGroup(newButton);
             }
-            tasksDiv.appendChild(newButton);
+            groupsDiv.appendChild(newButton);
         }
     };
-    function SetactiveGroup(task) {
+    function SetActiveGroup(group) {
         var selected = document.getElementsByClassName("activeGroup");
         if (selected.length > 0)
             selected[0].classList.remove("activeGroup");
-        task.classList.add("activeGroup");
+        group.classList.add("activeGroup");
     };
     function ShowGroupDetails(el) {
-        document.getElementById("taskName").value = el.Name;
-        document.getElementById("taskDescription").value = el.Description;
-        document.getElementById("taskStartDate").value = el.StartDate;
-        document.getElementById("taskFrequency").value = el.Frequency;
+        document.getElementById("groupName").value = el.Name;
+        document.getElementById("groupDescription").value = el.Description;
 
-        var groups = el.Groups;
-        var groupsDiv = document.getElementById("taskGroups");
-        while (groupsDiv.firstChild)
-            groupsDiv.removeChild(groupsDiv.firstChild);
-        for (var i = 0; i < groups.length; i++) {
-            var group = document.createElement("div");
-            group.classList.add("groupInTask");
-            group.classList.add("taskGroupItem");
-            group.groupId = groups[i].Id;
+        var tasksDiv = document.getElementById("groupTasks");
+        while (tasksDiv.firstChild)
+            tasksDiv.removeChild(tasksDiv.firstChild);
+
+        var tasks = el.Tasks;
+        for (var i = 0; i < tasks.length; i++) {
+            var task = document.createElement("div");
+            task.classList.add("taskInGroup");
+            task.classList.add("groupTaskItem");
+            task.taskId = tasks[i].Id;
             var label = document.createElement("label");
-            label.innerText = groups[i].Name;
+            label.innerText = tasks[i].Name;
             var p = document.createElement("p");
-            p.innerText = groups[i].Description;
-            group.appendChild(label);
-            group.appendChild(p);
-            groupsDiv.appendChild(group);
+            p.innerText = tasks[i].Description;
+            task.appendChild(label);
+            task.appendChild(p);
+            tasksDiv.appendChild(task);
         }
     }
     function NewGroupClick() {
         shownAllTasks = false;
-        SetactiveGroup(document.getElementById("newTask"));
+        SetActiveGroup(document.getElementById("newGroup"));
 
-        document.getElementById("taskName").value = "New Task";
-        document.getElementById("taskDescription").value = "Your description";
-        document.getElementById("taskStartDate").value = new Date().toISOString().substr(0, 16);
-        document.getElementById("taskFrequency").value = 1;
-        var groupsDiv = document.getElementById("taskGroups");
-        while (groupsDiv.firstChild)
-            groupsDiv.removeChild(groupsDiv.firstChild);
+        document.getElementById("groupName").value = "New group";
+        document.getElementById("groupDescription").value = "Your description";
+        var tasksDiv = document.getElementById("groupTasks");
+        while (tasksDiv.firstChild)
+            tasksDiv.removeChild(tasksDiv.firstChild);
     }
     //~tasks
 
     //config
     function sendNewConfig(id) {
+        var wqe = config;
         $.ajax({
             url: "http://localhost:8080/api/Configuration?userId=" + id,
             type: "POST",
