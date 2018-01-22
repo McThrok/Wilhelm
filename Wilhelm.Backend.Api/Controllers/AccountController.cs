@@ -26,7 +26,10 @@ namespace Wilhelm.Backend.Api.Controllers
         public ValidatedDto<UserDto> GetVerifiedUser(string login, string password)
         {
             return _accountsService.VerifyUserDto(login, password);
-
+        }
+        public UserDto GetUser(int userId)
+        {
+            return _accountsService.GetUser(userId);
         }
     }
 }

@@ -152,5 +152,16 @@ namespace Wilhelm.Backend.Services
             return violations;
         }
 
+        public UserDto GetUser(int userId)
+        {
+            UserDto userDto = new UserDto();
+            using (var db = _wContextFactory.Create())
+            {
+                var user = db.Users.SingleOrDefault(x => x.Id == userId);
+                if (user != null)
+                    _conversionService.ConvertToDto(userDto, user);
+            }
+            return userDto;
+        }
     }
 }

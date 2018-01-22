@@ -15,5 +15,6 @@ namespace Wilhelm.Backend.Services.Interfaces
         ValidatedDto<UserDto> VerifyUserDto(string login, string password);
         Validated<WUser> CreateUser(string login, string password, string confirmPassword);
         Validated<WUser> VerifyUser(string login, string password);
+        UserDto GetUser(int userId);
     }
 }

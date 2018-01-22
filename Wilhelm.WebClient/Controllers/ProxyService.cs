@@ -16,7 +16,7 @@ using System.Net.Http.Formatting;
 
 namespace Wilhelm.Client.Services
 {
-    public class ProxyService 
+    public class ProxyService
     {
         public async Task<IEnumerable<ActivityDto>> GetTodaysTasks(int userId)
         {
@@ -109,6 +109,21 @@ namespace Wilhelm.Client.Services
             if (response.IsSuccessStatusCode)
             {
                 user = await response.Content.ReadAsAsync<ValidatedDto<UserDto>>();
+            }
+            return user;
+        }
+        public async Task<UserDto> GetUser(int userId)
+        {
+            UserDto user = null;
+            var query = HttpUtility.ParseQueryString("");
+            query["userId"] = userId.ToString();
+            var builder = GetBaseUriBuilder("Account");
+            builder.Query = query.ToString();
+            HttpResponseMessage response = await GetClient().GetAsync(builder.ToString());
+
+            if (response.IsSuccessStatusCode)
+            {
+                user = await response.Content.ReadAsAsync<UserDto>();
             }
             return user;
         }
