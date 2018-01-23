@@ -43,7 +43,11 @@ table {
             background-color: #ccc;
         }
 
-        #menu .selectedMenu {
+    #menu .selectedMenu {
+        background-color: slategrey;
+        color: white;
+    }
+        #menu .selectedMenu:hover {
             background-color: #3b424c;
             color: white;
         }

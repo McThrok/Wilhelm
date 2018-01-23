@@ -1,13 +1,40 @@
 ﻿@{
     ViewBag.Title = "SignInPage";
 }
-<input id="login" type="text" />
-<input id="password" type="password" />
-<button type="button" id="signInBtn">Sign In</button>
-<button type="button" id="signUpBtn">Sign Up</button>
+<div class="container">
+    <div class="subContainer p-t-50 p-b-90">
+        <div class="loginForm validateForm">
+            <span class="loginFormTitle p-b-51">Sign In</span>
+
+
+            <div class="inputDiv validateInput m-b-16">
+                <input id="login" class="inputField" type="text" name="username" placeholder="Username">
+                <span class="focusInputField"></span>
+            </div>
+
+            <div class="inputDiv validateInput m-b-16">
+                <input id="password" class="inputField" type="password" name="pass" placeholder="Password">
+                <span class="focusInputField"></span>
+            </div>
+
+            <div m-t-17">
+                <button id="js-button" class="loginFormBtn">
+                    Sign In
+                </button>
+            </div>
+
+            <span class="loginFormTitle p-b-51">
+                <a id="js-link">
+                    Do not have an acount? Create one!
+                </a>
+            </span>
+        </div>
+    </div>
+</div>
 
 @section scripts{
     @Scripts.Render("~/Scripts/Sign/signIn.js")
+    @Styles.Render("~/Content/Signing.css")
 }
 
 

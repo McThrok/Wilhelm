@@ -1,19 +1,9 @@
-﻿
-@{
+﻿@{
     ViewBag.Title = "HomePage";
 }
-<div id="home">
-    @foreach (var activity in ViewBag.Activities)
-    {
-        <div class="homeItem">
-            <input data-activityid="@activity.Id"  class="qwe" type="checkbox" checked="@activity.IsDone">
-            <label>@activity.Task.Name</label>
-            <p>@activity.Task.Description</p>
-        </div>
-
-    }
-</div>
 <button type="button" data-activities="@ViewBag.JsonActivities" data-userId="@ViewBag.UserId" id="applyButton">Apply</button>
+<div id="home">
+</div>
 
 @section scripts{
     @Scripts.Render("~/Scripts/Pages/homePage.js")
