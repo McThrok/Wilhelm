@@ -24,7 +24,7 @@
             font-size: 13px;
         }
 button {
-    background-color: #bfff80;
+    background-color: #adb7c1;
     outline: none;
     border: none;
     display: block;
@@ -35,5 +35,5 @@ button {
     height: 30px;
 }
     button:hover {
-        background-color: #88ff4d;
+        background-color: slategrey;
     }
