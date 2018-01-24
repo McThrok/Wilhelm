@@ -132,6 +132,11 @@ namespace Wilhelm.Backend.Services
                 _conversionService.ConvertFromDto(activityModelToUpdate, dto);
             }
         }
-
+        public void UpdateEntity(IDbSet<WActivity> activities, ActivityDto dto)
+        {
+            var activity = activities.SingleOrDefault(x => x.Id == dto.Id);
+            if (activity != null)
+                _conversionService.ConvertFromDto(activity, dto);
+        }
     }
 }

@@ -58,5 +58,15 @@ namespace Wilhelm.Backend.Services
                 db.SaveChanges();
             }
         }
+
+        public void UpdateActivity(ActivityDto activity)
+        {
+            using (var db = _wContextFactory.Create())
+            {
+                _entitiesService.UpdateEntity(db.WActivities, activity);
+                db.SaveChanges();
+            }
+        }
+
     }
 }
