@@ -1,60 +1,109 @@
-﻿table {
-    border: 0;
+﻿
+/* tasks */
+#tasks {
+    /*width: 155px;*/
+    height: 645px;
 }
 
-    table td {
-        border-left: 5px;
-        border-left-color: white;
-        border-left-style: solid;
-        margin: 0;
-        padding: 0;
-        vertical-align: top;
+    #tasks button {
+        width: 150px;
+        background-color: #eee;
+        color: black;
+        padding: 12px;
+        width: 150px;
+        display: grid;
+        text-decoration: none;
+        border-width: 0;
     }
 
-#tasks button {
-    background-color: #eee;
-    color: black;
-    padding: 12px;
-    width: 150px;
-    display:grid;
-    text-decoration: none;
-    border-width: 0;
-}
+        #tasks button:hover {
+            background-color: #ccc;
+        }
 
-    #tasks button:hover {
-        background-color: #ccc;
-    }
+        #tasks button.activeTask {
+            font-size: 15px;
+            background-color: slategrey;
+            color: white;
+        }
 
-    #tasks button.activeTask {
-        background-color: #3b424c;
-        color: white;
-    }
-
+            #tasks button.activeTask:hover {
+                background-color: #3b424c;
+            }
+/*==========================*/
 #taskDetails {
-    padding: 10px;
+    border-left: 5px;
+    border-left-color: white;
+    border-left-style: solid;
+    width: 440px;
+    padding:10px;
 }
 
-    #taskDetails label {
-        vertical-align: central;
-        margin: 5px;
-        display: inline-block;
-        width: 50%;
-        overflow: hidden;
-        /*text-align: right;*/
-    }
+.contactForm {
+    font-weight: bold;
+    background-color: white;
+    width: 100%;
+    padding: 5px 15px 5px 120px;
+}
 
-    #taskDetails input {
-        vertical-align: central;
-        margin: 5px;
-        width: 200px;
-    }
+input {
+    outline: none;
+    border: none;
+}
 
-    #taskDetails label:after {
-        /*float: right;*/
-    }
+.labelInput {
+    font-size: 15px;
+    color: #3b424c;
+    line-height: 1.2;
+    text-align: right;
+    position: absolute;
+    top: 18px;
+    left: -105px;
+    width: 80px;
+}
 
+.wrapInput {
+    width: 100%;
+    position: relative;
+    border-bottom: 1px solid #b2b2b2;
+    margin-bottom: 18px;
+}
+
+.inputField {
+    font-size: 16px;
+    color: black;
+    line-height: 1.2;
+    display: block;
+    width: 100%;
+    background: transparent;
+    padding: 0 5px;
+}
+/*==========================*/
+.contactForm2 {
+    font-weight: bold;
+    font-size: 16px;
+    width: 100%;
+    padding: 0;
+}
+
+.wrapInput2 {
+    margin: 5px;
+    margin-top: 25px;
+}
+
+    .wrapInput2 input {
+        float: right;
+        background-color: #adb7c1;
+        height: 30px;
+    }
+        .wrapInput2 input:hover {
+            background-color: slategrey;
+        }
+/*=================taskGroups==============================*/
 #taskGroups {
-    min-height: 350px;
+    margin: 0;
+    margin-top: 15px;
+    margin-bottom: 5px;
+    min-height: 220px;
     border: 5px;
     border-style: solid;
     border-color: white;
@@ -62,20 +111,79 @@
 
     #taskGroups label {
         font-weight: bold;
+        font-size: 16px;
     }
-
+    #taskGroups p {
+        font-size: 14px;
+        font-weight: normal;
+    }
     #taskGroups .taskGroupItem {
         padding: 5px;
-        /*border:0;*/
     }
 
         #taskGroups .taskGroupItem:hover {
             background-color: #ccc;
         }
 
-    #taskGroups .groupInTask{
-        background-color:cadetblue;
+    #taskGroups .groupInTask {
+        color: black;
+        background-color: #adb7c1;
     }
-    #taskGroups .groupInTask:hover {
-        background-color: darkcyan;
+
+        #taskGroups .groupInTask:hover {
+            background-color: slategrey;
+        }
+
+/*================================================*/
+.left {
+    background-color: #bfff80;
+    height: 30px;
+}
+    .left:hover {
+        background-color: #88ff4d;
     }
+.right {
+    float: right;
+    background-color: #ffaa80;
+    height: 30px;
+}
+    .right:hover {
+        background-color: #ff7733;
+    }
+/*================================================*/
+
+.validateInput {
+    position: relative;
+}
+
+.focusInput {
+    position: absolute;
+    display: block;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    pointer-events: none;
+}
+
+    .focusInput::before {
+        content: "";
+        display: block;
+        position: absolute;
+        bottom: -1px;
+        left: 0;
+        width: 0;
+        height: 1px;
+        background: slategrey;
+    }
+
+input.inputField {
+    height: 40px;
+}
+
+
+textarea.inputField {
+    min-height: 100px;
+    padding-top: 14px;
+    padding-bottom: 13px;
+}

@@ -1,4 +1,6 @@
 ﻿#home {
+   
+    width: 590px;
     overflow-y: scroll;
 } /*TODO nie dziala*/
 
@@ -14,9 +16,24 @@
         }
 
         #home .homeItem label {
+            margin-left:10px;
             font-size: 16px;
             font-weight: bold;
         }
         #home .homeItem p {
             font-size: 13px;
         }
+button {
+    background-color: #bfff80;
+    outline: none;
+    border: none;
+    display: block;
+    margin: 0 auto;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    width: 160px;
+    height: 30px;
+}
+    button:hover {
+        background-color: #88ff4d;
+    }

@@ -1,5 +1,5 @@
 ﻿@{
-    ViewBag.Title = "TasksPage";
+    ViewBag.Title = "Tasks";
 }
 <div data-config="@ViewBag.JsonConfig" data-userId="@ViewBag.UserId" id="dataDiv" />
 
@@ -12,17 +12,45 @@
         </td>
         <td>
             <div id="taskDetails">
-                <label>Name</label> <input id="taskName" name="taskName" type="text" />
-                <label>Description</label> <input id="taskDescription" name="taskDescription" type="text"/>
-                <label>Sart date</label> <input id="taskStartDate" name="taskStartDate" type="datetime-local" />
-                <label>Frequency</label> <input id="taskFrequency" name="taskFrequency" type="number"/>
+                <div class="contactForm validate-form">
+                    <div class="wrapInput validateInput" data-validate="Name is required">
+                        <span class="labelInput">Name:</span>
+                        <input id="taskName" class="inputField" type="text" name="name" placeholder="Enter task name">
+                        <span class="focusInput"></span>
+                    </div>
 
-                <label><strong>Groups</strong> <input id="assignToGroup" name="assignToGroup" type="button" value="Assign to group" /></label>
-                <div id="taskGroups"></div>
+                    <div class="wrapInput validateInput" data-validate="Message is required">
+                        <span class="labelInput">Description:</span>
+                        <textarea id="taskDescription" class="inputField" name="message" placeholder="Your description..."></textarea>
+                        <span class="focusInput"></span>
+                    </div>
 
-                <input id="applyTask" type="button" value="Apply" />
-                <input id="resetTask" type="button" value="Reset changes" />
-                <input id="deleteTask" type="button" value="Detele task" />
+                    <div class="wrapInput validateInput" data-validate="Phone is required">
+                        <span class="labelInput">Sart date:</span>
+                        <input id="taskStartDate" class="inputField" type="datetime-local">
+                        <span class="focusInput"></span>
+                    </div>
+
+                    <div class="wrapInput validateInput" data-validate="Phone is required">
+                        <span class="labelInput">Frequency:</span>
+                        <input id="taskFrequency" class="inputField" type="number" placeholder="Enter phone number">
+                        <span class="focusInput"></span>
+                    </div>
+
+                </div>
+                <div class="contactForm2">
+                    <div class="wrapInput2 validateInput">
+                        <span class="labelInput2">Groups:</span>
+                        <input id="assignToGroup" name="assignToGroup" type="button" value="Assign to group" />
+                        <span class="focusInput"></span>
+                    </div>
+
+                    <div id="taskGroups"></div>
+
+                    <input class="left" id="applyTask" type="button" value="Apply" />
+                    <input class="left" id="resetTask" type="button" value="Reset changes" />
+                    <input class="right" id="deleteTask" type="button" value="Detele task" />
+                </div>
             </div>
         </td>
     </tr>
