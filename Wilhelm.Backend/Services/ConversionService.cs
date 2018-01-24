@@ -136,6 +136,8 @@ namespace Wilhelm.Backend.Services
         public void ConvertFromDto(WTask wTask, TaskDto dto, IEnumerable<WGroup> groups, bool updateGroups)
         {
             ConvertFromDto(wTask, dto);
+            if (dto.Groups == null)
+                return;
             foreach (var group in dto.Groups)
             {
                 var wgroup = groups.Where(x => x.Id == group.Id).SingleOrDefault();

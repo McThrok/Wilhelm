@@ -72,7 +72,7 @@ namespace Wilhelm.Backend.Services
                 wGroupToUpdate.WTasks = new List<WTask>();
                 _conversionService.ConvertFromDto(wGroupToUpdate, group);
             }
-
+            var a = wGroups.ToList();
             foreach (var task in config.Tasks)
             {
                 var wTaskToUpdate = wTasks.Where(x => x.Id == task.Id).SingleOrDefault();

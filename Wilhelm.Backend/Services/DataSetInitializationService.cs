@@ -36,7 +36,6 @@ namespace Wilhelm.Backend.Services
                 WGroup g3 = new WGroup() { Name = "Finanse", OwnerId = User1.Id, };
                 WGroup g4 = new WGroup() { Name = "Ważne", OwnerId = User1.Id, Description = "Lepiej o tym nie zapominać" };
 
-
                 WTask t1 = new WTask() { Name = "Nakarmić kota", OwnerId = User1.Id, Description = "Tom jest wybredny i je tylko Royal Canin", Frequency = 1, StartDate = DateTime.Today };
                 WTask t2 = new WTask() { Name = "Nakarmić psa", OwnerId = User1.Id, Description = "Burek zje wszystko", Frequency = 1, StartDate = DateTime.Today };
                 WTask t3 = new WTask() { Name = "Nakarmić rybki", OwnerId = User1.Id, Description = "Jeśli pływają brzuszkiem do góry to można przestać karmić", Frequency = 2, StartDate = DateTime.Today };
@@ -45,7 +44,6 @@ namespace Wilhelm.Backend.Services
                 WTask t6 = new WTask() { Name = "Podlać rosiczkę", OwnerId = User1.Id, Description = "Rosiczka jest mięsożerna, ale można i trzeba ją regularnie podlewać", Frequency = 1, StartDate = DateTime.Today };
                 WTask t7 = new WTask() { Name = "Zapłacić czynsz", OwnerId = User1.Id, Description = "1000zl plus ewentualne dopłaty", Frequency = 30, StartDate = DateTime.Today };
                 WTask t8 = new WTask() { Name = "Zapłacić za internet", OwnerId = User1.Id, Description = "60 plus ewentualne dopłaty", Frequency = 30, StartDate = DateTime.Today };
-
 
                 db.WTasks.Add(t1);
                 db.WTasks.Add(t2);

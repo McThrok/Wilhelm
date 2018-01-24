@@ -1,34 +1,61 @@
 ﻿@{
-    ViewBag.Title = "TasksPage";
+    ViewBag.Title = "Tasks";
 }
-<div data-config="@ViewBag.JsonConfig" data-userId="@ViewBag.UserId" id="dataDiv"/>
+<div data-config="@ViewBag.JsonConfig" data-userId="@ViewBag.UserId" id="dataDiv" />
 
-@foreach (var task in ViewBag.Config.Tasks)
-{
-    <div>
-        <label>@task.Name</label>
-    </div>
+<table>
+    <tr>
+        <td>
+            <div id="tasks">
+                <button id="newTask" class="taskButton">New Task</button>
+            </div>
+        </td>
+        <td>
+            <div id="taskDetails">
+                <div class="contactForm validate-form">
+                    <div class="wrapInput validateInput">
+                        <span class="labelInput">Name:</span>
+                        <input id="taskName" class="inputField" type="text" name="name" placeholder="Enter task name">
+                        <span class="focusInput"></span>
+                    </div>
 
-}
+                    <div class="wrapInput validateInput">
+                        <span class="labelInput">Description:</span>
+                        <textarea id="taskDescription" class="inputField" name="message" placeholder="Your description..."></textarea>
+                        <span class="focusInput"></span>
+                    </div>
 
-@foreach (var task in ViewBag.Config.Tasks)
-{
-    <div id="active_task_details">
-        <label for="name">Name</label>  <input id="name" name="name" type="text" value="@task.Name" />
-        <label for="description">Description</label>  <input id="description" name="description" type="text" value="@task.Description" />
-        <label for="start_date">Sart date</label>  <input id="start_date" name="start_date" type="datetime-local" value="@task.StartDate.ToString("s")" />
-        <label for="frequency">Frequency</label>  <input id="frequency" name="frequency" type="number" value="@task.Frequency" />
+                    <div class="wrapInput validateInput">
+                        <span class="labelInput">Sart date:</span>
+                        <input id="taskStartDate" class="inputField" type="datetime-local">
+                        <span class="focusInput"></span>
+                    </div>
 
-        <label><strong>Groups</strong> <input id="assign_to_group" name="assign_to_group" type="button" value="Assign to group" /></label>
-        <div id="task_groups">
-        </div>
-    </div>
+                    <div class="wrapInput validateInput">
+                        <span class="labelInput">Frequency:</span>
+                        <input id="taskFrequency" class="inputField" type="number" placeholder="Enter phone number">
+                        <span class="focusInput"></span>
+                    </div>
 
-}
-<input id="apply_task" type="button" value="Apply" />
-<input id="reset_task" type="button" value="Reset changes" />
-<input id="delete_task" type="button" value="Detele task" />
+                </div>
+                <div class="contactForm2">
+                    <div class="wrapInput2 validateInput">
+                        <span class="labelInput2">Groups:</span>
+                        <input id="assignToGroup" name="assignToGroup" type="button" value="Assign to group" />
+                        <span class="focusInput"></span>
+                    </div>
 
+                    <div id="taskGroups" class="t"></div>
+
+                    <input class="left" id="applyTask" type="button" value="Apply" />
+                    <input class="left" id="resetTask" type="button" value="Reset changes" />
+                    <input class="right" id="deleteTask" type="button" value="Detele task" />
+                </div>
+            </div>
+        </td>
+    </tr>
+</table>
 @section scripts{
     @Scripts.Render("~/Scripts/Pages/tasksPage.js")
+    @Styles.Render("~/Content/Pages/TasksPage.css")
 }

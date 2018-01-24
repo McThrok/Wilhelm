@@ -154,12 +154,12 @@ namespace Wilhelm.Backend.Services
 
         public UserDto GetUser(int userId)
         {
-
-            var userDto = new UserDto();
+            UserDto userDto = new UserDto();
             using (var db = _wContextFactory.Create())
             {
-                var user = db.Users.Where(x => x.Id == userId).SingleOrDefault();
-                _conversionService.ConvertToDto(userDto, user);
+                var user = db.Users.SingleOrDefault(x => x.Id == userId);
+                if (user != null)
+                    _conversionService.ConvertToDto(userDto, user);
             }
             return userDto;
         }
