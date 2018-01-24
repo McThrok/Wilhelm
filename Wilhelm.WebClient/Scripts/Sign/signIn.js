@@ -1,8 +1,7 @@
 
 (() => {
-
     window.onload = function () {
-        document.getElementById("js-button").onclick = function signInClick() {
+        document.getElementById("js-button").onclick = function() {
             var loginInput = document.getElementById("login");
             var passwordInput = document.getElementById("password");
 
@@ -19,7 +18,6 @@
                 $.get("http://localhost:8080/api/account?login=" + loginInput.value + "&password=" + passwordInput.value).done((data) => {
                     if (data.Dto === null) {
                         showValidate(loginInput, "Username or password is not correct");
-                        showValidate(passwordInput, "Username or password is not correct");
                     }
                     else
                         window.location.href = "/Pages/HomePage?userId=" + data.Dto.Id;

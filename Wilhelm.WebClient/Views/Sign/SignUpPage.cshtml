@@ -1,14 +1,45 @@
 ﻿@{
     ViewBag.Title = "SignUnPage";
 }
-<input id="login" type="text" />
-<input id="password" type="password" />
-<input id="confirmPassword" type="password" />
-<button type="button" id="signUpBtn">Sign Up</button>
-<button type="button" id="signInBtn">Sign In</button>
+<div class="container">
+    <div class="subContainer p-t-50 p-b-90">
+        <div class="loginForm validateForm">
+            <span class="loginFormTitle p-b-51">Sign In</span>
+
+
+            <div class="inputDiv validateInput m-b-16">
+                <input id="login" class="inputField" type="text">
+                <span class="focusInputField"></span>
+            </div>
+
+            <div class="inputDiv validateInput m-b-16">
+                <input id="password" class="inputField" type="password">
+                <span class="focusInputField"></span>
+            </div>
+
+            <div class="inputDiv validateInput m-b-16">
+                <input id="confirmPassword" class="inputField" type="password">
+                <span class="focusInputField"></span>
+            </div>
+
+            <div m-t-17">
+                <button id="js-button" class="loginFormBtn">
+                    Sign Up
+                </button>
+            </div>
+
+            <span class="loginFormTitle p-b-51">
+                <a id="js-link">
+                    Have an account? Log In!
+                </a>
+            </span>
+        </div>
+    </div>
+</div>
 
 @section scripts{
     @Scripts.Render("~/Scripts/Sign/signUp.js")
+    @Styles.Render("~/Content/Signing.css")
 }
 
 
