@@ -1,7 +1,4 @@
-﻿
-/* tasks */
-#tasks {
-    /*width: 155px;*/
+﻿#tasks {
     height: 645px;
 }
 
@@ -110,11 +107,18 @@ input {
             background-color: #3b424c;
         }
 /*=================taskGroups==============================*/
+.t {
+    height: 220px;
+    overflow-y: scroll;
+}
+.g {
+    height: 340px;
+    overflow-y: scroll;
+}
 #taskGroups {
     margin: 0;
     margin-top: 15px;
     margin-bottom: 5px;
-    min-height: 220px;
     border: 5px;
     border-style: solid;
     border-color: white;

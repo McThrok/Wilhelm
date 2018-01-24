@@ -176,9 +176,7 @@
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\Layouts\PagesLayout.css" />
-    <Content Include="Content\Pages\ArchivePage.css" />
     <Content Include="Content\Pages\HomePage.css" />
-    <Content Include="Content\Pages\GroupsPage.css" />
     <Content Include="Content\Pages\TasksPage.css" />
     <Content Include="Content\Signing.css" />
     <Content Include="favicon.ico" />
