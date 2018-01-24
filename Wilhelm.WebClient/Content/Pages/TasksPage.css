@@ -89,14 +89,25 @@ input {
     margin: 5px;
     margin-top: 25px;
 }
-
-    .wrapInput2 input {
+    /*.wrapInput2 input {
         float: right;
-        background-color: #adb7c1;
+        background-color: slategrey;
+        height: 30px;
+    }
+
+        .wrapInput2 input:hover {
+            background-color: #3b424c;
+        }*/
+    .wrapInput2 input {
+        width:120px;
+        font-size: 16px;
+        color: white;
+        float: right;
+        background-color: slategrey;
         height: 30px;
     }
         .wrapInput2 input:hover {
-            background-color: slategrey;
+            background-color: #3b424c;
         }
 /*=================taskGroups==============================*/
 #taskGroups {
@@ -136,12 +147,24 @@ input {
 
 /*================================================*/
 .left {
+    width:120px;
+    font-size: 16px;
+    color: white;
+    background-color: slategrey;
+    height: 30px;
+}
+
+    .left:hover {
+        background-color: #3b424c;
+    }
+/*.left {
+
     background-color: #adb7c1;
     height: 30px;
 }
     .left:hover {
         background-color: slategrey;
-    }
+    }*/
 .right {
     float: right;
     background-color: #ffcccc;

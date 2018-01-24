@@ -1,11 +1,10 @@
 ﻿@{
-    ViewBag.Title = "ArchivePage";
+    ViewBag.Title = "Archive";
 }
+<div id="home"></div>
 <button type="button" data-activities="@ViewBag.JsonActivities" data-userId="@ViewBag.UserId" id="applyButton">Apply</button>
-<div id="archive">
-</div>
 
 @section scripts{
     @Scripts.Render("~/Scripts/Pages/archivePage.js")
-    @Styles.Render("~/Content/Pages/ArchivePage.css")
+    @Styles.Render("~/Content/Pages/HomePage.css")
 }
