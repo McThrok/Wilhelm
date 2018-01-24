@@ -56,7 +56,7 @@ input {
     line-height: 1.2;
     text-align: right;
     position: absolute;
-    top: 18px;
+    top: 12px;
     left: -105px;
     width: 80px;
 }
@@ -136,19 +136,19 @@ input {
 
 /*================================================*/
 .left {
-    background-color: #bfff80;
+    background-color: #adb7c1;
     height: 30px;
 }
     .left:hover {
-        background-color: #88ff4d;
+        background-color: slategrey;
     }
 .right {
     float: right;
-    background-color: #ffaa80;
+    background-color: #ffcccc;
     height: 30px;
 }
     .right:hover {
-        background-color: #ff7733;
+        background-color: #ff8080;
     }
 /*================================================*/
 
