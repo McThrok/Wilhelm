@@ -193,7 +193,7 @@
     function sendNewConfig(ttype, task, groups) {
         $.ajax({
             url: "http://localhost:8080/api/Configuration/task",
-            type: type,
+            type: ttype,
             contentType: "application/json;charset=utf-8",
             data: JSON.stringify({ "Key": task, "Value": groups }),
             success: function () {
