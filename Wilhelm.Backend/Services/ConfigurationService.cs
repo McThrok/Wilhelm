@@ -93,5 +93,54 @@ namespace Wilhelm.Backend.Services
 
             SaveConfig(config);
         }
+
+        public void AddGroup(KeyValuePair<GroupDto, List<int>> groupPair)
+        {
+            groupPair.Key.Tasks = new List<TaskDto>();
+            var config = GetConfig(groupPair.Key.OwnerId);
+            config.Groups.Add(groupPair.Key);
+            foreach (var task in config.Tasks)
+            {
+                if (groupPair.Value.Contains(task.Id))
+                {
+                    groupPair.Key.Tasks.Add(task);
+                    task.Groups.Add(groupPair.Key);
+                }
+            }
+            SaveConfig(config);
+        }
+
+        public void UpdateGroup(KeyValuePair<GroupDto, List<int>> groupPair)
+        {
+            var group = groupPair.Key;
+            var config = GetConfig(group.OwnerId);
+            var groupToUpdate = config.Groups.SingleOrDefault(x => x.Id == group.Id);
+            groupToUpdate.Description = group.Description;
+            groupToUpdate.Name = group.Name;
+
+            var includedGroups = groupPair.Value;
+
+            foreach (var task in config.Tasks)
+            {
+                if (task.Groups.Contains(groupToUpdate))
+                {
+                    if (!includedGroups.Contains(task.Id))
+                    {
+                        groupToUpdate.Tasks.Remove(task);
+                        task.Groups.Remove(groupToUpdate);
+                    }
+                }
+                else
+                {
+                    if (includedGroups.Contains(task.Id))
+                    {
+                        groupToUpdate.Tasks.Add(task);
+                        task.Groups.Add(groupToUpdate);
+                    }
+                }
+            }
+
+            SaveConfig(config);
+        }
     }
 }
