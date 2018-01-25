@@ -50,8 +50,10 @@
         };
         if (selectedTaskId == -1) {
             task.Id = -1;
+            sendNewConfig("POST", task, groups);
         }
-        sendNewConfig(task,groups);
+        else
+            sendNewConfig("PUT", task, groups);
         LoadTasks();
         NewTaskClick();
         shownAllGroups = false;
@@ -66,16 +68,21 @@
     }
     function DeleteCLick() {
         var selectedTaskId = document.getElementsByClassName("activeTask")[0].taskId;
-        for (var j = 0; j < config.Tasks.length; j++) {
-            if (config.Tasks[j].Id == selectedTaskId) {
-                config.Tasks[j].Archivized = true;
-                break;
-            }
+        var groupsDivs = $("#taskGroups").find(".groupInTask");
+        var groups = [];
+        for (var i = 0; i < groupsDivs.length; i++) {
+            groups.push(groupsDivs[i].groupId);
         }
-        sendNewConfig(userId);
-        LoadTasks();
-        NewTaskClick();
-        shownAllGroups = false;
+        var task = {
+            Archivized: false,
+            Description: document.getElementById("taskDescription").value,
+            Frequency: document.getElementById("taskFrequency").value,
+            Id: selectedTaskId,
+            Name: document.getElementById("taskName").value,
+            OwnerId: userId,
+            StartDate: document.getElementById("taskStartDate").value,
+        };
+        sendNewConfig("PUT", task, groups);
     }
     function AssignClick() {
         if (shownAllGroups)
@@ -132,6 +139,7 @@
                 var task = tasks.filter(function (el) { return el.Id == newButton.taskId; })[0];
                 ShowTaskDetails(task);
                 SetActiveTask(newButton);
+                Show();
             }
             tasksDiv.appendChild(newButton);
         }
@@ -177,14 +185,15 @@
         var groupsDiv = document.getElementById("taskGroups");
         while (groupsDiv.firstChild)
             groupsDiv.removeChild(groupsDiv.firstChild);
+        Hide();
     }
     //~tasks
 
     //config
-    function sendNewConfig(task, groups) {
+    function sendNewConfig(ttype, task, groups) {
         $.ajax({
             url: "http://localhost:8080/api/Configuration/task",
-            type: "POST",
+            type: type,
             contentType: "application/json;charset=utf-8",
             data: JSON.stringify({ "Key": task, "Value": groups }),
             success: function () {
@@ -193,4 +202,16 @@
         })
     }
     //~config
+    function Hide() {
+        var resetBtn = document.getElementById("resetTask");
+        resetBtn.style.visibility = "hidden";
+        var deleteBtn = document.getElementById("deleteTask");
+        deleteBtn.style.visibility = "hidden";
+    }
+    function Show() {
+        var resetBtn = document.getElementById("resetTask");
+        resetBtn.style.visibility = "visible";
+        var deleteBtn = document.getElementById("deleteTask");
+        deleteBtn.style.visibility = "visible";
+    }
 })();
