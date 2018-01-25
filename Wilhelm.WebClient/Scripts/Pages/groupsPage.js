@@ -46,7 +46,7 @@
             Name: document.getElementById("taskName").value,
             OwnerId: userId,
         };
-        if (selectedGroupId == -1) {
+        if (selectedGroupId === -1) {
             group.Id = -1;
             sendNewConfig("POST", group, tasks);
         }
@@ -58,7 +58,7 @@
     function ResetCLick() {
         var selectedGroupId = document.getElementsByClassName("activeTask")[0].groupId;
         var group = config.Groups.filter(function (el) {
-            return el.Id == selectedGroupId
+            return el.Id === selectedGroupId
         });
         ShowGroupDetails(group[0]);
         shownAllTasks = false;
@@ -91,7 +91,7 @@
         var tasksDivs = $("#taskGroups").find(".taskGroupItem");
         for (let i = 0; i < tasksDivs.length; i++) {
             tasksDivs[i].onclick = function () { AddDeleteTaskFromGroup(tasksDivs[i]); };
-            tasks = tasks.filter(function (el) { return el.Id != tasksDivs[i].taskId; });
+            tasks = tasks.filter(function (el) { return el.Id !== tasksDivs[i].taskId; });
         }
 
         var tasksDiv = document.getElementById("taskGroups");
@@ -132,7 +132,7 @@
             newButton.innerText = groups[i].Name;
             newButton.onclick = function () {
                 shownAllTasks = false;
-                var group = groups.filter(function (el) { return el.Id == newButton.groupId; })[0];
+                var group = groups.filter(function (el) { return el.Id === newButton.groupId; })[0];
                 ShowGroupDetails(group);
                 SetActiveGroup(newButton);
                 Show();
@@ -194,6 +194,7 @@
             }
         })
     }
+    //~config
     function Hide() {
         var resetBtn = document.getElementById("resetTask");
         resetBtn.style.visibility = "hidden";
@@ -206,5 +207,4 @@
         var deleteBtn = document.getElementById("deleteTask");
         deleteBtn.style.visibility = "visible";
     }
-    //~config
 })();

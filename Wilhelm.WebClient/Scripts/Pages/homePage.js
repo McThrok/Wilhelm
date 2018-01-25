@@ -9,6 +9,8 @@
         //
         var homeDiv = document.getElementById("home");
         for (let i = 0; i < activities.length; i++) {
+            if (activities[i].Task.Archivized)
+                continue;
             let activity = document.createElement("div");
             activity.classList.add("homeItem");
             let checkbox = document.createElement("input");
