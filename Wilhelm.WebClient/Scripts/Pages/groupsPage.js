@@ -37,49 +37,49 @@
         var tasksDivs = $("#taskGroups").find(".groupInTask");
         var tasks = [];
         //telete choosen feoup from all tasks
-        for (var i = 0; i < config.Tasks.length; i++) {
-            config.Tasks[i].Groups = config.Tasks[i].Groups.filter(function (el) {
-                return el.Id != selectedGroupId;
-            })
-        }
+        //for (var i = 0; i < config.Tasks.length; i++) {
+        //    config.Tasks[i].Groups = config.Tasks[i].Groups.filter(function (el) {
+        //        return el.Id != selectedGroupId;
+        //    })
+        //}
         //
         for (var i = 0; i < tasksDivs.length; i++) {
-            var task = {
-                Id: tasksDivs[i].taskId,
-                Name: tasksDivs[i].firstChild.innerText,
-                Description: tasksDivs[i].lastChild.innerText
-            }
-            tasks.push(task);
+            //var task = {
+            //    Id: tasksDivs[i].taskId,
+            //    Name: tasksDivs[i].firstChild.innerText,
+            //    Description: tasksDivs[i].lastChild.innerText
+            //}
+            //tasks.push(task);
+            tasks.push(tasksDivs[i].taskId);
         }
         var group = {
             Archivized: false,
             Description: document.getElementById("taskDescription").value,
-            Tasks: tasks,
             Id: selectedGroupId,
             Name: document.getElementById("taskName").value,
             OwnerId: userId,
         };
         if (selectedGroupId == -1) {
             group.Id = -1;
-            config.Groups.push(group);
+          //  config.Groups.push(group);
         }
-        else {
-            for (var j = 0; j < config.Groups.length; j++) {
-                if (config.Groups[j].Id == selectedGroupId) {
-                    config.Groups[j] = group;
-                    break;
-                }
-            }
-        }
+        //else {
+        //    for (var j = 0; j < config.Groups.length; j++) {
+        //        if (config.Groups[j].Id == selectedGroupId) {
+        //            config.Groups[j] = group;
+        //            break;
+        //        }
+        //    }
+        //}
         //
-        for (var i = 0; i < config.Tasks.length; i++) {
-            if (group.Tasks.filter(function (el) {
-                return config.Tasks[i].Id === el.Id;
-            }).length == 1)
-                config.Tasks[i].Groups.push(group);
-        }
+        //for (var i = 0; i < config.Tasks.length; i++) {
+        //    if (group.Tasks.filter(function (el) {
+        //        return config.Tasks[i].Id === el.Id;
+        //    }).length == 1)
+        //        config.Tasks[i].Groups.push(group);
+        //}
         //
-        sendNewConfig(userId);
+        sendNewConfig(group, tasks);
         LoadGroups();
         NewGroupClick();
         shownAllTasks = false;
@@ -207,13 +207,12 @@
     //~tasks
 
     //config
-    function sendNewConfig(id) {
-        var wqe = config;
+    function sendNewConfig(group, tasks) {
         $.ajax({
-            url: "http://localhost:8080/api/Configuration?userId=" + id,
+            url: "http://localhost:8080/api/Configuration/group",
             type: "POST",
             contentType: "application/json;charset=utf-8",
-            data: JSON.stringify(config),
+            data: JSON.stringify({ "Key": group, "Value": tasks }),
             success: function () {
                 location.reload();
             }

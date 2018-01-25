@@ -37,18 +37,12 @@
         var groupsDivs = $("#taskGroups").find(".groupInTask");
         var groups = [];
         for (var i = 0; i < groupsDivs.length; i++) {
-            var group = {
-                Id: groupsDivs[i].groupId,
-                Name: groupsDivs[i].firstChild.innerText,
-                Description: groupsDivs[i].lastChild.innerText
-            }
-            groups.push(group);
+            groups.push(groupsDivs[i].groupId);
         }
         var task = {
             Archivized: false,
             Description: document.getElementById("taskDescription").value,
             Frequency: document.getElementById("taskFrequency").value,
-            Groups: groups,
             Id: selectedTaskId,
             Name: document.getElementById("taskName").value,
             OwnerId: userId,
@@ -56,17 +50,8 @@
         };
         if (selectedTaskId == -1) {
             task.Id = -1;
-            config.Tasks.push(task);
         }
-        else {
-            for (var j = 0; j < config.Tasks.length; j++) {
-                if (config.Tasks[j].Id == selectedTaskId) {
-                    config.Tasks[j] = task;
-                    break;
-                }
-            }
-        }
-        sendNewConfig(userId);
+        sendNewConfig(task,groups);
         LoadTasks();
         NewTaskClick();
         shownAllGroups = false;
@@ -196,12 +181,12 @@
     //~tasks
 
     //config
-    function sendNewConfig(id) {
+    function sendNewConfig(task, groups) {
         $.ajax({
-            url: "http://localhost:8080/api/Configuration?userId=" + id,
+            url: "http://localhost:8080/api/Configuration/task",
             type: "POST",
             contentType: "application/json;charset=utf-8",
-            data: JSON.stringify(config),
+            data: JSON.stringify({ "Key": task, "Value": groups }),
             success: function () {
                 location.reload();
             }

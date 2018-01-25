@@ -3,10 +3,9 @@
 
     window.onload = function () {
         var dataDiv = document.getElementById("config");
-        //var activities = JSON.parse(dataDiv.dataset.activities);
         var userId = dataDiv.dataset.userid;
         var offset = 0;
-        var count = 5;
+        var count = 8;
 
         var loadMore = document.getElementById("load");
         loadMore.onclick = function () {
