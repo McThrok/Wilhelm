@@ -7,6 +7,8 @@
         var offset = 0;
         var count = 8;
 
+        GetNewActivities(userId, offset, count);
+
         var loadMore = document.getElementById("load");
         loadMore.onclick = function () {
             GetNewActivities(userId, offset, count);
