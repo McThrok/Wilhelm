@@ -13,7 +13,7 @@ namespace Wilhelm.Backend.Services.Interfaces
     {
         ConfigDto GetConfig(int userId);
         void SaveConfig(ConfigDto config);
-        void AddTask(int userId,TaskDto task);
-        void UpdateTask(int userId, TaskDto task);
+        void AddTask(TaskDto task);
+        void UpdateTask(TaskDto task);
     }
 }

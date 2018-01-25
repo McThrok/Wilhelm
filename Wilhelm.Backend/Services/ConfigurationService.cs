@@ -43,26 +43,43 @@ namespace Wilhelm.Backend.Services
             }
         }
 
-        public void UpdateTask(int userId, TaskDto task)
+        public void UpdateTask(TaskDto task)
         {
-            var config = GetConfig(userId);
+            var config = GetConfig(task.OwnerId);
             var taskToUpdate = config.Tasks.SingleOrDefault(x => x.Id == task.Id);
             taskToUpdate.Frequency = task.Frequency;
             taskToUpdate.StartDate = task.StartDate;
             taskToUpdate.Description = task.Description;
             taskToUpdate.Name = task.Name;
 
+            var includedGroups = task.Groups.Select(x => x.Id).ToList();
+
             taskToUpdate.Groups = new List<GroupDto>();
-            foreach (var group in task.Groups)
+            foreach (var group in config.Groups)
             {
-               var groupToUpdate = config.Groups.SingleOrDefault(x => x.Id == group.Id);
-                taskToUpdate.Groups.Add(groupToUpdate);
+                if (group.Tasks.Contains(taskToUpdate))
+                {
+                    if (!includedGroups.Contains(group.Id))
+                    {
+                        taskToUpdate.Groups.Remove(group);
+                        group.Tasks.Remove(taskToUpdate);
+                    }
+                }
+                else
+                {
+                    if (includedGroups.Contains(group.Id))
+                    {
+                        taskToUpdate.Groups.Add(group);
+                        group.Tasks.Add(taskToUpdate);
+                    }
+                }
             }
+            SaveConfig(config);
         }
 
-        public void AddTask(int userId, TaskDto task)
+        public void AddTask(TaskDto task)
         {
-            var config = GetConfig(userId);
+            var config = GetConfig(task.OwnerId);
             config.Tasks.Add(task);
             foreach (var group in task.Groups)
                 config.Groups.SingleOrDefault(x => x.Id == group.Id)?.Tasks.Add(task);

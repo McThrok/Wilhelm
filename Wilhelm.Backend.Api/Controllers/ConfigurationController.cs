@@ -33,16 +33,15 @@ namespace Wilhelm.Backend.Api.Controllers
         }
 
         [Route("task")]
-        public void PostTask(int userId, [FromBody]TaskDto task)
+        public void PostTask([FromBody]TaskDto task)
         {
-            throw new NotImplementedException();
-            _configurationService.AddTask(userId, task);
+            _configurationService.AddTask(task);
         }
         [Route("task")]
-        public void PutTask(int userId, [FromBody]TaskDto task)
+        public void PutTask([FromBody]TaskDto task)
         {
-            throw new NotImplementedException();
-            _configurationService.UpdateTask(userId, task);
+            _configurationService.UpdateTask( task);
         }
     }
 }
+ 
