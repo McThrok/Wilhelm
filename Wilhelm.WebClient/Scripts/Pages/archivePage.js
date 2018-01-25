@@ -1,15 +1,16 @@
 (() => {
     var c = true;
-    var nr = 0;
 
     window.onload = function () {
         var dataDiv = document.getElementById("config");
         //var activities = JSON.parse(dataDiv.dataset.activities);
         var userId = dataDiv.dataset.userid;
+        var offset = 0;
+        var count = 5;
 
         var loadMore = document.getElementById("load");
         loadMore.onclick = function () {
-            GetNewActivities(userId);
+            GetNewActivities(userId, offset, count);
         }
     }
 
@@ -26,9 +27,10 @@
         })
     }
 
-    function GetNewActivities(userId) {
+    function GetNewActivities(userId,offset,count) {
+        var qwe = offset;
         $.ajax({
-            url: "http://localhost:8080/api/ArchiveActivities?userId=" + userId + "&qwe=" + nr++,
+            url: "http://localhost:8080/api/ArchiveActivities?userId=" + userId + "&offset=" + count*offset++ + "&amount=" + count,
             type: 'GET',
             contentType: "application/json;charset=utf-8",
             //contentType: "json",
