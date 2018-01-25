@@ -31,5 +31,18 @@ namespace Wilhelm.Backend.Api.Controllers
         {
             _configurationService.SaveConfig(config);
         }
+
+        [Route("task")]
+        public void PostTask(int userId, [FromBody]TaskDto task)
+        {
+            throw new NotImplementedException();
+            _configurationService.AddTask(userId, task);
+        }
+        [Route("task")]
+        public void PutTask(int userId, [FromBody]TaskDto task)
+        {
+            throw new NotImplementedException();
+            _configurationService.UpdateTask(userId, task);
+        }
     }
 }
