@@ -74,7 +74,7 @@
             groups.push(groupsDivs[i].groupId);
         }
         var task = {
-            Archivized: false,
+            Archivized: true,
             Description: document.getElementById("taskDescription").value,
             Frequency: document.getElementById("taskFrequency").value,
             Id: selectedTaskId,
