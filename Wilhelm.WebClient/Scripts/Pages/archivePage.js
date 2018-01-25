@@ -29,7 +29,6 @@
     }
 
     function GetNewActivities(userId, offset, count) {
-        var qwe = offset;
         $.ajax({
             url: "http://localhost:8080/api/ArchiveActivities?userId=" + userId + "&offset=" + count * offset++ + "&amount=" + count,
             type: 'GET',

@@ -54,9 +54,6 @@
         }
         else
             sendNewConfig("PUT", task, groups);
-        LoadTasks();
-        NewTaskClick();
-        shownAllGroups = false;
     }
     function ResetCLick() {
         var selectedTaskId = document.getElementsByClassName("activeTask")[0].taskId;

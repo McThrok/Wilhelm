@@ -53,9 +53,7 @@
         else {
             sendNewConfig("PUT", group, tasks);
         }
-        LoadGroups();
-        NewGroupClick();
-        shownAllTasks = false;
+       
     }
     function ResetCLick() {
         var selectedGroupId = document.getElementsByClassName("activeTask")[0].groupId;
@@ -80,7 +78,6 @@
             OwnerId: userId,
         };
         sendNewConfig("PUT", group, tasks);
-        sendNewConfig(userId);
     }
     function AssignClick() {
         if (shownAllTasks)
