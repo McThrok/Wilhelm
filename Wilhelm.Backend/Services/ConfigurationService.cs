@@ -43,8 +43,25 @@ namespace Wilhelm.Backend.Services
             }
         }
 
-        public void UpdateTask(TaskDto task)
+        public void AddTask(KeyValuePair<TaskDto, List<int>> taskPair)
         {
+            taskPair.Key.Groups = new List<GroupDto>();
+            var config = GetConfig(taskPair.Key.OwnerId);
+            config.Tasks.Add(taskPair.Key);
+            foreach (var group in config.Groups)
+            {
+                if (taskPair.Value.Contains(group.Id))
+                {
+                    taskPair.Key.Groups.Add(group);
+                    group.Tasks.Add(taskPair.Key);
+                }
+            }
+            SaveConfig(config);
+        }
+
+        public void UpdateTask(KeyValuePair<TaskDto, List<int>> taskPair)
+        {
+            var task = taskPair.Key;
             var config = GetConfig(task.OwnerId);
             var taskToUpdate = config.Tasks.SingleOrDefault(x => x.Id == task.Id);
             taskToUpdate.Frequency = task.Frequency;
@@ -52,9 +69,8 @@ namespace Wilhelm.Backend.Services
             taskToUpdate.Description = task.Description;
             taskToUpdate.Name = task.Name;
 
-            var includedGroups = task.Groups.Select(x => x.Id).ToList();
+            var includedGroups = taskPair.Value;
 
-            taskToUpdate.Groups = new List<GroupDto>();
             foreach (var group in config.Groups)
             {
                 if (group.Tasks.Contains(taskToUpdate))
@@ -74,15 +90,7 @@ namespace Wilhelm.Backend.Services
                     }
                 }
             }
-            SaveConfig(config);
-        }
 
-        public void AddTask(TaskDto task)
-        {
-            var config = GetConfig(task.OwnerId);
-            config.Tasks.Add(task);
-            foreach (var group in task.Groups)
-                config.Groups.SingleOrDefault(x => x.Id == group.Id)?.Tasks.Add(task);
             SaveConfig(config);
         }
     }
