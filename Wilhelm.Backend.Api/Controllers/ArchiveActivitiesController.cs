@@ -28,9 +28,16 @@ namespace Wilhelm.Backend.Api.Controllers
             _activityService.SaveActivities(activities);
         }
 
-        public void PutActivity([FromBody]ActivityDto activity)
+        //http://localhost:8080/api/archiveactivities?activityId=12&value=true
+        public void PutActivity(int activityId, bool value)
         {
-            _activityService.UpdateActivity(activity);
+            _activityService.UpdateActivity(activityId, value);
+        }
+
+        //[{"Key":12,"Value":true},{"Key":13,"Value":true}]
+        public void PutActivities([FromBody]List<KeyValuePair<int, bool>> activities)
+        {
+            _activityService.UpdateActivities(activities);
         }
 
     }

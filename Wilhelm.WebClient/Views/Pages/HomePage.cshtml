@@ -2,7 +2,7 @@
     ViewBag.Title = "Home";
 }
 <div id="home"></div>
-<button type="button" data-activities="@ViewBag.JsonActivities" data-userId="@ViewBag.UserId" id="applyButton">Apply</button>
+<div data-activities="@ViewBag.JsonActivities" data-userId="@ViewBag.UserId" id="config"></div>
 
 @section scripts{
     @Scripts.Render("~/Scripts/Pages/homePage.js")
