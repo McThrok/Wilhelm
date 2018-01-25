@@ -39,13 +39,11 @@ button {
     margin-bottom: 10px;
     width: 160px;
     height: 30px;
-    box-shadow: 0 5px 0 #a6a6a6;
+    box-shadow: 0 5px 0 #a6a6a6;    
 }
     button:hover {
         background-color: #3b424c;
     }
 button:active {
-    /*background-color: #3e8e41;*/
-    box-shadow: 0 5px #666;
     transform: translateY(4px);
 }

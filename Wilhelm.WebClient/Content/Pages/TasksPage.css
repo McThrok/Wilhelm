@@ -17,6 +17,7 @@
             background-color: #ccc;
         }
 
+
         #tasks button.activeTask {
             font-size: 15px;
             background-color: slategrey;
@@ -32,7 +33,7 @@
     border-left-color: white;
     border-left-style: solid;
     width: 440px;
-    padding:10px;
+    padding: 10px;
 }
 
 .contactForm {
@@ -71,7 +72,7 @@ input {
     line-height: 1.2;
     display: block;
     width: 100%;
-    background-color:white;
+    background-color: white;
     padding: 0 5px;
 }
 /*==========================*/
@@ -86,35 +87,35 @@ input {
     margin: 5px;
     margin-top: 25px;
 }
-    /*.wrapInput2 input {
-        float: right;
-        background-color: slategrey;
-        height: 30px;
-    }
 
-        .wrapInput2 input:hover {
-            background-color: #3b424c;
-        }*/
     .wrapInput2 input {
-        width:120px;
+        width: 120px;
         font-size: 16px;
         color: white;
         float: right;
         background-color: slategrey;
         height: 30px;
+        box-shadow: 0 5px 0 #a6a6a6;
     }
+
         .wrapInput2 input:hover {
             background-color: #3b424c;
         }
+
+    .wrapInput2 input:active {
+        transform: translateY(4px);
+    }
 /*=================taskGroups==============================*/
 .t {
     height: 220px;
     overflow-y: scroll;
 }
+
 .g {
     height: 340px;
     overflow-y: scroll;
 }
+
 #taskGroups {
     margin: 0;
     margin-top: 15px;
@@ -128,10 +129,12 @@ input {
         font-weight: bold;
         font-size: 16px;
     }
+
     #taskGroups p {
         font-size: 14px;
         font-weight: normal;
     }
+
     #taskGroups .taskGroupItem {
         padding: 5px;
     }
@@ -151,31 +154,37 @@ input {
 
 /*================================================*/
 .left {
-    width:120px;
+    width: 120px;
     font-size: 16px;
     color: white;
     background-color: slategrey;
     height: 30px;
+    box-shadow: 0 5px 0 #a6a6a6;
 }
 
     .left:hover {
         background-color: #3b424c;
     }
-/*.left {
 
-    background-color: #adb7c1;
-    height: 30px;
-}
-    .left:hover {
-        background-color: slategrey;
-    }*/
+    .left:active {
+        box-shadow: 0 5px #666;
+        transform: translateY(4px);
+    }
+
 .right {
     float: right;
     background-color: #ffcccc;
     height: 30px;
+    box-shadow: 0 5px 0 #a6a6a6;
 }
+
     .right:hover {
         background-color: #ff8080;
+    }
+
+    .right:active {
+        box-shadow: 0 5px #666;
+        transform: translateY(4px);
     }
 /*================================================*/
 
