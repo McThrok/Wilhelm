@@ -33,7 +33,7 @@ namespace Wilhelm.Backend.Services
             }
             return dto;
         }
-        public void SaveConfig( ConfigDto config)
+        public void SaveConfig(ConfigDto config)
         {
             using (var db = _wContextFactory.Create())
             {
@@ -41,6 +41,49 @@ namespace Wilhelm.Backend.Services
                 _entitiesService.PrepareConfigToSave(db.WTasks, db.WGroups);
                 db.SaveChanges();
             }
+        }
+
+        public void UpdateTask(TaskDto task)
+        {
+            var config = GetConfig(task.OwnerId);
+            var taskToUpdate = config.Tasks.SingleOrDefault(x => x.Id == task.Id);
+            taskToUpdate.Frequency = task.Frequency;
+            taskToUpdate.StartDate = task.StartDate;
+            taskToUpdate.Description = task.Description;
+            taskToUpdate.Name = task.Name;
+
+            var includedGroups = task.Groups.Select(x => x.Id).ToList();
+
+            taskToUpdate.Groups = new List<GroupDto>();
+            foreach (var group in config.Groups)
+            {
+                if (group.Tasks.Contains(taskToUpdate))
+                {
+                    if (!includedGroups.Contains(group.Id))
+                    {
+                        taskToUpdate.Groups.Remove(group);
+                        group.Tasks.Remove(taskToUpdate);
+                    }
+                }
+                else
+                {
+                    if (includedGroups.Contains(group.Id))
+                    {
+                        taskToUpdate.Groups.Add(group);
+                        group.Tasks.Add(taskToUpdate);
+                    }
+                }
+            }
+            SaveConfig(config);
+        }
+
+        public void AddTask(TaskDto task)
+        {
+            var config = GetConfig(task.OwnerId);
+            config.Tasks.Add(task);
+            foreach (var group in task.Groups)
+                config.Groups.SingleOrDefault(x => x.Id == group.Id)?.Tasks.Add(task);
+            SaveConfig(config);
         }
     }
 }

@@ -27,9 +27,13 @@ namespace Wilhelm.Backend.Api.Controllers
             _activityService.SaveActivities(activities);
         }
 
-        public void PutActivity([FromBody]ActivityDto activity)
+        public void PutActivity(int activityId, bool value)
         {
-            _activityService.UpdateActivity(activity);
+            _activityService.UpdateActivity(activityId, value);
+        }
+        public void PutActivities([FromBody]List<KeyValuePair<int,bool>> activities)
+        {
+            _activityService.UpdateActivities(activities);
         }
     }
 }
