@@ -22,6 +22,10 @@ namespace Wilhelm.Backend.Api.Controllers
         {
             return _activityService.GetArchive(userId);
         }
+        public List<ActivityDto> GetActivities(int userId, int offset, int amount)
+        {
+            return _activityService.GetArchiveActivities(userId, offset, amount);
+        }
 
         public void PostActivities(int userId, [FromBody]IEnumerable<ActivityDto> activities)
         {
@@ -40,10 +44,6 @@ namespace Wilhelm.Backend.Api.Controllers
             _activityService.UpdateActivities(activities);
         }
 
-        public List<ActivityDto> GetActivities(int userId,bool nr)
-        {
-            return _activityService.GetArchiveActivities(userId,nr);
-        }
 
     }
 }

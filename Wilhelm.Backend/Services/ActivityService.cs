@@ -31,19 +31,13 @@ namespace Wilhelm.Backend.Services
             {
                 var archive = db.WActivities.Where(x => x.WTask.OwnerId == userId).Include(x => x.WTask);
                 _entitiesService.UpdateDto(dto, archive);
+                dto.Sort((a, b) => DateTime.Compare(b.Date, a.Date));
             }
             return dto;
         }
-
-        public List<ActivityDto> GetArchiveActivities(int userId, int nr)
+        public List<ActivityDto> GetArchiveActivities(int userId, int offset, int amount)
         {
-            List<ActivityDto> dto = new List<ActivityDto>();
-            using (var db = _wContextFactory.Create())
-            {
-                var archive = db.WActivities.Where(x => x.WTask.OwnerId == userId).Include(x => x.WTask);
-                _entitiesService.UpdateDto(dto, archive);
-            }
-            return dto;
+            return GetArchive(userId).Skip(offset).Take(amount).ToList();
         }
 
         public List<ActivityDto> GetTodaysActivities(int userId)
