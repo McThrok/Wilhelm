@@ -40,5 +40,10 @@ namespace Wilhelm.Backend.Api.Controllers
             _activityService.UpdateActivities(activities);
         }
 
+        public List<ActivityDto> GetActivities(int userId,bool nr)
+        {
+            return _activityService.GetArchiveActivities(userId,nr);
+        }
+
     }
 }

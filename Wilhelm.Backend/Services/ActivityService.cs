@@ -34,6 +34,18 @@ namespace Wilhelm.Backend.Services
             }
             return dto;
         }
+
+        public List<ActivityDto> GetArchiveActivities(int userId, int nr)
+        {
+            List<ActivityDto> dto = new List<ActivityDto>();
+            using (var db = _wContextFactory.Create())
+            {
+                var archive = db.WActivities.Where(x => x.WTask.OwnerId == userId).Include(x => x.WTask);
+                _entitiesService.UpdateDto(dto, archive);
+            }
+            return dto;
+        }
+
         public List<ActivityDto> GetTodaysActivities(int userId)
         {
             List<ActivityDto> dto = new List<ActivityDto>();
