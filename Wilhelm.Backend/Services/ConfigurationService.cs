@@ -67,6 +67,7 @@ namespace Wilhelm.Backend.Services
             taskToUpdate.Frequency = task.Frequency;
             taskToUpdate.StartDate = task.StartDate;
             taskToUpdate.Description = task.Description;
+            taskToUpdate.Archivized = task.Archivized;
             taskToUpdate.Name = task.Name;
 
             var includedGroups = taskPair.Value;
@@ -117,6 +118,7 @@ namespace Wilhelm.Backend.Services
             var groupToUpdate = config.Groups.SingleOrDefault(x => x.Id == group.Id);
             groupToUpdate.Description = group.Description;
             groupToUpdate.Name = group.Name;
+            groupToUpdate.Archivized = group.Archivized;
 
             var includedGroups = groupPair.Value;
 
