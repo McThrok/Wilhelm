@@ -1,16 +1,14 @@
 (() => {
-    var activities = "";
-    var userId = "";
     var c = true;
+
     window.onload = function () {
-        var applyBtn = document.getElementById("applyButton");
-        activities = JSON.parse(applyBtn.dataset.activities);
-        userId = applyBtn.dataset.userid;
-        applyBtn.onclick = () => apply(activities, userId);
+        var dataDiv = document.getElementById("config");
+        var activities = JSON.parse(dataDiv.dataset.activities);
+        var userId = dataDiv.dataset.userid;
 
         //
         var homeDiv = document.getElementById("home");
-        for (var i = 0; i < activities.length; i++) {
+        for (let i = 0; i < activities.length; i++) {
             let activity = document.createElement("div");
             activity.classList.add("homeItem");
             let checkbox = document.createElement("input");
@@ -30,8 +28,10 @@
             activity.appendChild(p);
             homeDiv.appendChild(activity);
             activity.onclick = function () {
-                if (c)
-                    activity.children[0].checked = !activity.children[0].checked;
+                if (c) {
+                    checkbox.checked = !checkbox.checked;
+                    SaveActivities(activities[i].Id, checkbox.checked);
+                }
                 c = true;
             }
         }
@@ -42,20 +42,10 @@
         selectedMenu[0].classList.remove("selectedMenu");
     document.getElementById("homeButton").classList.add("selectedMenu");
 
-    function apply(activities, id) {
-        var checkBoxes = document.getElementsByClassName("c");
-        for (var i = 0; i < checkBoxes.length; i++)
-            for (var j = 0; j < activities.length; j++)
-                if (Number(checkBoxes[i].activityId) === activities[j].Id) {
-                    activities[j].IsDone = checkBoxes[i].checked;
-                    break;
-                }
-
+    function SaveActivities(id, value) {
         $.ajax({
-            url: "http://localhost:8080/api/ActiveActivities?userId=" + id,
-            type: "POST",
-            contentType: "application/json;charset=utf-8",
-            data: JSON.stringify(activities),
+            url: "http://localhost:8080/api/ArchiveActivities?activityId=" + id + "&value=" + value,
+            type: "PUT",
         })
     }
 

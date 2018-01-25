@@ -1,10 +1,11 @@
 ﻿#home {
     width: 590px;
-    height:600px;
+    height:620px;
     overflow-y: scroll;
 } 
 
     #home .homeItem {
+        min-height:80px;
         color: black;
         display: block;
         padding-left: 20px;
@@ -26,19 +27,3 @@
         #home .homeItem p {
             font-size: 13px;
         }
-button {
-    font-size: 16px;
-    background-color: slategrey;
-    color: white;
-    outline: none;
-    border: none;
-    display: block;
-    margin: 0 auto;
-    margin-top: 5px;
-    margin-bottom: 5px;
-    width: 160px;
-    height: 30px;
-}
-    button:hover {
-        background-color: #3b424c;
-    }
