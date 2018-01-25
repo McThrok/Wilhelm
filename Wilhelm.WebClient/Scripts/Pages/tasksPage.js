@@ -5,7 +5,9 @@
 
     window.onload = function () {
         var dataDiv = document.getElementById("dataDiv");
-        config = JSON.parse(dataDiv.dataset.config);
+        //config = JSON.parse(dataDiv.dataset.config);
+        config = { "Tasks": [], "Groups": [] };
+
         userId = dataDiv.dataset.userid;
 
         var applyBtn = document.getElementById("applyTask");
@@ -23,8 +25,7 @@
         newTask.taskId = -1;
 
         NewTaskClick();
-        LoadTasks();
-
+        GetTaskList();
         //menu
         var selectedMenu = document.getElementsByClassName("selectedMenu");
         if (selectedMenu.length > 0)
@@ -102,8 +103,7 @@
     //~buttons
 
     //tasks
-    function LoadTasks() {
-        var tasks = config.Tasks;
+    function ShowTasks(tasks) {
         var tasksDiv = document.getElementById("tasks");
         while (tasksDiv.children.length > 1) // 0 - New task
             tasksDiv.removeChild(tasksDiv.lastChild);
@@ -112,14 +112,14 @@
                 continue;
             let newButton = document.createElement("button");
             newButton.classList.add("taskButton");
-            newButton.taskId = tasks[i].Id;
-            newButton.innerText = tasks[i].Name;
+            newButton.taskId = tasks[i].Key;
+            newButton.innerText = tasks[i].Value;
             newButton.onclick = function () {
-                shownAllGroups = false;
-                var task = tasks.filter(function (el) { return el.Id === newButton.taskId; })[0];
-                ShowTaskDetails(task);
-                SetActiveTask(newButton);
-                Show();
+                //shownAllGroups = false;
+                //var task = tasks.filter(function (el) { return el.Id === newButton.taskId; })[0];
+                //ShowTaskDetails(task);
+                //SetActiveTask(newButton);
+                //Show();
             }
             tasksDiv.appendChild(newButton);
         }
@@ -180,6 +180,35 @@
                 location.reload();
             }
         })
+    }
+    function GetTaskList() {
+        $.ajax({
+            url: "http://localhost:8080/api/Configuration?userId=" + userId,
+            type: 'GET',
+            contentType: "application/json;charset=utf-8",
+            success: function (data) {
+                ShowTasks(data);
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+                alert(xhr.status);
+                alert(thrownError);
+            }
+        });
+    }
+    function GetTaskDetails(taskId) {
+        $.ajax({
+            url: "http://localhost:8080/api/Configuration/taskDetails?taskId=" + taskId,
+            type: 'GET',
+            contentType: "application/json;charset=utf-8",
+            success: function (data) {
+                //ShowTasks(data);
+                console.log(data);
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+                alert(xhr.status);
+                alert(thrownError);
+            }
+        });
     }
     //~config
     function Hide() {

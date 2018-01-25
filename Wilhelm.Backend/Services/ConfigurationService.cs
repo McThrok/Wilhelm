@@ -33,6 +33,28 @@ namespace Wilhelm.Backend.Services
             }
             return dto;
         }
+        public List<KeyValuePair<int, string>> GetTaskNames(int userId)
+        {
+            List<KeyValuePair<int, string>> tasks = new List<KeyValuePair<int, string>>();
+            using (var db = _wContextFactory.Create())
+            {
+                tasks = db.WTasks.Where(x => x.OwnerId == userId && !x.Archivized)
+                    .Select(o => new { o.Id, o.Name }).AsEnumerable()
+                    .Select(o => new KeyValuePair<int, string>(o.Id, o.Name)).ToList();
+            }
+            return tasks;
+        }
+        TaskDto GetTaskDetails(int taskId)
+        {
+            TaskDto task = new TaskDto();
+            using (var db = _wContextFactory.Create())
+            {
+                WTask wTask = db.WTasks.SingleOrDefault(x => x.Id == taskId);
+                List<WGroup> wGroups = db.WTasks.SingleOrDefault(x => x.Id == taskId).WGroups;
+            }
+            return task;
+        }
+
         public void SaveConfig(ConfigDto config)
         {
             using (var db = _wContextFactory.Create())
@@ -144,5 +166,7 @@ namespace Wilhelm.Backend.Services
 
             SaveConfig(config);
         }
+
+
     }
 }

@@ -12,6 +12,8 @@ namespace Wilhelm.Backend.Services.Interfaces
     public interface IConfigurationService
     {
         ConfigDto GetConfig(int userId);
+        List<KeyValuePair<int, string>> GetTaskNames(int userId);
+        TaskDto GetTaskDetails(int taskId);
         void SaveConfig(ConfigDto config);
         void AddTask(KeyValuePair<TaskDto, List<int>> task);
         void UpdateTask(KeyValuePair<TaskDto, List<int>> task);

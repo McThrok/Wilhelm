@@ -27,25 +27,25 @@ namespace Wilhelm.WebClient.Controllers
         {
             ViewBag.UserId = userId;
             ViewBag.Name = (await _proxy.GetUser(userId))?.Login;
-            string jsonConfig = JsonConvert.SerializeObject(await _proxy.GetConfig(userId), new JsonSerializerSettings()
-            {
-                PreserveReferencesHandling = PreserveReferencesHandling.Objects,
-                Formatting = Formatting.Indented
-            });
-            ViewBag.JsonConfig = jsonConfig;
+            //string jsonConfig = JsonConvert.SerializeObject(await _proxy.GetConfig(userId), new JsonSerializerSettings()
+            //{
+            //    PreserveReferencesHandling = PreserveReferencesHandling.Objects,
+            //    Formatting = Formatting.Indented
+            //});
+            //ViewBag.JsonConfig = jsonConfig;
             return View();
         }
         public async Task<ActionResult> GroupsPage(int userId)
         {
             ViewBag.UserId = userId;
             ViewBag.Name = (await _proxy.GetUser(userId))?.Login;
-            ViewBag.Config = await _proxy.GetConfig(userId);
-            string jsonConfig = JsonConvert.SerializeObject(ViewBag.Config, new JsonSerializerSettings()
-            {
-                PreserveReferencesHandling = PreserveReferencesHandling.Objects,
-                Formatting = Formatting.Indented
-            });
-            ViewBag.JsonConfig = jsonConfig;
+            //ViewBag.Config = await _proxy.GetConfig(userId);
+            //string jsonConfig = JsonConvert.SerializeObject(ViewBag.Config, new JsonSerializerSettings()
+            //{
+            //    PreserveReferencesHandling = PreserveReferencesHandling.Objects,
+            //    Formatting = Formatting.Indented
+            //});
+            //ViewBag.JsonConfig = jsonConfig;
             return View();
         }
         public async Task<ActionResult> ArchivePage(int userId)

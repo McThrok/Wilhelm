@@ -33,14 +33,13 @@
             url: "http://localhost:8080/api/ArchiveActivities?userId=" + userId + "&offset=" + count * offset++ + "&amount=" + count,
             type: 'GET',
             contentType: "application/json;charset=utf-8",
-            //contentType: "json",
             success: function (data) {
                 AddActivities(data);
             },
-            error: function (xhr, ajaxOptions, thrownError) {
-                alert(xhr.status);
-                alert(thrownError);
-            }
+            //error: function (xhr, ajaxOptions, thrownError) {
+            //    alert(xhr.status);
+            //    alert(thrownError);
+            //}
         });
     }
     function AddActivities(activities) {

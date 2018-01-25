@@ -22,9 +22,19 @@ namespace Wilhelm.Backend.Api.Controllers
             _configurationService = new ServiceFactory().CreateConfigurationService();
         }
 
-        public ConfigDto GetConfig(int userId)
+        //public ConfigDto GetConfig(int userId)
+        //{
+        //    return _configurationService.GetConfig(userId);
+        //}
+        [Route("api/configuration/")]
+        public List<KeyValuePair<int, string>> GetTaskNames(int userId)
         {
-            return _configurationService.GetConfig(userId);
+            return _configurationService.GetTaskNames(userId);
+        }
+        [Route("api/configuration/taskDetails")]
+        public TaskDto GetTaskDetails(int taskId)
+        {
+            return _configurationService.GetTaskDetails(taskId);
         }
 
         public void PostConfig(int userId, [FromBody]ConfigDto config)
