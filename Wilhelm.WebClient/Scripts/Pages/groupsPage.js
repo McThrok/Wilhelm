@@ -36,20 +36,7 @@
         var selectedGroupId = document.getElementsByClassName("activeTask")[0].groupId;
         var tasksDivs = $("#taskGroups").find(".groupInTask");
         var tasks = [];
-        //telete choosen feoup from all tasks
-        //for (var i = 0; i < config.Tasks.length; i++) {
-        //    config.Tasks[i].Groups = config.Tasks[i].Groups.filter(function (el) {
-        //        return el.Id != selectedGroupId;
-        //    })
-        //}
-        //
         for (var i = 0; i < tasksDivs.length; i++) {
-            //var task = {
-            //    Id: tasksDivs[i].taskId,
-            //    Name: tasksDivs[i].firstChild.innerText,
-            //    Description: tasksDivs[i].lastChild.innerText
-            //}
-            //tasks.push(task);
             tasks.push(tasksDivs[i].taskId);
         }
         var group = {
@@ -61,25 +48,11 @@
         };
         if (selectedGroupId == -1) {
             group.Id = -1;
-          //  config.Groups.push(group);
+            sendNewConfig("POST", group, tasks);
         }
-        //else {
-        //    for (var j = 0; j < config.Groups.length; j++) {
-        //        if (config.Groups[j].Id == selectedGroupId) {
-        //            config.Groups[j] = group;
-        //            break;
-        //        }
-        //    }
-        //}
-        //
-        //for (var i = 0; i < config.Tasks.length; i++) {
-        //    if (group.Tasks.filter(function (el) {
-        //        return config.Tasks[i].Id === el.Id;
-        //    }).length == 1)
-        //        config.Tasks[i].Groups.push(group);
-        //}
-        //
-        sendNewConfig(group, tasks);
+        else {
+            sendNewConfig("PUT", group, tasks);
+        }
         LoadGroups();
         NewGroupClick();
         shownAllTasks = false;
@@ -94,16 +67,20 @@
     }
     function DeleteCLick() {
         var selectedGroupId = document.getElementsByClassName("activeTask")[0].groupId;
-        for (var j = 0; j < config.Tasks.length; j++) {
-            if (config.Groups[j].Id == selectedGroupId) {
-                config.Groups[j].Archivized = true;
-                break;
-            }
+        var tasksDivs = $("#taskGroups").find(".groupInTask");
+        var tasks = [];
+        for (var i = 0; i < tasksDivs.length; i++) {
+            tasks.push(tasksDivs[i].taskId);
         }
+        var group = {
+            Archivized: false,
+            Description: document.getElementById("taskDescription").value,
+            Id: selectedGroupId,
+            Name: document.getElementById("taskName").value,
+            OwnerId: userId,
+        };
+        sendNewConfig("PUT", group, tasks);
         sendNewConfig(userId);
-        LoadGroups();
-        NewGroupClick();
-        shownAllTasks = false;
     }
     function AssignClick() {
         if (shownAllTasks)
@@ -209,10 +186,10 @@
     //~tasks
 
     //config
-    function sendNewConfig(group, tasks) {
+    function sendNewConfig(ttype, group, tasks) {
         $.ajax({
             url: "http://localhost:8080/api/Configuration/group",
-            type: "POST",
+            type: ttype,
             contentType: "application/json;charset=utf-8",
             data: JSON.stringify({ "Key": group, "Value": tasks }),
             success: function () {
