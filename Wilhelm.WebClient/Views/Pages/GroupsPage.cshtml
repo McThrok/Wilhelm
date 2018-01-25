@@ -1,3 +1,49 @@
 ﻿@{
     ViewBag.Title = "GroupsPage";
 }
+<div data-config="@ViewBag.JsonConfig" data-userId="@ViewBag.UserId" id="dataDiv" />
+<table>
+    <tr>
+        <td>
+            <div id="tasks">
+                <button id="newTask" class="taskButton">New Group</button>
+            </div>
+        </td>
+
+        <td>
+            <div id="taskDetails">
+                <div class="contactForm validate-form">
+                    <div class="wrapInput validateInput">
+                        <span class="labelInput">Name:</span>
+                        <input id="taskName" class="inputField" type="text" name="name" placeholder="Enter group name">
+                        <span class="focusInput"></span>
+                    </div>
+
+                    <div class="wrapInput validateInput">
+                        <span class="labelInput">Description:</span>
+                        <textarea id="taskDescription" class="inputField" name="message" placeholder="Your description..."></textarea>
+                        <span class="focusInput"></span>
+                    </div>
+
+                </div>
+                <div class="contactForm2">
+                    <div class="wrapInput2 validateInput">
+                        <span class="labelInput2">Groups:</span>
+                        <input id="assignToGroup" name="assignToGroup" type="button" value="Assign to task" />
+                        <span class="focusInput"></span>
+                    </div>
+
+                    <div id="taskGroups" class="g"></div>
+
+                    <input class="left" id="applyTask" type="button" value="Apply" />
+                    <input class="left" id="resetTask" type="button" value="Reset changes" />
+                    <input class="right" id="deleteTask" type="button" value="Detele task" />
+                </div>
+            </div>
+        </td>
+    </tr>
+</table>
+@section scripts{
+    @Scripts.Render("~/Scripts/Pages/groupsPage.js")
+    @Styles.Render("~/Content/Pages/TasksPage.css")
+}

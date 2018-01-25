@@ -5,18 +5,31 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title</title>
     @Styles.Render("~/Content/css")
+    @Styles.Render("~/Content/Layouts/PagesLayout.css")
     @Scripts.Render("~/bundles/modernizr")
 </head>
 <body>
-
-    <div>@ViewBag.Title</div>
-    <div>@Html.ActionLink("Home", "HomePage", "Pages", new { userId = ViewBag.UserId },null)</div>
-    <div>@Html.ActionLink("Tasks", "TasksPage", "Pages", new { userId = ViewBag.UserId },null)</div>
-    <div>@Html.ActionLink("Groups", "GroupsPage", "Pages", new { userId = ViewBag.UserId }, null)</div>
-    <div>@Html.ActionLink("Archive", "ArchivePage", "Pages", new { userId = ViewBag.UserId },null)</div>
-    <div>@Html.ActionLink("Report", "ReportPage", "Pages", new { userId = ViewBag.UserId }, null)</div>
-
-    @RenderBody()
+    <table>
+        <tr>
+            <th>@ViewBag.Name</th>
+            <th>@ViewBag.Title</th>
+        </tr>
+        <tr>
+            <td>
+                <div id="menu">
+                    <div> @Html.ActionLink("Home", "HomePage", "Pages", new { userId = ViewBag.UserId }, new { @id = "homeButton" })</div>
+                    <div> @Html.ActionLink("Tasks", "TasksPage", "Pages", new { userId = ViewBag.UserId }, new { @id = "tasksButton" })</div>
+                    <div> @Html.ActionLink("Groups", "GroupsPage", "Pages", new { userId = ViewBag.UserId }, new { @id = "groupsButton" })</div>
+                    <div> @Html.ActionLink("Archive", "ArchivePage", "Pages", new { userId = ViewBag.UserId }, new { @id = "archivesButton" })</div>
+                    <div> @Html.ActionLink("Reports", "ReportPage", "Pages", new { userId = ViewBag.UserId }, new { @id = "reportsButton" })</div>
+                    <div> @Html.ActionLink("Sign Out", "SignInPage", "Sign", new { userId = ViewBag.UserId }, new { @id = "sugnoutButton" })</div>
+                </div>
+            </td>
+            <td>
+                @RenderBody()
+            </td>
+        </tr>
+    </table>
 
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")

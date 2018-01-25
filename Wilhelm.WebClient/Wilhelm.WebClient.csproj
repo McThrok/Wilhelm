@@ -175,6 +175,11 @@
   <ItemGroup>
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\Layouts\PagesLayout.css" />
+    <Content Include="Content\Pages\ReportsPage.css" />
+    <Content Include="Content\Pages\HomePage.css" />
+    <Content Include="Content\Pages\TasksPage.css" />
+    <Content Include="Content\Signing.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -192,8 +197,11 @@
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
+    <Content Include="Scripts\Layouts\PagesLayout.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
+    <Content Include="Scripts\Pages\reportsPage.js" />
     <Content Include="Scripts\Pages\archivePage.js" />
+    <Content Include="Scripts\Pages\groupsPage.js" />
     <Content Include="Scripts\Pages\tasksPage.js" />
     <Content Include="Scripts\Sign\signUp.js" />
     <Content Include="Scripts\Sign\signIn.js" />
@@ -211,9 +219,6 @@
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_blankLayout.cshtml" />
-    <Content Include="Views\Home\About.cshtml" />
-    <Content Include="Views\Home\Contact.cshtml" />
-    <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Pages\HomePage.cshtml" />
     <Content Include="Views\Sign\SignInPage.cshtml" />
     <Content Include="Views\Shared\_pagesLayout.cshtml" />

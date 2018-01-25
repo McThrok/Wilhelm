@@ -1,0 +1,17 @@
+﻿#reports {
+    width: 590px;
+    height: 630px;
+    overflow-y: scroll;
+}
+
+    #reports .report {
+        padding-left: 15px;
+        padding-top: 15px;
+        padding-right: 20px;
+        padding-bottom: 5px;
+        margin: 0px;
+    }
+
+    #reports div:nth-child(2n+1) {
+        background-color: #ccc;
+    }

@@ -1,0 +1,44 @@
+﻿#home {
+    width: 590px;
+    height:600px;
+    overflow-y: scroll;
+} 
+
+    #home .homeItem {
+        color: black;
+        display: block;
+        padding-left: 20px;
+        padding-top:15px;
+        padding-right:20px;
+        padding-bottom:10px;
+        text-decoration: none;
+    }
+
+        #home .homeItem:hover {
+            background-color: #ccc;
+        }
+
+        #home .homeItem label {
+            margin-left:10px;
+            font-size: 16px;
+            font-weight: bold;
+        }
+        #home .homeItem p {
+            font-size: 13px;
+        }
+button {
+    font-size: 16px;
+    background-color: slategrey;
+    color: white;
+    outline: none;
+    border: none;
+    display: block;
+    margin: 0 auto;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    width: 160px;
+    height: 30px;
+}
+    button:hover {
+        background-color: #3b424c;
+    }

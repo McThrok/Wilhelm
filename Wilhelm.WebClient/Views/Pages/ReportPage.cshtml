@@ -1,10 +1,17 @@
 ﻿@{
-    ViewBag.Title = "ReportPage";
+    ViewBag.Title = "Reports";
 }
-@foreach (var report in ViewBag.Reports)
-{
-    <div>
-        <label>@report.Category</label>
-        <label>@report.Value</label>
-    </div>
+
+<div id="reports">
+    @foreach (var report in ViewBag.Reports)
+    {
+        <div class="report">
+            <label>@report.Category</label>
+            <label>@report.Value</label>
+        </div>
+    }
+</div>
+@section scripts{
+    @Scripts.Render("~/Scripts/Pages/reportsPage.js")
+    @Styles.Render("~/Content/Pages/ReportsPage.css")
 }

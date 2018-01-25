@@ -17,6 +17,7 @@ namespace Wilhelm.WebClient.Controllers
         public async Task<ActionResult> HomePage(int userId)
         {
             ViewBag.UserId = userId;
+            ViewBag.Name = (await _proxy.GetUser(userId))?.Login;
             ViewBag.Activities = await _proxy.GetTodaysTasks(userId);
             ViewBag.JsonActivities = JsonConvert.SerializeObject(ViewBag.Activities);
             return View();
@@ -25,8 +26,8 @@ namespace Wilhelm.WebClient.Controllers
         public async Task<ActionResult> TasksPage(int userId)
         {
             ViewBag.UserId = userId;
-            ViewBag.Config = await _proxy.GetConfig(userId);
-            string jsonConfig = JsonConvert.SerializeObject(ViewBag.Config, new JsonSerializerSettings()
+            ViewBag.Name = (await _proxy.GetUser(userId))?.Login;
+            string jsonConfig = JsonConvert.SerializeObject(await _proxy.GetConfig(userId), new JsonSerializerSettings()
             {
                 PreserveReferencesHandling = PreserveReferencesHandling.Objects,
                 Formatting = Formatting.Indented
@@ -37,6 +38,7 @@ namespace Wilhelm.WebClient.Controllers
         public async Task<ActionResult> GroupsPage(int userId)
         {
             ViewBag.UserId = userId;
+            ViewBag.Name = (await _proxy.GetUser(userId))?.Login;
             ViewBag.Config = await _proxy.GetConfig(userId);
             string jsonConfig = JsonConvert.SerializeObject(ViewBag.Config, new JsonSerializerSettings()
             {
@@ -49,15 +51,17 @@ namespace Wilhelm.WebClient.Controllers
         public async Task<ActionResult> ArchivePage(int userId)
         {
             ViewBag.UserId = userId;
+            ViewBag.Name = (await _proxy.GetUser(userId))?.Login;
             var archive = (await _proxy.GetArchive(userId)).ToList();
             archive.Sort((a, b) => DateTime.Compare(b.Date, a.Date));
-            ViewBag.Activities = archive;
+            //ViewBag.Activities = archive;
             ViewBag.JsonActivities = JsonConvert.SerializeObject(ViewBag.Activities);
             return View();
         }
         public async Task<ActionResult> ReportPage(int userId)
         {
             ViewBag.UserId = userId;
+            ViewBag.Name = (await _proxy.GetUser(userId))?.Login;
             ViewBag.Reports = await _proxy.GetReports(userId);
             return View();
         }

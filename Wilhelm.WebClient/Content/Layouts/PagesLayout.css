@@ -1,0 +1,62 @@
+﻿body {
+    margin-top: 5px;
+    margin-bottom: 5px;
+    padding: 0;
+}
+
+table {
+    border:0;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+    table td {
+        margin: 0;
+        padding: 0;
+        background-color: #eee;
+        vertical-align: top;
+    }
+
+    table th {
+        vertical-align:middle;
+        height: 40px;
+        background-color: white;
+        color: #3b424c;
+        font-size: 20px;
+        font-weight:bold;
+        text-align:center;
+    }
+
+#menu {
+    margin:0;
+    border-right: 5px;
+    border-right-color: white;
+    border-right-style: solid;
+    min-height:640px;
+}
+
+    #menu a {
+        width:160px;
+        font-size:16px;
+        text-align:center;
+        color: black;
+        display: block;
+        padding: 12px;
+        text-decoration: none;
+        height:50px;
+    }
+
+        #menu a:hover {
+            background-color: #ccc;
+        }
+
+    #menu .selectedMenu {
+        margin:0;
+        font-size:18px;
+        background-color: slategrey;
+        color: white;
+    }
+        #menu .selectedMenu:hover {
+            background-color: #3b424c;
+            color: white;
+        }
