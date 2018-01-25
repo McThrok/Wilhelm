@@ -18,5 +18,6 @@ namespace Wilhelm.Backend.Services.Interfaces
 
         void UpdateDto(ICollection<ActivityDto> dtos, IEnumerable<WActivity> activities);
         void UpdateEntities(IDbSet<WActivity> activities, IEnumerable<ActivityDto> dtos);
+        void UpdateEntity(IDbSet<WActivity> wActivities, ActivityDto activity);
     }
 }

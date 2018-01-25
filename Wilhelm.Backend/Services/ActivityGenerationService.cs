@@ -23,7 +23,7 @@ namespace Wilhelm.Backend.Services
                         var latestActivityDate = activitiesForTask.Max(x => x.Date);
                         latestActivity = activitiesForTask.First(x => x.Date == latestActivityDate);
                     }
-                    generatedTodayTasks.AddRange(GenerateActivitiesForTask(latestActivity, task, date));
+                    generatedTodayTasks.AddRange(GenerateActivitiesForTask(latestActivity, task, date.Date));
                 }
 
             return generatedTodayTasks;

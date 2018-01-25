@@ -31,6 +31,5 @@ namespace Wilhelm.Backend.Api.Controllers
         {
             return _accountsService.GetUser(userId);
         }
-      
     }
 }

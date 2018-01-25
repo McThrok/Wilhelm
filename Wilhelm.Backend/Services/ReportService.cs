@@ -100,7 +100,7 @@ namespace Wilhelm.Backend.Services
             List<ReportDto> reports = new List<ReportDto>();
             for (int i = 0; i < activities.Count; i++)
             {
-                var doneCount = data.Where(a => a.IsDone == true && a.Id == activities[i].Id).Count();
+                var doneCount = data.Where(a => a.IsDone == true && a.WTask.Id == activities[i].Id).Count();
                 var task = tasks.Where(t => t.Id == activities[i].Id).Single();
                 var taskCount = data.Where(a => a.WTask.Id == task.Id).Count();
                 var report = new ReportDto
@@ -124,7 +124,7 @@ namespace Wilhelm.Backend.Services
             string minPersentTaskName = "";
             for (int i = 0; i < activities.Count; i++)
             {
-                var doneCount = data.Where(a => a.IsDone == true && a.Id == activities[i].Id).Count();
+                var doneCount = data.Where(a => a.IsDone == true && a.WTask.Id == activities[i].Id).Count();
                 var task = tasks.Where(t => t.Id == activities[i].Id).Single();
                 var taskCount = data.Where(a => a.WTask.Id == task.Id).Count();
                 double percent = doneCount / (double)taskCount;
