@@ -59,11 +59,20 @@ namespace Wilhelm.Backend.Services
             }
         }
 
-        public void UpdateActivity(ActivityDto activity)
+        public void UpdateActivity(int activityId, bool value )
         {
             using (var db = _wContextFactory.Create())
             {
-                _entitiesService.UpdateEntity(db.WActivities, activity);
+                db.WActivities.SingleOrDefault(x => x.Id == activityId).IsDone = value;
+                db.SaveChanges();
+            }
+        }
+        public void UpdateActivities(List<KeyValuePair<int,bool>> activities)
+        {
+            using (var db = _wContextFactory.Create())
+            {
+                foreach(var activity in activities)
+                db.WActivities.SingleOrDefault(x => x.Id == activity.Key).IsDone = activity.Value;
                 db.SaveChanges();
             }
         }

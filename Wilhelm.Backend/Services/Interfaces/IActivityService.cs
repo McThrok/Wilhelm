@@ -12,6 +12,7 @@ namespace Wilhelm.Backend.Services.Interfaces
         List<ActivityDto> GetArchive(int userId);
         List<ActivityDto> GetTodaysActivities(int userId);
         void SaveActivities(IEnumerable<ActivityDto> activities);
-        void UpdateActivity(ActivityDto activity);
+        void UpdateActivity(int activityId, bool value);
+        void UpdateActivities(List<KeyValuePair<int, bool>> activities);
     }
 }
