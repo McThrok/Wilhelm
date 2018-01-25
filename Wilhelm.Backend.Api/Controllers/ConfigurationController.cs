@@ -45,15 +45,15 @@ namespace Wilhelm.Backend.Api.Controllers
         }
 
         [Route("api/configuration/group")]
-        public void PostGroup([FromBody] KeyValuePair<TaskDto, List<int>> task)
+        public void PostGroup([FromBody] KeyValuePair<GroupDto, List<int>> group)
         {
-            _configurationService.AddTask(task);
+            _configurationService.AddGroup(group);
         }
 
         [Route("api/configuration/group")]
-        public void PutGroup([FromBody] KeyValuePair<TaskDto, List<int>> task)
+        public void PutGroup([FromBody] KeyValuePair<GroupDto, List<int>> group)
         {
-            _configurationService.UpdateTask(task);
+            _configurationService.UpdateGroup(group);
         }
     }
 }
