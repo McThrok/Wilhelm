@@ -15,5 +15,7 @@ namespace Wilhelm.Backend.Services.Interfaces
         void SaveConfig(ConfigDto config);
         void AddTask(KeyValuePair<TaskDto, List<int>> task);
         void UpdateTask(KeyValuePair<TaskDto, List<int>> task);
+        void AddGroup(KeyValuePair<GroupDto, List<int>> group);
+        void UpdateGroup(KeyValuePair<GroupDto, List<int>> group);
     }
 }
