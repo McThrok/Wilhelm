@@ -161,6 +161,7 @@
                 var group = groups.filter(function (el) { return el.Id == newButton.groupId; })[0];
                 ShowGroupDetails(group);
                 SetActiveGroup(newButton);
+                Show();
             }
             groupsDiv.appendChild(newButton);
         }
@@ -203,6 +204,7 @@
         var tasksDiv = document.getElementById("taskGroups");
         while (tasksDiv.firstChild)
             tasksDiv.removeChild(tasksDiv.firstChild);
+        Hide();
     }
     //~tasks
 
@@ -217,6 +219,18 @@
                 location.reload();
             }
         })
+    }
+    function Hide() {
+        var resetBtn = document.getElementById("resetTask");
+        resetBtn.style.visibility = "hidden";
+        var deleteBtn = document.getElementById("deleteTask");
+        deleteBtn.style.visibility = "hidden";
+    }
+    function Show() {
+        var resetBtn = document.getElementById("resetTask");
+        resetBtn.style.visibility = "visible";
+        var deleteBtn = document.getElementById("deleteTask");
+        deleteBtn.style.visibility = "visible";
     }
     //~config
 })();
