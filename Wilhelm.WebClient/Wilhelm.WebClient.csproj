@@ -176,6 +176,7 @@
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\Layouts\PagesLayout.css" />
+    <Content Include="Content\Pages\ReportsPage.css" />
     <Content Include="Content\Pages\HomePage.css" />
     <Content Include="Content\Pages\TasksPage.css" />
     <Content Include="Content\Signing.css" />
@@ -198,6 +199,7 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\Layouts\PagesLayout.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
+    <Content Include="Scripts\Pages\reportsPage.js" />
     <Content Include="Scripts\Pages\archivePage.js" />
     <Content Include="Scripts\Pages\groupsPage.js" />
     <Content Include="Scripts\Pages\tasksPage.js" />
