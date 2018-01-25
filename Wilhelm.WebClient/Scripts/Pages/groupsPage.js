@@ -71,7 +71,7 @@
             tasks.push(tasksDivs[i].taskId);
         }
         var group = {
-            Archivized: false,
+            Archivized: true,
             Description: document.getElementById("taskDescription").value,
             Id: selectedGroupId,
             Name: document.getElementById("taskName").value,
