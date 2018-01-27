@@ -22,7 +22,7 @@
         newTask.taskId = -1;
 
         NewTaskClick();
-        GetTasksNames();
+        GetTasks();
         //menu
         var selectedMenu = document.getElementsByClassName("selectedMenu");
         if (selectedMenu.length > 0)
@@ -52,12 +52,7 @@
     }
     function DeleteCLick() {
         var selectedTaskId = document.getElementsByClassName("activeTask")[0].taskId;
-        var groupsDivs = $("#taskGroups").find(".groupInTask");
-        var groups = [];
-        for (var i = 0; i < groupsDivs.length; i++) {
-            groups.push(groupsDivs[i].groupId);
-        }
-        SendTask("PUT", GetTask(true), groups);
+        DeleteTask(selectedTaskId);
     }
     function AssignClick() {
         if (shownAllGroups)
@@ -175,11 +170,11 @@
             success: function () {
                //    location.reload();
                 NewTaskClick();
-                GetTasksNames();
+                GetTasks();
             }
         })
     }
-    function GetTasksNames() {
+    function GetTasks() {
         $.ajax({
             url: "http://localhost:8080/api/Configuration/tasksNames?userId=" + userId,
             type: 'GET',
@@ -214,6 +209,21 @@
             contentType: "application/json;charset=utf-8",
             success: function (data) {
                 ShowAllGroups(data);
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+                alert(xhr.status);
+                alert(thrownError);
+            }
+        });
+    }
+    function DeleteTask(taskId) {
+        $.ajax({
+            url: "http://localhost:8080/api/Configuration?taskId=" + taskId,
+            type: 'DELETE',
+            success: function () {
+                NewTaskClick();
+                GetTasks();
+                console.log("delete");
             },
             error: function (xhr, ajaxOptions, thrownError) {
                 alert(xhr.status);

@@ -61,7 +61,7 @@ namespace Wilhelm.Backend.Services
             List<Tuple<int, string, string>> groups = new List<Tuple<int, string, string>>();
             using (var db = _wContextFactory.Create())
             {
-                groups = db.WGroups.Where(o => o.OwnerId == userId)
+                groups = db.WGroups.Where(o => o.OwnerId == userId && !o.Archivized)
                     .Select(o => new { o.Id, o.Name, o.Description }).AsEnumerable()
                     .Select(o => new Tuple<int, string, string>(o.Id, o.Name, o.Description)).ToList();
             }
@@ -180,5 +180,13 @@ namespace Wilhelm.Backend.Services
             SaveConfig(config);
         }
 
+        public void DeleteTask(int taskId)
+        {
+            using (var db = _wContextFactory.Create())
+            {
+                db.WTasks.Where(x => x.Id == taskId).Single().Archivized = true;
+                db.SaveChanges();
+            }
+        }
     }
 }

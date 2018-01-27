@@ -43,6 +43,11 @@ namespace Wilhelm.Backend.Api.Controllers
             return _configurationService.GetGroups(userId);
         }
 
+        public void DeleteTask(int taskId)
+        {
+            _configurationService.DeleteTask(taskId);
+        }
+
         public void PostConfig(int userId, [FromBody]ConfigDto config)
         {
             _configurationService.SaveConfig(config);

@@ -20,5 +20,6 @@ namespace Wilhelm.Backend.Services.Interfaces
         void UpdateTask(KeyValuePair<TaskDto, List<int>> task);
         void AddGroup(KeyValuePair<GroupDto, List<int>> group);
         void UpdateGroup(KeyValuePair<GroupDto, List<int>> group);
+        void DeleteTask(int taskId);
     }
 }
