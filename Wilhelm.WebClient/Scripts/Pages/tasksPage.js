@@ -163,7 +163,7 @@
     //config
     function SendTask(ttype, task, groups) {
         $.ajax({
-            url: "http://localhost:8080/api/Configuration/task",
+            url: "http://localhost:8080/api/tasks",
             type: ttype,
             contentType: "application/json;charset=utf-8",
             data: JSON.stringify({ "Key": task, "Value": groups }),
@@ -176,7 +176,7 @@
     }
     function GetTasks() {
         $.ajax({
-            url: "http://localhost:8080/api/Configuration/tasksNames?userId=" + userId,
+            url: "http://localhost:8080/api/tasks/names?userId=" + userId,
             type: 'GET',
             contentType: "application/json;charset=utf-8",
             success: function (data) {
@@ -190,7 +190,7 @@
     }
     function GetTaskDetails(taskId) {
         $.ajax({
-            url: "http://localhost:8080/api/Configuration/taskDetails?taskId=" + taskId,
+            url: "http://localhost:8080/api/tasks/details?taskId=" + taskId,
             type: 'GET',
             contentType: "application/json;charset=utf-8",
             success: function (data) {
@@ -204,7 +204,7 @@
     }
     function GetGroups() {
         $.ajax({
-            url: "http://localhost:8080/api/Configuration/groups?userId=" + userId,
+            url: "http://localhost:8080/api/tasks/groups?userId=" + userId,
             type: 'GET',
             contentType: "application/json;charset=utf-8",
             success: function (data) {
@@ -218,12 +218,11 @@
     }
     function DeleteTask(taskId) {
         $.ajax({
-            url: "http://localhost:8080/api/Configuration?taskId=" + taskId,
+            url: "http://localhost:8080/api/tasks?taskId=" + taskId,
             type: 'DELETE',
             success: function () {
                 NewTaskClick();
                 GetTasks();
-                console.log("delete");
             },
             error: function (xhr, ajaxOptions, thrownError) {
                 alert(xhr.status);
