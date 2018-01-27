@@ -41,7 +41,7 @@ namespace Wilhelm.Backend.Services
                     dto.Groups.Add(groupToUpdate);
                 }
                 groupToUpdate.Tasks = new List<TaskDto>();
-                _conversionService.ConvertToDto(groupToUpdate, wGroup);
+                _conversionService.ConvertToDto(groupToUpdate, wGroup, false);
             }
 
             foreach (var wTask in wTasks)

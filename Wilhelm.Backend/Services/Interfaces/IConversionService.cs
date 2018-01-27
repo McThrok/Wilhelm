@@ -18,7 +18,7 @@ namespace Wilhelm.Backend.Services.Interfaces
         void ConvertFromDto(WActivity wActivity, ActivityDto dto);
 
         void ConvertToDto(GroupDto dto, WGroup wGroup, IEnumerable<TaskDto> tasks, bool updateTasks);
-        void ConvertToDto(GroupDto dto, WGroup group);
+        void ConvertToDto(GroupDto dto, WGroup group, bool copyTasks);
         void ConvertFromDto(WGroup wGroup, GroupDto dto, IEnumerable<WTask> tasks, bool updateTasks);
         void ConvertFromDto(WGroup wGroup, GroupDto dto);
 

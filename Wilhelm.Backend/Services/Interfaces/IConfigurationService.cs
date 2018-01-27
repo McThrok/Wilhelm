@@ -12,14 +12,21 @@ namespace Wilhelm.Backend.Services.Interfaces
     public interface IConfigurationService
     {
         ConfigDto GetConfig(int userId);
+        void SaveConfig(ConfigDto config);
+
         List<KeyValuePair<int, string>> GetTaskNames(int userId);
         TaskDto GetTaskDetails(int taskId);
         List<Tuple<int, string, string>> GetGroups(int userId);
-        void SaveConfig(ConfigDto config);
+        void DeleteTask(int taskId);
+
+        List<KeyValuePair<int, string>> GetGroupsNames(int userId);
+        GroupDto GetGroupDetails(int groupId);
+        List<Tuple<int, string, string>> GetTasks(int userId);
+        void DeleteGroup(int groupId);
+
         void AddTask(KeyValuePair<TaskDto, List<int>> task);
         void UpdateTask(KeyValuePair<TaskDto, List<int>> task);
         void AddGroup(KeyValuePair<GroupDto, List<int>> group);
         void UpdateGroup(KeyValuePair<GroupDto, List<int>> group);
-        void DeleteTask(int taskId);
     }
 }

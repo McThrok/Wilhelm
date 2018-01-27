@@ -12,6 +12,7 @@
         var loadMore = document.getElementById("load");
         loadMore.onclick = function () {
             GetNewActivities(userId, offset, count);
+            offset++;
         }
     }
 
@@ -30,7 +31,7 @@
 
     function GetNewActivities(userId, offset, count) {
         $.ajax({
-            url: "http://localhost:8080/api/ArchiveActivities?userId=" + userId + "&offset=" + count * offset++ + "&amount=" + count,
+            url: "http://localhost:8080/api/ArchiveActivities?userId=" + userId + "&offset=" + count * offset + "&amount=" + count,
             type: 'GET',
             contentType: "application/json;charset=utf-8",
             success: function (data) {

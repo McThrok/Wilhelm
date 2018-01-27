@@ -1,11 +1,9 @@
 (() => {
     var shownAllTasks = false;
-    var config = "";
     var userId = "";
 
     window.onload = function () {
         var dataDiv = document.getElementById("dataDiv");
-        config = JSON.parse(dataDiv.dataset.config);
         userId = dataDiv.dataset.userid;
 
         var applyBtn = document.getElementById("applyTask");
@@ -23,7 +21,7 @@
         newGroup.groupId = -1;
 
         NewGroupClick();
-        LoadGroups();
+        GetGroups();
 
         //menu
         var selectedMenu = document.getElementsByClassName("selectedMenu");
@@ -48,61 +46,44 @@
         };
         if (selectedGroupId === -1) {
             group.Id = -1;
-            sendNewConfig("POST", group, tasks);
+            SendGroup("POST", group, tasks);
         }
         else {
-            sendNewConfig("PUT", group, tasks);
+            SendGroup("PUT", group, tasks);
         }
-       
     }
     function ResetCLick() {
         var selectedGroupId = document.getElementsByClassName("activeTask")[0].groupId;
-        var group = config.Groups.filter(function (el) {
-            return el.Id === selectedGroupId
-        });
-        ShowGroupDetails(group[0]);
+        GetGroupDetails(selectedGroupId);
         shownAllTasks = false;
     }
     function DeleteCLick() {
         var selectedGroupId = document.getElementsByClassName("activeTask")[0].groupId;
-        var tasksDivs = $("#taskGroups").find(".groupInTask");
-        var tasks = [];
-        for (var i = 0; i < tasksDivs.length; i++) {
-            tasks.push(tasksDivs[i].taskId);
-        }
-        var group = {
-            Archivized: true,
-            Description: document.getElementById("taskDescription").value,
-            Id: selectedGroupId,
-            Name: document.getElementById("taskName").value,
-            OwnerId: userId,
-        };
-        sendNewConfig("PUT", group, tasks);
+        DeleteGroup(selectedGroupId);
     }
     function AssignClick() {
         if (shownAllTasks)
             return;
         shownAllTasks = true;
-        ShowAllTasks();
+        GetTasks();
     }
     // used in AssignClick
-    function ShowAllTasks() {
-        tasks = config.Tasks;
+    function ShowAllTasks(tasks) {
         var tasksDivs = $("#taskGroups").find(".taskGroupItem");
         for (let i = 0; i < tasksDivs.length; i++) {
             tasksDivs[i].onclick = function () { AddDeleteTaskFromGroup(tasksDivs[i]); };
-            tasks = tasks.filter(function (el) { return el.Id !== tasksDivs[i].taskId; });
+            tasks = tasks.filter(function (el) { return el.m_Item1 !== tasksDivs[i].taskId; });
         }
 
         var tasksDiv = document.getElementById("taskGroups");
         for (var i = 0; i < tasks.length; i++) {
             let task = document.createElement("div");
-            task.taskId = tasks[i].Id;
+            task.taskId = tasks[i].m_Item1;
             task.classList.add("taskGroupItem");
             var label = document.createElement("label");
-            label.innerText = tasks[i].Name;
+            label.innerText = tasks[i].m_Item2;
             var p = document.createElement("p");
-            p.innerText = tasks[i].Description;
+            p.innerText = tasks[i].m_Item3;
             task.appendChild(label);
             task.appendChild(p);
             task.onclick = function () { AddDeleteTaskFromGroup(task); };
@@ -118,8 +99,7 @@
     //~buttons
 
     //tasks
-    function LoadGroups() {
-        var groups = config.Groups;
+    function ShowGroups(groups) {
         var groupsDiv = document.getElementById("tasks");
         while (groupsDiv.children.length > 1) // 0 - New group
             groupsDiv.removeChild(groupsDiv.lastChild);
@@ -128,14 +108,13 @@
                 continue;
             let newButton = document.createElement("button");
             newButton.classList.add("taskButton");
-            newButton.groupId = groups[i].Id;
-            newButton.innerText = groups[i].Name;
+            newButton.groupId = groups[i].Key;
+            newButton.innerText = groups[i].Value;
             newButton.onclick = function () {
                 shownAllTasks = false;
-                var group = groups.filter(function (el) { return el.Id === newButton.groupId; })[0];
-                ShowGroupDetails(group);
                 SetActiveGroup(newButton);
                 Show();
+                GetGroupDetails(newButton.groupId);
             }
             groupsDiv.appendChild(newButton);
         }
@@ -183,16 +162,73 @@
     //~tasks
 
     //config
-    function sendNewConfig(ttype, group, tasks) {
+    function SendGroup(ttype, group, tasks) {
         $.ajax({
             url: "http://localhost:8080/api/Configuration/group",
             type: ttype,
             contentType: "application/json;charset=utf-8",
             data: JSON.stringify({ "Key": group, "Value": tasks }),
             success: function () {
-                location.reload();
+                NewGroupClick();
+                GetGroups();
             }
         })
+    }
+    function GetGroups() {
+        $.ajax({
+            url: "http://localhost:8080/api/groups/names?userId=" + userId,
+            type: 'GET',
+            contentType: "application/json;charset=utf-8",
+            success: function (data) {
+                ShowGroups(data);
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+                alert(xhr.status);
+                alert(thrownError);
+            }
+        });
+    }
+    function GetGroupDetails(groupId) {
+        $.ajax({
+            url: "http://localhost:8080/api/groups/details?groupId=" + groupId,
+            type: 'GET',
+            contentType: "application/json;charset=utf-8",
+            success: function (data) {
+                ShowGroupDetails(data);
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+                alert(xhr.status);
+                alert(thrownError);
+            }
+        });
+    }
+    function GetTasks() {
+        $.ajax({
+            url: "http://localhost:8080/api/groups/tasks?userId=" + userId,
+            type: 'GET',
+            contentType: "application/json;charset=utf-8",
+            success: function (data) {
+                ShowAllTasks(data);
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+                alert(xhr.status);
+                alert(thrownError);
+            }
+        });
+    }
+    function DeleteGroup(groupId) {
+        $.ajax({
+            url: "http://localhost:8080/api/groups?groupId=" + groupId,
+            type: 'DELETE',
+            success: function () {
+                NewGroupClick();
+                GetGroups();
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+                alert(xhr.status);
+                alert(thrownError);
+            }
+        });
     }
     //~config
     function Hide() {

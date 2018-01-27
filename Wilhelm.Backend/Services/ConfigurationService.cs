@@ -35,6 +35,16 @@ namespace Wilhelm.Backend.Services
             }
             return dto;
         }
+        public void SaveConfig(ConfigDto config)
+        {
+            using (var db = _wContextFactory.Create())
+            {
+                _entitiesService.UpdateEntities(db.WTasks, db.WGroups, config);
+                _entitiesService.PrepareConfigToSave(db.WTasks, db.WGroups);
+                db.SaveChanges();
+            }
+        }
+
         public List<KeyValuePair<int, string>> GetTaskNames(int userId)
         {
             List<KeyValuePair<int, string>> tasks = new List<KeyValuePair<int, string>>();
@@ -67,13 +77,52 @@ namespace Wilhelm.Backend.Services
             }
             return groups;
         }
+        public void DeleteTask(int taskId)
+        {
+            using ( var db = _wContextFactory.Create())
+            {
+                db.WTasks.Where(x => x.Id == taskId).Single().Archivized = true;
+                db.SaveChanges();
+            }
+        }
 
-        public void SaveConfig(ConfigDto config)
+        public List<KeyValuePair<int, string>> GetGroupsNames(int userId)
+        {
+            List<KeyValuePair<int, string>> groups = new List<KeyValuePair<int, string>>();
+            using (var db = _wContextFactory.Create())
+            {
+                groups = db.WGroups.Where(x => x.OwnerId == userId && !x.Archivized)
+                    .Select(o => new { o.Id, o.Name }).AsEnumerable()
+                    .Select(o => new KeyValuePair<int, string>(o.Id, o.Name)).ToList();
+            }
+            return groups;
+        }
+        public GroupDto GetGroupDetails(int groupId)
+        {
+            GroupDto group = new GroupDto();
+            using (var db = _wContextFactory.Create())
+            {
+                WGroup wGroup = db.WGroups.SingleOrDefault(x => x.Id == groupId);
+                _conversionService.ConvertToDto(group, wGroup, true);
+            }
+            return group;
+        }
+        public List<Tuple<int, string, string>> GetTasks(int userId)
+        {
+            List<Tuple<int, string, string>> tasks = new List<Tuple<int, string, string>>();
+            using (var db = _wContextFactory.Create())
+            {
+                tasks = db.WTasks.Where(o => o.OwnerId == userId && !o.Archivized)
+                    .Select(o => new { o.Id, o.Name, o.Description }).AsEnumerable()
+                    .Select(o => new Tuple<int, string, string>(o.Id, o.Name, o.Description)).ToList();
+            }
+            return tasks;
+        }
+        public void DeleteGroup(int groupId)
         {
             using (var db = _wContextFactory.Create())
             {
-                _entitiesService.UpdateEntities(db.WTasks, db.WGroups, config);
-                _entitiesService.PrepareConfigToSave(db.WTasks, db.WGroups);
+                db.WGroups.Where(x => x.Id == groupId).Single().Archivized = true;
                 db.SaveChanges();
             }
         }
@@ -93,7 +142,6 @@ namespace Wilhelm.Backend.Services
             }
             SaveConfig(config);
         }
-
         public void UpdateTask(KeyValuePair<TaskDto, List<int>> taskPair)
         {
             var task = taskPair.Key;
@@ -129,7 +177,6 @@ namespace Wilhelm.Backend.Services
 
             SaveConfig(config);
         }
-
         public void AddGroup(KeyValuePair<GroupDto, List<int>> groupPair)
         {
             groupPair.Key.Tasks = new List<TaskDto>();
@@ -145,7 +192,6 @@ namespace Wilhelm.Backend.Services
             }
             SaveConfig(config);
         }
-
         public void UpdateGroup(KeyValuePair<GroupDto, List<int>> groupPair)
         {
             var group = groupPair.Key;
@@ -178,15 +224,6 @@ namespace Wilhelm.Backend.Services
             }
 
             SaveConfig(config);
-        }
-
-        public void DeleteTask(int taskId)
-        {
-            using (var db = _wContextFactory.Create())
-            {
-                db.WTasks.Where(x => x.Id == taskId).Single().Archivized = true;
-                db.SaveChanges();
-            }
         }
     }
 }

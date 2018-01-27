@@ -59,7 +59,6 @@
             return;
         shownAllGroups = true;
         GetGroups();
-        //ShowAllGroups(GetGroups());
     }
     // used in AssignClick
     function ShowAllGroups(groups) {
@@ -168,7 +167,6 @@
             contentType: "application/json;charset=utf-8",
             data: JSON.stringify({ "Key": task, "Value": groups }),
             success: function () {
-               //    location.reload();
                 NewTaskClick();
                 GetTasks();
             }
