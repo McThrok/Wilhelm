@@ -11,8 +11,8 @@
 
         var loadMore = document.getElementById("load");
         loadMore.onclick = function () {
-            GetNewActivities(userId, offset, count);
             offset++;
+            GetNewActivities(userId, offset, count);
         }
     }
 

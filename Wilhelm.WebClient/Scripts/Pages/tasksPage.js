@@ -150,7 +150,8 @@
 
         document.getElementById("taskName").value = "New Task";
         document.getElementById("taskDescription").value = "Your description";
-        document.getElementById("taskStartDate").value = new Date().toISOString().substr(0, 16);
+        var tzoffset = (new Date()).getTimezoneOffset() * 60000;
+        document.getElementById("taskStartDate").value = (new Date(Date.now() - tzoffset)).toISOString().slice(0, -1).substr(0, 16);
         document.getElementById("taskFrequency").value = 1;
         var groupsDiv = document.getElementById("taskGroups");
         while (groupsDiv.firstChild)
