@@ -14,6 +14,7 @@ namespace Wilhelm.Backend.Services.Interfaces
         ConfigDto GetConfig(int userId);
         List<KeyValuePair<int, string>> GetTaskNames(int userId);
         TaskDto GetTaskDetails(int taskId);
+        List<Tuple<int, string, string>> GetGroups(int userId);
         void SaveConfig(ConfigDto config);
         void AddTask(KeyValuePair<TaskDto, List<int>> task);
         void UpdateTask(KeyValuePair<TaskDto, List<int>> task);

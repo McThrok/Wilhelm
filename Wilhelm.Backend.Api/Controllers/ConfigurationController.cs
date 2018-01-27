@@ -26,7 +26,8 @@ namespace Wilhelm.Backend.Api.Controllers
         //{
         //    return _configurationService.GetConfig(userId);
         //}
-        [Route("api/configuration/")]
+      //  [Route("api/configuration/tasksNames")]
+        [Route("api/configuration/tasksNames")]
         public List<KeyValuePair<int, string>> GetTaskNames(int userId)
         {
             return _configurationService.GetTaskNames(userId);
@@ -35,6 +36,11 @@ namespace Wilhelm.Backend.Api.Controllers
         public TaskDto GetTaskDetails(int taskId)
         {
             return _configurationService.GetTaskDetails(taskId);
+        }
+        [Route("api/configuration/groups")]
+        public List<Tuple<int, string, string>> GetGroups(int userId)
+        {
+            return _configurationService.GetGroups(userId);
         }
 
         public void PostConfig(int userId, [FromBody]ConfigDto config)

@@ -15,11 +15,13 @@ namespace Wilhelm.Backend.Services
     {
         private IWContextFactory _wContextFactory;
         private IEntitiesService _entitiesService;
+        private IConversionService _conversionService;
 
-        public ConfigurationService(IWContextFactory wContextFactory, IEntitiesService entitiesService)
+        public ConfigurationService(IWContextFactory wContextFactory, IEntitiesService entitiesService, IConversionService conversionService)
         {
             _wContextFactory = wContextFactory;
             _entitiesService = entitiesService;
+            _conversionService = conversionService;
         }
 
         public ConfigDto GetConfig(int userId)
@@ -44,15 +46,26 @@ namespace Wilhelm.Backend.Services
             }
             return tasks;
         }
-        TaskDto GetTaskDetails(int taskId)
+        public TaskDto GetTaskDetails(int taskId)
         {
             TaskDto task = new TaskDto();
             using (var db = _wContextFactory.Create())
             {
                 WTask wTask = db.WTasks.SingleOrDefault(x => x.Id == taskId);
-                List<WGroup> wGroups = db.WTasks.SingleOrDefault(x => x.Id == taskId).WGroups;
+                _conversionService.ConvertToDto(task, wTask, true);
             }
             return task;
+        }
+        public List<Tuple<int, string, string>> GetGroups(int userId)
+        {
+            List<Tuple<int, string, string>> groups = new List<Tuple<int, string, string>>();
+            using (var db = _wContextFactory.Create())
+            {
+                groups = db.WGroups.Where(o => o.OwnerId == userId)
+                    .Select(o => new { o.Id, o.Name, o.Description }).AsEnumerable()
+                    .Select(o => new Tuple<int, string, string>(o.Id, o.Name, o.Description)).ToList();
+            }
+            return groups;
         }
 
         public void SaveConfig(ConfigDto config)
@@ -166,7 +179,6 @@ namespace Wilhelm.Backend.Services
 
             SaveConfig(config);
         }
-
 
     }
 }

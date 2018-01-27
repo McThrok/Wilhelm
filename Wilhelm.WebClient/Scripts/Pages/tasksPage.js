@@ -25,7 +25,7 @@
         newTask.taskId = -1;
 
         NewTaskClick();
-        GetTaskList();
+        GetTasksNames();
         //menu
         var selectedMenu = document.getElementsByClassName("selectedMenu");
         if (selectedMenu.length > 0)
@@ -69,25 +69,26 @@
         if (shownAllGroups)
             return;
         shownAllGroups = true;
-        ShowAllGroups(config.Groups);
+        GetGroups();
+        //ShowAllGroups(GetGroups());
     }
     // used in AssignClick
     function ShowAllGroups(groups) {
         var groupsDivs = $("#taskGroups").find(".taskGroupItem");
         for (let i = 0; i < groupsDivs.length; i++) {
             groupsDivs[i].onclick = function () { AddDeleteGroupFromTask(groupsDivs[i]); };
-            groups = groups.filter(function (el) { return el.Id !== groupsDivs[i].groupId; });
+            groups = groups.filter(function (el) { return el.m_Item1 !== groupsDivs[i].groupId; });
         }
 
         var groupsDiv = document.getElementById("taskGroups");
         for (var i = 0; i < groups.length; i++) {
             let group = document.createElement("div");
-            group.groupId = groups[i].Id;
+            group.groupId = groups[i].m_Item1;
             group.classList.add("taskGroupItem");
             var label = document.createElement("label");
-            label.innerText = groups[i].Name;
+            label.innerText = groups[i].m_Item2;
             var p = document.createElement("p");
-            p.innerText = groups[i].Description;
+            p.innerText = groups[i].m_Item3;
             group.appendChild(label);
             group.appendChild(p);
             group.onclick = function () { AddDeleteGroupFromTask(group); };
@@ -115,11 +116,10 @@
             newButton.taskId = tasks[i].Key;
             newButton.innerText = tasks[i].Value;
             newButton.onclick = function () {
-                //shownAllGroups = false;
-                //var task = tasks.filter(function (el) { return el.Id === newButton.taskId; })[0];
-                //ShowTaskDetails(task);
-                //SetActiveTask(newButton);
-                //Show();
+                shownAllGroups = false;
+                SetActiveTask(newButton);
+                Show();
+                GetTaskDetails(newButton.taskId);
             }
             tasksDiv.appendChild(newButton);
         }
@@ -141,6 +141,8 @@
         while (groupsDiv.firstChild)
             groupsDiv.removeChild(groupsDiv.firstChild);
         for (var i = 0; i < groups.length; i++) {
+            if (groups[i].Archivized)
+                continue;
             var group = document.createElement("div");
             group.classList.add("groupInTask");
             group.classList.add("taskGroupItem");
@@ -181,9 +183,9 @@
             }
         })
     }
-    function GetTaskList() {
+    function GetTasksNames() {
         $.ajax({
-            url: "http://localhost:8080/api/Configuration?userId=" + userId,
+            url: "http://localhost:8080/api/Configuration/tasksNames?userId=" + userId,
             type: 'GET',
             contentType: "application/json;charset=utf-8",
             success: function (data) {
@@ -201,8 +203,21 @@
             type: 'GET',
             contentType: "application/json;charset=utf-8",
             success: function (data) {
-                //ShowTasks(data);
-                console.log(data);
+                ShowTaskDetails(data);
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+                alert(xhr.status);
+                alert(thrownError);
+            }
+        });
+    }
+    function GetGroups() {
+        $.ajax({
+            url: "http://localhost:8080/api/Configuration/groups?userId=" + userId,
+            type: 'GET',
+            contentType: "application/json;charset=utf-8",
+            success: function (data) {
+                ShowAllGroups(data);
             },
             error: function (xhr, ajaxOptions, thrownError) {
                 alert(xhr.status);

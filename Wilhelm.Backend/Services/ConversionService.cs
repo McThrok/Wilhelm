@@ -102,7 +102,7 @@ namespace Wilhelm.Backend.Services
 
         public void ConvertToDto(TaskDto dto, WTask wtask, IEnumerable<GroupDto> groups, bool updateGroups)
         {
-            ConvertToDto(dto, wtask);
+            ConvertToDto(dto, wtask, false);
             if (dto.Groups == null)
                 dto.Groups = new List<GroupDto>();
 
@@ -125,13 +125,22 @@ namespace Wilhelm.Backend.Services
                 }
             }
         }
-        public void ConvertToDto(TaskDto dto, WTask task)
+        public void ConvertToDto(TaskDto dto, WTask task, bool copyGroups)
         {
             ConvertToNamedModelDto(dto, task);
             dto.Frequency = task.Frequency;
             dto.StartDate = task.StartDate;
             if (dto.Groups == null)
                 dto.Groups = new List<GroupDto>();
+            if(copyGroups)
+            {
+                foreach(var group in task.WGroups)
+                {
+                    GroupDto dtoGroup= new GroupDto();
+                    ConvertToDto(dtoGroup, group);
+                    dto.Groups.Add(dtoGroup);
+                }
+            }
         }
         public void ConvertFromDto(WTask wTask, TaskDto dto, IEnumerable<WGroup> groups, bool updateGroups)
         {

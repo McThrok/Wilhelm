@@ -106,7 +106,7 @@ namespace Wilhelm.Backend.Services
                     var activityDto = new ActivityDto();
                     _conversionService.ConvertToDto(activityDto, activity);
                     var taskDto = new TaskDto();
-                    _conversionService.ConvertToDto(taskDto, activity.WTask);
+                    _conversionService.ConvertToDto(taskDto, activity.WTask, false);
                     activityDto.Task = taskDto;
                     dtos.Add(activityDto);
                 }

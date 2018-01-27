@@ -26,7 +26,7 @@ namespace Wilhelm.Backend.Services
 
         public IConfigurationService CreateConfigurationService()
         {
-            return new ConfigurationService(_wContextFactory, _entitiesService);
+            return new ConfigurationService(_wContextFactory, _entitiesService, _conversionService);
         }
         public IActivityService CreateActivityService()
         {
