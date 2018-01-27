@@ -1,12 +1,9 @@
 (() => {
     var shownAllGroups = false;
-    var config = "";
     var userId = "";
 
     window.onload = function () {
         var dataDiv = document.getElementById("dataDiv");
-        //config = JSON.parse(dataDiv.dataset.config);
-        config = { "Tasks": [], "Groups": [] };
 
         userId = dataDiv.dataset.userid;
 
@@ -43,17 +40,14 @@
         var task = GetTask(false);
         if (selectedTaskId === -1) {
             task.Id = -1;
-            sendNewConfig("POST", task, groups);
+            SendTask("POST", task, groups);
         }
         else
-            sendNewConfig("PUT", task, groups);
+            SendTask("PUT", task, groups);
     }
     function ResetCLick() {
         var selectedTaskId = document.getElementsByClassName("activeTask")[0].taskId;
-        var task = config.Tasks.filter(function (el) {
-            return el.Id === selectedTaskId;
-        });
-        ShowTaskDetails(task[0]);
+        GetTaskDetails(selectedTaskId);
         shownAllGroups = false;
     }
     function DeleteCLick() {
@@ -63,7 +57,7 @@
         for (var i = 0; i < groupsDivs.length; i++) {
             groups.push(groupsDivs[i].groupId);
         }
-        sendNewConfig("PUT", GetTask(true), groups);
+        SendTask("PUT", GetTask(true), groups);
     }
     function AssignClick() {
         if (shownAllGroups)
@@ -172,14 +166,16 @@
     //~tasks
 
     //config
-    function sendNewConfig(ttype, task, groups) {
+    function SendTask(ttype, task, groups) {
         $.ajax({
             url: "http://localhost:8080/api/Configuration/task",
             type: ttype,
             contentType: "application/json;charset=utf-8",
             data: JSON.stringify({ "Key": task, "Value": groups }),
             success: function () {
-                location.reload();
+               //    location.reload();
+                NewTaskClick();
+                GetTasksNames();
             }
         })
     }
