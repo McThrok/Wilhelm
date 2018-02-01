@@ -1,19 +1,14 @@
 (() => {
     var c = true;
+    var offset = 0;
+    var count = 8;
+    var userId = "";
 
     window.onload = function () {
-        var dataDiv = document.getElementById("config");
-        var userId = dataDiv.dataset.userid;
-        var offset = 0;
-        var count = 8;
+        userId = document.getElementById("config").dataset.userid;
 
         GetNewActivities(userId, offset, count);
 
-        var loadMore = document.getElementById("load");
-        loadMore.onclick = function () {
-            offset++;
-            GetNewActivities(userId, offset, count);
-        }
     }
 
     //menu
@@ -35,16 +30,18 @@
             type: 'GET',
             contentType: "application/json;charset=utf-8",
             success: function (data) {
-                AddActivities(data);
+                AddActivities(data.m_Item2, data.m_Item1);
             },
-            //error: function (xhr, ajaxOptions, thrownError) {
-            //    alert(xhr.status);
-            //    alert(thrownError);
-            //}
+            error: function (xhr, ajaxOptions, thrownError) {
+                alert(xhr.status);
+                alert(thrownError);
+            }
         });
     }
-    function AddActivities(activities) {
+    function AddActivities(activities, addButton) {
         var archiveDiv = document.getElementById("home");
+        if (archiveDiv.children.length > 0)
+            archiveDiv.removeChild(archiveDiv.lastChild);
 
         for (let i = 0; i < activities.length; i++) {
             let activity = document.createElement("div");
@@ -76,5 +73,19 @@
                 c = true;
             }
         }
+
+        if (addButton)
+            archiveDiv.appendChild(GetButton());
+    }
+
+    function GetButton() {
+        var b = document.createElement("button");
+        b.id = "load";
+        b.innerHTML = "Load";
+        b.onclick = function () {
+            offset++;
+            GetNewActivities(userId, offset, count);
+        }
+        return b;
     }
 })();

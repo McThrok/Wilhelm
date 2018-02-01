@@ -35,9 +35,11 @@ namespace Wilhelm.Backend.Services
             }
             return dto;
         }
-        public List<ActivityDto> GetArchiveActivities(int userId, int offset, int amount)
+        public Tuple<bool, List<ActivityDto>> GetArchiveActivities(int userId, int offset, int amount)
         {
-            return GetArchive(userId).Skip(offset).Take(amount).ToList();
+            var archive = GetArchive(userId);
+            bool last = archive.Count < offset + amount;
+            return new Tuple<bool, List<ActivityDto>>(!last, archive.Skip(offset).Take(amount).ToList());
         }
 
         public List<ActivityDto> GetTodaysActivities(int userId)
@@ -65,7 +67,7 @@ namespace Wilhelm.Backend.Services
             }
         }
 
-        public void UpdateActivity(int activityId, bool value )
+        public void UpdateActivity(int activityId, bool value)
         {
             using (var db = _wContextFactory.Create())
             {
@@ -73,12 +75,12 @@ namespace Wilhelm.Backend.Services
                 db.SaveChanges();
             }
         }
-        public void UpdateActivities(List<KeyValuePair<int,bool>> activities)
+        public void UpdateActivities(List<KeyValuePair<int, bool>> activities)
         {
             using (var db = _wContextFactory.Create())
             {
-                foreach(var activity in activities)
-                db.WActivities.SingleOrDefault(x => x.Id == activity.Key).IsDone = activity.Value;
+                foreach (var activity in activities)
+                    db.WActivities.SingleOrDefault(x => x.Id == activity.Key).IsDone = activity.Value;
                 db.SaveChanges();
             }
         }

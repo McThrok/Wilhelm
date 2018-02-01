@@ -2,11 +2,11 @@
     var c = true;
 
     window.onload = function () {
-        var dataDiv = document.getElementById("config");
-        var activities = JSON.parse(dataDiv.dataset.activities);
-        var userId = dataDiv.dataset.userid;
+        var userId = document.getElementById("config").dataset.userid;
+        GetActivities(userId);
+    }
 
-        //
+    function ShowTodayActivities(activities) {
         var homeDiv = document.getElementById("home");
         for (let i = 0; i < activities.length; i++) {
             if (activities[i].Task.Archivized)
@@ -32,23 +32,38 @@
             activity.onclick = function () {
                 if (c) {
                     checkbox.checked = !checkbox.checked;
-                    SaveActivities(activities[i].Id, checkbox.checked);
+                    SaveActivity(activities[i].Id, checkbox.checked);
                 }
                 c = true;
             }
         }
     }
+
     //menu
     var selectedMenu = document.getElementsByClassName("selectedMenu");
     if (selectedMenu.length > 0)
         selectedMenu[0].classList.remove("selectedMenu");
     document.getElementById("homeButton").classList.add("selectedMenu");
 
-    function SaveActivities(id, value) {
+    function SaveActivity(id, value) {
         $.ajax({
             url: "http://localhost:8080/api/ArchiveActivities?activityId=" + id + "&value=" + value,
             type: "PUT",
         })
+    }
+
+    function GetActivities(userId) {
+        $.ajax({
+            url: "http://localhost:8080/api/ActiveActivities?userId=" + userId,
+            type: 'GET',
+            success: function (data) {
+                ShowTodayActivities(data);
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+                alert(xhr.status);
+                alert(thrownError);
+            }
+        });
     }
 
 })();

@@ -22,7 +22,7 @@ namespace Wilhelm.Backend.Api.Controllers
         {
             return _activityService.GetArchive(userId);
         }
-        public List<ActivityDto> GetActivities(int userId, int offset, int amount)
+        public Tuple<bool,List<ActivityDto>> GetActivities(int userId, int offset, int amount)
         {
             return _activityService.GetArchiveActivities(userId, offset, amount);
         }

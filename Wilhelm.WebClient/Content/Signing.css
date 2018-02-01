@@ -66,10 +66,14 @@ button {
     width: 100%;
     display: flex;
     flex-wrap: wrap;
+    box-shadow: 0 5px 0 #a6a6a6;
 }
 
     button:hover {
         cursor: pointer;
+    }
+    button:active {
+        transform: translateY(4px);
     }
 /*---------------------------------------------*/
 .loginForm {
