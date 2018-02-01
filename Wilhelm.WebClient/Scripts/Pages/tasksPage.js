@@ -1,6 +1,8 @@
 (() => {
     var shownAllGroups = false;
     var userId = "";
+    var offset = 0;
+    var count = 8;
 
     window.onload = function () {
         var dataDiv = document.getElementById("dataDiv");
@@ -92,9 +94,9 @@
     //~buttons
 
     //tasks
-    function ShowTasks(tasks) {
+    function AddTasks(tasks, addButton) {
         var tasksDiv = document.getElementById("tasks");
-        while (tasksDiv.children.length > 1) // 0 - New task
+        if (tasksDiv.children.length > 1) // 0 - New task
             tasksDiv.removeChild(tasksDiv.lastChild);
         for (var i = 0; i < tasks.length; i++) {
             if (tasks[i].Archivized === true)
@@ -111,6 +113,8 @@
             }
             tasksDiv.appendChild(newButton);
         }
+        if (addButton)
+            tasksDiv.appendChild(GetButton());
     };
     function SetActiveTask(task) {
         var selected = document.getElementsByClassName("activeTask");
@@ -175,11 +179,11 @@
     }
     function GetTasks() {
         $.ajax({
-            url: "http://localhost:8080/api/tasks/names?userId=" + userId,
+            url: "http://localhost:8080/api/tasks/names?userId=" + userId + "&offset=" + count * offset + "&amount=" + count,
             type: 'GET',
             contentType: "application/json;charset=utf-8",
             success: function (data) {
-                ShowTasks(data);
+                AddTasks(data.m_Item2, data.m_Item1);
             },
             error: function (xhr, ajaxOptions, thrownError) {
                 alert(xhr.status);
@@ -253,5 +257,16 @@
             OwnerId: userId,
             StartDate: document.getElementById("taskStartDate").value,
         };
+    }
+
+    function GetButton() {
+        var b = document.createElement("button");
+        b.id = "load";
+        b.innerHTML = "Load";
+        b.onclick = function () {
+            offset++;
+            GetTasks();
+        }
+        return b;
     }
 })();

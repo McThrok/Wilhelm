@@ -23,9 +23,9 @@ namespace Wilhelm.Backend.Api.Controllers
         }
 
         [Route("api/tasks/names")]
-        public List<KeyValuePair<int, string>> GetTaskNames(int userId)
+        public Tuple<bool,List<KeyValuePair<int, string>>> GetTaskNames(int userId, int offset, int amount)
         {
-            return _configurationService.GetTaskNames(userId);
+            return _configurationService.GetTaskNames(userId, offset, amount);
         }
         [Route("api/tasks/details")]
         public TaskDto GetTaskDetails(int taskId)

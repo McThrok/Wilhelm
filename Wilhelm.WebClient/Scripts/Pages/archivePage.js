@@ -8,7 +8,6 @@
         userId = document.getElementById("config").dataset.userid;
 
         GetNewActivities(userId, offset, count);
-
     }
 
     //menu

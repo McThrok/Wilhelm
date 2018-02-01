@@ -45,16 +45,21 @@ namespace Wilhelm.Backend.Services
             }
         }
 
-        public List<KeyValuePair<int, string>> GetTaskNames(int userId)
+        public Tuple<bool, List<KeyValuePair<int, string>>> GetTaskNames(int userId, int offset, int amount)
         {
             List<KeyValuePair<int, string>> tasks = new List<KeyValuePair<int, string>>();
+            bool last = false;
             using (var db = _wContextFactory.Create())
             {
-                tasks = db.WTasks.Where(x => x.OwnerId == userId && !x.Archivized)
-                    .Select(o => new { o.Id, o.Name }).AsEnumerable()
-                    .Select(o => new KeyValuePair<int, string>(o.Id, o.Name)).ToList();
+                tasks = db.WTasks.Where(x => x.OwnerId == userId && !x.Archivized).
+                    Select(o => new { o.Id, o.Name }).AsEnumerable()
+                    .Select(o => new KeyValuePair<int, string>(o.Id, o.Name))
+                    .Skip(offset).Take(amount).ToList();
+                var allTasksCount = db.WTasks.Where(x => x.OwnerId == userId && !x.Archivized).Count();
+                if (allTasksCount <= offset + amount) 
+                    last=true;
             }
-            return tasks;
+            return new Tuple<bool, List<KeyValuePair<int, string>>>(!last, tasks);
         }
         public TaskDto GetTaskDetails(int taskId)
         {

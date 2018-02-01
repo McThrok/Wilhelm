@@ -28,6 +28,30 @@
             #tasks button.activeTask:hover {
                 background-color: #3b424c;
             }
+
+    #tasks #load {
+        font-size: 16px;
+        background-color: slategrey;
+        color: white;
+        outline: none;
+        border: none;
+        display: block;
+        margin: 0 auto;
+        margin-top: 5px;
+        margin-bottom: 10px;
+        width: 130px;
+        height: 40px;
+        box-shadow: 0 5px 0 #a6a6a6;
+    }
+
+        #tasks #load:hover {
+            background-color: #3b424c;
+        }
+
+        #tasks  #load:active {
+            transform: translateY(4px);
+        }
+
 /*==========================*/
 #taskDetails {
     border-left: 5px;
@@ -223,3 +247,4 @@ textarea.inputField {
     padding-top: 14px;
     padding-bottom: 13px;
 }
+

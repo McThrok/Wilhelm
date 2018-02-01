@@ -38,7 +38,7 @@ namespace Wilhelm.Backend.Services
         public Tuple<bool, List<ActivityDto>> GetArchiveActivities(int userId, int offset, int amount)
         {
             var archive = GetArchive(userId);
-            bool last = archive.Count < offset + amount;
+            bool last = archive.Count <= offset + amount;
             return new Tuple<bool, List<ActivityDto>>(!last, archive.Skip(offset).Take(amount).ToList());
         }
 
