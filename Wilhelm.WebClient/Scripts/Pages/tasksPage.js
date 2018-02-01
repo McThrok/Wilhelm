@@ -96,7 +96,7 @@
     //tasks
     function AddTasks(tasks, addButton) {
         var tasksDiv = document.getElementById("tasks");
-        if (tasksDiv.children.length > 1) // 0 - New task
+        while (tasksDiv.children.length > 1) // 0 - New task
             tasksDiv.removeChild(tasksDiv.lastChild);
         for (var i = 0; i < tasks.length; i++) {
             if (tasks[i].Archivized === true)

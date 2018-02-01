@@ -103,7 +103,7 @@
     //tasks
     function AddGroup(groups, addButton) {
         var groupsDiv = document.getElementById("tasks");
-        if (groupsDiv.children.length > 1) // 0 - New group
+        while (groupsDiv.children.length > 1) // 0 - New group
             groupsDiv.removeChild(groupsDiv.lastChild);
         for (var i = 0; i < groups.length; i++) {
             if (groups[i].Archivized === true)
