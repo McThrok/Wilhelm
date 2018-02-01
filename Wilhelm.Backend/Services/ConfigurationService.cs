@@ -91,16 +91,20 @@ namespace Wilhelm.Backend.Services
             }
         }
 
-        public List<KeyValuePair<int, string>> GetGroupsNames(int userId)
+        public Tuple<bool, List<KeyValuePair<int, string>>> GetGroupsNames(int userId, int offset, int amount)
         {
             List<KeyValuePair<int, string>> groups = new List<KeyValuePair<int, string>>();
+            bool last = false;
             using (var db = _wContextFactory.Create())
             {
                 groups = db.WGroups.Where(x => x.OwnerId == userId && !x.Archivized)
                     .Select(o => new { o.Id, o.Name }).AsEnumerable()
                     .Select(o => new KeyValuePair<int, string>(o.Id, o.Name)).ToList();
+                var allGRoupsCount = db.WGroups.Where(x => x.OwnerId == userId && !x.Archivized).Count();
+                if (allGRoupsCount <= offset + amount)
+                    last = true;
             }
-            return groups;
+            return new Tuple<bool, List<KeyValuePair<int, string>>>(!last, groups);
         }
         public GroupDto GetGroupDetails(int groupId)
         {

@@ -19,7 +19,7 @@ namespace Wilhelm.Backend.Services.Interfaces
         List<Tuple<int, string, string>> GetGroups(int userId);
         void DeleteTask(int taskId);
 
-        List<KeyValuePair<int, string>> GetGroupsNames(int userId);
+        Tuple<bool, List<KeyValuePair<int, string>>> GetGroupsNames(int userId, int offset, int amount);
         GroupDto GetGroupDetails(int groupId);
         List<Tuple<int, string, string>> GetTasks(int userId);
         void DeleteGroup(int groupId);

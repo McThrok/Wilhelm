@@ -23,9 +23,9 @@ namespace Wilhelm.Backend.Api.Controllers
         }
 
         [Route("api/groups/names")]
-        public List<KeyValuePair<int, string>> GetGroupsNames(int userId)
+        public Tuple<bool, List<KeyValuePair<int, string>>> GetGroupsNames(int userId, int offset, int amount)
         {
-            return _configurationService.GetGroupsNames(userId);
+            return _configurationService.GetGroupsNames(userId, offset, amount);
         }
         [Route("api/groups/details")]
         public GroupDto GetGroupDetails(int groupId)

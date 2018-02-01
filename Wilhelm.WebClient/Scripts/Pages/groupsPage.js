@@ -1,6 +1,8 @@
 (() => {
     var shownAllTasks = false;
     var userId = "";
+    var offset = 0;
+    var count = 8;
 
     window.onload = function () {
         var dataDiv = document.getElementById("dataDiv");
@@ -99,9 +101,9 @@
     //~buttons
 
     //tasks
-    function ShowGroups(groups) {
+    function AddGroup(groups, addButton) {
         var groupsDiv = document.getElementById("tasks");
-        while (groupsDiv.children.length > 1) // 0 - New group
+        if (groupsDiv.children.length > 1) // 0 - New group
             groupsDiv.removeChild(groupsDiv.lastChild);
         for (var i = 0; i < groups.length; i++) {
             if (groups[i].Archivized === true)
@@ -118,6 +120,8 @@
             }
             groupsDiv.appendChild(newButton);
         }
+        if (addButton)
+            groupsDiv.appendChild(GetButton());
     };
     function SetActiveGroup(group) {
         var selected = document.getElementsByClassName("activeTask");
@@ -176,11 +180,11 @@
     }
     function GetGroups() {
         $.ajax({
-            url: "http://localhost:8080/api/groups/names?userId=" + userId,
+            url: "http://localhost:8080/api/groups/names?userId=" + userId + "&offset=" + count * offset + "&amount=" + count,
             type: 'GET',
             contentType: "application/json;charset=utf-8",
             success: function (data) {
-                ShowGroups(data);
+                AddGroup(data.m_Item2, data.m_Item1);
             },
             error: function (xhr, ajaxOptions, thrownError) {
                 alert(xhr.status);
@@ -242,5 +246,16 @@
         resetBtn.style.visibility = "visible";
         var deleteBtn = document.getElementById("deleteTask");
         deleteBtn.style.visibility = "visible";
+    }
+
+    function GetButton() {
+        var b = document.createElement("button");
+        b.id = "load";
+        b.innerHTML = "Load";
+        b.onclick = function () {
+            offset++;
+            GetGroups();
+        }
+        return b;
     }
 })();
