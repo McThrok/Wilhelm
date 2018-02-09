@@ -19,6 +19,7 @@
             checkbox.activityId = activities[i].Id;
             checkbox.checked = activities[i].IsDone;
             checkbox.onclick = function () {
+                SaveActivity(activities[i].Id, checkbox.checked);
                 c = false;
             }
             var l2 = document.createElement("label")

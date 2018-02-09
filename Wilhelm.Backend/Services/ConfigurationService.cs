@@ -191,6 +191,7 @@ namespace Wilhelm.Backend.Services
                 }
             }
             SaveConfig(config);
+
         }
         public void UpdateGroup(KeyValuePair<GroupDto, List<int>> groupPair)
         {

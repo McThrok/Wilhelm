@@ -37,9 +37,18 @@ namespace Wilhelm.Backend.Services
         }
         public Tuple<bool, List<ActivityDto>> GetArchiveActivities(int userId, int offset, int amount)
         {
-            var archive = GetArchive(userId);
-            bool last = archive.Count < offset + amount;
-            return new Tuple<bool, List<ActivityDto>>(!last, archive.Skip(offset).Take(amount).ToList());
+            List<ActivityDto> dto = new List<ActivityDto>();
+            bool last = false;
+            using (var db = _wContextFactory.Create())
+            {
+                var archive = db.WActivities.Where(x => x.WTask.OwnerId == userId);
+                var archivePage = archive.Include(x => x.WTask).OrderByDescending(a =>a.Date).Skip(offset).Take(amount);
+                _entitiesService.UpdateDto(dto, archivePage);
+                if (archive.Count() <= offset + amount)
+                    last = true;
+            }
+
+            return new Tuple<bool, List<ActivityDto>>(!last, dto.ToList());
         }
 
         public List<ActivityDto> GetTodaysActivities(int userId)

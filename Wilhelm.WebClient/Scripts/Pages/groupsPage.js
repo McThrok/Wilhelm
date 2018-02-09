@@ -135,6 +135,8 @@
 
         var tasks = el.Tasks;
         for (var i = 0; i < tasks.length; i++) {
+            if (tasks[i].Archivized)
+                continue;
             var task = document.createElement("div");
             task.classList.add("groupInTask");
             task.classList.add("taskGroupItem");
